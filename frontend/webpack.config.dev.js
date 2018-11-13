@@ -22,11 +22,17 @@ module.exports = {
       {
         test: /\.scss$/,
         loader: 'style-loader!css-loader!sass-loader?sourceMap'
-      }
+      },
+      {
+        test: /\.css$/,  
+        include: /node_modules/,  
+        loaders: ['style-loader', 'css-loader']
+        }
+      
     ]
   },
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.js', '.jsx']
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin()
