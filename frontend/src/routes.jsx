@@ -6,6 +6,7 @@ import Login from './components/views/login';
 import Admin from './components/views/admin';
 import Visitor from './components/views/visitor';
 import Register from './components/views/register';
+import Search from './components/views/search';
 
 export default (
   <Route path='/' component={App}>
@@ -14,6 +15,7 @@ export default (
     <Route path='register' component={Register} />
     <Route path='admin' component={Admin} />
     <Route path='visitor' component={Visitor} />
+    <Route path='search' component={Search} />
     <Route path='*' component={Home} />
   </Route>
 );

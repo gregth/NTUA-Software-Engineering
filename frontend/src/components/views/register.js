@@ -5,6 +5,8 @@
  */
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEye } from '@fortawesome/free-solid-svg-icons'
 
 class Register extends React.Component {
     
@@ -79,15 +81,15 @@ class Register extends React.Component {
                 <div class="form-group">
                     <label id="label-form" for="pwd">Password:</label>
                     <input title="no special characters" type="password" name="password" class="form-control" pattern="[A-Za-z0-9]{8,16}" id="pwd" onKeyUp={() => this.checkPasswordMatch()} required></input>
-                    <button className="button is-white fa fa-ye" toggle="#pwd" type="button" id="eye" onClick={() => this.showPassword()}>Show</button>
+                    <button type="eye" id="eye" onClick={() => this.showPassword()}>
+                        <FontAwesomeIcon icon={faEye} />
+                    </button>                    
                 </div>
                 
                 <div class="form-group">
                     <label id="label-form" for="pwd_repeat">Repeat Password:</label>
                     <input id="re_pass" name="re_pass" class="form-control" type="password" onInput={() => this.checkPasswordMatch()} required/>
-                    <span id='message'></span>
                 </div>
-                
                 <div className="for-group">
                     <label id="label-form" for="birth_date">Date of Birth:</label>
                     <input type="date" id="birth_date" name="birth_date" class="form-control" max="2000-12-31" required/>
