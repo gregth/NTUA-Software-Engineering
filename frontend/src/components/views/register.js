@@ -6,13 +6,13 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEye } from '@fortawesome/free-solid-svg-icons'
+import { faEye, faEyeSlash, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons'
 
 class Register extends React.Component {
     
     constructor(props) {
         super(props);
-        this.state = {ready: false, first_name: '', last_name: '', username: '', password: '', email: '', phone: 0, birth_date: ''};
+        this.state = {show: true, check: null, check_show: false, ready: false, first_name: '', last_name: '', username: '', password: '', email: '', phone: 0, birth_date: ''};
         this.handleSubmit = this.handleSubmit.bind(this);
         this.checkPasswordMatch = this.checkPasswordMatch.bind(this);
         this.showPassword = this.showPassword.bind(this);
@@ -35,8 +35,10 @@ class Register extends React.Component {
         
         if (s.type === "password") {
             s.type = "text";
+             this.setState(() => ({ show: false}));
         } else {
             s.type = "password";
+            this.setState(() => ({ show: true}));
         }
     }
     
@@ -44,6 +46,17 @@ class Register extends React.Component {
     checkPasswordMatch() {
         var password = document.getElementById('pwd').value;
         var confirmPassword = document.getElementById('re_pass').value;
+        
+        if (this.state.check !== null) {
+          this.setState(() => ({ check_show: true}));  
+        }
+        
+        if (password === confirmPassword && confirmPassword !== "") {
+            this.setState(() => ({ check: true}));
+        }
+        else if (password !== confirmPassword && confirmPassword !== "") {
+            this.setState(() => ({ check: false}));
+        }
         
         if (password === confirmPassword) {
             this.setState( () => ({ready: true}));
@@ -82,14 +95,28 @@ class Register extends React.Component {
                     <label id="label-form" for="pwd">Password:</label>
                     <input title="no special characters" type="password" name="password" class="form-control" pattern="[A-Za-z0-9]{8,16}" id="pwd" onKeyUp={() => this.checkPasswordMatch()} required></input>
                     <button type="eye" id="eye" onClick={() => this.showPassword()}>
-                        <FontAwesomeIcon icon={faEye} />
-                    </button>                    
+                        { this.state.show
+                        ? <FontAwesomeIcon icon={faEye} />
+                        : <FontAwesomeIcon icon={faEyeSlash} />
+                        }
+                    </button> 
+                    
                 </div>
                 
                 <div class="form-group">
                     <label id="label-form" for="pwd_repeat">Repeat Password:</label>
                     <input id="re_pass" name="re_pass" class="form-control" type="password" onInput={() => this.checkPasswordMatch()} required/>
+                    { this.state.check_show
+                    ? <span> 
+                    { this.state.check
+                        ? <FontAwesomeIcon id="check" icon={faCheck} />
+                        : <FontAwesomeIcon id="error" icon={faTimes} />
+                        }
+                    </span>
+                    : <span />
+                    }
                 </div>
+                
                 <div className="for-group">
                     <label id="label-form" for="birth_date">Date of Birth:</label>
                     <input type="date" id="birth_date" name="birth_date" class="form-control" max="2000-12-31" required/>

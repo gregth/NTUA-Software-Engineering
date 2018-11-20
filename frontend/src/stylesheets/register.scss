@@ -57,3 +57,20 @@ input[type=tel] {
 	font-family: fantasy;
 	display: inline;
 }
+
+#eye {
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+}
+
+#check {
+    color: green;
+}
+
+#error {
+    color: red;
+}
