@@ -42,7 +42,6 @@ class Register extends React.Component {
         }
     }
     
-    
     checkPasswordMatch() {
         var password = document.getElementById('pwd').value;
         var confirmPassword = document.getElementById('re_pass').value;
@@ -67,6 +66,7 @@ class Register extends React.Component {
             document.getElementById("message").innerHTML = "Password must match";
         }
     }
+    
     render() {
         return(
             <form id="register" onSubmit={() => this.handleSubmit()}>

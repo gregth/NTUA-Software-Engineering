@@ -7,12 +7,11 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom'
 import { browserHistory } from 'react-router';
 
-class Visitor extends React.Component {
-  
-    render() {
-        browserHistory.push('/search');
-        return;
-  }
+class Visitor extends React.Component { 
+       render() {
+           browserHistory.push('/search');
+           return (<span/>);
+       }
 }
 
 export default Visitor;

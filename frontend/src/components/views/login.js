@@ -6,11 +6,14 @@
 
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 
 class Login extends React.Component {
+    
     constructor(props) {
         super(props);
-        this.state = {username: '', password: ''};
+        this.state = {show: true, username: '', password: ''};
         this.handleSubmit = this.handleSubmit.bind(this);
     }
     
@@ -18,24 +21,43 @@ class Login extends React.Component {
        const us = document.getElementById('username').value;
        const pass = document.getElementById('pwd').value;
        
-       this.setState(() => ({ username: us, password: pass}));
-        
+       this.setState(() => ({ username: us, password: pass}));        
     }
+    
+    showPassword() {
+        var s = document.getElementById("pwd");
+        
+        if (s.type === "password") {
+            s.type = "text";
+             this.setState(() => ({ show: false}));
+        } else {
+            s.type = "password";
+            this.setState(() => ({ show: true}));
+        }
+    }
+    
     render() {
-        return (
-            <form onSubmit={this.handleSubmit}>
-            <div>
-                </div>
+        return(
+            <form id="login" onSubmit={() => this.handleSubmit()}>
+                <div></div>
+                
                 <div class="form-group">
-                    <label for="username">Username:</label>
-                    <input id="username" name="username" class="form-control" type="text" required/>
+                    <label id="label-form" for="username">Username:</label>
+                    <input id="username" name="username" class="form-control" title="only letters, numbers and underscore" pattern="[A-Za-z0-9_]+" type="text" required/>
                 </div>
-
+                
                 <div class="form-group">
-                    <label for="pwd">Password:</label>
-                    <input type="password" name="password" class="form-control" id="pwd" required></input>
+                    <label id="label-form" for="pwd">Password:</label>
+                    <input title="no special characters" type="password" name="password" class="form-control" pattern="[A-Za-z0-9]{8,16}" id="pwd" required></input>
+                    <button type="eye" id="eye" onClick={() => this.showPassword()}>
+                        { this.state.show
+                        ? <FontAwesomeIcon icon={faEye} />
+                        : <FontAwesomeIcon icon={faEyeSlash} />
+                        }
+                    </button> 
                 </div>
-                <button type="submit" class="btn btn-default">Submit</button>
+                
+                <button type="submit" id="button1">Login</button>
             </form>
         );
   }
