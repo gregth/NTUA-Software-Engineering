@@ -7,62 +7,127 @@
 import React, { Component } from "react";
 import ReactDOM from 'react-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faHome } from '@fortawesome/free-solid-svg-icons';
 import { GeolocatedProps, geolocated } from 'react-geolocated';
+import { browserHistory } from 'react-router';
+import Slider from 'react-rangeslider'
 
-const AnyReactComponent = ({ text }) => <div>{ text }</div>;
+class Range extends React.Component {
+  constructor(props) {
+    super(props);
+    this.updateRange = this.updateRange.bind(this);
+  }
+  
+  updateRange(e) {
+    this.props.updateRange(e.target.value);
+  }
+  
+  render() {
+    // console.log(this.props);
+    const { range } = this.props;
+    return (
+      <div>
+        <input id="range" type="range"
+          value={range}
+          min="0"
+          max="50"
+          step="0.01"
+          onChange={this.updateRange}
+        />
+        <span id="price">{range}€</span>
+      </div>
+    );
+  }
+}
 
 class Search extends React.Component {
  
      constructor(props) {
         super(props);
-        this.state = {search: '', latitude: '', longitude: ''};
+        this.state = {search: [], latitude: '', longitude: '', price: 50};
         this.handleSubmit = this.handleSubmit.bind(this);
         this.defaultProps = {center: {lat: 59.95, lng: 30.33}, zoom: 11};
         this.getMyLocation = this.getMyLocation.bind(this);
+        this.toggleCheckbox = this.toggleCheckbox.bind(this);
+        this.homepage = this.homepage.bind(this);
+        this.updateRange = this.updateRange.bind(this);
+    }
+    
+    updateRange(val) {
+        this.setState({
+            price: val
+        });
+    } 
+  
+    componentWillMount() {
+        this.selectedCheckboxes = new Set();
+    }
+    
+    homepage() {
+        browserHistory.push('/');
+    }
+    
+    toggleCheckbox(label){
+        if (this.selectedCheckboxes.has(label)) {
+            this.selectedCheckboxes.delete(label);
+        } 
+        else {
+            this.selectedCheckboxes.add(label);
+        }
     }
   
-  componentDidMount() {
-    this.getMyLocation();
-  }
+    getMyLocation() {
+        const location = window.navigator && window.navigator.geolocation;
 
-  getMyLocation() {
-    const location = window.navigator && window.navigator.geolocation;
-    
-    if (location) {
-      location.getCurrentPosition((position) => {
-        this.setState({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude
-        });
-      }, (error) => {
-        this.setState({ latitude: 'err-latitude', longitude: 'err-longitude' });
-      });
+        if (location) {
+            location.getCurrentPosition((position) => {
+                this.setState({
+                    latitude: position.coords.latitude,
+                    longitude: position.coords.longitude
+                });
+                alert(position.coords.latitude);
+            }, (error) => {
+                this.setState({ latitude: 'err-latitude', longitude: 'err-longitude' });
+            });
+        }
     }
-
-  }
     
     handleSubmit () {
-       const s = document.getElementById('search').value;
+        const s = document.getElementById('search').value;
        
-       this.setState(() => ({ search: s}));  
-       alert(s);
+        if (s !== '') {
+            this.selectedCheckboxes.add(s);
+        }
+        
+        this.setState(() => ({search: this.selectedCheckboxes}));
     }
     
     render() {
         return (
             <div> 
-                <h1> Boooo! </h1>
+                <button id="homepage" type="submit" onClick={() => this.homepage()}><FontAwesomeIcon icon={faHome}></FontAwesomeIcon></button>
+                <br/>
+                <h1> Αναζήτηση Προϊόντων </h1>
 
                 <form id="searching" onSubmit={() => this.handleSubmit()}>
+                    <label> Κρασί </label>
+                    <input type="checkbox" name="product" value="wine" onChange={() => this.toggleCheckbox("Κρασί")}></input>
+                    <label> Μακαρόνια </label>
+                    <input type="checkbox" name="product" value="pasta" onChange={() => this.toggleCheckbox("Μακαρόνια")}></input>
+                    <label> Χυμός </label>
+                    <input type="checkbox" name="product" value="juice" onChange={() => this.toggleCheckbox("Χυμός")}></input>
+                    <label> Φρούτα </label>
+                    <input type="checkbox" name="product" value="fruits" onChange={() => this.toggleCheckbox("Φρούτα")}></input>
+                    <br/>
                     <input id="search" type="text" placeholder="Search.." name="search"></input>
-
                     <button id="search_btn" type="submit"><FontAwesomeIcon icon={faSearch}></FontAwesomeIcon></button>
+                    <br/><br/>
+                    <label> Μέγιστη τιμή </label>
+                    <Range range={this.state.price} updateRange={this.updateRange}/>
+                    <br/>
+                    <label> Only nearby shops</label>
+                    <input type="checkbox" name="location" onChange={() => this.getMyLocation()}></input>
                 </form>
-                Location:
-                <input type="text" value={this.state.latitude} />
-        <input type="text" value={this.state.longitude} />
-            
             </div>
         );
     }

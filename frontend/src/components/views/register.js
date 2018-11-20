@@ -5,8 +5,9 @@
  */
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEye, faEyeSlash, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash, faCheck, faTimes, faHome } from '@fortawesome/free-solid-svg-icons';
+import { browserHistory } from 'react-router';
 
 class Register extends React.Component {
     
@@ -16,6 +17,11 @@ class Register extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.checkPasswordMatch = this.checkPasswordMatch.bind(this);
         this.showPassword = this.showPassword.bind(this);
+        this.homepage = this.homepage.bind(this);
+    }
+    
+    homepage() {
+        browserHistory.push('/');
     }
     
     handleSubmit () {
@@ -71,6 +77,8 @@ class Register extends React.Component {
         return(
             <form id="register" onSubmit={() => this.handleSubmit()}>
                 <div></div>
+                <button id="homepage" type="submit" onClick={() => this.homepage()}><FontAwesomeIcon icon={faHome}></FontAwesomeIcon></button>
+                <br/>
                 <div class="form-group">
                     <label id="label-form" for="first_name">First Name:</label>
                     <input id="first_name" name="first_name" class="form-control" pattern="[A-Za-z]+" type="text" required/>

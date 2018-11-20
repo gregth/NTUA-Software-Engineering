@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom'
+import ReactDOM from 'react-dom';
 import { browserHistory } from 'react-router';
 
 class Visitor extends React.Component { 
