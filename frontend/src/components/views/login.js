@@ -17,10 +17,15 @@ class Login extends React.Component {
         this.state = {show: true, username: '', password: ''};
         this.handleSubmit = this.handleSubmit.bind(this);
         this.homepage = this.homepage.bind(this);
+        this.register = this.register.bind(this);
     }
     
     homepage() {
         browserHistory.push('/');
+    }
+    
+    register() {
+        browserHistory.push('/register');
     }
     
     handleSubmit() {
@@ -34,6 +39,7 @@ class Login extends React.Component {
        else {
            document.getElementById("message").innerHTML = "";
        }
+       browserHistory.push('/search');
     }
     
     showPassword() {
@@ -77,6 +83,7 @@ class Login extends React.Component {
                 </div>
                 <span id="message"/><br/>
                 <button type="submit" id="button1" onClick={() => this.handleSubmit()}>Login</button>
+                <button type="submit" id="button1" onClick={() => this.register()}>Register</button>
            </form>
         );
   }

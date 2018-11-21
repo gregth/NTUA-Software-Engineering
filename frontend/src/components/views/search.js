@@ -100,7 +100,7 @@ class Search extends React.Component {
                 alert(error);
             }
         );
-        }
+    }
     
     handleSubmit () {
         const s = document.getElementById('search').value;
@@ -114,7 +114,7 @@ class Search extends React.Component {
     
     render() {
         return (
-            <div> 
+            <div>
                 <button id="homepage" type="submit" onClick={() => this.homepage()}><FontAwesomeIcon icon={faHome}></FontAwesomeIcon></button>
                 <br/>
                 <h1> Αναζήτηση Προϊόντων </h1>
