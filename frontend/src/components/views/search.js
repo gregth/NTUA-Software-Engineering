@@ -10,7 +10,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faHome } from '@fortawesome/free-solid-svg-icons';
 import { GeolocatedProps, geolocated } from 'react-geolocated';
 import { browserHistory } from 'react-router';
-import Slider from 'react-rangeslider'
+import Slider from 'react-rangeslider';
+import Geocode from 'react-geocode';
 
 class Range extends React.Component {
   constructor(props) {
@@ -58,7 +59,7 @@ class Search extends React.Component {
             price: val
         });
     } 
-  
+    
     componentWillMount() {
         this.selectedCheckboxes = new Set();
     }
@@ -85,12 +86,21 @@ class Search extends React.Component {
                     latitude: position.coords.latitude,
                     longitude: position.coords.longitude
                 });
-                alert(position.coords.latitude);
             }, (error) => {
                 this.setState({ latitude: 'err-latitude', longitude: 'err-longitude' });
             });
         }
-    }
+        
+        Geocode.fromLatLng("48.8583701", "2.2922926").then(
+            response => {
+                const address = response.results[0].formatted_address;
+                console.log(address);
+            },
+            error => {
+                alert(error);
+            }
+        );
+        }
     
     handleSubmit () {
         const s = document.getElementById('search').value;
@@ -108,7 +118,7 @@ class Search extends React.Component {
                 <button id="homepage" type="submit" onClick={() => this.homepage()}><FontAwesomeIcon icon={faHome}></FontAwesomeIcon></button>
                 <br/>
                 <h1> Αναζήτηση Προϊόντων </h1>
-
+                
                 <form id="searching" onSubmit={() => this.handleSubmit()}>
                     <label> Κρασί </label>
                     <input type="checkbox" name="product" value="wine" onChange={() => this.toggleCheckbox("Κρασί")}></input>

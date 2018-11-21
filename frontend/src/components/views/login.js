@@ -27,7 +27,13 @@ class Login extends React.Component {
        const us = document.getElementById('username').value;
        const pass = document.getElementById('pwd').value;
        
-       this.setState(() => ({ username: us, password: pass}));        
+       this.setState(() => ({ username: us, password: pass}));   
+       if (us === '' || pass === '') {
+           document.getElementById("message").innerHTML = "Συμπληρώστε όλα τα πεδία";
+       }
+       else {
+           document.getElementById("message").innerHTML = "";
+       }
     }
     
     showPassword() {
@@ -69,7 +75,7 @@ class Login extends React.Component {
                         }
                     </button> 
                 </div>
-                
+                <span id="message"/><br/>
                 <button type="submit" id="button1" onClick={() => this.handleSubmit()}>Login</button>
            </form>
         );
