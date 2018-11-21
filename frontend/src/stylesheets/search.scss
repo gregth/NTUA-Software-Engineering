@@ -18,8 +18,46 @@ $primary: lightblue;
     outline:none;
 }
 
+#logoff {
+    background-repeat:no-repeat;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+    background-color: rgb(200, 150, 100);
+    border: none;
+    color: white;
+    padding: 5px ;
+    text-align: center;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 12px;
+    width: 100px;
+    font-family: fantasy;
+    display: inline;
+}
+
+#new {
+    background-repeat:no-repeat;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+    background-color: rgb(200, 150, 100);
+    border: none;
+    color: white;
+    padding: 5px ;
+    text-align: center;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 12px;
+    width: 100px;
+    font-family: fantasy;
+    display: inline;
+}
+
 #homepage {
-    background-color: Transparent;
+    background-repeat: Transparent;
     background-repeat:no-repeat;
     border: none;
     cursor:pointer;

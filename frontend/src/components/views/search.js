@@ -7,7 +7,7 @@
 import React, { Component } from "react";
 import ReactDOM from 'react-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faHome } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faHome, faTimes, faShoppingBasket, faBuilding } from '@fortawesome/free-solid-svg-icons';
 import { GeolocatedProps, geolocated } from 'react-geolocated';
 import { browserHistory } from 'react-router';
 import Slider from 'react-rangeslider';
@@ -50,8 +50,10 @@ class Search extends React.Component {
         this.defaultProps = {center: {lat: 59.95, lng: 30.33}, zoom: 11};
         this.getMyLocation = this.getMyLocation.bind(this);
         this.toggleCheckbox = this.toggleCheckbox.bind(this);
-        this.homepage = this.homepage.bind(this);
+        this.logoff = this.logoff.bind(this);
         this.updateRange = this.updateRange.bind(this);
+        this.newproduct = this.newproduct.bind(this);
+        this.newshop = this.newshop.bind(this);
     }
     
     updateRange(val) {
@@ -64,8 +66,16 @@ class Search extends React.Component {
         this.selectedCheckboxes = new Set();
     }
     
-    homepage() {
+    logoff() {
         browserHistory.push('/');
+    }
+    
+    newproduct() {
+        //TO DO 
+    }
+    
+    newshop() {
+        browserHistory.push('/addshop');
     }
     
     toggleCheckbox(label){
@@ -90,18 +100,8 @@ class Search extends React.Component {
                 this.setState({ latitude: 'err-latitude', longitude: 'err-longitude' });
             });
         }
-        
-        Geocode.fromLatLng("48.8583701", "2.2922926").then(
-            response => {
-                const address = response.results[0].formatted_address;
-                console.log(address);
-            },
-            error => {
-                alert(error);
-            }
-        );
     }
-    
+        
     handleSubmit () {
         const s = document.getElementById('search').value;
        
@@ -115,7 +115,9 @@ class Search extends React.Component {
     render() {
         return (
             <div>
-                <button id="homepage" type="submit" onClick={() => this.homepage()}><FontAwesomeIcon icon={faHome}></FontAwesomeIcon></button>
+                <button id="logoff" type="submit" onClick={() => this.logoff()}><FontAwesomeIcon icon={faTimes}></FontAwesomeIcon> Logoff </button>
+                <button id="new" type="submit" onClick={() => this.newproduct()}><FontAwesomeIcon icon={faShoppingBasket}></FontAwesomeIcon> Προσθήκη Νέου Προϊόντος </button>
+                <button id="new" type="submit" onClick={() => this.newshop()}><FontAwesomeIcon icon={faBuilding}></FontAwesomeIcon> Προσθήκη Νέου Καταστήματος </button>
                 <br/>
                 <h1> Αναζήτηση Προϊόντων </h1>
                 
