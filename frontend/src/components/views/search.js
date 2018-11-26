@@ -31,7 +31,7 @@ class Range extends React.Component {
         <input id="range" type="range"
           value={range}
           min="0"
-          max="50"
+          max="150"
           step="0.01"
           onChange={this.updateRange}
         />
@@ -71,7 +71,7 @@ class Search extends React.Component {
     }
     
     newproduct() {
-        //TO DO 
+        browserHistory.push('/addproduct');
     }
     
     newshop() {
@@ -124,12 +124,25 @@ class Search extends React.Component {
                 <form id="searching" onSubmit={() => this.handleSubmit()}>
                     <label> Κρασί </label>
                     <input type="checkbox" name="product" value="wine" onChange={() => this.toggleCheckbox("Κρασί")}></input>
-                    <label> Μακαρόνια </label>
-                    <input type="checkbox" name="product" value="pasta" onChange={() => this.toggleCheckbox("Μακαρόνια")}></input>
-                    <label> Χυμός </label>
-                    <input type="checkbox" name="product" value="juice" onChange={() => this.toggleCheckbox("Χυμός")}></input>
-                    <label> Φρούτα </label>
-                    <input type="checkbox" name="product" value="fruits" onChange={() => this.toggleCheckbox("Φρούτα")}></input>
+                    <label> Μπύρες </label>
+                    <input type="checkbox" name="product" value="beer" onChange={() => this.toggleCheckbox("Μπύρες")}></input>
+                    <label> Βότκα </label>
+                    <input type="checkbox" name="product" value="vodka" onChange={() => this.toggleCheckbox("Βότκα")}></input>
+                    <label> Ουίσκι </label>
+                    <input type="checkbox" name="product" value="whiskey" onChange={() => this.toggleCheckbox("Ουίσκι")}></input>
+                    <label> Ρούμι </label>
+                    <input type="checkbox" name="product" value="Rum" onChange={() => this.toggleCheckbox("Ρούμι")}></input>
+                    <br/><br/>
+                    <label> Gin </label>
+                    <input type="checkbox" name="product" value="Gin" onChange={() => this.toggleCheckbox("Gin")}></input>
+                    <label> Τεκίλα </label>
+                    <input type="checkbox" name="product" value="Tequila" onChange={() => this.toggleCheckbox("Τεκίλα")}></input>
+                    <label> Αναψυκτικά </label>
+                    <input type="checkbox" name="product" value="beverages" onChange={() => this.toggleCheckbox("Αναψυκτικά")}></input>
+                    <label> Snacks </label>
+                    <input type="checkbox" name="product" value="snancks" onChange={() => this.toggleCheckbox("Snacks")}></input>
+                    <label> Χωρίς Αλκοόλ </label>
+                    <input type="checkbox" name="product" value="nonalchool" onChange={() => this.toggleCheckbox("Χωρίς Αλκοόλ")}></input>
                     <br/>
                     <input id="search" type="text" placeholder="Search.." name="search"></input>
                     <button id="search_btn" type="submit"><FontAwesomeIcon icon={faSearch}></FontAwesomeIcon></button>
