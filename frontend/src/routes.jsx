@@ -8,6 +8,7 @@ import Register from './components/views/register';
 import Search from './components/views/search';
 import Shop from './components/views/addshop';
 import Product from './components/views/addproduct';
+import Maps from './components/views/map';
 
 export default (
   <Route path='/' component={App}>
@@ -18,6 +19,7 @@ export default (
     <Route path='search' component={Search} />
     <Route path='addshop' component={Shop} />
     <Route path='addproduct' component={Product} />
+    <Route path='map' component={Maps}/>
     <Route path='*' component={Home} />
   </Route>
 );

@@ -116,6 +116,10 @@ export default class Home extends Component {
         browserHistory.push('/register');
     }
     
+    Map() {
+        browserHistory.push('/map');
+    }
+    
     render() {
       return (
         <div> 
@@ -158,6 +162,7 @@ export default class Home extends Component {
             <br/>
             <button type="submit" id="button1" onClick={() => this.Login()}>Login</button>
             <button type="submit" id="button1" onClick={() => this.Register()}>Register</button>
+            <button type="submit" id="button1" onClick={() => this.Map()}>Map</button>
         </div>
 
           );
