@@ -55,41 +55,42 @@ class Product extends React.Component {
     
     render() {
         return(
-            <form id="addproduct" onSubmit={() => this.handleSubmit()}>
-                <div></div>
-                <button id="homepage" type="submit" onClick={() => this.homepage()}><FontAwesomeIcon icon={faHome}></FontAwesomeIcon>Home Page</button>
-                <br/>
-                <div class="form-group">
-                    <label id="label-form" for="name">Barcode:</label>
-                    <input id="barcode" name="barcode" class="form-control" pattern="[0-9]{1,128}" type="text" required/>
-                </div>
-                <div>
-                    <label> Τωρινή τοποθεσία </label>
-                    <input type="checkbox" name="location" id="location" onChange={() => this.getMyLocation()}></input>
-                </div>
-                <div> Ή </div>
-                <div class="form-group">
-                    <label id="label-form" for="address">Διεύθυνση:</label>
-                    <input id="address" name="address" class="form-control" pattern="[A-Za-z]+" type="text" disabled={this.flag} required/>
-                </div>
+            <div>
+                <button className="homepage" type="submit" onClick={() => this.homepage()}><FontAwesomeIcon icon={faHome}></FontAwesomeIcon>Home Page</button>
                 
-                <div class="form-group">
-                    <label id="label-form" for="number">Αριθμός:</label>
-                    <input type="text" id="number" disabled={this.flag} required/>
-                </div>
-                
-                <div class="form-group">
-                    <label id="label-form" for="postal">ΤΚ:</label>
-                    <input id="postal" name="postal" class="form-control" pattern="[0-9]+" type="text" disabled={this.flag} required/>
-                </div>
-                
-                <div class="form-group">
-                    <label id="label-form" for="price">Τιμή:</label>
-                    <input type="text" id="price" pattern="[0-9,]+" name="price" required/>
-                </div>
-                
-                <button type="submit" id="button1">Προσθήκη</button>
-            </form>
+                <form className="addform" id="addproduct" onSubmit={() => this.handleSubmit()}>
+                        <div>
+                            <label id="label-form" htmlFor="name">Barcode:</label>
+                            <input id="barcode" name="barcode" pattern="[0-9]{1,128}" type="text" required/>
+                        </div>
+                        <div>
+                            <label> Τωρινή τοποθεσία </label>
+                            <input type="checkbox" name="location" id="location" onChange={() => this.getMyLocation()}></input>
+                        </div>
+                        <div> Ή </div>
+                        <div>
+                            <label id="label-form" htmlFor="address">Διεύθυνση:</label>
+                            <input id="address" name="address" pattern="[A-Za-z]+" type="text" disabled={this.flag} required/>
+                        </div>
+
+                        <div>
+                            <label id="label-form" htmlFor="number">Αριθμός:</label>
+                            <input type="text" id="number" disabled={this.flag} required/>
+                        </div>
+
+                        <div>
+                            <label id="label-form" htmlFor="postal">ΤΚ:</label>
+                            <input id="postal" name="postal" pattern="[0-9]+" type="text" disabled={this.flag} required/>
+                        </div>
+
+                        <div>
+                            <label id="label-form" htmlFor="price">Τιμή:</label>
+                            <input type="text" id="price" pattern="[0-9,]+" name="price" required/>
+                        </div>
+
+                        <button className="btn" type="submit" id="button1">Προσθήκη</button>
+                </form>
+            </div>
         );
   }
 }

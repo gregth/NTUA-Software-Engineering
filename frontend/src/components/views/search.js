@@ -7,53 +7,27 @@
 import React, { Component } from "react";
 import ReactDOM from 'react-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faHome, faTimes, faShoppingBasket, faBuilding } from '@fortawesome/free-solid-svg-icons';
-import { GeolocatedProps, geolocated } from 'react-geolocated';
+import { faSearch, faHome, faTimes, faShoppingBasket, faBuilding, faUser, faBars} from '@fortawesome/free-solid-svg-icons';
 import { browserHistory } from 'react-router';
 import Slider from 'react-rangeslider';
-import Geocode from 'react-geocode';
-
-class Range extends React.Component {
-  constructor(props) {
-    super(props);
-    this.updateRange = this.updateRange.bind(this);
-  }
-  
-  updateRange(e) {
-    this.props.updateRange(e.target.value);
-  }
-  
-  render() {
-    // console.log(this.props);
-    const { range } = this.props;
-    return (
-      <div>
-        <input id="range" type="range"
-          value={range}
-          min="0"
-          max="150"
-          step="0.01"
-          onChange={this.updateRange}
-        />
-        <span id="price">{range}€</span>
-      </div>
-    );
-  }
-}
+import MapClass from './map';
+import Range from './range';
+import { Map, GoogleApiWrapper } from 'google-maps-react';
 
 class Search extends React.Component {
  
      constructor(props) {
         super(props);
-        this.state = {search: [], latitude: '', longitude: '', price: 50};
+        this.state = {search: [], price: 50, show_map: false};
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.defaultProps = {center: {lat: 59.95, lng: 30.33}, zoom: 11};
-        this.getMyLocation = this.getMyLocation.bind(this);
+        this.show_map = this.show_map.bind(this);
         this.toggleCheckbox = this.toggleCheckbox.bind(this);
-        this.logoff = this.logoff.bind(this);
+        this.logoff = this.logoff.bind(this);        
+        this.delete = this.delete.bind(this);
         this.updateRange = this.updateRange.bind(this);
         this.newproduct = this.newproduct.bind(this);
         this.newshop = this.newshop.bind(this);
+        this.favourite_products = this.favourite_products.bind(this);
     }
     
     updateRange(val) {
@@ -78,6 +52,15 @@ class Search extends React.Component {
         browserHistory.push('/addshop');
     }
     
+    delete() {
+        //TODO 
+        browserHistory.push('/');
+    }
+    
+    favourite_products () {
+        browserHistory.push('/products');
+    }
+    
     toggleCheckbox(label){
         if (this.selectedCheckboxes.has(label)) {
             this.selectedCheckboxes.delete(label);
@@ -87,19 +70,9 @@ class Search extends React.Component {
         }
     }
   
-    getMyLocation() {
-        const location = window.navigator && window.navigator.geolocation;
-
-        if (location) {
-            location.getCurrentPosition((position) => {
-                this.setState({
-                    latitude: position.coords.latitude,
-                    longitude: position.coords.longitude
-                });
-            }, (error) => {
-                this.setState({ latitude: 'err-latitude', longitude: 'err-longitude' });
-            });
-        }
+    show_map() {
+        var temp = this.state.show_map;
+        this.setState(() => ({ show_map: !temp}));
     }
         
     handleSubmit () {
@@ -115,44 +88,58 @@ class Search extends React.Component {
     render() {
         return (
             <div>
-                <button id="logoff" type="submit" onClick={() => this.logoff()}><FontAwesomeIcon icon={faTimes}></FontAwesomeIcon> Logoff </button>
-                <button id="new" type="submit" onClick={() => this.newproduct()}><FontAwesomeIcon icon={faShoppingBasket}></FontAwesomeIcon> Προσθήκη Νέου Προϊόντος </button>
-                <button id="new" type="submit" onClick={() => this.newshop()}><FontAwesomeIcon icon={faBuilding}></FontAwesomeIcon> Προσθήκη Νέου Καταστήματος </button>
+                <div className="dropdown">
+                    <button className="dropbtn"><FontAwesomeIcon icon={faBars}></FontAwesomeIcon> Username</button>
+                    <div className="dropdown-content">
+                        <div href="#">Wishlist</div>
+                        <div onClick={() => this.favourite_products()}>Αγαπημένα Προϊόντα</div>
+                        <div href="#">Αγαπημένα Καταστήματα</div>
+                        <div onClick={() => this.delete()}>Απενεργοποίηση Λογαριασμού</div>
+                        <div onClick={() => this.logoff()}>Αποσύνδεση</div>
+                    </div>
+                </div>
+                <button className="new" id="new_product" type="submit" onClick={() => this.newproduct()}><FontAwesomeIcon icon={faShoppingBasket}></FontAwesomeIcon> Προσθήκη Νέου Προϊόντος </button>
+                <button className="new" id="new_shop" type="submit" onClick={() => this.newshop()}><FontAwesomeIcon icon={faBuilding}></FontAwesomeIcon> Προσθήκη Νέου Καταστήματος </button>
                 <br/>
-                <h1> Αναζήτηση Προϊόντων </h1>
-                
-                <form id="searching" onSubmit={() => this.handleSubmit()}>
-                    <label> Κρασί </label>
-                    <input type="checkbox" name="product" value="wine" onChange={() => this.toggleCheckbox("Κρασί")}></input>
-                    <label> Μπύρες </label>
-                    <input type="checkbox" name="product" value="beer" onChange={() => this.toggleCheckbox("Μπύρες")}></input>
-                    <label> Βότκα </label>
-                    <input type="checkbox" name="product" value="vodka" onChange={() => this.toggleCheckbox("Βότκα")}></input>
-                    <label> Ουίσκι </label>
-                    <input type="checkbox" name="product" value="whiskey" onChange={() => this.toggleCheckbox("Ουίσκι")}></input>
-                    <label> Ρούμι </label>
-                    <input type="checkbox" name="product" value="Rum" onChange={() => this.toggleCheckbox("Ρούμι")}></input>
-                    <br/><br/>
-                    <label> Gin </label>
-                    <input type="checkbox" name="product" value="Gin" onChange={() => this.toggleCheckbox("Gin")}></input>
-                    <label> Τεκίλα </label>
-                    <input type="checkbox" name="product" value="Tequila" onChange={() => this.toggleCheckbox("Τεκίλα")}></input>
-                    <label> Αναψυκτικά </label>
-                    <input type="checkbox" name="product" value="beverages" onChange={() => this.toggleCheckbox("Αναψυκτικά")}></input>
-                    <label> Snacks </label>
-                    <input type="checkbox" name="product" value="snancks" onChange={() => this.toggleCheckbox("Snacks")}></input>
-                    <label> Χωρίς Αλκοόλ </label>
-                    <input type="checkbox" name="product" value="nonalchool" onChange={() => this.toggleCheckbox("Χωρίς Αλκοόλ")}></input>
-                    <br/>
-                    <input id="search" type="text" placeholder="Search.." name="search"></input>
-                    <button id="search_btn" type="submit"><FontAwesomeIcon icon={faSearch}></FontAwesomeIcon></button>
-                    <br/><br/>
-                    <label> Μέγιστη τιμή </label>
-                    <Range range={this.state.price} updateRange={this.updateRange}/>
-                    <br/>
-                    <label> Only nearby shops</label>
-                    <input type="checkbox" name="location" onChange={() => this.getMyLocation()}></input>
-                </form>
+                <div className="search">
+                    <h1> Αναζήτηση Προϊόντων </h1>
+                    <form id="searching" onSubmit={() => this.handleSubmit()}>
+                        <label> Κρασί </label>
+                        <input type="checkbox" name="product" value="wine" onChange={() => this.toggleCheckbox("Κρασί")}></input>
+                        <label> Μπύρες </label>
+                        <input type="checkbox" name="product" value="beer" onChange={() => this.toggleCheckbox("Μπύρες")}></input>
+                        <label> Βότκα </label>
+                        <input type="checkbox" name="product" value="vodka" onChange={() => this.toggleCheckbox("Βότκα")}></input>
+                        <label> Ουίσκι </label>
+                        <input type="checkbox" name="product" value="whiskey" onChange={() => this.toggleCheckbox("Ουίσκι")}></input>
+                        <label> Ρούμι </label>
+                        <input type="checkbox" name="product" value="Rum" onChange={() => this.toggleCheckbox("Ρούμι")}></input>
+                        <br/><br/>
+                        <label> Gin </label>
+                        <input type="checkbox" name="product" value="Gin" onChange={() => this.toggleCheckbox("Gin")}></input>
+                        <label> Τεκίλα </label>
+                        <input type="checkbox" name="product" value="Tequila" onChange={() => this.toggleCheckbox("Τεκίλα")}></input>
+                        <label> Αναψυκτικά </label>
+                        <input type="checkbox" name="product" value="beverages" onChange={() => this.toggleCheckbox("Αναψυκτικά")}></input>
+                        <label> Snacks </label>
+                        <input type="checkbox" name="product" value="snancks" onChange={() => this.toggleCheckbox("Snacks")}></input>
+                        <label> Χωρίς Αλκοόλ </label>
+                        <input type="checkbox" name="product" value="nonalchool" onChange={() => this.toggleCheckbox("Χωρίς Αλκοόλ")}></input>
+                        <br/>
+                        <input id="search" type="text" placeholder="Search.." name="search"></input>
+                        <button className="search_btn" id="search_btn" type="submit"><FontAwesomeIcon icon={faSearch}></FontAwesomeIcon></button>
+                        <br/><br/>
+                        <label> Μέγιστη τιμή </label>
+                        <Range range={this.state.price} updateRange={this.updateRange}/>
+                        <br/>
+                        <label> Only nearby shops</label>
+                        <input type="checkbox" name="location" onChange={() => this.show_map()}></input>
+                        {this.state.show_map
+                        ?<MapClass/>
+                        : <div/>
+                        }
+                    </form>
+                </div>
             </div>
         );
     }

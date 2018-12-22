@@ -56,41 +56,41 @@ class Shop extends React.Component {
         return(
             <form id="register" onSubmit={() => this.handleSubmit()}>
                 <div></div>
-                <button id="homepage" type="submit" onClick={() => this.homepage()}><FontAwesomeIcon icon={faHome}></FontAwesomeIcon>Home Page</button>
+                <button className="homepage" type="submit" onClick={() => this.homepage()}><FontAwesomeIcon icon={faHome}></FontAwesomeIcon>Home Page</button>
                 <br/>
-                <div class="form-group">
-                    <label id="label-form" for="name">Όνομα Καταστήματος:</label>
-                    <input id="name" name="name" class="form-control" type="text" required/>
+                <div className="form-group">
+                    <label id="label-form" htmlFor="name">Όνομα Καταστήματος:</label>
+                    <input id="name" name="name" className="form-control" type="text" required/>
                 </div>
                 <div>
                     <label> Τωρινή τοποθεσία </label>
                     <input type="checkbox" name="location" id="location" onChange={() => this.getMyLocation()}></input>
                 </div>
                 <div> Ή </div>
-                <div class="form-group">
-                    <label id="label-form" for="address">Διεύθυνση:</label>
-                    <input id="address" name="address" class="form-control" pattern="[A-Za-z]+" type="text" disabled={this.flag} required/>
+                <div className="form-group">
+                    <label id="label-form" htmlFor="address">Διεύθυνση:</label>
+                    <input id="address" name="address" className="form-control" pattern="[A-Za-z]+" type="text" disabled={this.flag} required/>
                 </div>
                 
-                <div class="form-group">
-                    <label id="label-form" for="number">Αριθμός:</label>
+                <div className="form-group">
+                    <label id="label-form" htmlFor="number">Αριθμός:</label>
                     <input type="text" id="number" disabled={this.flag} required/>
                 </div>
                 
-                <div class="form-group">
-                <label id="label-form" for="postal">ΤΚ:</label>
-                    <input id="postal" name="postal" class="form-control" pattern="[0-9]+" type="text" disabled={this.flag} required/>
+                <div className="form-group">
+                <label id="label-form" htmlFor="postal">ΤΚ:</label>
+                    <input id="postal" name="postal" className="form-control" pattern="[0-9]+" type="text" disabled={this.flag} required/>
                 </div>
                 
-                <div class="form-group">
-                    <label id="label-form" for="hours">Ωράριο:</label>
+                <div className="form-group">
+                    <label id="label-form" htmlFor="hours">Ωράριο:</label>
                     <span> Από </span>
-                    <input type="time" name="opening" class="form-control" id="opening"></input>
+                    <input type="time" name="opening" className="form-control" id="opening"></input>
                     <span> Έως </span>
-                    <input type="time" name="closing" class="form-control" id="closing"></input>
+                    <input type="time" name="closing" className="form-control" id="closing"></input>
                 </div>
                 
-                <div class="form-group">
+                <div className="form-group">
                     <label> Καθημερινές </label>
                     <input type="checkbox" name="days" value="workdays" onChange={() => this.toggleCheckbox("Καθημερινές")}></input>
                     <label> Σάββατο </label>
@@ -99,12 +99,12 @@ class Shop extends React.Component {
                     <input type="checkbox" name="days" value="sunday" onChange={() => this.toggleCheckbox("Κυριακή")}></input>
                 </div>
                 
-                <div class="form-group">
-                    <label id="label-form" for="phone">Τηλέφωνο Καταστήματος:</label>
+                <div className="form-group">
+                    <label id="label-form" htmlFor="phone">Τηλέφωνο Καταστήματος:</label>
                     <input type="tel" id="phone" pattern="210\d{10}" name="phone"/>
                 </div>
                 
-                <button type="submit" id="button1">Προσθήκη</button>
+                <button className="btn" type="submit" id="button1">Προσθήκη</button>
             </form>
         );
   }

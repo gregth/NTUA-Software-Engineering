@@ -79,29 +79,29 @@ class Register extends React.Component {
                 <div></div>
                 <button id="homepage" type="submit" onClick={() => this.homepage()}><FontAwesomeIcon icon={faHome}></FontAwesomeIcon></button>
                 <br/>
-                <div class="form-group">
-                    <label id="label-form" for="first_name">First Name:</label>
-                    <input id="first_name" name="first_name" class="form-control" pattern="[A-Za-z]+" type="text" required/>
+                <div className="form-group">
+                    <label id="label-form" htmlFor="first_name">Όνομα:</label>
+                    <input id="first_name" name="first_name" className="form-control" pattern="[A-Za-z]+" type="text" required/>
                 </div>
                 
-                <div class="form-group">
-                    <label id="label-form" for="last_name">Last Name:</label>
-                    <input id="last_name" name="last_name" class="form-control" pattern="[A-Za-z]+" type="text" required/>
+                <div className="form-group">
+                    <label id="label-form" htmlFor="last_name">Επίθετο:</label>
+                    <input id="last_name" name="last_name" className="form-control" pattern="[A-Za-z]+" type="text" required/>
                 </div>
                 <visibility/>
-                <div class="form-group">
-                    <label id="label-form" for="email">Email:</label>
+                <div className="form-group">
+                    <label id="label-form" htmlFor="email">Email:</label>
                     <input type="email" id="email" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required/>
                 </div>
                 
-                <div class="form-group">
-                    <label id="label-form" for="username">Username:</label>
-                    <input id="username" name="username" class="form-control" title="only letters, numbers and underscore" pattern="[A-Za-z0-9_]+" type="text" required/>
+                <div className="form-group">
+                    <label id="label-form" htmlFor="username">Username:</label>
+                    <input id="username" name="username" className="form-control" title="only letters, numbers and underscore" pattern="[A-Za-z0-9_]+" type="text" required/>
                 </div>
                 
-                <div class="form-group">
-                    <label id="label-form" for="pwd">Password:</label>
-                    <input title="no special characters" type="password" name="password" class="form-control" pattern="[A-Za-z0-9]{8,16}" id="pwd" onKeyUp={() => this.checkPasswordMatch()} required></input>
+                <div className="form-group">
+                    <label id="label-form" htmlFor="pwd">Κωδικός:</label>
+                    <input title="no special characters" type="password" name="password" className="form-control" pattern="[A-Za-z0-9]{8,16}" id="pwd" onKeyUp={() => this.checkPasswordMatch()} required></input>
                     <button type="eye" id="eye" onClick={() => this.showPassword()}>
                         { this.state.show
                         ? <FontAwesomeIcon icon={faEye} />
@@ -111,9 +111,9 @@ class Register extends React.Component {
                     
                 </div>
                 
-                <div class="form-group">
-                    <label id="label-form" for="pwd_repeat">Repeat Password:</label>
-                    <input id="re_pass" name="re_pass" class="form-control" type="password" onInput={() => this.checkPasswordMatch()} required/>
+                <div className="form-group">
+                    <label id="label-form" htmlFor="pwd_repeat">Επαλήθευση Κωδικού:</label>
+                    <input id="re_pass" name="re_pass" className="form-control" type="password" onInput={() => this.checkPasswordMatch()} required/>
                     { this.state.check_show
                     ? <span> 
                     { this.state.check
@@ -126,15 +126,15 @@ class Register extends React.Component {
                 </div>
                 
                 <div className="for-group">
-                    <label id="label-form" for="birth_date">Date of Birth:</label>
-                    <input type="date" id="birth_date" name="birth_date" class="form-control" max="2000-12-31" required/>
+                    <label id="label-form" htmlFor="birth_date">Ημερομηνία Γέννησης:</label>
+                    <input type="date" id="birth_date" name="birth_date" className="form-control" max="2000-12-31" required/>
                 </div>
-                <div class="form-group">
-                    <label id="label-form" for="phone">Enter your phone number:</label>
+                <div className="form-group">
+                    <label id="label-form" htmlFor="phone">Κινητό Τηλέφωνο:</label>
                     <input type="tel" id="phone" title="69XXXXXXXX" pattern="69\d{8}" name="phone" required/>
                 </div>
                 
-                <button type="submit" disabled={!this.state.ready} id="button1">Register</button>
+                <button className="btn" type="submit" disabled={!this.state.ready} id="button1">Εγγραφή</button>
             </form>
         );
   }

@@ -5,34 +5,7 @@ import { GeolocatedProps, geolocated } from 'react-geolocated';
 import { browserHistory } from 'react-router';
 import Slider from 'react-rangeslider';
 import Geocode from 'react-geocode';
-
-class Range extends React.Component {
-  constructor(props) {
-    super(props);
-    this.updateRange = this.updateRange.bind(this);
-  }
-  
-  updateRange(e) {
-    this.props.updateRange(e.target.value);
-  }
-  
-  render() {
-    // console.log(this.props);
-    const { range } = this.props;
-    return (
-      <div>
-        <input id="range" type="range"
-          value={range}
-          min="0"
-          max="150"
-          step="0.01"
-          onChange={this.updateRange}
-        />
-        <span id="price">{range}€</span>
-      </div>
-    );
-  }
-}
+import Range from './range';
 
 export default class Home extends Component {
     constructor(props) {
@@ -123,9 +96,8 @@ export default class Home extends Component {
     render() {
       return (
         <div> 
-             <div>
+            <div className="search">
                 <h1> Αναζήτηση Προϊόντων </h1>
-                
                 <form id="searching" onSubmit={() => this.handleSubmit()}>
                     <label> Κρασί </label>
                     <input type="checkbox" name="product" value="wine" onChange={() => this.toggleCheckbox("Κρασί")}></input>
@@ -150,7 +122,7 @@ export default class Home extends Component {
                     <input type="checkbox" name="product" value="nonalchool" onChange={() => this.toggleCheckbox("Χωρίς Αλκοόλ")}></input>
                     <br/>
                     <input id="search" type="text" placeholder="Search.." name="search"></input>
-                    <button id="search_btn" type="submit"><FontAwesomeIcon icon={faSearch}></FontAwesomeIcon></button>
+                    <button className="search_btn" id="search_btn" type="submit"><FontAwesomeIcon icon={faSearch}></FontAwesomeIcon></button>
                     <br/><br/>
                     <label> Μέγιστη τιμή </label>
                     <Range range={this.state.price} updateRange={this.updateRange}/>
@@ -158,11 +130,9 @@ export default class Home extends Component {
                     <label> Only nearby shops</label>
                     <input type="checkbox" name="location" onChange={() => this.getMyLocation()}></input>
                 </form>
+                <button className="btn" type="submit" id="button1" onClick={() => this.Login()}>Σύνδεση</button>
+                <button className="btn" type="submit" id="button2" onClick={() => this.Register()}>Εγγραφή</button>
             </div>
-            <br/>
-            <button type="submit" id="button1" onClick={() => this.Login()}>Login</button>
-            <button type="submit" id="button1" onClick={() => this.Register()}>Register</button>
-            <button type="submit" id="button1" onClick={() => this.Map()}>Map</button>
         </div>
 
           );
