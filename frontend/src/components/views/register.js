@@ -78,7 +78,7 @@ class Register extends React.Component {
         return(
             <form id="register" onSubmit={() => this.handleSubmit()}>
                 <div></div>
-                <button id="homepage" type="submit" onClick={() => this.homepage()}><FontAwesomeIcon icon={faHome}></FontAwesomeIcon></button>
+                <button className='icon' id="homepage" type="submit" onClick={() => this.homepage()}><FontAwesomeIcon icon={faHome}></FontAwesomeIcon></button>
                 <br/>
                 <div className="form-group">
                     <label id="label-form" htmlFor="first_name">Όνομα:</label>

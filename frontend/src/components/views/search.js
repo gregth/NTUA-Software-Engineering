@@ -7,19 +7,22 @@
 import React, { Component } from "react";
 import ReactDOM from 'react-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faHome, faTimes, faShoppingBasket, faBuilding, faUser, faBars} from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faHome, faTimes, faShoppingBasket, faBuilding, faUser, faBars, faHeart} from '@fortawesome/free-solid-svg-icons';
+import {falHeart} from '@fortawesome/free-regular-svg-icons';
 import { browserHistory } from 'react-router';
 import Slider from 'react-rangeslider';
 import MapClass from './map';
 import Range from './range';
 import { Map, GoogleApiWrapper } from 'google-maps-react';
 import cookie from 'react-cookies';
+import {Product} from './product';
+import {Shop} from './shop';
 
 class Search extends React.Component {
  
      constructor(props) {
         super(props);
-        this.state = {search: [], price: 50, show_map: false, username: cookie.load('username')};
+        this.state = {search: [], price: 50, show_map: false, username: cookie.load('username'), products: [], results: false};
         this.handleSubmit = this.handleSubmit.bind(this);
         this.show_map = this.show_map.bind(this);
         this.toggleCheckbox = this.toggleCheckbox.bind(this);
@@ -29,6 +32,8 @@ class Search extends React.Component {
         this.newproduct = this.newproduct.bind(this);
         this.newshop = this.newshop.bind(this);
         this.favourite_products = this.favourite_products.bind(this);
+        this.favourite = this.favourite.bind(this);
+        this.selectedCheckboxes = new Set();
     }
     
     updateRange(val) {
@@ -36,11 +41,7 @@ class Search extends React.Component {
             price: val
         });
     } 
-    
-    componentWillMount() {
-        this.selectedCheckboxes = new Set();
-    }
-    
+        
     logoff() {
         cookie.remove('username', { path: '/' });
         browserHistory.push('/');
@@ -77,8 +78,14 @@ class Search extends React.Component {
         var temp = this.state.show_map;
         this.setState(() => ({ show_map: !temp}));
     }
-        
-    handleSubmit () {
+    
+    favourite (id, flag) {
+        // TODO
+    }
+    
+    handleSubmit (event) {
+        event.preventDefault();
+        event.nativeEvent.stopImmediatePropagation();
         const s = document.getElementById('search').value;
        
         if (s !== '') {
@@ -86,6 +93,10 @@ class Search extends React.Component {
         }
         
         this.setState(() => ({search: this.selectedCheckboxes}));
+        var shop = new Shop({name: 'cava1', id: 1, address: 'Athens 1', lat: 37.9738, lgn:23.7275});
+        var product = new Product({name: 'pr1', barcode: 12345, price: 12, shop:shop, favourite: true});
+        this.state.products.push(product);
+        this.setState({results: true});
     }
     
     render() {
@@ -106,7 +117,7 @@ class Search extends React.Component {
                 <br/>
                 <div className="search">
                     <h1> Αναζήτηση Προϊόντων </h1>
-                    <form id="searching" onSubmit={() => this.handleSubmit()}>
+                    <form id="searching">
                         <label> Κρασί </label>
                         <input type="checkbox" name="product" value="wine" onChange={() => this.toggleCheckbox("Κρασί")}></input>
                         <label> Μπύρες </label>
@@ -130,7 +141,7 @@ class Search extends React.Component {
                         <input type="checkbox" name="product" value="nonalchool" onChange={() => this.toggleCheckbox("Χωρίς Αλκοόλ")}></input>
                         <br/>
                         <input id="search" type="text" placeholder="Search.." name="search"></input>
-                        <button className="search_btn" id="search_btn" type="submit"><FontAwesomeIcon icon={faSearch}></FontAwesomeIcon></button>
+                        <button className="search_btn" id="search_btn" type="submit" onClick={this.handleSubmit}><FontAwesomeIcon icon={faSearch}></FontAwesomeIcon></button>
                         <br/><br/>
                         <label> Μέγιστη τιμή </label>
                         <Range range={this.state.price} updateRange={this.updateRange}/>
@@ -138,8 +149,20 @@ class Search extends React.Component {
                         <label> Only nearby shops</label>
                         <input type="checkbox" name="location" onChange={() => this.show_map()}></input>
                         {this.state.show_map
-                        ?<MapClass/>
-                        : <div/>
+                            ?<MapClass/>
+                            : <div/>
+                        }
+                        {this.state.results
+                            ? <div> {this.state.products.map(product => (
+                                    
+                                    <div> {product.name} {product.price}€ 
+                                    {!product.favourite 
+                                    ? <button className='icon'><FontAwesomeIcon icon={faHeart}></FontAwesomeIcon></button>
+                                    : <button className='icon'><FontAwesomeIcon icon={falHeart}></FontAwesomeIcon></button> 
+                                    }
+                                    </div>
+                                ))}</div>
+                            : <div></div>
                         }
                     </form>
                 </div>
