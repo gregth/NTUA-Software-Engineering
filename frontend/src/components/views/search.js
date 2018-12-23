@@ -13,12 +13,13 @@ import Slider from 'react-rangeslider';
 import MapClass from './map';
 import Range from './range';
 import { Map, GoogleApiWrapper } from 'google-maps-react';
+import cookie from 'react-cookies';
 
 class Search extends React.Component {
  
      constructor(props) {
         super(props);
-        this.state = {search: [], price: 50, show_map: false};
+        this.state = {search: [], price: 50, show_map: false, username: cookie.load('username')};
         this.handleSubmit = this.handleSubmit.bind(this);
         this.show_map = this.show_map.bind(this);
         this.toggleCheckbox = this.toggleCheckbox.bind(this);
@@ -41,6 +42,7 @@ class Search extends React.Component {
     }
     
     logoff() {
+        cookie.remove('username', { path: '/' });
         browserHistory.push('/');
     }
     
@@ -54,6 +56,7 @@ class Search extends React.Component {
     
     delete() {
         //TODO 
+        cookie.remove('username', { path: '/' });
         browserHistory.push('/');
     }
     
@@ -89,7 +92,7 @@ class Search extends React.Component {
         return (
             <div>
                 <div className="dropdown">
-                    <button className="dropbtn"><FontAwesomeIcon icon={faBars}></FontAwesomeIcon> Username</button>
+                    <button className="dropbtn"><FontAwesomeIcon icon={faBars}></FontAwesomeIcon> {this.state.username}</button>
                     <div className="dropdown-content">
                         <div href="#">Wishlist</div>
                         <div onClick={() => this.favourite_products()}>Αγαπημένα Προϊόντα</div>

@@ -9,10 +9,13 @@ and open the template in the editor.
 */
 $primary: lightblue;
 
- .map {
-        height: 100%;
-        width: 100%;
-    }
+.marker {
+    color: white;
+}
+.map {
+    height: 100%;
+    width: 100%;
+}
       
 .search_btn {
     background-color: Transparent;

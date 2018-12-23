@@ -8,6 +8,7 @@ import ReactDOM from 'react-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash, faCheck, faTimes, faHome } from '@fortawesome/free-solid-svg-icons';
 import { browserHistory } from 'react-router';
+import cookie from 'react-cookies';
 
 class Register extends React.Component {
     
@@ -32,7 +33,7 @@ class Register extends React.Component {
        const email = document.getElementById('email').value;
        const bdate = document.getElementById('birth_date').value;
        const number = document.getElementById('phone').value;
-       
+       cookie.save('username', us, {path: '/'});
        this.setState(() => ({ first_name: fname, last_name: lname, username: us, password: pass, email: email, phone: number, birth_date: bdate}));        
     }
     

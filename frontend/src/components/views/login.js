@@ -9,6 +9,7 @@ import ReactDOM from 'react-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash, faUser, faKey, faHome } from '@fortawesome/free-solid-svg-icons';
 import { browserHistory } from 'react-router';
+import cookie from 'react-cookies';
 
 class Login extends React.Component {
     
@@ -39,6 +40,8 @@ class Login extends React.Component {
        else {
            document.getElementById("message").innerHTML = "";
        }
+       
+       cookie.save('username', us, {path: '/'});
        browserHistory.push('/search');
     }
     

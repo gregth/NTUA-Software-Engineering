@@ -10,13 +10,19 @@ const mapStyles = {
 export class MapClass extends Component {
     constructor(props) {
         super(props);
-        this.state = {current: [{latitude: 11 , longitude: 11}], show_current: false,
-            markers : [{latitude: 37.9763, longitude:23.79763, id:1}, {latitude: 37.9738, longitude:23.7275, id:2}]};
+        this.state = {current: [], show_current: false,
+            markers : []};
         this.getLocation = this.getLocation.bind(this);
-        this.lat = null;
+        this.info = this.info.bind(this);
     }
     
-    getLocation()  {
+    componentDidMount() {
+        //TODO request results
+        this.setState({markers : [{latitude: 37.9763, longitude:23.79763, id:0, price: 17, name: 'CAVA_0'}, 
+                    {latitude: 37.9738, longitude:23.7275, id:1, price: 21, name: 'CAVA_1'}]});
+    }
+    
+    getLocation ()  {
         const location = window.navigator && window.navigator.geolocation;
 
         if (location) {
@@ -32,6 +38,10 @@ export class MapClass extends Component {
         }
     }
   
+    info (i) {
+        alert(this.state.markers[i].name);
+    }
+    
     render() {
         return (
             <div>
@@ -39,7 +49,7 @@ export class MapClass extends Component {
                 <input type="checkbox" name="location" onChange={() => this.getLocation()}></input>
                 <Map 
                     google={this.props.google}
-                    zoom={10}
+                    zoom={11}
                     coordinates={true}
                     className='map'
                     initialCenter={{
@@ -48,8 +58,13 @@ export class MapClass extends Component {
                     }}>
                     {this.state.markers.map(marker => (
                     <Marker
+                        className='marker'
                         position={{ lat: marker.latitude, lng: marker.longitude }}
                         key={marker.id}
+                        label={marker.price.toString() + '€'}
+                        onClick={() => this.info(marker.id)}
+                        labelStyle={{color: '#fff'}}
+                                    icon ={'https://img.icons8.com/color/48/000000/speech-bubble.png'}
                     />
                     ))}
                     {this.state.current.map(marker => (
@@ -57,7 +72,9 @@ export class MapClass extends Component {
                         ? <Marker
                             position={{ lat: marker.latitude, lng: marker.longitude }}
                             key={0} icon={'https://www.robotwoods.com/dev/misc/bluecircle.png'}
-                        />
+                        >
+                        <InfoWindow content='test'/>
+                        </Marker>
                         : <div/>
                         ))}
                     

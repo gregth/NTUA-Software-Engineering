@@ -96,6 +96,8 @@ export default class Home extends Component {
     render() {
       return (
         <div> 
+            <button className="btn" type="submit" id="button1" onClick={() => this.Login()}>Σύνδεση</button>
+            <button className="btn" type="submit" id="button2" onClick={() => this.Register()}>Εγγραφή</button>
             <div className="search">
                 <h1> Αναζήτηση Προϊόντων </h1>
                 <form id="searching" onSubmit={() => this.handleSubmit()}>
@@ -130,8 +132,6 @@ export default class Home extends Component {
                     <label> Only nearby shops</label>
                     <input type="checkbox" name="location" onChange={() => this.getMyLocation()}></input>
                 </form>
-                <button className="btn" type="submit" id="button1" onClick={() => this.Login()}>Σύνδεση</button>
-                <button className="btn" type="submit" id="button2" onClick={() => this.Register()}>Εγγραφή</button>
             </div>
         </div>
 
