@@ -17,6 +17,7 @@ import { Map, GoogleApiWrapper } from 'google-maps-react';
 import cookie from 'react-cookies';
 import {Product} from './product';
 import {Shop} from './shop';
+import fetch from 'isomorphic-fetch';
 
 class Search extends React.Component {
  
@@ -33,7 +34,7 @@ class Search extends React.Component {
         this.newshop = this.newshop.bind(this);
         this.favourite_products = this.favourite_products.bind(this);
         this.favourite = this.favourite.bind(this);
-        this.selectedCheckboxes = new Set();
+        this.selectedCheckboxes = new Set();        
     }
     
     updateRange(val) {

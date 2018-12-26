@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Map, GoogleApiWrapper, Marker, InfoWindow } from 'google-maps-react';
 import Geocode from 'react-geocode';
+import fetch from 'isomorphic-fetch';
 
 const mapStyles = {
   width: '100%',
@@ -13,7 +14,6 @@ export class MapClass extends Component {
         this.state = {current: [], show_current: false,
             markers : []};
         this.getLocation = this.getLocation.bind(this);
-        this.info = this.info.bind(this);
     }
     
     componentDidMount() {
@@ -24,22 +24,29 @@ export class MapClass extends Component {
     
     getLocation ()  {
         const location = window.navigator && window.navigator.geolocation;
-
+        
         if (location) {
             location.getCurrentPosition((position) => {
                 this.setState({
                     current : [{latitude: position.coords.latitude, longitude: position.coords.longitude}]
                 });
             }, (error) => {
-                this.setState({ latitude: 'err-latitude', longitude: 'err-longitude' });
+                console.log('error current location');
             });
+            
             var temp = this.state.show_current;
             this.setState({ show_current: !temp});
+            
+            if (this.state.current.length > 0) {
+                fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + 
+                        '38.032836' + ',' + '23.744472' +
+                        '&key=' + 'AIzaSyAsLsF3d7bdPcNMcSwPfb8aUfcadkjOMH0')
+                .then((response) => response.json())
+                .then((responseJson) => {
+                    console.log(responseJson.results[0].formatted_address);
+                });
+            }
         }
-    }
-  
-    info (i) {
-        alert(this.state.markers[i].name);
     }
     
     render() {
@@ -73,7 +80,6 @@ export class MapClass extends Component {
                             position={{ lat: marker.latitude, lng: marker.longitude }}
                             key={0} icon={'https://www.robotwoods.com/dev/misc/bluecircle.png'}
                         >
-                        <InfoWindow content='test'/>
                         </Marker>
                         : <div/>
                         ))}

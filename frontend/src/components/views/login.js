@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash, faUser, faKey, faHome } from '@fortawesome/free-solid-svg-icons';
 import { browserHistory } from 'react-router';
 import cookie from 'react-cookies';
+import fetch from 'isomorphic-fetch';
 
 class Login extends React.Component {
     
@@ -42,7 +43,26 @@ class Login extends React.Component {
        }
        
        cookie.save('username', us, {path: '/'});
-       browserHistory.push('/search');
+       /*
+       fetch('https://localhost:5000/login', {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    token: 1234
+                },
+                body: JSON.stringify({
+                    username: us,
+                    password: pass
+                })
+                }).then((response) => response.json())
+            .then((responseJson) => {
+                console.log(responseJson);
+            })
+            .catch((error) => {
+                console.error(error);
+            });*/
+        browserHistory.push('/search');
     }
     
     showPassword() {
