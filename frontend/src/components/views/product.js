@@ -12,5 +12,6 @@ export class Product {
         this.price = details.price;
         this.shop = details.shop;
         this.favourite = details.favourite;
+        this.id = details.id;
     }
 };

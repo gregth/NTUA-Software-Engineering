@@ -25,7 +25,7 @@ class Search extends React.Component {
         super(props);
         this.state = {search: [], price: 50, show_map: false, username: cookie.load('username'), products: [], results: false};
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.show_map = this.show_map.bind(this);
+        this.only_nearby_shops = this.only_nearby_shops.bind(this);
         this.toggleCheckbox = this.toggleCheckbox.bind(this);
         this.logoff = this.logoff.bind(this);        
         this.delete = this.delete.bind(this);
@@ -37,26 +37,28 @@ class Search extends React.Component {
         this.selectedCheckboxes = new Set();        
     }
     
-    updateRange(val) {
+    updateRange (val, event) {
+        event.preventDefault();
+        event.nativeEvent.stopImmediatePropagation();
         this.setState({
             price: val
         });
     } 
         
-    logoff() {
+    logoff () {
         cookie.remove('username', { path: '/' });
         browserHistory.push('/');
     }
     
-    newproduct() {
+    newproduct () {
         browserHistory.push('/addproduct');
     }
     
-    newshop() {
+    newshop () {
         browserHistory.push('/addshop');
     }
     
-    delete() {
+    delete () {
         //TODO 
         cookie.remove('username', { path: '/' });
         browserHistory.push('/');
@@ -66,7 +68,9 @@ class Search extends React.Component {
         browserHistory.push('/products');
     }
     
-    toggleCheckbox(label){
+    toggleCheckbox (label, event){
+        event.preventDefault();
+        event.nativeEvent.stopImmediatePropagation();
         if (this.selectedCheckboxes.has(label)) {
             this.selectedCheckboxes.delete(label);
         } 
@@ -75,13 +79,17 @@ class Search extends React.Component {
         }
     }
   
-    show_map() {
-        var temp = this.state.show_map;
-        this.setState(() => ({ show_map: !temp}));
+    only_nearby_shops () {
+        //TODO send request
     }
     
-    favourite (id, flag) {
-        // TODO
+    favourite (id, event) {
+        event.preventDefault();
+        event.nativeEvent.stopImmediatePropagation();
+        var temp = this.state.products[0].favourite;
+        this.state.products[id].favourite = !temp;
+        var temp_products = this.state.products;
+        this.setState({products: temp_products});
     }
     
     handleSubmit (event) {
@@ -92,12 +100,12 @@ class Search extends React.Component {
         if (s !== '') {
             this.selectedCheckboxes.add(s);
         }
+        var temp = this.state.show_map;
         
-        this.setState(() => ({search: this.selectedCheckboxes}));
         var shop = new Shop({name: 'cava1', id: 1, address: 'Athens 1', lat: 37.9738, lgn:23.7275});
-        var product = new Product({name: 'pr1', barcode: 12345, price: 12, shop:shop, favourite: true});
+        var product = new Product({name: 'pr1', barcode: 12345, price: 12, shop:shop, favourite: true, id: 0});
         this.state.products.push(product);
-        this.setState({results: true});
+        this.setState({results: true, show_map: !temp, search: this.selectedCheckboxes});
     }
     
     render() {
@@ -148,24 +156,25 @@ class Search extends React.Component {
                         <Range range={this.state.price} updateRange={this.updateRange}/>
                         <br/>
                         <label> Only nearby shops</label>
-                        <input type="checkbox" name="location" onChange={() => this.show_map()}></input>
-                        {this.state.show_map
-                            ?<MapClass/>
-                            : <div/>
-                        }
+                        <input type="checkbox" name="location" onChange={() => this.only_nearby_shops()}></input>
+                        
                         {this.state.results
                             ? <div> {this.state.products.map(product => (
-                                    
                                     <div> {product.name} {product.price}€ 
-                                    {!product.favourite 
-                                    ? <button className='icon'><FontAwesomeIcon icon={faHeart}></FontAwesomeIcon></button>
-                                    : <button className='icon'><FontAwesomeIcon icon={falHeart}></FontAwesomeIcon></button> 
+                                    {product.favourite 
+                                    ? <button title='Αφαίρεση από τα αγαπημένα' onClick={(e) => this.favourite(product.id, e)} className='icon'><FontAwesomeIcon color="#FF0000" icon={faHeart}></FontAwesomeIcon></button>
+                                    : <button title='Προσθήκη στα αγαπημένα' onClick={(e) => this.favourite(product.id, e)} className='icon'><FontAwesomeIcon icon={faHeart}></FontAwesomeIcon></button> 
                                     }
                                     </div>
                                 ))}</div>
                             : <div></div>
                         }
+                        {this.state.show_map
+                            ?<MapClass/>
+                            : <div/>
+                        }   
                     </form>
+                    
                 </div>
             </div>
         );

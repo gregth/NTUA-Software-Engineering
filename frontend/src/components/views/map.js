@@ -23,6 +23,13 @@ export class MapClass extends Component {
     }
     
     getLocation ()  {
+        var checkBox = document.getElementById("location");
+        if (!checkBox.checked) {
+            var temp = this.state.show_current;
+            this.setState({ show_current: !temp});
+            return;
+        }
+        
         const location = window.navigator && window.navigator.geolocation;
         
         if (location) {
@@ -39,11 +46,13 @@ export class MapClass extends Component {
             
             if (this.state.current.length > 0) {
                 fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + 
-                        '38.032836' + ',' + '23.744472' +
+                        JSON.stringify(this.state.current[0].latitude) + ',' + JSON.stringify(this.state.current[0].longitude) +
                         '&key=' + 'AIzaSyAsLsF3d7bdPcNMcSwPfb8aUfcadkjOMH0')
                 .then((response) => response.json())
                 .then((responseJson) => {
-                    console.log(responseJson.results[0].formatted_address);
+                    if (responseJson.status === 'OK') {
+                        console.log(responseJson.results[0].formatted_address);
+                    }
                 });
             }
         }
@@ -53,9 +62,9 @@ export class MapClass extends Component {
         return (
             <div>
                 <label> Εμφάνιση Τωρινής Τοποθεσίας</label>
-                <input type="checkbox" name="location" onChange={() => this.getLocation()}></input>
+                <input type="checkbox" id="location" name="location" onChange={() => this.getLocation()}></input>
                 <Map 
-                    google={this.props.google}
+                    google={window.google}
                     zoom={11}
                     coordinates={true}
                     className='map'
