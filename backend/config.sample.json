@@ -2,8 +2,8 @@
     "db": {
         "host": "localhost",
         "user": "root",
-        "pass": "",
-        "name": "nerdtech"
+        "password": "",
+        "database": "nerdtech"
     },
     "port": "3000"
 }
