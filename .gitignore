@@ -1,6 +1,6 @@
 /frontend/nbproject/private/
 node_modules/
-api/config.json
+backend/config.json
 
 *.swp
 *.log
