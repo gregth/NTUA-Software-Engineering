@@ -1,2 +1,6 @@
 /frontend/nbproject/private/
 node_modules/
+api/config.json
+
+*.swp
+*.log
