@@ -1,4 +1,8 @@
 module.exports = class BaseController {
+    constructor(model) {
+        this.model = model
+    }
+
     list(req, res) {
         res.status(501).json({status: 400, message: 'Method Not Implemented'})
     }
