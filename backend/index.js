@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 const cors = require('cors')
-const PORT = 3000
+const config = require('./config.json')
 const { createSimpleRouter } = require('./utils')
 
 app.use(cors())
@@ -11,4 +11,4 @@ for (const resource of resources) {
     app.use(`/${resource}`, createSimpleRouter(resource))
 }
 
-app.listen(PORT, () => console.log(`Server listening on port ${PORT}`))
+app.listen(config.port, () => console.log(`Server listening on port ${config.port}`))
