@@ -2,8 +2,8 @@ const BaseController = require('./base')
 const model = require('../models/product')
 
 module.exports = class ProductsController extends BaseController {
-    constructor() {
-        super(new model())
+    constructor(connection) {
+        super(new model(connection))
     }
 
     async list(req, res) {
@@ -12,7 +12,6 @@ module.exports = class ProductsController extends BaseController {
             res.send(JSON.stringify(list))
         } catch (err) {
             console.log(err)
-
             res.sendStatus(500)
         }
     }

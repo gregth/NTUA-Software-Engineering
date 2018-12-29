@@ -1,15 +1,11 @@
-const mysql = require('mysql2')
-const config = require('../config.json')
-
-const connection = mysql.createConnection(config.db);
-
 module.exports = class BaseModel {
-    constructor(table) {
+    constructor(table, connection) {
         this.db = connection
         this.table = table
     }
 
-    query(...args) {
-        return this.db.query.apply(this.db, args)
+    async execute(query) {
+        return await this.db.execute(query)
     }
 }
+
