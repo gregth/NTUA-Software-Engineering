@@ -2,8 +2,8 @@ const BaseController = require('./base')
 const model = require('../models/product')
 
 module.exports = class ProductsController extends BaseController {
-    constructor(connection) {
-        super(new model(connection))
+    constructor(dbConnection) {
+        super(new model(dbConnection))
     }
 
     async list(req, res) {

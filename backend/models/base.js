@@ -1,6 +1,6 @@
 module.exports = class BaseModel {
-    constructor(table, connection) {
-        this.db = connection
+    constructor(table, dbConnection) {
+        this.db = dbConnection
         this.table = table
     }
 

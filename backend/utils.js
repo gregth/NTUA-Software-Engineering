@@ -12,9 +12,9 @@ const createControllerRoutes = controller => {
     return router
 }
 
-const createSimpleRouter = (key, connection) => {
+const createSimpleRouter = (key, dbConnection) => {
     const ControllerClass = require(`./controllers/${key}`)
-    const controller = new ControllerClass(connection)
+    const controller = new ControllerClass(dbConnection)
 
     return createControllerRoutes(controller)
 }
