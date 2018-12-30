@@ -20,7 +20,6 @@ module.exports = class Product extends BaseModel {
             },
             insert: {
                 required_fields: [
-                    'id',
                     'name',
                     'description',
                     'barcode'
@@ -31,7 +30,6 @@ module.exports = class Product extends BaseModel {
             },
             update: {
                 updatable_fields: [
-                    'id',   
                     'name',
                     'description',
                     'barcode',
