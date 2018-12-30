@@ -37,7 +37,7 @@ module.exports = class BaseModel {
         }
 
         console.log(query);
-        let result = await this.db.execute(query, substitutions);
+        let [result] = await this.db.execute(query, substitutions);
         return result
     }
 

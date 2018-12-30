@@ -43,8 +43,15 @@ module.exports = class ProductsController extends BaseController {
         }
     }
 
-    patch(req, res, id) {
-        res.send(`PATCH ID: ${req.params.id}`)
+    async patch(req, res, id) {
+        try {
+            let product_details = this.validate_patch_request(req, res, id)
+            console.log(product_details)
+            await this.model.update(product_details, {id})
+            res.status(200).json(product_details)
+        } catch (err) {
+            res.status(400).json({message: err.message})
+        }
     }
 
     delete(req, res, id) {

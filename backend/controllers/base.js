@@ -44,6 +44,18 @@ module.exports = class BaseController {
         return required_params
     }
 
+    validate_patch_request(req, res, id) {
+        let rules = this.model.rules.update
+        let required_params = filter_keys(req.body, rules.updatable_fields);
+        // For a put request to take place, all updateable fields must be passed
+        if (Object.keys(required_params).length == 0) {
+            console.log('[PATCH_VALIDATOR]: No updatable attributes provided in params')
+            throw new Error('No updatable attributes provided in params')
+        }
+
+        return required_params
+    }
+
     list(req, res) {
         res.status(501).json({status: 400, message: 'Method Not Implemented'})
     }
