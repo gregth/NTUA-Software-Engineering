@@ -23,7 +23,7 @@ module.exports = class ProductsController extends BaseController {
             await this.model.insert(product)
             res.status(200).json(product)
         } catch (err) {
-            rer.status(400).json(err)
+            res.status(400).json(err)
         }
     }
 
@@ -31,8 +31,16 @@ module.exports = class ProductsController extends BaseController {
         res.send(`READ ID: ${req.params.id}`)
     }
 
-    put(req, res, id) {
-        res.send(`PUT ID: ${req.params.id}`)
+    async put(req, res, id) {
+        try {
+            let product_details = this.validate_put_request(req, res, id)
+            console.log(product_details)
+            await this.model.update(product_details, {id})
+            res.status(200).json(product_details)
+        } catch (err) {
+            console.log(err)
+            res.status(400).json(err)
+        }
     }
 
     patch(req, res, id) {
