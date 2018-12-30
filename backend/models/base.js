@@ -40,5 +40,46 @@ module.exports = class BaseModel {
         let result = await this.db.execute(query, substitutions);
         return result
     }
+
+    async select(fields, conditions, orderBy, joins) {
+        let result;
+        let substitutions = [];
+        let query = `SELECT `;
+        if (fields && Object.keys(fields).length != 0) {
+            query += fields.join(", ");
+        }
+        else {
+            query += ` *`;
+        }
+        query += ` FROM ${this.table}`;
+        if (joins) {
+            joins.forEach(join => {
+                query += ` ${join.type} ${join.table} ON ${join.on} `;
+            });
+        }
+        if (conditions && Object.keys(conditions).length != 0){
+            let [conditionPlaceholders, conditionValues] = objectToQueryFields(conditions);
+            query += ` WHERE ` + conditionPlaceholders.join(" AND ");
+            substitutions.push(...conditionValues);
+        }
+
+        if (orderBy && orderBy.length != 0){
+            let order_properties = [];
+            orderBy.forEach( order_field => {
+                order_properties.push(`${order_field.field_name}  ${order_field.order}`);
+            });
+            query += ` ORDER BY ` + order_properties.join(", ");
+        }
+
+        console.log(query);
+        if (substitutions.length == 0) {
+            result = await this.db.execute(query);
+        }
+        else {
+            result = await this.db.execute(query, substitutions);
+        }
+
+        return result;
+    }
 }
 
