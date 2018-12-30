@@ -18,11 +18,7 @@ module.exports = class BaseController {
         let required_params = filter_keys(req.body, rules.required_fields);
         if (Object.keys(required_params).length != rules.required_fields.length) {
             console.log("[POST_VALIDATOR]: Not all required post params provided")
-
-            return {
-                succesfull: false,
-                error: 'Not all required post params provided'
-            }
+            throw new Error('Not all required post params provided')
         }
 
         let validated_params = required_params
@@ -31,10 +27,7 @@ module.exports = class BaseController {
            validated_params[k]  = optional_params[k]
         }
 
-        return {
-            succesfull: true,
-            validated_params: validated_params
-        }
+        return validated_params
     }
 
     list(req, res) {
