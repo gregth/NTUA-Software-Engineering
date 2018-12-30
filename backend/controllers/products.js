@@ -17,10 +17,16 @@ module.exports = class ProductsController extends BaseController {
     }
 
     create(req, res) {
-        console.log("Gonna create a new product...")
-        let product = req.body
-        this.model.insert(product)
-        res.sendStatus(204)
+        let validation = this.validate_post_request(req, res)
+        if (validation.succesfull) {
+            console.log("Gonna create a new product...")
+            let product = validation.validated_params
+            this.model.insert(product)
+            res.status(200).json(validation.validated_params)
+        } else {
+            res.status(400).json({error: validation.error})
+        }
+
     }
 
     read(req, res, id) {
