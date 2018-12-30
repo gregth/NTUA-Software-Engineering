@@ -10,7 +10,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faHome, faTimes, faShoppingBasket, faBuilding, faUser, faBars, faHeart} from '@fortawesome/free-solid-svg-icons';
 import {falHeart} from '@fortawesome/free-regular-svg-icons';
 import { browserHistory } from 'react-router';
-import Slider from 'react-rangeslider';
 import MapClass from './map';
 import Range from './range';
 import { Map, GoogleApiWrapper } from 'google-maps-react';
@@ -37,9 +36,7 @@ class Search extends React.Component {
         this.selectedCheckboxes = new Set();        
     }
     
-    updateRange (val, event) {
-        event.preventDefault();
-        event.nativeEvent.stopImmediatePropagation();
+    updateRange (val) {
         this.setState({
             price: val
         });
