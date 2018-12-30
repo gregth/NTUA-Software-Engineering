@@ -17,6 +17,9 @@ module.exports = class ProductsController extends BaseController {
     }
 
     create(req, res) {
+        console.log("Gonna create a new product...")
+        let product = req.body
+        this.model.insert(product)
         res.sendStatus(204)
     }
 
