@@ -81,5 +81,19 @@ module.exports = class BaseModel {
 
         return result;
     }
+
+    async delete(conditions) {
+        let query = `DELETE FROM  ${this.table}`;
+        let substitutions = [];
+        if (conditions && Object.keys(conditions).length != 0){
+            let [conditionPlaceholders, conditionValues] = objectToQueryFields(conditions);
+            query += ` WHERE ` + conditionPlaceholders.join(" AND ") + ` LIMIT 1`;
+            substitutions.push(...conditionValues);
+        }
+
+        console.log(query);
+        let result = await this.db.execute(query, substitutions);
+        return result;
+    }
 }
 
