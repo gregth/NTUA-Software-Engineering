@@ -54,7 +54,23 @@ module.exports = class ProductsController extends BaseController {
         }
     }
 
-    delete(req, res, id) {
-        res.send(`DELETE ID: ${req.params.id}`)
+    async delete(req, res, id) {
+        try {
+            let role = 'user'
+            if (role == 'admin') {
+                var result = await this.model.delete({id})
+            } else {
+                var result = await this.model.update({'withdrawn': true}, {id})
+            }
+
+            console.log(result)
+            if (result.affectedRows != 0) {
+                res.status(200).json({message: "OK"})
+            } else {
+                throw new Error("The provided ID did not exist")
+            }
+        } catch (err) {
+            res.status(400).json({message: err.message})
+        }
     }
 }
