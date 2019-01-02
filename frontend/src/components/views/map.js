@@ -120,7 +120,6 @@ export class MapClass extends Component {
                         ? <Marker
                             position={{ lat: marker.latitude, lng: marker.longitude }}
                             key={3} icon={'https://www.robotwoods.com/dev/misc/bluecircle.png'}
-                            onMouseOver={this.onMarkerClick}
                         >
                         </Marker>
                         : null
