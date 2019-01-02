@@ -2,12 +2,32 @@ const express = require('express')
 
 const createControllerRoutes = controller => {
     const router = express.Router()
-    router.get('/', (req, res) => controller.list(req, res))
-    router.get('/:id', (req, res) => controller.read(req, res, req.params.id))
-    router.post('/', (req, res) => controller.create(req, res))
-    router.put('/:id', (req, res) => controller.put(req, res, req.params.id))
-    router.patch('/:id', (req, res) => controller.patch(req, res, req.params.id))
-    router.delete('/:id', (req, res) => controller.delete(req, res, req.params.id))
+    async function endpointHandler(method, res) {
+        try {
+            const results = await method
+
+            if (typeof results === 'object') {
+                res.setHeader('Content-Type', 'application/json');
+                res.json(results)
+            } else if (typeof results === 'boolean') {
+                if (results) {
+                    res.status(204).send()
+                } else {
+                    res.status(400).send()
+                }
+            }
+        } catch(err) {
+            console.log(err)
+            res.status(500).send()
+        }
+    }
+
+    router.get('/', (req, res) => endpointHandler(controller.list(), res))
+    router.get('/:id', (req, res) => endpointHandler(controller.read(req.params.id), res))
+    router.post('/', (req, res) => endpointHandler(controller.create(req.body), res))
+    router.put('/:id', (req, res) => endpointHandler(controller.put(req.params.id), res))
+    router.patch('/:id', (req, res) => endpointHandler(controller.patch(req.body, req.params.id), res))
+    router.delete('/:id', (req, res) => endpointHandler(controller.delete(req.params.id), res))
 
     return router
 }
