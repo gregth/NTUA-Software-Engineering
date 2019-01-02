@@ -18,7 +18,7 @@ module.exports = class BaseModel {
         return await this.db.execute(query)
     }
 
-    async insert (values) {
+    async insert(values) {
         let [placeholders, fieldValues] = objectToQueryFields(values);
         let query = `INSERT INTO ${this.table} SET ` + placeholders.join(', ');
         let result = await this.db.execute(query, fieldValues);
@@ -96,4 +96,3 @@ module.exports = class BaseModel {
         return result;
     }
 }
-
