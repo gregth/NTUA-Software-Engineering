@@ -6,71 +6,51 @@ module.exports = class ProductsController extends BaseController {
         super(new model(dbConnection))
     }
 
-    async list(req, res) {
-        try {
-            const list = await this.model.list()
-            res.send(JSON.stringify(list))
-        } catch (err) {
-            console.log(err)
-            res.sendStatus(500)
-        }
+    async list() {
+        const list = await this.model.list()
+        return list
     }
 
-    async create(req, res) {
-        try {
-            let product = this.validate_post_request(req, res)
-            console.log("Creating a new product...")
-            await this.model.insert(product)
-            res.status(200).json(product)
-        } catch (err) {
-            res.status(400).json(err)
-        }
+    async create(params) {
+        // TODO: throw malformed input error
+        let product = this.validate_post_params(params)
+
+        const result = await this.model.insert(product)
+
+        return result.affectedRows > 0
     }
 
-    read(req, res, id) {
-        res.send(`READ ID: ${req.params.id}`)
+    async read(id) {
+        return {id}
     }
 
-    async put(req, res, id) {
-        try {
-            let product_details = this.validate_put_request(req, res, id)
-            console.log(product_details)
-            await this.model.update(product_details, {id})
-            res.status(200).json(product_details)
-        } catch (err) {
-            console.log(err)
-            res.status(400).json(err)
-        }
+    async put(params, id) {
+        let product_details = this.validate_put_params(params)
+        console.log(product_details)
+
+        const result = await this.model.update(product_details, {id})
+
+        return result.affectedRows > 0
     }
 
-    async patch(req, res, id) {
-        try {
-            let product_details = this.validate_patch_request(req, res, id)
-            console.log(product_details)
-            await this.model.update(product_details, {id})
-            res.status(200).json(product_details)
-        } catch (err) {
-            res.status(400).json({message: err.message})
-        }
+    async patch(params, id) {
+        // TODO: Malformed input
+        let product_details = this.validate_patch_params(params)
+        console.log(product_details)
+
+        const result = await this.model.update(product_details, {id})
+
+        return result.affectedRows > 0
     }
 
-    async delete(req, res, id) {
-        try {
-            let role = 'user'
-            if (role == 'admin') {
-                var result = await this.model.delete({id})
-            } else {
-                var result = await this.model.update({'withdrawn': true}, {id})
-            }
-
-            console.log(result)
-            if (result.affectedRows != 0) {
-                res.status(200).json({message: "OK"})
-            } else {
-                throw new Error("The provided ID did not exist")
-            }
-        } catch (err) {
-            res.status(400).json({message: err.message})
+    async delete(id) {
+        let role = 'user'
+        if (role == 'admin') {
+            var result = await this.model.delete({id})
+        } else {
+            var result = await this.model.update({'withdrawn': true}, {id})
         }
+
+        return result.affectedRows > 0
     }
 }
