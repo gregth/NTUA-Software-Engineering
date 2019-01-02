@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faHome, faTimes, faShoppingBasket, faBuilding, faUser, faBars, faHeart} from '@fortawesome/free-solid-svg-icons';
@@ -16,11 +16,12 @@ import { Map, GoogleApiWrapper } from 'google-maps-react';
 import cookie from 'react-cookies';
 import {Product} from './product';
 import {Shop} from './shop';
+import {Categories} from './categories_menu';
 import fetch from 'isomorphic-fetch';
 
-class Search extends React.Component {
+class Search extends Component {
  
-     constructor(props) {
+    constructor(props) {
         super(props);
         this.state = {search: [], price: 50, show_map: false, username: cookie.load('username'), products: [], results: false};
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -111,7 +112,6 @@ class Search extends React.Component {
                 <div className="dropdown">
                     <button className="dropbtn"><FontAwesomeIcon icon={faBars}></FontAwesomeIcon> {this.state.username}</button>
                     <div className="dropdown-content">
-                        <div href="#">Wishlist</div>
                         <div onClick={() => this.favourite_products()}>Αγαπημένα Προϊόντα</div>
                         <div href="#">Αγαπημένα Καταστήματα</div>
                         <div onClick={() => this.delete()}>Απενεργοποίηση Λογαριασμού</div>
@@ -121,6 +121,7 @@ class Search extends React.Component {
                 <button className="new" id="new_product" type="submit" onClick={() => this.newproduct()}><FontAwesomeIcon icon={faShoppingBasket}></FontAwesomeIcon> Προσθήκη Νέου Προϊόντος </button>
                 <button className="new" id="new_shop" type="submit" onClick={() => this.newshop()}><FontAwesomeIcon icon={faBuilding}></FontAwesomeIcon> Προσθήκη Νέου Καταστήματος </button>
                 <br/>
+                <Categories/>
                 <div className="search">
                     <h1> Αναζήτηση Προϊόντων </h1>
                     <form id="searching">
