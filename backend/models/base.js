@@ -37,8 +37,7 @@ module.exports = class BaseModel {
         return result
     }
 
-    async select(fields, conditions, orderBy, joins) {
-        let result;
+    async list(fields, conditions, orderBy, joins) {
         let substitutions = [];
         let query = `SELECT `;
         if (fields && Object.keys(fields).length != 0) {
