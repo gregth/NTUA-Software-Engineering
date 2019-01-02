@@ -1,4 +1,5 @@
 const express = require('express')
+const { MalformedInput } = require('./errors')
 
 const createControllerRoutes = controller => {
     const router = express.Router()
@@ -18,7 +19,12 @@ const createControllerRoutes = controller => {
             }
         } catch(err) {
             console.log(err)
-            res.status(500).send()
+
+            if (err instanceof MalformedInput) {
+                res.status(400).json({error: err.message})
+            } else {
+                res.status(500).send()
+            }
         }
     }
 
