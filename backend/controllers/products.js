@@ -12,7 +12,6 @@ module.exports = class ProductsController extends BaseController {
     }
 
     async create(params) {
-        // TODO: throw malformed input error
         let product = this.validate_post_params(params)
 
         const result = await this.model.insert(product)
@@ -34,7 +33,6 @@ module.exports = class ProductsController extends BaseController {
     }
 
     async patch(params, id) {
-        // TODO: Malformed input
         let product_details = this.validate_patch_params(params)
         console.log(product_details)
 

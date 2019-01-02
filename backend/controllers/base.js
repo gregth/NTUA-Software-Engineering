@@ -1,3 +1,5 @@
+const { MalformedInput } = require('../errors')
+
 function filter_keys(params, allowed_keys) {
     let filtered_params = {};
     allowed_keys.forEach(key => {
@@ -18,7 +20,7 @@ module.exports = class BaseController {
         let required_params = filter_keys(params, rules.required_fields);
         if (Object.keys(required_params).length != rules.required_fields.length) {
             console.log("[POST_VALIDATOR]: Not all required post params provided")
-            throw new Error('Not all required post params provided')
+            throw new MalformedInput('Not all required post params provided')
         }
 
         let validated_params = required_params
@@ -38,7 +40,7 @@ module.exports = class BaseController {
         // For a put request to take place, all updateable fields must be passed
         if (Object.keys(required_params).length != rules.updatable_fields.length) {
             console.log("[PUT_VALIDATOR]: Not all required post params provided")
-            throw new Error('Not all required post params provided')
+            throw new MalformedInput('Not all required post params provided')
         }
 
         return required_params
@@ -50,7 +52,7 @@ module.exports = class BaseController {
         // For a put request to take place, all updateable fields must be passed
         if (Object.keys(required_params).length == 0) {
             console.log('[PATCH_VALIDATOR]: No updatable attributes provided in params')
-            throw new Error('No updatable attributes provided in params')
+            throw new MalformedInput('No updatable attributes provided in params')
         }
 
         return required_params
