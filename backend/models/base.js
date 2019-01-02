@@ -14,10 +14,6 @@ module.exports = class BaseModel {
         this.table = table
     }
 
-    async execute(query) {
-        return await this.db.execute(query)
-    }
-
     async insert(values) {
         let [placeholders, fieldValues] = objectToQueryFields(values);
         let query = `INSERT INTO ${this.table} SET ` + placeholders.join(', ');
