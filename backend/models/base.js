@@ -17,7 +17,7 @@ module.exports = class BaseModel {
     async insert(values) {
         let [placeholders, fieldValues] = objectToQueryFields(values);
         let query = `INSERT INTO ${this.table} SET ` + placeholders.join(', ');
-        let result = await this.db.execute(query, fieldValues);
+        let [result] = await this.db.execute(query, fieldValues);
 
         return result;
     }
@@ -68,14 +68,15 @@ module.exports = class BaseModel {
         }
 
         console.log(query);
+        let rows;
         if (substitutions.length == 0) {
-            result = await this.db.execute(query);
+            [rows] = await this.db.execute(query);
         }
         else {
-            result = await this.db.execute(query, substitutions);
+            [rows] = await this.db.execute(query, substitutions);
         }
 
-        return result;
+        return rows;
     }
 
     async delete(conditions) {
