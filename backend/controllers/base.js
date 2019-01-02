@@ -39,8 +39,8 @@ module.exports = class BaseController {
         console.log(required_params	)
         // For a put request to take place, all updateable fields must be passed
         if (Object.keys(required_params).length != rules.updatable_fields.length) {
-            console.log("[PUT_VALIDATOR]: Not all required post params provided")
-            throw new MalformedInput('Not all required post params provided')
+            console.log("[PUT_VALIDATOR]: Not all required put params provided")
+            throw new MalformedInput('Not all required put params provided')
         }
 
         return required_params
