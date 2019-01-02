@@ -3,9 +3,43 @@ const BaseModel = require('./base')
 module.exports = class Product extends BaseModel {
     constructor(connection) {
         super('products', connection)
-    }
-
-    async list() {
-        return await this.execute(`SELECT * FROM ${this.table}`)
+        this.rules = {
+            select: {
+                allowed_select_keys: [
+                    'id',
+                    'name',
+                    'barcode'
+                ],
+                selectable_fields: [
+                    'id',
+                    'name',
+                    'description',
+                    'barcode',
+                    'withdrawn'
+                ]
+            },
+            insert: {
+                required_fields: [
+                    'name',
+                    'description',
+                    'barcode'
+                ],
+                optional_fields: [
+                    'withdrawn'
+                ]
+            },
+            update: {
+                updatable_fields: [
+                    'name',
+                    'description',
+                    'barcode',
+                    'withdrawn',
+                ],
+                allowed_query_keys: ['id']
+            },
+            delete: {
+                allowed_query_keys: ['id']
+            }
+        }
     }
 }

@@ -16,26 +16,61 @@ module.exports = class ProductsController extends BaseController {
         }
     }
 
-    create(req, res) {
-        console.log("Gonna create a new product...")
-        let product = req.body
-        this.model.insert(product)
-        res.sendStatus(204)
+    async create(req, res) {
+        try {
+            let product = this.validate_post_request(req, res)
+            console.log("Creating a new product...")
+            await this.model.insert(product)
+            res.status(200).json(product)
+        } catch (err) {
+            res.status(400).json(err)
+        }
     }
 
     read(req, res, id) {
         res.send(`READ ID: ${req.params.id}`)
     }
 
-    put(req, res, id) {
-        res.send(`PUT ID: ${req.params.id}`)
+    async put(req, res, id) {
+        try {
+            let product_details = this.validate_put_request(req, res, id)
+            console.log(product_details)
+            await this.model.update(product_details, {id})
+            res.status(200).json(product_details)
+        } catch (err) {
+            console.log(err)
+            res.status(400).json(err)
+        }
     }
 
-    patch(req, res, id) {
-        res.send(`PATCH ID: ${req.params.id}`)
+    async patch(req, res, id) {
+        try {
+            let product_details = this.validate_patch_request(req, res, id)
+            console.log(product_details)
+            await this.model.update(product_details, {id})
+            res.status(200).json(product_details)
+        } catch (err) {
+            res.status(400).json({message: err.message})
+        }
     }
 
-    delete(req, res, id) {
-        res.send(`DELETE ID: ${req.params.id}`)
+    async delete(req, res, id) {
+        try {
+            let role = 'user'
+            if (role == 'admin') {
+                var result = await this.model.delete({id})
+            } else {
+                var result = await this.model.update({'withdrawn': true}, {id})
+            }
+
+            console.log(result)
+            if (result.affectedRows != 0) {
+                res.status(200).json({message: "OK"})
+            } else {
+                throw new Error("The provided ID did not exist")
+            }
+        } catch (err) {
+            res.status(400).json({message: err.message})
+        }
     }
 }
