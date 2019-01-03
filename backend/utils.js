@@ -1,5 +1,5 @@
 const express = require('express')
-const { MalformedInput } = require('./errors')
+const { MalformedInput, NotImplemented } = require('./errors')
 
 const createControllerRoutes = controller => {
     const router = express.Router()
@@ -22,6 +22,8 @@ const createControllerRoutes = controller => {
 
             if (err instanceof MalformedInput) {
                 res.status(400).json({error: err.message})
+            } else if (err instanceof NotImplemented) {
+                res.status(501).json({error: 'Method Not Implemented'})
             } else {
                 res.status(500).send()
             }
