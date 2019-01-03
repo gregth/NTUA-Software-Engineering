@@ -10,6 +10,7 @@ import { faChevronLeft, faBars } from '@fortawesome/free-solid-svg-icons';
 import { browserHistory } from 'react-router';
 import Geocode from 'react-geocode';
 import cookie from 'react-cookies';
+import Modal from './modal_product';
 
 function coords_to_address (lat, long) {
   return fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' +
@@ -59,6 +60,8 @@ class Product extends React.Component {
         this.delete = this.delete.bind(this);
         this.favourite_products = this.favourite_products.bind(this);
         this.flag = false;
+        this.toggleModal = this.toggleModal.bind(this);
+        this.new_product = this.new_product.bind(this);
     }
     
     async currentLocation ()  {
@@ -95,22 +98,40 @@ class Product extends React.Component {
         browserHistory.push('/search');
     }
     
-    handleSubmit () {
-       const barcode = document.getElementById('barcode').value;
-       const postal = document.getElementById('postal').value;
-       const address = document.getElementById('address').value;
-       const number = document.getElementById('number').value;
-       const price = document.getElementById('price').value;
-       const temp = address + ' ' + number + ' ' + postal + ' Greece';
-       
-       
-       this.setState(() => ({barcode: barcode, price: price})); 
-       
+    handleSubmit (event) {
+        event.preventDefault();
+        event.nativeEvent.stopImmediatePropagation();
+        this.toggleModal();
+        const barcode = document.getElementById('barcode').value;
+        const postal = document.getElementById('postal').value;
+        const address = document.getElementById('address').value;
+        const number = document.getElementById('number').value;
+        const price = document.getElementById('price').value;
+        const temp = address + ' ' + number + ' ' + postal + ' Greece';
+
+        this.setState(() => ({barcode: barcode, price: price})); 
+    }
+    
+    toggleModal() {
+        this.setState({
+          isOpen: !this.state.isOpen
+        });
+    }
+    
+    new_product () {
+        //TODO
+        alert("TODO");
     }
     
     render() {
         return(
             <div>
+                <Modal show={this.state.isOpen} 
+                        onClose={this.toggleModal} 
+                        home={this.homepage}
+                        new_product={this.new_product}>
+                    Here's some content for the modal
+                </Modal>
                 <div className="dropdown">
                     <button className="dropbtn"><FontAwesomeIcon icon={faBars}></FontAwesomeIcon> {this.state.username}</button>
                     <div className="dropdown-content">
@@ -123,7 +144,7 @@ class Product extends React.Component {
                 
                 <button className="homepage" type="submit" onClick={() => this.homepage()}><FontAwesomeIcon icon={faChevronLeft}></FontAwesomeIcon> Αρχική Σελίδα </button>
                 
-                <form className="addform" id="addproduct" onSubmit={() => this.handleSubmit()}>
+                <form className="addform" id="addproduct" onSubmit={this.handleSubmit}>
                         <div>
                             <label id="label-form" htmlFor="name">Barcode Προϊόντος:</label>
                             <input id="barcode" name="barcode" pattern="[0-9]{1,128}" type="text" required/>

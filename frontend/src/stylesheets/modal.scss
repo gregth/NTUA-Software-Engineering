@@ -1,0 +1,28 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Jan 3, 2019, 6:13:48 PM
+    Author     : nikol
+*/
+
+.backdrop {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0,0,0,0.3);
+    padding: 50;
+}
+
+.modal {
+    background: #fff;
+    border-radius: 5;
+    width: 500;
+    height: 300;
+    margin: 0 auto;
+    padding: 30;
+}

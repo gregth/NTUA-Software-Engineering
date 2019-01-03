@@ -8,6 +8,7 @@ require('./stylesheets/base.scss');
 require('./stylesheets/register.scss');
 require('./stylesheets/search.scss');
 require('./stylesheets/menu.scss');
+require('./stylesheets/modal.scss');
 
 ReactDom.render(
   <Router history={browserHistory} routes={routes} />,

@@ -10,13 +10,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash, faUser, faKey, faHome, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { browserHistory } from 'react-router';
 import cookie from 'react-cookies';
-import fetch from 'isomorphic-fetch';
+
 
 class Login extends React.Component {
     
     constructor(props) {
         super(props);
-        this.state = {show: true, username: '', password: ''};
+        this.state = {isOpen: false, show: true, username: '', password: ''};
         this.handleSubmit = this.handleSubmit.bind(this);
         this.homepage = this.homepage.bind(this);
         this.register = this.register.bind(this);
@@ -80,7 +80,7 @@ class Login extends React.Component {
             this.setState(() => ({ show: true}));
         }
     }
-    
+  
     render() {
         return(
             <div>
