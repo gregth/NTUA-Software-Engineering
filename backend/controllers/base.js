@@ -58,27 +58,27 @@ module.exports = class BaseController {
         return required_params
     }
 
-    list() {
+    async list() {
         throw new NotImplemented()
     }
 
-    read(id) {
+    async read(id) {
         throw new NotImplemented()
     }
 
-    create(params) {
+    async create(params) {
         throw new NotImplemented()
     }
 
-    put(params, id) {
+    async put(params, id) {
         throw new NotImplemented()
     }
 
-    patch(params, id) {
+    async patch(params, id) {
         throw new NotImplemented()
     }
 
-    delete(id) {
+    async delete(id) {
         throw new NotImplemented()
     }
 }
