@@ -1,4 +1,4 @@
-const { MalformedInput } = require('../errors')
+const { MalformedInput, NotImplemented } = require('../errors')
 
 function filter_keys(params, allowed_keys) {
     let filtered_params = {};
@@ -58,27 +58,27 @@ module.exports = class BaseController {
         return required_params
     }
 
-    list(req, res) {
-        res.status(501).json({error: 'Method Not Implemented'})
+    list() {
+        throw new NotImplemented()
     }
 
-    read(req, res, id) {
-        res.status(501).json({error: 'Method Not Implemented'})
+    read(id) {
+        throw new NotImplemented()
     }
 
-    create(req, res) {
-        res.status(501).json({error: 'Method Not Implemented'})
+    create(params) {
+        throw new NotImplemented()
     }
 
-    put(req, res, id) {
-        res.status(501).json({error: 'Method Not Implemented'})
+    put(params, id) {
+        throw new NotImplemented()
     }
 
-    patch(req, res, id) {
-        res.status(501).json({error: 'Method Not Implemented'})
+    patch(params, id) {
+        throw new NotImplemented()
     }
 
-    delete(req, res, id) {
-        res.status(501).json({error: 'Method Not Implemented'})
+    delete(id) {
+        throw new NotImplemented()
     }
 }
