@@ -7,7 +7,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faHome, faTimes, faShoppingBasket, faBuilding, faUser, faBars, faHeart} from '@fortawesome/free-solid-svg-icons';
+import { faCartPlus, faBuilding, faBars, faHeart, faSearch} from '@fortawesome/free-solid-svg-icons';
 import {falHeart} from '@fortawesome/free-regular-svg-icons';
 import { browserHistory } from 'react-router';
 import MapClass from './map';
@@ -17,7 +17,6 @@ import cookie from 'react-cookies';
 import {Product} from './product';
 import {Shop} from './shop';
 import {Categories} from './categories_menu';
-import fetch from 'isomorphic-fetch';
 
 class Search extends Component {
  
@@ -26,15 +25,13 @@ class Search extends Component {
         this.state = {search: [], price: 50, show_map: false, username: cookie.load('username'), products: [], results: false};
         this.handleSubmit = this.handleSubmit.bind(this);
         this.only_nearby_shops = this.only_nearby_shops.bind(this);
-        this.toggleCheckbox = this.toggleCheckbox.bind(this);
         this.logoff = this.logoff.bind(this);        
         this.delete = this.delete.bind(this);
         this.updateRange = this.updateRange.bind(this);
-        this.newproduct = this.newproduct.bind(this);
+        this.newprice = this.newprice.bind(this);
         this.newshop = this.newshop.bind(this);
         this.favourite_products = this.favourite_products.bind(this);
         this.favourite = this.favourite.bind(this);
-        this.selectedCheckboxes = new Set();        
     }
     
     updateRange (val) {
@@ -48,8 +45,8 @@ class Search extends Component {
         browserHistory.push('/');
     }
     
-    newproduct () {
-        browserHistory.push('/addproduct');
+    newprice () {
+        browserHistory.push('/addprice');
     }
     
     newshop () {
@@ -64,17 +61,6 @@ class Search extends Component {
     
     favourite_products () {
         browserHistory.push('/products');
-    }
-    
-    toggleCheckbox (label, event){
-        event.preventDefault();
-        event.nativeEvent.stopImmediatePropagation();
-        if (this.selectedCheckboxes.has(label)) {
-            this.selectedCheckboxes.delete(label);
-        } 
-        else {
-            this.selectedCheckboxes.add(label);
-        }
     }
   
     only_nearby_shops () {
@@ -118,36 +104,17 @@ class Search extends Component {
                         <div onClick={() => this.logoff()}>Αποσύνδεση</div>
                     </div>
                 </div>
-                <button className="new" id="new_product" type="submit" onClick={() => this.newproduct()}><FontAwesomeIcon icon={faShoppingBasket}></FontAwesomeIcon> Προσθήκη Νέου Προϊόντος </button>
+                <button className="new" id="new_product" type="submit" onClick={() => this.newprice()}>
+                    <FontAwesomeIcon icon={faCartPlus}></FontAwesomeIcon> Προσθήκη Νέας Τιμής 
+                </button>
                 <button className="new" id="new_shop" type="submit" onClick={() => this.newshop()}><FontAwesomeIcon icon={faBuilding}></FontAwesomeIcon> Προσθήκη Νέου Καταστήματος </button>
                 <br/>
-                <Categories/>
+                
                 <div className="search">
                     <h1> Αναζήτηση Προϊόντων </h1>
                     <form id="searching">
-                        <label> Κρασί </label>
-                        <input type="checkbox" name="product" value="wine" onChange={() => this.toggleCheckbox("Κρασί")}></input>
-                        <label> Μπύρες </label>
-                        <input type="checkbox" name="product" value="beer" onChange={() => this.toggleCheckbox("Μπύρες")}></input>
-                        <label> Βότκα </label>
-                        <input type="checkbox" name="product" value="vodka" onChange={() => this.toggleCheckbox("Βότκα")}></input>
-                        <label> Ουίσκι </label>
-                        <input type="checkbox" name="product" value="whiskey" onChange={() => this.toggleCheckbox("Ουίσκι")}></input>
-                        <label> Ρούμι </label>
-                        <input type="checkbox" name="product" value="Rum" onChange={() => this.toggleCheckbox("Ρούμι")}></input>
-                        <br/><br/>
-                        <label> Gin </label>
-                        <input type="checkbox" name="product" value="Gin" onChange={() => this.toggleCheckbox("Gin")}></input>
-                        <label> Τεκίλα </label>
-                        <input type="checkbox" name="product" value="Tequila" onChange={() => this.toggleCheckbox("Τεκίλα")}></input>
-                        <label> Αναψυκτικά </label>
-                        <input type="checkbox" name="product" value="beverages" onChange={() => this.toggleCheckbox("Αναψυκτικά")}></input>
-                        <label> Snacks </label>
-                        <input type="checkbox" name="product" value="snancks" onChange={() => this.toggleCheckbox("Snacks")}></input>
-                        <label> Χωρίς Αλκοόλ </label>
-                        <input type="checkbox" name="product" value="nonalchool" onChange={() => this.toggleCheckbox("Χωρίς Αλκοόλ")}></input>
-                        <br/>
-                        <input id="search" type="text" placeholder="Search.." name="search"></input>
+                        <Categories/>
+                        <input id="search" type="text" placeholder="Αναζήτηση με όνομα.." name="search"></input>
                         <button className="search_btn" id="search_btn" type="submit" onClick={this.handleSubmit}><FontAwesomeIcon icon={faSearch}></FontAwesomeIcon></button>
                         <br/><br/>
                         <label> Μέγιστη τιμή </label>

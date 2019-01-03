@@ -7,7 +7,7 @@ import Admin from './components/views/admin';
 import Register from './components/views/register';
 import Search from './components/views/search';
 import Shop from './components/views/addshop';
-import Product from './components/views/addproduct';
+import Product from './components/views/addprice';
 import Products from './components/views/favourite_products';
 
 export default (
@@ -18,7 +18,7 @@ export default (
     <Route path='admin' component={Admin} />
     <Route path='search' component={Search} />
     <Route path='addshop' component={Shop} />
-    <Route path='addproduct' component={Product} />
+    <Route path='addprice' component={Product} />
     <Route path='products' component={Products} />
     <Route path='*' component={Home} />
   </Route>

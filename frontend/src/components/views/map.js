@@ -30,13 +30,13 @@ function getLocation() {
     .then(async (position) => {
         var lat = position.coords.latitude;
         var long = position.coords.longitude;
-        let address = await coords_to_address(lat, long)
+        let address = await coords_to_address(lat, long);
         console.log(address);
         return [position.coords.latitude, position.coords.longitude, address];
     })
     .catch((error) => {
-          console.log(error)
-    })
+          console.log(error);
+    });
 }
 
 export class MapClass extends Component {

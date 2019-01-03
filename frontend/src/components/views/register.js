@@ -6,7 +6,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEyeSlash, faCheck, faTimes, faHome } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faEyeSlash, faCheck, faTimes, faHome, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { browserHistory } from 'react-router';
 import cookie from 'react-cookies';
 
@@ -37,7 +37,9 @@ class Register extends React.Component {
        this.setState(() => ({ first_name: fname, last_name: lname, username: us, password: pass, email: email, phone: number, birth_date: bdate}));        
     }
     
-    showPassword() {
+    showPassword(event) {
+        event.preventDefault();
+        event.nativeEvent.stopImmediatePropagation();
         var s = document.getElementById("pwd");
         
         if (s.type === "password") {
@@ -51,35 +53,42 @@ class Register extends React.Component {
     
     checkPasswordMatch() {
         var password = document.getElementById('pwd').value;
-        var confirmPassword = document.getElementById('re_pass').value;
+        try {
+            var confirmPassword = document.getElementById('re_pass').value;
         
-        if (this.state.check !== null) {
-          this.setState(() => ({ check_show: true}));  
+            if (this.state.check !== null) {
+              this.setState(() => ({ check_show: true}));  
+            }
+
+            if (password === confirmPassword && confirmPassword !== "") {
+                this.setState(() => ({ check: true}));
+            }
+            else if (password !== confirmPassword && confirmPassword !== "") {
+                this.setState(() => ({ check: false}));
+            }
+
+            if (password === confirmPassword) {
+                this.setState( () => ({ready: true}));
+                document.getElementById("message").innerHTML = "";
+            }
+            else {
+                this.setState( () => ({ready: false}));
+                document.getElementById("message").innerHTML = "Password must match";
+            }
         }
-        
-        if (password === confirmPassword && confirmPassword !== "") {
-            this.setState(() => ({ check: true}));
-        }
-        else if (password !== confirmPassword && confirmPassword !== "") {
-            this.setState(() => ({ check: false}));
-        }
-        
-        if (password === confirmPassword) {
-            this.setState( () => ({ready: true}));
-            document.getElementById("message").innerHTML = "";
-        }
-        else {
-            this.setState( () => ({ready: false}));
-            document.getElementById("message").innerHTML = "Password must match";
+        catch (error) {
+            return;
         }
     }
     
     render() {
         return(
+            <div>
+            <button className="homepage" type="submit" onClick={() => this.homepage()}><FontAwesomeIcon icon={faChevronLeft}></FontAwesomeIcon> Αρχική Σελίδα </button>
+            <br/>
             <form id="register" onSubmit={() => this.handleSubmit()}>
                 <div></div>
-                <button className='icon' id="homepage" type="submit" onClick={() => this.homepage()}><FontAwesomeIcon icon={faHome}></FontAwesomeIcon></button>
-                <br/>
+                
                 <div className="form-group">
                     <label id="label-form" htmlFor="first_name">Όνομα:</label>
                     <input id="first_name" name="first_name" className="form-control" pattern="[A-Za-z]+" type="text" required/>
@@ -89,7 +98,7 @@ class Register extends React.Component {
                     <label id="label-form" htmlFor="last_name">Επίθετο:</label>
                     <input id="last_name" name="last_name" className="form-control" pattern="[A-Za-z]+" type="text" required/>
                 </div>
-                <visibility/>
+                
                 <div className="form-group">
                     <label id="label-form" htmlFor="email">Email:</label>
                     <input type="email" id="email" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required/>
@@ -103,7 +112,7 @@ class Register extends React.Component {
                 <div className="form-group">
                     <label id="label-form" htmlFor="pwd">Κωδικός:</label>
                     <input title="no special characters" type="password" name="password" className="form-control" pattern="[A-Za-z0-9]{8,16}" id="pwd" onKeyUp={() => this.checkPasswordMatch()} required></input>
-                    <button type="eye" id="eye" onClick={() => this.showPassword()}>
+                    <button type="eye" id="eye" onClick={this.showPassword}>
                         { this.state.show
                         ? <FontAwesomeIcon icon={faEye} />
                         : <FontAwesomeIcon icon={faEyeSlash} />
@@ -134,9 +143,9 @@ class Register extends React.Component {
                     <label id="label-form" htmlFor="phone">Κινητό Τηλέφωνο:</label>
                     <input type="tel" id="phone" title="69XXXXXXXX" pattern="69\d{8}" name="phone" required/>
                 </div>
-                
-                <button className="btn" type="submit" disabled={!this.state.ready} id="button1">Εγγραφή</button>
             </form>
+            <button className="btn" type="submit" disabled={!this.state.ready} id="button1">Εγγραφή</button>
+            </div>
         );
   }
 }
