@@ -1,11 +1,11 @@
-$var: pink;
+$var: #EEEEEE;
 
 body {
   background: $var;
 }
 
 .container {
-    background: red;
+  background: red;
   width: 500px;
   clear: both;
 }

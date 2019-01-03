@@ -1,31 +1,35 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 import React, { Component } from 'react';
 import SelectSearch from 'react-select-search';
 
 const options = [
     {name: 'Όλες οι κατηγορίες', value: 'all'},
-    {name: 'Κρασί', value: 'wine'},
-    {name: 'Μπύρες', value: 'beer'},
-    {name: 'Βότκα', value: 'vodka'},
-    {name: 'Ρούμι', value: 'rum'},
-    {name: 'Gin', value: 'gin'},
-    {name: 'Ουίσκι', value: 'whiskey'},
-    {name: 'Τεκίλα', value: 'tequila'},
     {name: 'Αναψυκτικά', value: 'beverages'},
-    {name: 'Snacks', value: 'snacks'},
+    {name: 'Βότκα', value: 'vodka'},
+    {name: 'Κονιάκ', value: 'koniak'},
+    {name: 'Κρασί', value: 'wine'},
+    {name: 'Λικέρ', value: 'liquer'},
+    {name: 'Μπύρες', value: 'beer'},
+    {name: 'Ούζο', value: 'ouzo'},
+    {name: 'Ουίσκι', value: 'whiskey'},
+    {name: 'Ρούμι', value: 'rum'},
+    {name: 'Σνακς', value: 'snacks'},
+    {name: 'Τζιν', value: 'gin'},
+    {name: 'Τεκίλα', value: 'tequila'},
+    {name: 'Τσίπουρο', value: 'tsipouro'},
     {name: 'Χωρίς Αλκοόλ', value: 'nonalchool'}
 ];
+
+function compare(a, b){
+    if (a.name > b.name) return 1;
+    if (a.name < b.name) return -1;
+    return 0;
+}
 
 export class Categories extends Component {
   render() {
         return ( 
             <div>
-                <SelectSearch options={options} value="all" name="categories" placeholder="Επιλογή Κατηγορίας" />
+                <SelectSearch options={options.sort(compare)} value="all" name="categories" placeholder="Επιλογή Κατηγορίας" />
             </div>
         );
     }
