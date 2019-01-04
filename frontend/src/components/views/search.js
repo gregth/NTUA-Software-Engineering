@@ -81,9 +81,6 @@ class Search extends Component {
         event.nativeEvent.stopImmediatePropagation();
         const s = document.getElementById('search').value;
        
-        if (s !== '') {
-            this.selectedCheckboxes.add(s);
-        }
         var temp = this.state.show_map;
         
         var shop = new Shop({name: 'cava1', id: 1, address: 'Athens 1', lat: 37.9738, lgn:23.7275});

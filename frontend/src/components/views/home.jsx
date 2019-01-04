@@ -83,7 +83,6 @@ export default class Home extends Component {
             <button className="btn" type="submit" id="button2" onClick={() => this.Register()}>Εγγραφή</button>
             <img src={"/public/logo_transparent.png"} className="App-logo" alt="logo" />
             <div className="search">
-                    <h1> Αναζήτηση Προϊόντων </h1>
                     <form id="searching">
                         <Categories/>
                         <input id="search" type="text" placeholder="Search.." name="search"></input>
