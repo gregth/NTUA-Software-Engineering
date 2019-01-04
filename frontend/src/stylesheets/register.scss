@@ -16,18 +16,30 @@
 }
 
 .btn {								
-	background-color: rgb(55, 33, 22);
-	border: none;
-   	color: white;
-    	padding: 5px ;
-    	text-align: center;
-	font-size: 16px;
-    	margin: 4px 2px;
-    	cursor: pointer;
-	border-radius: 12px;
-	width: 100px;
-	font-family: fantasy;
-	display: inline;
+    background-color: rgb(55, 33, 22);
+    border: none;
+    color: white;
+    padding: 5px ;
+    text-align: center;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 12px;
+    width: 100px;
+    font-family: fantasy;
+    display: inline;
+}
+
+.btn_home {								
+    background-color: transparent;
+    border: none;
+    color: black;
+    text-align: center;
+    margin: 4px 2px;
+    cursor: pointer;
+    font-family: verdana;
+    font-size: 16px;
+    display: inline;
 }
 
 #eye {

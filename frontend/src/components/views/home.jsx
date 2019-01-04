@@ -79,8 +79,8 @@ export default class Home extends Component {
     render() {
       return (
         <div> 
-            <button className="btn" type="submit" id="button1" onClick={() => this.Login()}>Σύνδεση</button>
-            <button className="btn" type="submit" id="button2" onClick={() => this.Register()}>Εγγραφή</button>
+            <button className="btn_home" type="submit" id="button1" onClick={() => this.Login()}>Σύνδεση</button>
+            <button className="btn_home" type="submit" id="button2" onClick={() => this.Register()}>Εγγραφή</button>
             <img src={"/public/logo_transparent.png"} className="App-logo" alt="logo" />
             <div className="search">
                     <form id="searching">
