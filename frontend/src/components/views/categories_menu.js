@@ -7,19 +7,20 @@ const options = [
         type: 'group',
         items: [
             {name: 'Αναψυκτικά', value: 'beverages'},
+            {name: 'Χωρίς Αλκοόλ', value: 'nonalchool'},
             {name: 'Βότκα', value: 'vodka'},
             {name: 'Κονιάκ', value: 'koniak'},
+            {name: 'Τζιν', value: 'gin'},
             {name: 'Κρασί', value: 'wine'},
             {name: 'Λικέρ', value: 'liquer'},
             {name: 'Μπύρες', value: 'beer'},
             {name: 'Ούζο', value: 'ouzo'},
             {name: 'Ουίσκι', value: 'whiskey'},
             {name: 'Ρούμι', value: 'rum'},
-            {name: 'Σνακς', value: 'snacks'},
-            {name: 'Τζιν', value: 'gin'},
             {name: 'Τεκίλα', value: 'tequila'},
             {name: 'Τσίπουρο', value: 'tsipouro'},
-            {name: 'Χωρίς Αλκοόλ', value: 'nonalchool'}
+            {name: 'Σνακς', value: 'snacks'}
+            
         ].sort(compare)
     }
 ];

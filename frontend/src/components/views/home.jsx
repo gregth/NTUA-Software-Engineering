@@ -16,7 +16,7 @@ export default class Home extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.only_nearby_shops = this.only_nearby_shops.bind(this);
         this.updateRange = this.updateRange.bind(this);
-        this.selectedCheckboxes = new Set();        
+        this.selectedCheckboxes = new Set();  
     }
     
     updateRange (val) {
@@ -81,6 +81,7 @@ export default class Home extends Component {
         <div> 
             <button className="btn" type="submit" id="button1" onClick={() => this.Login()}>Σύνδεση</button>
             <button className="btn" type="submit" id="button2" onClick={() => this.Register()}>Εγγραφή</button>
+            <img src={"/public/logo_transparent.png"} className="App-logo" alt="logo" />
             <div className="search">
                     <h1> Αναζήτηση Προϊόντων </h1>
                     <form id="searching">

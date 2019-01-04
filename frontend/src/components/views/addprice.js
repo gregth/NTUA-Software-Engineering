@@ -129,8 +129,8 @@ class Product extends React.Component {
                 <Modal show={this.state.isOpen} 
                         onClose={this.toggleModal} 
                         home={this.homepage}
-                        new_product={this.new_product}>
-                    Here's some content for the modal
+                        new={this.new_product}>
+                        Το προϊόν με barcode {this.state.barcode} δε βρέθηκε.
                 </Modal>
                 <div className="dropdown">
                     <button className="dropbtn"><FontAwesomeIcon icon={faBars}></FontAwesomeIcon> {this.state.username}</button>
