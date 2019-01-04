@@ -131,12 +131,14 @@ class Search extends Component {
                                 ))}</div>
                             : <div></div>
                         }
-                        {this.state.show_map
-                            ?<MapClass/>
-                            : <div/>
-                        }   
+                           
                     </form>
-                    
+                </div>
+                <div className="map">
+                    {this.state.show_map
+                        ?<MapClass/>
+                        : null
+                    }
                 </div>
             </div>
         );
