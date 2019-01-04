@@ -94,9 +94,9 @@ export class MapClass extends Component {
                 <input type="checkbox" id="location" name="location" onChange={() => this.currentLocation()}></input>
                 <Map 
                     google={window.google}
+                    style={{width:'40%', height:'40%'}}
                     zoom={11}
                     coordinates={true}
-                    className='map'
                     initialCenter={{
                         lat: 37.9838,
                         lng: 23.7275
