@@ -1,5 +1,3 @@
-$primary: yellow;
-
 .marker {
     color: white;
 }
@@ -15,6 +13,7 @@ $primary: yellow;
     left: 33%;
     display: block;
     margin: auto;
+    font-family: verdana;
 }
 
 .search_input {
@@ -97,8 +96,8 @@ $primary: yellow;
 }
 
 .price {
-  background: $primary;
-  color: #fff;
+  background: rgb(178, 0, 0);
+  color: white;
   border-radius: 2px;
   padding: 3px 7px;
   margin: 0px 10px;
@@ -112,7 +111,7 @@ $primary: yellow;
     transform: translateY(-50%);
     height: 0;
     width: 0;
-    border: solid 6px $primary;
+    border: solid 6px rgb(178, 0, 0);
     z-index: -1;
     border-top-color: Transparent;
     border-bottom-color: Transparent;
