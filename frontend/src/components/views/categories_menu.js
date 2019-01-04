@@ -34,9 +34,7 @@ function compare(a, b){
 export class Categories extends Component {
   render() {
         return ( 
-            <div>
-                <SelectSearch options={options} value="all" name="categories" placeholder="Επιλογή Κατηγορίας" />
-            </div>
+            <SelectSearch options={options} value="all" name="categories" placeholder="Επιλογή Κατηγορίας" />
         );
     }
 };

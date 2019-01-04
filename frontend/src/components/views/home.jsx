@@ -84,12 +84,17 @@ export default class Home extends Component {
             <img src={"/public/logo_transparent.png"} className="App-logo" alt="logo" />
             <div className="search">
                     <form id="searching">
-                        <Categories/>
-                        <input id="search" type="text" className="search_input" placeholder="Αναζήτηση με όνομα.." name="search"></input>
-                        <button className="search_btn" id="search_btn" type="submit" onClick={this.handleSubmit}><FontAwesomeIcon icon={faSearch}></FontAwesomeIcon></button>
-                        <br/><br/>
-                        <label> Μέγιστη τιμή </label>
-                        <Range range={this.state.price} updateRange={this.updateRange}/>
+                        <div className="div_next">
+                            <Categories/>
+                        </div>
+                        <div className="div_next">
+                            <input id="search" type="text" className="search_input" placeholder="Αναζήτηση με όνομα.." name="search"></input>
+                            <button className="search_btn" id="search_btn" type="submit" onClick={this.handleSubmit}><FontAwesomeIcon icon={faSearch}></FontAwesomeIcon></button>
+                        </div>
+                        <div className="div_under">
+                            <label> Μέγιστη τιμή </label>
+                            <Range range={this.state.price} updateRange={this.updateRange}/>
+                        </div>
                         <br/>
                         <label> Only nearby shops</label>
                         <input type="checkbox" name="location" onChange={() => this.only_nearby_shops()}></input>
