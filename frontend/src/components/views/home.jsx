@@ -85,7 +85,7 @@ export default class Home extends Component {
             <div className="search">
                     <form id="searching">
                         <Categories/>
-                        <input id="search" type="text" placeholder="Search.." name="search"></input>
+                        <input id="search" type="text" className="search_input" placeholder="Αναζήτηση με όνομα.." name="search"></input>
                         <button className="search_btn" id="search_btn" type="submit" onClick={this.handleSubmit}><FontAwesomeIcon icon={faSearch}></FontAwesomeIcon></button>
                         <br/><br/>
                         <label> Μέγιστη τιμή </label>
