@@ -94,7 +94,7 @@ class Login extends React.Component {
                         <FontAwesomeIcon icon={faUser} />
                         Username:
                     </label>
-                    <input id="username" type="button" name="username" className="form-control" title="only letters, numbers and underscore" pattern="[A-Za-z0-9_]+" type="text" required/>
+                    <input id="username" type="button" name="username" className="form_input" title="only letters, numbers and underscore" pattern="[A-Za-z0-9_]+" type="text" required/>
                 </div>
                 
                 <div className="form-group">
@@ -102,7 +102,7 @@ class Login extends React.Component {
                         <FontAwesomeIcon icon={faKey} />
                         Password:
                     </label>
-                    <input title="8-16 no special characters" type="password" name="password" className="form-control" pattern="[A-Za-z0-9]{8,16}" id="pwd" required></input>
+                    <input title="8-16 no special characters" type="password" name="password" className="form_input" pattern="[A-Za-z0-9]{8,16}" id="pwd" required></input>
                     <button type="eye" id="eye" onClick={this.showPassword}>
                         { this.state.show
                         ? <FontAwesomeIcon icon={faEye} />

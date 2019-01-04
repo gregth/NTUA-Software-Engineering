@@ -147,7 +147,7 @@ class Product extends React.Component {
                 <form className="addform" id="addproduct" onSubmit={this.handleSubmit}>
                         <div>
                             <label id="label-form" htmlFor="name">Barcode Προϊόντος:</label>
-                            <input id="barcode" name="barcode" pattern="[0-9]{1,128}" type="text" required/>
+                            <input id="barcode" name="barcode" pattern="[0-9]{1,128}" className="form_input" type="text" required/>
                         </div>
                         <div>
                             <label> Τωρινή τοποθεσία </label>
@@ -156,27 +156,27 @@ class Product extends React.Component {
                         <div> Ή </div>
                         <div>
                             <label id="label-form" htmlFor="address">Όνομα Καταστήματος:</label>
-                            <input id="name" name="name" type="text" disabled={this.flag}/>
+                            <input id="name" name="name" type="text" className="form_input" disabled={this.flag}/>
                         </div>
                         
                         <div>
                             <label id="label-form" htmlFor="address">Διεύθυνση:</label>
-                            <input id="address" name="address" pattern="[A-Za-z]+" type="text" disabled={this.flag} required/>
+                            <input id="address" name="address" pattern="[A-Za-z]+" type="text" disabled={this.flag} className="form_input" required/>
                         </div>
 
                         <div>
                             <label id="label-form" htmlFor="number">Αριθμός:</label>
-                            <input type="text" id="number" disabled={this.flag} required/>
+                            <input type="text" id="number" disabled={this.flag} className="form_input" required/>
                         </div>
 
                         <div>
                             <label id="label-form" htmlFor="postal">ΤΚ:</label>
-                            <input id="postal" name="postal" pattern="[0-9]+" type="text" disabled={this.flag} required/>
+                            <input id="postal" name="postal" pattern="[0-9]+" type="text" disabled={this.flag} className="form_input" required/>
                         </div>
 
                         <div>
                             <label id="label-form" htmlFor="price">Τιμή:</label>
-                            <input type="text" id="price" pattern="[0-9,]+" name="price" required/>
+                            <input type="text" id="price" pattern="[0-9,]+" name="price" className="form_input" required/>
                         </div>
 
                         <button className="btn" type="submit" id="button1">Προσθήκη</button>

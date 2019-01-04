@@ -91,27 +91,27 @@ class Register extends React.Component {
                 
                 <div className="form-group">
                     <label id="label-form" htmlFor="first_name">Όνομα:</label>
-                    <input id="first_name" name="first_name" className="form-control" pattern="[A-Za-z]+" type="text" required/>
+                    <input id="first_name" name="first_name" className="form_input" pattern="[A-Za-z]+" type="text" required/>
                 </div>
                 
                 <div className="form-group">
                     <label id="label-form" htmlFor="last_name">Επίθετο:</label>
-                    <input id="last_name" name="last_name" className="form-control" pattern="[A-Za-z]+" type="text" required/>
+                    <input id="last_name" name="last_name" className="form_input" pattern="[A-Za-z]+" type="text" required/>
                 </div>
                 
                 <div className="form-group">
                     <label id="label-form" htmlFor="email">Email:</label>
-                    <input type="email" id="email" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required/>
+                    <input type="email" id="email" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" className="form_input" required/>
                 </div>
                 
                 <div className="form-group">
                     <label id="label-form" htmlFor="username">Username:</label>
-                    <input id="username" name="username" className="form-control" title="only letters, numbers and underscore" pattern="[A-Za-z0-9_]+" type="text" required/>
+                    <input id="username" name="username" className="form_input" title="only letters, numbers and underscore" pattern="[A-Za-z0-9_]+" type="text" required/>
                 </div>
                 
                 <div className="form-group">
                     <label id="label-form" htmlFor="pwd">Κωδικός:</label>
-                    <input title="no special characters" type="password" name="password" className="form-control" pattern="[A-Za-z0-9]{8,16}" id="pwd" onKeyUp={() => this.checkPasswordMatch()} required></input>
+                    <input title="no special characters" type="password" name="password" className="form_input" pattern="[A-Za-z0-9]{8,16}" id="pwd" onKeyUp={() => this.checkPasswordMatch()} required></input>
                     <button type="eye" id="eye" onClick={this.showPassword}>
                         { this.state.show
                         ? <FontAwesomeIcon icon={faEye} />
@@ -123,7 +123,7 @@ class Register extends React.Component {
                 
                 <div className="form-group">
                     <label id="label-form" htmlFor="pwd_repeat">Επαλήθευση Κωδικού:</label>
-                    <input id="re_pass" name="re_pass" className="form-control" type="password" onInput={() => this.checkPasswordMatch()} required/>
+                    <input id="re_pass" name="re_pass" className="form_input" type="password" onInput={() => this.checkPasswordMatch()} required/>
                     { this.state.check_show
                     ? <span> 
                     { this.state.check
@@ -137,11 +137,11 @@ class Register extends React.Component {
                 
                 <div className="for-group">
                     <label id="label-form" htmlFor="birth_date">Ημερομηνία Γέννησης:</label>
-                    <input type="date" id="birth_date" name="birth_date" className="form-control" max="2000-12-31" required/>
+                    <input type="date" id="birth_date" name="birth_date" className="form_input" max="2000-12-31" required/>
                 </div>
                 <div className="form-group">
                     <label id="label-form" htmlFor="phone">Κινητό Τηλέφωνο:</label>
-                    <input type="tel" id="phone" title="69XXXXXXXX" pattern="69\d{8}" name="phone" required/>
+                    <input type="tel" id="phone" title="69XXXXXXXX" pattern="69\d{8}" name="phone" className="form_input" required/>
                 </div>
             </form>
             <button className="btn" type="submit" disabled={!this.state.ready} id="button1">Εγγραφή</button>

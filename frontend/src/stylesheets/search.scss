@@ -14,8 +14,21 @@ $primary: lightblue;
 }
 .map {
     height: 20%;
-    width: 20px;
-    top: 67%;
+    width: 50px;
+}
+
+.search {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+}
+
+.search_input {
+    width: 80%;
+    padding: 5px 10px;
+    margin: 8px 0;
+    box-sizing: border-box;
 }
 
 .icon {
@@ -172,19 +185,6 @@ $primary: lightblue;
 .dropdown:hover .dropdown-content {display: block;}
 
 .dropdown:hover .dropbtn {background-color: #3e8e41;}
-
-.search {
-    width: 50%;
-    height: 50%;
-    align-items: center;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    position: absolute;
-    right: 45%;
-    left: 35%;
-    top: 15%;
-}
 
 .addform {
     position:static;
