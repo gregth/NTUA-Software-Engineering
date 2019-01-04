@@ -15,12 +15,9 @@ body {
 }
 
 .App-logo {
-  position: absolute;
-  bottom: 300px;
-  right:450px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 30%;
-  height: 400px;
+  align-items: center;
+    top: 10%;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
 }
