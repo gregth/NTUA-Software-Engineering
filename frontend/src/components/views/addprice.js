@@ -119,8 +119,7 @@ class Product extends React.Component {
     }
     
     new_product () {
-        //TODO
-        alert("TODO");
+        browserHistory.push('/newproduct');
     }
     
     render() {
