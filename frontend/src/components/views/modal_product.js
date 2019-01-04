@@ -21,7 +21,7 @@ class Modal extends React.Component {
                     <button className="homepage" onClick={this.props.onClose}>
                         Διόρθωση Barcode
                     </button>
-                    <button className="homepage" onClick={this.props.new_product}>
+                    <button className="homepage" onClick={this.props.new}>
                         Προσθήκη Νέου Προϊόντος
                     </button>
                     <button className="homepage" onClick={this.props.home}>
