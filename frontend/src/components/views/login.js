@@ -118,8 +118,9 @@ class Login extends React.Component {
                     </FormGroup>
                     <span id="message"/><br/>
                     <Button type="submit" id="button1">Σύνδεση</Button>
+                    <Button id="button2" onClick={() => this.register()}>Εγγραφή</Button>
                </Form>
-               <Button id="button2" onClick={() => this.register()}>Εγγραφή</Button>
+               
            </div>
         );
   }
