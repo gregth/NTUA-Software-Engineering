@@ -93,8 +93,9 @@ export class MapClass extends Component {
         return (
             <div>   
                 <Label>
-                    <Input type="checkbox" id="location_map" onChange={() => this.currentLocation()}/>{' '}
                     Εμφάνιση Τωρινής Τοποθεσίας
+                    <Input type="checkbox" id="location_map" onChange={() => this.currentLocation()}/>{' '}
+                    
                 </Label>
                 
                 <Map 
