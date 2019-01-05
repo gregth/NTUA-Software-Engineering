@@ -9,7 +9,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 require('./stylesheets/base.scss');
 require('./stylesheets/register.scss');
 require('./stylesheets/search.scss');
-require('./stylesheets/modal.scss');
 require('./stylesheets/bootstrap.scss');
 
 ReactDom.render(

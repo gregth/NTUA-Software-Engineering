@@ -10,7 +10,8 @@ import { faChevronLeft, faBars } from '@fortawesome/free-solid-svg-icons';
 import { browserHistory } from 'react-router';
 import Geocode from 'react-geocode';
 import cookie from 'react-cookies';
-import Modal from './modal_product';
+import {Settings} from './dropdown_settings';
+import {  Modal, ModalHeader, ModalBody, ModalFooter, Input, Label, Button, Form, FormGroup, Row, Col } from 'reactstrap';
 
 function coords_to_address (lat, long) {
   return fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' +
@@ -52,13 +53,10 @@ class Product extends React.Component {
     
     constructor(props) {
         super(props);
-        this.state = {username: cookie.load('username'), barcode: '', latitude: '', longitude: '', address: '', post_code: null, addr_num: null, price:null};
+        this.state = { barcode: '', latitude: '', longitude: '', address: '', post_code: null, addr_num: null, price:null};
         this.handleSubmit = this.handleSubmit.bind(this);
         this.homepage = this.homepage.bind(this);
         this.currentLocation = this.currentLocation.bind(this);
-        this.logoff = this.logoff.bind(this);        
-        this.delete = this.delete.bind(this);
-        this.favourite_products = this.favourite_products.bind(this);
         this.flag = false;
         this.toggleModal = this.toggleModal.bind(this);
         this.new_product = this.new_product.bind(this);
@@ -77,21 +75,6 @@ class Product extends React.Component {
         console.log(result);
         var temp = this.state.show_current;
         this.setState({ current: [{latitude: result[0], longitude: result[1]}], show_current: !temp});
-    }
-    
-    delete () {
-        //TODO 
-        cookie.remove('username', { path: '/' });
-        browserHistory.push('/');
-    }
-    
-    favourite_products () {
-        browserHistory.push('/products');
-    }
-    
-    logoff () {
-        cookie.remove('username', { path: '/' });
-        browserHistory.push('/');
     }
     
     homepage() {
@@ -125,61 +108,58 @@ class Product extends React.Component {
     render() {
         return(
             <div>
-                <Modal show={this.state.isOpen} 
-                        onClose={this.toggleModal} 
-                        home={this.homepage}
-                        new={this.new_product}>
-                        Το προϊόν με barcode {this.state.barcode} δε βρέθηκε.
-                </Modal>
-                <div className="dropdown">
-                    <button className="dropbtn"><FontAwesomeIcon icon={faBars}></FontAwesomeIcon> {this.state.username}</button>
-                    <div className="dropdown-content">
-                        <div onClick={() => this.favourite_products()}>Αγαπημένα Προϊόντα</div>
-                        <div href="#">Αγαπημένα Καταστήματα</div>
-                        <div onClick={() => this.delete()}>Απενεργοποίηση Λογαριασμού</div>
-                        <div onClick={() => this.logoff()}>Αποσύνδεση</div>
-                    </div>
-                </div>
+                <Settings/>
                 
                 <button className="homepage" type="submit" onClick={() => this.homepage()}><FontAwesomeIcon icon={faChevronLeft}></FontAwesomeIcon> Αρχική Σελίδα </button>
                 
-                <form className="addform" id="addproduct" onSubmit={this.handleSubmit}>
-                        <div>
-                            <label id="label-form" htmlFor="name">Barcode Προϊόντος:</label>
-                            <input id="barcode" name="barcode" pattern="[0-9]{1,128}" className="form_input" type="text" required/>
-                        </div>
-                        <div>
-                            <label> Τωρινή τοποθεσία </label>
-                            <input type="checkbox" name="location" id="location" onChange={() => this.currentLocation()}></input>
-                        </div>
+                <Form id="addproduct" onSubmit={this.handleSubmit}>
+                        <FormGroup className="mb-2 mr-sm-2 mb-sm-0" check inline>
+                            <Label for="name" className="mr-sm-2">Barcode Προϊόντος:</Label>
+                            <Input id="barcode" name="barcode" pattern="[0-9]{1,128}" type="text" required/>
+                        </FormGroup>
+                        <FormGroup check inline>
+                            <Input type="checkbox" name="location" id="location" onChange={() => this.currentLocation()}></Input>
+                            <Label> Τωρινή τοποθεσία</Label> 
+                        </FormGroup>
                         <div> Ή </div>
-                        <div>
-                            <label id="label-form" htmlFor="address">Όνομα Καταστήματος:</label>
-                            <input id="name" name="name" type="text" className="form_input" disabled={this.flag}/>
-                        </div>
+                        <FormGroup className="login" check inline>
+                            <Label for="address">Όνομα Καταστήματος:</Label>
+                            <Input id="name" name="name" type="text" disabled={this.flag}/>
+                        </FormGroup>
                         
-                        <div>
-                            <label id="label-form" htmlFor="address">Διεύθυνση:</label>
-                            <input id="address" name="address" pattern="[A-Za-z]+" type="text" disabled={this.flag} className="form_input" required/>
-                        </div>
-
-                        <div>
-                            <label id="label-form" htmlFor="number">Αριθμός:</label>
-                            <input type="text" id="number" disabled={this.flag} className="form_input" required/>
-                        </div>
-
-                        <div>
-                            <label id="label-form" htmlFor="postal">ΤΚ:</label>
-                            <input id="postal" name="postal" pattern="[0-9]+" type="text" disabled={this.flag} className="form_input" required/>
-                        </div>
-
-                        <div>
-                            <label id="label-form" htmlFor="price">Τιμή:</label>
-                            <input type="text" id="price" pattern="[0-9,]+" name="price" className="form_input" required/>
-                        </div>
+                        <FormGroup className="login" check inline>
+                            <Label for="address">Διεύθυνση:</Label>
+                            <Input id="address" name="address" pattern="[A-Za-z]+" type="text" disabled={this.flag} required/>
+                        </FormGroup>
+                        <Row form>
+                        <Col md={6}>
+                        <FormGroup className="login" check inline>
+                            <Label for="number">Αριθμός:</Label>
+                            <Input type="text" id="number" disabled={this.flag} className="form_input" required/>
+                        </FormGroup>
+                        </Col>
+                        <Col md={6}>
+                        <FormGroup className="login" check inline>
+                            <Label for="postal">ΤΚ:</Label>
+                            <Input id="postal" name="postal" pattern="[0-9]+" type="text" disabled={this.flag} required/>
+                        </FormGroup>
+                        </Col>
+                        </Row>
+                        <FormGroup check inline>
+                            <Label for="price">Τιμή:</Label>
+                            <Input type="text" id="price" pattern="[0-9,]+" name="price" required/> {' '}€
+                        </FormGroup>
 
                         <button className="btn" type="submit" id="button1">Προσθήκη</button>
-                </form>
+                        <Modal isOpen={this.state.isOpen} toggle={this.toggleModal}>
+                            <ModalBody>Το προϊόν με barcode {this.state.barcode} δε βρέθηκε.</ModalBody>
+                            <ModalFooter>
+                                <Button color="primary" onClick={this.toggleModal}>Διόρθωση Barcode</Button>{' '}
+                                <Button color="secondary" onClick={this.homepage}>Ακύρωση</Button>
+                                <Button color="secondary" onClick={this.new_product}>Προσθήκη νέου προϊόντος</Button>
+                            </ModalFooter>
+                        </Modal>
+                </Form>
             </div>
         );
   }

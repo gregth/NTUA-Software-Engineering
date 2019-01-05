@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Map, GoogleApiWrapper, Marker, InfoWindow } from 'google-maps-react';
 import Geocode from 'react-geocode';
-import fetch from 'isomorphic-fetch';
+import { Input, Label } from 'reactstrap';
 
 function coords_to_address (lat, long) {
   return fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' +
@@ -56,13 +56,14 @@ export class MapClass extends Component {
     }
     
     async currentLocation ()  {
+        
         var checkBox = document.getElementById("location");
         if (!checkBox.checked) {
             var temp = this.state.show_current;
             this.setState({ show_current: !temp});
             return;
         }
-        
+        alert('aa');
         let result = await getLocation();
         console.log(result);
         var temp = this.state.show_current;
@@ -89,9 +90,12 @@ export class MapClass extends Component {
   
     render() {
         return (
-            <div>
-                <label> Εμφάνιση Τωρινής Τοποθεσίας</label>
-                <input type="checkbox" id="location" name="location" onChange={() => this.currentLocation()}></input>
+            <div>   
+                <Label>
+                    <Input type="checkbox" id="location" onChange={() => this.currentLocation()}/>{' '}
+                    Εμφάνιση Τωρινής Τοποθεσίας
+                </Label>
+                
                 <Map 
                     google={window.google}
                     style={{width:'40%', height:'40%'}}
