@@ -8,7 +8,6 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartPlus, faBuilding, faBars, faHeart, faSearch} from '@fortawesome/free-solid-svg-icons';
-import {falHeart} from '@fortawesome/free-regular-svg-icons';
 import { browserHistory } from 'react-router';
 import MapClass from './map';
 import Range from './range';
@@ -16,21 +15,20 @@ import { Map, GoogleApiWrapper } from 'google-maps-react';
 import cookie from 'react-cookies';
 import {Product} from './product';
 import {Shop} from './shop';
+import {Settings} from './dropdown_settings';
 import {Categories} from './categories_menu';
+import { NavbarBrand, Navbar, Nav, NavItem, NavLink, Input, InputGroupAddon, Button, Form, InputGroup, FormGroup, Label, NavbarToggler } from 'reactstrap';
 
 class Search extends Component {
  
     constructor(props) {
         super(props);
-        this.state = {search: [], price: 50, show_map: false, username: cookie.load('username'), products: [], results: false};
+        this.state = {search: null, price: 50, show_map: false, username: cookie.load('username'), products: [], results: false};
         this.handleSubmit = this.handleSubmit.bind(this);
         this.only_nearby_shops = this.only_nearby_shops.bind(this);
-        this.logoff = this.logoff.bind(this);        
-        this.delete = this.delete.bind(this);
         this.updateRange = this.updateRange.bind(this);
         this.newprice = this.newprice.bind(this);
         this.newshop = this.newshop.bind(this);
-        this.favourite_products = this.favourite_products.bind(this);
         this.favourite = this.favourite.bind(this);
     }
     
@@ -39,11 +37,6 @@ class Search extends Component {
             price: val
         });
     } 
-        
-    logoff () {
-        cookie.remove('username', { path: '/' });
-        browserHistory.push('/');
-    }
     
     newprice () {
         browserHistory.push('/addprice');
@@ -51,16 +44,6 @@ class Search extends Component {
     
     newshop () {
         browserHistory.push('/addshop');
-    }
-    
-    delete () {
-        //TODO 
-        cookie.remove('username', { path: '/' });
-        browserHistory.push('/');
-    }
-    
-    favourite_products () {
-        browserHistory.push('/products');
     }
   
     only_nearby_shops () {
@@ -86,54 +69,65 @@ class Search extends Component {
         var shop = new Shop({name: 'cava1', id: 1, address: 'Athens 1', lat: 37.9738, lgn:23.7275});
         var product = new Product({name: 'pr1', barcode: 12345, price: 12, shop:shop, favourite: true, id: 0});
         this.state.products.push(product);
-        this.setState({results: true, show_map: !temp, search: this.selectedCheckboxes});
+        this.setState({results: true, show_map: !temp, search: s});
     }
     
     render() {
         return (
             <div>
-                <div className="dropdown">
-                    <button className="dropbtn"><FontAwesomeIcon icon={faBars}></FontAwesomeIcon> {this.state.username}</button>
-                    <div className="dropdown-content">
-                        <div onClick={() => this.favourite_products()}>Αγαπημένα Προϊόντα</div>
-                        <div href="#">Αγαπημένα Καταστήματα</div>
-                        <div onClick={() => this.delete()}>Απενεργοποίηση Λογαριασμού</div>
-                        <div onClick={() => this.logoff()}>Αποσύνδεση</div>
-                    </div>
-                </div>
-                <button className="new" id="new_product" type="submit" onClick={() => this.newprice()}>
-                    <FontAwesomeIcon icon={faCartPlus}></FontAwesomeIcon> Προσθήκη Νέας Τιμής 
-                </button>
+                <Navbar color="faded" light>
+                <NavbarBrand><Settings/></NavbarBrand>
+                    <Nav className="ml-auto" navbar>
+                        <NavItem>
+                            <NavLink onClick={() => this.newprice()}><FontAwesomeIcon icon={faCartPlus}></FontAwesomeIcon> Προσθήκη Νέας Τιμής</NavLink>
+                        </NavItem>
+                    </Nav>
+                </Navbar>
+                
                 <button className="new" id="new_shop" type="submit" onClick={() => this.newshop()}><FontAwesomeIcon icon={faBuilding}></FontAwesomeIcon> Προσθήκη Νέου Καταστήματος </button>
                 <br/>
                 
-                <div className="search">
-                    <h1> Αναζήτηση Προϊόντων </h1>
-                    <form id="searching">
-                        <Categories/>
-                        <input id="search" type="text" className="search_input" placeholder="Αναζήτηση με όνομα.." name="search"></input>
-                        <button className="search_btn" id="search_btn" type="submit" onClick={this.handleSubmit}><FontAwesomeIcon icon={faSearch}></FontAwesomeIcon></button>
-                        <br/><br/>
-                        <label> Μέγιστη τιμή </label>
-                        <Range range={this.state.price} updateRange={this.updateRange}/>
-                        <br/>
-                        <label> Only nearby shops</label>
-                        <input type="checkbox" name="location" onChange={() => this.only_nearby_shops()}></input>
-                        
-                        {this.state.results
-                            ? <div> {this.state.products.map(product => (
-                                    <div> {product.name} {product.price}€ 
-                                    {product.favourite 
-                                    ? <button title='Αφαίρεση από τα αγαπημένα' onClick={(e) => this.favourite(product.id, e)} className='icon'><FontAwesomeIcon color="#FF0000" icon={faHeart}></FontAwesomeIcon></button>
-                                    : <button title='Προσθήκη στα αγαπημένα' onClick={(e) => this.favourite(product.id, e)} className='icon'><FontAwesomeIcon icon={faHeart}></FontAwesomeIcon></button> 
-                                    }
-                                    </div>
-                                ))}</div>
-                            : <div></div>
-                        }
-                           
-                    </form>
+                <div className="div_center">
+                    <img src={"/public/logo_transparent.png"} className="App-logo" alt="logo" />
+
+                    <div className="search">
+                        <Form id="searching">
+                            <FormGroup check inline>
+                                <Categories/>
+                                <InputGroup>
+                                    <Input id="search" placeholder="Αναζήτηση με όνομα.."></Input>
+                                    <InputGroupAddon addonType="append">
+                                        <button className="search_btn" id="search_btn" onClick={this.handleSubmit}>
+                                            <FontAwesomeIcon icon={faSearch}></FontAwesomeIcon>
+                                        </button>
+                                    </InputGroupAddon>
+                                </InputGroup>
+                            </FormGroup>
+
+                            <FormGroup>
+                                <label> Μέγιστη τιμή </label>
+                                <Range range={this.state.price} updateRange={this.updateRange}/>
+                            </FormGroup>
+                            <FormGroup check>
+                                <Label>
+                                    <Input type="checkbox" id="location" onChange={() => this.only_nearby_shops()}/>{' '}
+                                    Μόνο κοντινά καταστήματα
+                                </Label>
+                            </FormGroup>
+                        </Form> 
+                    </div>
                 </div>
+                {this.state.results
+                    ? <div> {this.state.products.map(product => (
+                            <div> {product.name} {product.price}€ 
+                            {product.favourite 
+                            ? <button title='Αφαίρεση από τα αγαπημένα' onClick={(e) => this.favourite(product.id, e)} className='icon'><FontAwesomeIcon color="#FF0000" icon={faHeart}></FontAwesomeIcon></button>
+                            : <button title='Προσθήκη στα αγαπημένα' onClick={(e) => this.favourite(product.id, e)} className='icon'><FontAwesomeIcon icon={faHeart}></FontAwesomeIcon></button> 
+                            }
+                            </div>
+                        ))}</div>
+                    : <div></div>
+                }   
                 <div className="map">
                     {this.state.show_map
                         ?<MapClass/>

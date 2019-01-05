@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import SelectSearch from 'react-select-search';
+import {DropdownMenu, DropdownToggle, ButtonDropdown, DropdownItem  } from 'reactstrap';
 
 const options = [
-    {name: 'Όλες οι κατηγορίες', value: 'all'},
-    {
-        type: 'group',
-        items: [
             {name: 'Αναψυκτικά', value: 'beverages'},
             {name: 'Χωρίς Αλκοόλ', value: 'nonalchool'},
             {name: 'Βότκα', value: 'vodka'},
@@ -19,11 +16,9 @@ const options = [
             {name: 'Ρούμι', value: 'rum'},
             {name: 'Τεκίλα', value: 'tequila'},
             {name: 'Τσίπουρο', value: 'tsipouro'},
-            {name: 'Σνακς', value: 'snacks'}
-            
-        ].sort(compare)
-    }
-];
+            {name: 'Σνακς', value: 'snacks'}           
+        ].sort(compare);
+
 
 function compare(a, b){
     if (a.name > b.name) return 1;
@@ -32,9 +27,44 @@ function compare(a, b){
 }
 
 export class Categories extends Component {
-  render() {
+    constructor(props) {
+    super(props);
+
+    this.toggle = this.toggle.bind(this);
+    this.state = { dropdownOpen: false, dropDownValue: 'Επιλογή κατηγορίας' };
+    this.changeValue = this.changeValue.bind(this);
+  }
+
+  toggle() {
+    this.setState({
+      dropdownOpen: !this.state.dropdownOpen
+    });
+  }
+  
+    changeValue(e) {
+        this.setState({dropDownValue: e.currentTarget.textContent});
+    }
+
+    render() {
         return ( 
-            <SelectSearch options={options} value="all" name="categories" placeholder="Επιλογή Κατηγορίας" />
+            <div>
+                <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+                    <DropdownToggle caret>
+                        {this.state.dropDownValue}
+                    </DropdownToggle>
+                    <DropdownMenu right>
+                        <DropdownItem onClick={this.changeValue}>
+                            Όλες οι κατηγορίες
+                        </DropdownItem>
+                        <DropdownItem divider />
+                        {options.map(option => (
+                            <DropdownItem onClick={this.changeValue} key={option.value}>
+                                {option.name}
+                            </DropdownItem>
+                        ))}
+                    </DropdownMenu>
+                </ButtonDropdown>
+            </div>
         );
     }
 };

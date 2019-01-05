@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash, faUser, faKey, faHome, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { browserHistory } from 'react-router';
 import cookie from 'react-cookies';
-
+import { Input, InputGroupAddon, Button, Form, InputGroup, FormGroup, Label, Col } from 'reactstrap';
 
 class Login extends React.Component {
     
@@ -84,36 +84,42 @@ class Login extends React.Component {
     render() {
         return(
             <div>
-            <button className="homepage" type="submit" onClick={() => this.homepage()}><FontAwesomeIcon icon={faChevronLeft}></FontAwesomeIcon> Αρχική Σελίδα </button>
-            <form id="login" onSubmit={this.handleSubmit}>
-                <div></div>
-                
-                <br/>
-                <div className="form-group">
-                    <label id="label-form" htmlFor="username">
-                        <FontAwesomeIcon icon={faUser} />
-                        Username:
-                    </label>
-                    <input id="username" type="button" name="username" className="form_input" title="only letters, numbers and underscore" pattern="[A-Za-z0-9_]+" type="text" required/>
-                </div>
-                
-                <div className="form-group">
-                    <label id="label-form" htmlFor="pwd">
-                        <FontAwesomeIcon icon={faKey} />
-                        Password:
-                    </label>
-                    <input title="8-16 no special characters" type="password" name="password" className="form_input" pattern="[A-Za-z0-9]{8,16}" id="pwd" required></input>
-                    <button type="eye" id="eye" onClick={this.showPassword}>
-                        { this.state.show
-                        ? <FontAwesomeIcon icon={faEye} />
-                        : <FontAwesomeIcon icon={faEyeSlash} />
-                        }
-                    </button> 
-                </div>
-                <span id="message"/><br/>
-                <input className="btn" type="submit" id="button1" value="Σύνδεση"></input>
-           </form>
-           <button className="btn" type="button" id="button2" onClick={() => this.register()}>Εγγραφή</button>
+                <button className="homepage" type="submit" onClick={() => this.homepage()}><FontAwesomeIcon icon={faChevronLeft}></FontAwesomeIcon> Αρχική Σελίδα </button>
+
+                <Form id="login" onSubmit={this.handleSubmit}>
+                    <FormGroup>
+                        <Label for="username">
+                            <FontAwesomeIcon icon={faUser} /> {' '}
+                            Username:
+                        </Label>
+                        <div className="login">
+                            <Input bsSize="sm" id="username" type="text" name="username" title="only letters, numbers and underscore" pattern="[A-Za-z0-9_]+" type="text" required/>
+                        </div>
+                    </FormGroup>
+
+                    <FormGroup>
+                        <Label for="pwd">
+                            <FontAwesomeIcon icon={faKey} />{' '}
+                            Password:
+                        </Label>
+                            <InputGroup>
+                            <div className="login">
+                                <Input title="8-16 no special characters" type="password" name="password" pattern="[A-Za-z0-9]{8,16}" id="pwd" required></Input>
+                            </div>
+                            <InputGroupAddon addonType="append">
+                                <button type="eye" id="eye" onClick={this.showPassword}>
+                                    { this.state.show
+                                    ? <FontAwesomeIcon icon={faEye} />
+                                    : <FontAwesomeIcon icon={faEyeSlash} />
+                                    }
+                                </button> 
+                            </InputGroupAddon>
+                            </InputGroup>
+                    </FormGroup>
+                    <span id="message"/><br/>
+                    <Button type="submit" id="button1">Σύνδεση</Button>
+               </Form>
+               <Button id="button2" onClick={() => this.register()}>Εγγραφή</Button>
            </div>
         );
   }

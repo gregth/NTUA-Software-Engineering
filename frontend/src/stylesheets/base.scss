@@ -18,8 +18,6 @@ body {
 .App-logo {
     position: absolute;
     top: 15%;
-    right: 37.5%;
-    left: 37.5%;
     width: 25%;
     display: block;
     margin: auto;
@@ -33,4 +31,12 @@ body {
 .div_under {
     clear: both;
     margin: 10px;
+}
+
+.div_center {
+    align-items: center;
+    top: 10%;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
 }
