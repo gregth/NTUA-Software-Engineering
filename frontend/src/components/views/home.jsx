@@ -104,7 +104,7 @@ export default class Home extends Component {
                     </Form>   
                 </div>
             </div>
-            <div className="temp">
+            <div className="map_class">
                     {this.state.results
                     ? <div> {this.state.products.map(product => (
                             <div> {product.name} {product.price}€ 

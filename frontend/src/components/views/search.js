@@ -117,6 +117,7 @@ class Search extends Component {
                         </Form> 
                     </div>
                 </div>
+                <div className="map_class">
                 {this.state.results
                     ? <div> {this.state.products.map(product => (
                             <div> {product.name} {product.price}€ 
@@ -127,8 +128,7 @@ class Search extends Component {
                             </div>
                         ))}</div>
                     : <div></div>
-                }   
-                <div>
+                }
                     {this.state.show_map
                         ?<MapClass/>
                         : null
