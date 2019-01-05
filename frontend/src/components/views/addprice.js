@@ -11,7 +11,7 @@ import { browserHistory } from 'react-router';
 import Geocode from 'react-geocode';
 import cookie from 'react-cookies';
 import {Settings} from './dropdown_settings';
-import {  Modal, ModalHeader, ModalBody, ModalFooter, Input, Label, Button, Form, FormGroup, Row, Col } from 'reactstrap';
+import {  Modal, ModalHeader, ModalBody, ModalFooter, Input, Label, Button, Form, FormGroup, Row, Col, InputGroupAddon, InputGroup } from 'reactstrap';
 
 function coords_to_address (lat, long) {
   return fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' +
@@ -64,7 +64,7 @@ class Product extends React.Component {
     
     async currentLocation ()  {
         this.flag = !this.flag;
-        var checkBox = document.getElementById("location");
+        var checkBox = document.getElementById("location_price");
         if (!checkBox.checked) {
             var temp = this.state.show_current;
             this.setState({ show_current: !temp});
@@ -113,41 +113,58 @@ class Product extends React.Component {
                 <button className="homepage" type="submit" onClick={() => this.homepage()}><FontAwesomeIcon icon={faChevronLeft}></FontAwesomeIcon> Αρχική Σελίδα </button>
                 
                 <Form id="addproduct" onSubmit={this.handleSubmit}>
-                        <FormGroup className="mb-2 mr-sm-2 mb-sm-0" check inline>
-                            <Label for="name" className="mr-sm-2">Barcode Προϊόντος:</Label>
-                            <Input id="barcode" name="barcode" pattern="[0-9]{1,128}" type="text" required/>
-                        </FormGroup>
-                        <FormGroup check inline>
-                            <Input type="checkbox" name="location" id="location_price" onChange={() => this.currentLocation()}></Input>
-                            <Label> Τωρινή τοποθεσία</Label> 
-                        </FormGroup>
-                        <div> Ή </div>
-                        <FormGroup className="login" check inline>
-                            <Label for="address">Όνομα Καταστήματος:</Label>
-                            <Input id="name" name="name" type="text" disabled={this.flag}/>
+                        <FormGroup check row>
+                            <Label sm={3} for="barcode" className="mr-sm-2">Barcode Προϊόντος:</Label>
+                            <Col sm={3}>
+                                <Input id="barcode" name="barcode" pattern="[0-9]{1,128}" type="text" required/>
+                            </Col>
                         </FormGroup>
                         
-                        <FormGroup className="login" check inline>
-                            <Label for="address">Διεύθυνση:</Label>
-                            <Input id="address" name="address" pattern="[A-Za-z]+" type="text" disabled={this.flag} required/>
+                        <FormGroup check row>
+                            <Col sm={4}>
+                                <Label sm={3} for="location_price"> Τωρινή τοποθεσία</Label>
+                                <Input type="checkbox" name="location" id="location_price" onChange={() => this.currentLocation()}></Input>
+                            </Col>
                         </FormGroup>
-                        <Row form>
-                        <Col md={6}>
-                        <FormGroup className="login" check inline>
-                            <Label for="number">Αριθμός:</Label>
-                            <Input type="text" id="number" disabled={this.flag} className="form_input" required/>
+                        
+                        <FormGroup check row>
+                            <Label sm={3}>Ή</Label>
                         </FormGroup>
-                        </Col>
-                        <Col md={6}>
-                        <FormGroup className="login" check inline>
-                            <Label for="postal">ΤΚ:</Label>
-                            <Input id="postal" name="postal" pattern="[0-9]+" type="text" disabled={this.flag} required/>
+                        
+                        <FormGroup check row>
+                            <Label sm={3} for="address">Όνομα Καταστήματος:</Label>
+                            <Col sm={3}>
+                                <Input id="name" name="name" type="text" disabled={this.flag}/>
+                            </Col>
                         </FormGroup>
-                        </Col>
-                        </Row>
+                        
+                        <FormGroup check row>
+                            <Label sm={3} for="address">Διεύθυνση:</Label>
+                            <Col sm={3}>
+                                <Input id="address" name="address" pattern="[A-Za-z]+" type="text" disabled={this.flag} required/>
+                            </Col>
+                        </FormGroup>
+                        <br/>
                         <FormGroup check inline>
-                            <Label for="price">Τιμή:</Label>
-                            <Input type="text" id="price" pattern="[0-9,]+" name="price" required/> {' '}€
+                            <Col sm={2}>
+                                <Label for="number">Αριθμός:</Label>
+                                <Input id="number" name="number" pattern="[0-9]+" type="text" disabled={this.flag} required/>
+                            </Col>
+                            
+                            <Col sm={2}>
+                                <Label for="postal">ΤΚ:</Label>
+                                <Input id="postal" name="postal" pattern="[0-9]+" type="text" disabled={this.flag} required/>
+                            </Col>
+                        </FormGroup>
+                        
+                        <FormGroup check row>
+                            <Label sm={3} for="price">Τιμή:</Label>
+                            <Col sm={1}>
+                                <InputGroup>
+                                    <Input type="text" id="price" pattern="[0-9,]+" name="price" required/>
+                                    <InputGroupAddon addonType="append">€</InputGroupAddon>
+                                </InputGroup>
+                            </Col>
                         </FormGroup>
 
                         <button className="btn" type="submit" id="button1">Προσθήκη</button>
