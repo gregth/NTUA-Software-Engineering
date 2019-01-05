@@ -6,7 +6,6 @@ import MapClass from './map';
 import Range from './range';
 import {Product} from './product';
 import {Shop} from './shop';
-import { Map, GoogleApiWrapper } from 'google-maps-react';
 import {Categories} from './categories_menu';
 import { Navbar, Nav, NavItem, NavLink, Input, InputGroupAddon, Button, Form, InputGroup, FormGroup, Label, Container, Row,  Col } from 'reactstrap';
 
@@ -75,7 +74,6 @@ export default class Home extends Component {
                     </NavItem>
                 </Nav>
             </Navbar>
-            
                     <div className="div_center">
                         <img src={"/public/logo_transparent.png"} className="App-logo" alt="logo" />
 
@@ -99,7 +97,7 @@ export default class Home extends Component {
                                 </FormGroup>
                                 <FormGroup check>
                                     <Label>
-                                        <Input type="checkbox" id="location" onChange={() => this.only_nearby_shops()}/>{' '}
+                                        <Input type="checkbox" id="location_home" onChange={() => this.only_nearby_shops()}/>{' '}
                                         Μόνο κοντινά καταστήματα
                                     </Label>
                                 </FormGroup>
@@ -114,7 +112,7 @@ export default class Home extends Component {
                             ))}</div>
                         : null
                         }
-                        <div className="map">
+                        <div >
                             {this.state.show_map
                                 ?<MapClass/>
                                 : null

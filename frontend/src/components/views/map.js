@@ -57,13 +57,14 @@ export class MapClass extends Component {
     
     async currentLocation ()  {
         
-        var checkBox = document.getElementById("location");
-        if (!checkBox.checked) {
+        var checkBox = document.getElementById("location_map");
+        
+        if (!checkBox) {
             var temp = this.state.show_current;
             this.setState({ show_current: !temp});
             return;
         }
-        alert('aa');
+        
         let result = await getLocation();
         console.log(result);
         var temp = this.state.show_current;
@@ -92,7 +93,7 @@ export class MapClass extends Component {
         return (
             <div>   
                 <Label>
-                    <Input type="checkbox" id="location" onChange={() => this.currentLocation()}/>{' '}
+                    <Input type="checkbox" id="location_map" onChange={() => this.currentLocation()}/>{' '}
                     Εμφάνιση Τωρινής Τοποθεσίας
                 </Label>
                 

@@ -118,7 +118,7 @@ class Product extends React.Component {
                             <Input id="barcode" name="barcode" pattern="[0-9]{1,128}" type="text" required/>
                         </FormGroup>
                         <FormGroup check inline>
-                            <Input type="checkbox" name="location" id="location" onChange={() => this.currentLocation()}></Input>
+                            <Input type="checkbox" name="location" id="location_price" onChange={() => this.currentLocation()}></Input>
                             <Label> Τωρινή τοποθεσία</Label> 
                         </FormGroup>
                         <div> Ή </div>
