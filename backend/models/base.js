@@ -1,3 +1,5 @@
+const debug = require('debug')('backend:base-model')
+
 function objectToQueryFields(fields) {
     let keys = Object.keys(fields);
     let placeholders = keys.map((key) => {
@@ -32,7 +34,7 @@ module.exports = class BaseModel {
             substitutions.push(...conditionValues);    
         }
 
-        console.log(query);
+        debug(query);
         let [result] = await this.db.execute(query, substitutions);
         return result
     }
@@ -66,7 +68,7 @@ module.exports = class BaseModel {
             query += ` ORDER BY ` + order_properties.join(", ");
         }
 
-        console.log(query);
+        debug(query);
         let rows;
         if (substitutions.length == 0) {
             [rows] = await this.db.execute(query);
@@ -87,7 +89,7 @@ module.exports = class BaseModel {
             substitutions.push(...conditionValues);
         }
 
-        console.log(query);
+        debug(query);
         let [result] = await this.db.execute(query, substitutions);
         return result;
     }
