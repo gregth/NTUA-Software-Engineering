@@ -5,7 +5,7 @@ module.exports = class Product extends BaseModel {
         super('products', connection)
         this.rules = {
             select: {
-                allowed_select_keys: [
+                allowed_query_keys: [
                     'id',
                     'name',
                     'barcode'
