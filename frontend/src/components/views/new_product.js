@@ -111,6 +111,7 @@ class newProduct extends React.Component {
                     <Button color="secondary" onClick={this.search}>Αρχική σελίδα</Button>
                 </ModalFooter>
             </Modal>
+            
            </div>
         );
   }

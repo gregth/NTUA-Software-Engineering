@@ -87,34 +87,34 @@ class Login extends React.Component {
                 <button className="homepage" type="submit" onClick={() => this.homepage()}><FontAwesomeIcon icon={faChevronLeft}></FontAwesomeIcon> Αρχική Σελίδα </button>
 
                 <Form id="login" onSubmit={this.handleSubmit}>
-                    <FormGroup>
-                        <Label for="username">
+                    <FormGroup check row>
+                        <Label for="username" sm={3}>
                             <FontAwesomeIcon icon={faUser} /> {' '}
                             Username:
                         </Label>
-                        <div className="login">
+                        <Col sm={3}>
                             <Input bsSize="sm" id="username" type="text" name="username" title="only letters, numbers and underscore" pattern="[A-Za-z0-9_]+" type="text" required/>
-                        </div>
+                        </Col>
                     </FormGroup>
 
-                    <FormGroup>
-                        <Label for="pwd">
+                    <FormGroup check row>
+                        <Label for="pwd" sm={3}>
                             <FontAwesomeIcon icon={faKey} />{' '}
                             Password:
                         </Label>
-                            <InputGroup>
-                            <div className="login">
-                                <Input title="8-16 no special characters" type="password" name="password" pattern="[A-Za-z0-9]{8,16}" id="pwd" required></Input>
-                            </div>
-                            <InputGroupAddon addonType="append">
-                                <button type="eye" id="eye" onClick={this.showPassword}>
-                                    { this.state.show
-                                    ? <FontAwesomeIcon icon={faEye} />
-                                    : <FontAwesomeIcon icon={faEyeSlash} />
-                                    }
-                                </button> 
-                            </InputGroupAddon>
-                            </InputGroup>
+                            <Col sm={3}>
+                                <InputGroup>
+                                    <Input title="8-16 no special characters" type="password" name="password" pattern="[A-Za-z0-9]{8,16}" id="pwd" required></Input>
+                                    <InputGroupAddon addonType="append">
+                                        <button type="eye" id="eye" onClick={this.showPassword}>
+                                            { this.state.show
+                                            ? <FontAwesomeIcon icon={faEye} />
+                                            : <FontAwesomeIcon icon={faEyeSlash} />
+                                            }
+                                        </button> 
+                                    </InputGroupAddon>
+                                </InputGroup>
+                            </Col>
                     </FormGroup>
                     <span id="message"/><br/>
                     <Button type="submit" id="button1">Σύνδεση</Button>

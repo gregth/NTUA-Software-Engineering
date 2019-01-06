@@ -37,7 +37,9 @@ class Register extends React.Component {
        const bdate = document.getElementById('birth_date').value;
        const number = document.getElementById('phone').value;
        cookie.save('username', us, {path: '/'});
-       this.setState(() => ({ first_name: fname, last_name: lname, username: us, password: pass, email: email, phone: number, birth_date: bdate}));        
+       this.setState(() => ({ first_name: fname, last_name: lname, username: us, password: pass, email: email, phone: number, birth_date: bdate}));  
+       
+       browserHistory.push('/search');
     }
     
     showPassword(event) {
@@ -107,7 +109,7 @@ class Register extends React.Component {
             <button className="homepage" type="submit" onClick={() => this.homepage()}><FontAwesomeIcon icon={faChevronLeft}></FontAwesomeIcon> Αρχική Σελίδα </button>
             <br/>
             
-            <Form onSubmit={() => this.handleSubmit()}>
+            <Form>
                 <div></div>
                 <FormGroup check row>
                     <Label for="first_name" sm={3}>Όνομα:</Label>
@@ -175,7 +177,7 @@ class Register extends React.Component {
                     </Col>
                 </FormGroup>
             </Form>
-            <Button type="submit" disabled={!this.state.ready}>Εγγραφή</Button>
+            <Button type="submit" onClick={() => this.handleSubmit()}>Εγγραφή</Button>
             </div>
         );
   }

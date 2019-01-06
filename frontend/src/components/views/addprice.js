@@ -12,6 +12,7 @@ import Geocode from 'react-geocode';
 import cookie from 'react-cookies';
 import {Settings} from './dropdown_settings';
 import {  Modal, ModalHeader, ModalBody, ModalFooter, Input, Label, Button, Form, FormGroup, Row, Col, InputGroupAddon, InputGroup } from 'reactstrap';
+import ModalExample from './nearby_shops';
 
 function coords_to_address (lat, long) {
   return fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' +
@@ -53,13 +54,18 @@ class Product extends React.Component {
     
     constructor(props) {
         super(props);
-        this.state = { barcode: '', latitude: '', longitude: '', address: '', post_code: null, addr_num: null, price:null};
+        this.state = { barcode: '', latitude: '', longitude: '', address: '', post_code: null, addr_num: null, price:null, nearby_shops: false};
         this.handleSubmit = this.handleSubmit.bind(this);
         this.homepage = this.homepage.bind(this);
         this.currentLocation = this.currentLocation.bind(this);
         this.flag = false;
         this.toggleModal = this.toggleModal.bind(this);
         this.new_product = this.new_product.bind(this);
+        this.nearby_shops = this.nearby_shops.bind(this);
+    }
+    
+    nearby_shops () {
+        this.setState({nearby_shops: !this.state.nearby_shops});
     }
     
     async currentLocation ()  {
@@ -177,6 +183,8 @@ class Product extends React.Component {
                             </ModalFooter>
                         </Modal>
                 </Form>
+                <Button onClick={() => this.nearby_shops()}> Test nearby shops </Button>
+                <ModalExample flag={this.state.nearby_shops}/>
             </div>
         );
   }
