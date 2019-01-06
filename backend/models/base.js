@@ -37,16 +37,10 @@ module.exports = class BaseModel {
         return result
     }
 
-    async list(fields, conditions, orderBy, joins) {
+    async list(conditions, orderBy, joins) {
         let substitutions = [];
-        let query = `SELECT `;
-        if (fields && Object.keys(fields).length != 0) {
-            query += fields.join(", ");
-        }
-        else {
-            query += ` *`;
-        }
-        query += ` FROM ${this.table}`;
+        let query = `SELECT ${this.rules.select.selectable_fields.join(', ')} FROM ${this.table}`;
+
         if (joins) {
             joins.forEach(join => {
                 query += ` ${join.type} ${join.table} ON ${join.on} `;
