@@ -47,6 +47,12 @@ module.exports = class BaseModel {
             });
         }
         if (conditions && Object.keys(conditions).length != 0){
+            for (const condition in conditions) {
+                if (!this.rules.select.allowed_query_keys.includes(condition)) {
+                    throw new Error(`Not allowed to query ${condition}`)
+                }
+            }
+
             let [conditionPlaceholders, conditionValues] = objectToQueryFields(conditions);
             query += ` WHERE ` + conditionPlaceholders.join(" AND ");
             substitutions.push(...conditionValues);
