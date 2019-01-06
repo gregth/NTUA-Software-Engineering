@@ -8,7 +8,7 @@ module.exports = class ProductsController extends BaseController {
 
     async list() {
         const list = await this.model.list()
-        return list
+        return {products: list}
     }
 
     async create(params) {
