@@ -20,7 +20,7 @@ module.exports = class ProductsController extends BaseController {
     }
 
     async read(id) {
-        return {id}
+        return {products: (await this.model.list({id}))}
     }
 
     async put(params, id) {
