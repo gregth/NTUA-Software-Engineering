@@ -45,11 +45,37 @@ class newProduct extends React.Component {
     
     handleSubmit(event) {
         event.preventDefault();
+        event.nativeEvent.stopImmediatePropagation();
         const name = document.getElementById('new_product_name').value;
         const barcode = document.getElementById('new_product_barcode').value;
         const brand = document.getElementById('new_product_brand').value;
         const volume = document.getElementById('new_product_volume').value;
+        var product = { 
+            description: "Product Description",
+            name,
+            barcode,
+            brand,
+            volume,
+            withdrawn: 0
+        }
+        console.log(product)
         
+        fetch('http://localhost:3002/products', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                token: 1234
+            },
+            body: JSON.stringify(product)
+       })
+       .then((response) => {
+           console.log(response)
+       })
+        .catch((error) => {
+            console.error(error);
+        });
+
         this.setState({ name: name, barcode: barcode, volume: volume, brand: brand});   
        
         this.setState({success: true});
@@ -59,7 +85,7 @@ class newProduct extends React.Component {
         return(
             <div>
             <button className="homepage" type="submit" onClick={() => this.homepage()}><FontAwesomeIcon icon={faChevronLeft}></FontAwesomeIcon> Αρχική Σελίδα </button>
-            <Form id="new_product_form" onSubmit={this.handleSubmit}>
+            <Form id="new_product_form">
                 <div></div>
                 
                 <br/>
@@ -93,7 +119,7 @@ class newProduct extends React.Component {
                         </InputGroup>
                     </Col>
                 </FormGroup>
-                <Button type="submit" id="button1">Προσθήκη</Button>
+                <Button type="submit" id="button1" onClick={this.handleSubmit}>Προσθήκη</Button>
             </Form>
             <Button type="button" id="button2" onClick={browserHistory.goBack}>Ακύρωση</Button>
             
