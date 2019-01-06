@@ -6,7 +6,6 @@ import MapClass from './map';
 import Range from './range';
 import {Product} from './product';
 import {Shop} from './shop';
-import { Map, GoogleApiWrapper } from 'google-maps-react';
 import {Categories} from './categories_menu';
 import { Navbar, Nav, NavItem, NavLink, Input, InputGroupAddon, Button, Form, InputGroup, FormGroup, Label, Container, Row,  Col } from 'reactstrap';
 
@@ -75,52 +74,51 @@ export default class Home extends Component {
                     </NavItem>
                 </Nav>
             </Navbar>
-            
-                    <div className="div_center">
-                        <img src={"/public/logo_transparent.png"} className="App-logo" alt="logo" />
+            <div className="div_center">
+                <img src={"/public/logo_transparent.png"} className="App-logo" alt="logo" />
 
-                        <div className="search">
-                            <Form id="searching">
-                                <FormGroup check inline>
-                                    <Categories/>
-                                    <InputGroup>
-                                        <Input id="search" placeholder="Αναζήτηση με όνομα.."></Input>
-                                        <InputGroupAddon addonType="append">
-                                            <button className="search_btn" id="search_btn" onClick={this.handleSubmit}>
-                                                <FontAwesomeIcon icon={faSearch}></FontAwesomeIcon>
-                                            </button>
-                                        </InputGroupAddon>
-                                    </InputGroup>
-                                </FormGroup>
+                <div className="search">
+                    <Form id="searching">
+                        <FormGroup check inline>
+                            <Categories/>
+                            <InputGroup>
+                                <Input id="search" placeholder="Αναζήτηση με όνομα.."></Input>
+                                <InputGroupAddon addonType="append">
+                                    <button className="search_btn" id="search_btn" onClick={this.handleSubmit}>
+                                        <FontAwesomeIcon icon={faSearch}></FontAwesomeIcon>
+                                    </button>
+                                </InputGroupAddon>
+                            </InputGroup>
+                        </FormGroup>
 
-                                <FormGroup>
-                                    <label> Μέγιστη τιμή </label>
-                                    <Range range={this.state.price} updateRange={this.updateRange}/>
-                                </FormGroup>
-                                <FormGroup check>
-                                    <Label>
-                                        <Input type="checkbox" id="location" onChange={() => this.only_nearby_shops()}/>{' '}
-                                        Μόνο κοντινά καταστήματα
-                                    </Label>
-                                </FormGroup>
-                            </Form>   
-                        </div>
-                    </div>
-                <Container>
-                        {this.state.results
-                        ? <div> {this.state.products.map(product => (
-                                <div> {product.name} {product.price}€ 
-                                </div>
-                            ))}</div>
-                        : null
+                        <FormGroup>
+                            <label> Μέγιστη τιμή </label>
+                            <Range range={this.state.price} updateRange={this.updateRange}/>
+                        </FormGroup>
+                        <FormGroup check>
+                            <Label>
+                                <Input type="checkbox" id="location_home" onChange={() => this.only_nearby_shops()}/>{' '}
+                                Μόνο κοντινά καταστήματα
+                            </Label>
+                        </FormGroup>
+                    </Form>   
+                </div>
+            </div>
+            <div className="map_class">
+                    {this.state.results
+                    ? <div> {this.state.products.map(product => (
+                            <div> {product.name} {product.price}€ 
+                            </div>
+                        ))}</div>
+                    : null
+                    }
+                    <div >
+                        {this.state.show_map
+                            ?<MapClass/>
+                            : null
                         }
-                        <div className="map">
-                            {this.state.show_map
-                                ?<MapClass/>
-                                : null
-                            }
-                        </div>
-            </Container>
+                    </div>
+            </div>
         </div>
 
           );

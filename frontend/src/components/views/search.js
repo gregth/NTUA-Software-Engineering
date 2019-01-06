@@ -110,13 +110,14 @@ class Search extends Component {
                             </FormGroup>
                             <FormGroup check>
                                 <Label>
-                                    <Input type="checkbox" id="location" onChange={() => this.only_nearby_shops()}/>{' '}
+                                    <Input type="checkbox" id="location_search" onChange={() => this.only_nearby_shops()}/>{' '}
                                     Μόνο κοντινά καταστήματα
                                 </Label>
                             </FormGroup>
                         </Form> 
                     </div>
                 </div>
+                <div className="map_class">
                 {this.state.results
                     ? <div> {this.state.products.map(product => (
                             <div> {product.name} {product.price}€ 
@@ -127,8 +128,7 @@ class Search extends Component {
                             </div>
                         ))}</div>
                     : <div></div>
-                }   
-                <div className="map">
+                }
                     {this.state.show_map
                         ?<MapClass/>
                         : null

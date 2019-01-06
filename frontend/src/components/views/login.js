@@ -45,25 +45,22 @@ class Login extends React.Component {
         }
 
         cookie.save('username', us, {path: '/'});
-        /*
-        fetch('https://localhost:5000/login', {
-                 method: 'POST',
+        fetch('http://localhost:3002/products', {
+                 method: 'GET',
                  headers: {
                      Accept: 'application/json',
-                     'Content-Type': 'application/json',
                      token: 1234
-                 },
-                 body: JSON.stringify({
-                     username: us,
-                     password: pass
-                 })
-                 }).then((response) => response.json())
-             .then((responseJson) => {
+                 }
+            })
+            .then((response) => {
+                return response.json()
+            })
+            .then((responseJson) => {
                  console.log(responseJson);
              })
              .catch((error) => {
                  console.error(error);
-             });*/
+             });
          browserHistory.push('/search');
     }
     
@@ -118,8 +115,9 @@ class Login extends React.Component {
                     </FormGroup>
                     <span id="message"/><br/>
                     <Button type="submit" id="button1">Σύνδεση</Button>
+                    <Button id="button2" onClick={() => this.register()}>Εγγραφή</Button>
                </Form>
-               <Button id="button2" onClick={() => this.register()}>Εγγραφή</Button>
+               
            </div>
         );
   }
