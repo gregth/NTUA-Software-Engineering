@@ -39,7 +39,7 @@ const createControllerRoutes = controller => {
     router.get('/', (req, res) => endpointHandler(controller.list(req.query), req, res))
     router.get('/:id', (req, res) => endpointHandler(controller.read(req.params.id), req, res))
     router.post('/', (req, res) => endpointHandler(controller.create(req.body), req, res))
-    router.put('/:id', (req, res) => endpointHandler(controller.put(req.params.id), req, res))
+    router.put('/:id', (req, res) => endpointHandler(controller.put(req.body, req.params.id), req, res))
     router.patch('/:id', (req, res) => endpointHandler(controller.patch(req.body, req.params.id), req, res))
     router.delete('/:id', (req, res) => endpointHandler(controller.delete(req.params.id), req, res))
 
