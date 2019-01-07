@@ -4,6 +4,10 @@ const { MalformedInput, NotImplemented } = require('./errors')
 const createControllerRoutes = controller => {
     const router = express.Router()
     async function endpointHandler(method, req, res) {
+        if (req.query.format && req.query.format !== 'json') {
+            return res.status(400).send()
+        }
+
         try {
             const results = await method
 
