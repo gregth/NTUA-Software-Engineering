@@ -3,7 +3,7 @@ const { MalformedInput, NotImplemented } = require('./errors')
 
 const createControllerRoutes = controller => {
     const router = express.Router()
-    async function endpointHandler(method, res) {
+    async function endpointHandler(method, req, res) {
         try {
             const results = await method
 
@@ -30,12 +30,12 @@ const createControllerRoutes = controller => {
         }
     }
 
-    router.get('/', (req, res) => endpointHandler(controller.list(), res))
-    router.get('/:id', (req, res) => endpointHandler(controller.read(req.params.id), res))
-    router.post('/', (req, res) => endpointHandler(controller.create(req.body), res))
-    router.put('/:id', (req, res) => endpointHandler(controller.put(req.params.id), res))
-    router.patch('/:id', (req, res) => endpointHandler(controller.patch(req.body, req.params.id), res))
-    router.delete('/:id', (req, res) => endpointHandler(controller.delete(req.params.id), res))
+    router.get('/', (req, res) => endpointHandler(controller.list(), req, res))
+    router.get('/:id', (req, res) => endpointHandler(controller.read(req.params.id), req, res))
+    router.post('/', (req, res) => endpointHandler(controller.create(req.body), req, res))
+    router.put('/:id', (req, res) => endpointHandler(controller.put(req.params.id), req, res))
+    router.patch('/:id', (req, res) => endpointHandler(controller.patch(req.body, req.params.id), req, res))
+    router.delete('/:id', (req, res) => endpointHandler(controller.delete(req.params.id), req, res))
 
     return router
 }
