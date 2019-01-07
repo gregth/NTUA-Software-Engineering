@@ -7,7 +7,8 @@ const mysql = require('mysql2/promise')
 const bodyParser = require('body-parser')
 
 app.use(cors())
-app.use(bodyParser.urlencoded());
+app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.json())
 
 async function main() {
     const dbConnection = await mysql.createConnection(config.db);

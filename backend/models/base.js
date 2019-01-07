@@ -1,3 +1,5 @@
+const debug = require('debug')('backend:base-model')
+
 function objectToQueryFields(fields) {
     let keys = Object.keys(fields);
     let placeholders = keys.map((key) => {
@@ -32,27 +34,27 @@ module.exports = class BaseModel {
             substitutions.push(...conditionValues);    
         }
 
-        console.log(query);
+        debug(query);
         let [result] = await this.db.execute(query, substitutions);
         return result
     }
 
-    async list(fields, conditions, orderBy, joins) {
+    async list(conditions, orderBy, joins) {
         let substitutions = [];
-        let query = `SELECT `;
-        if (fields && Object.keys(fields).length != 0) {
-            query += fields.join(", ");
-        }
-        else {
-            query += ` *`;
-        }
-        query += ` FROM ${this.table}`;
+        let query = `SELECT ${this.rules.select.selectable_fields.join(', ')} FROM ${this.table}`;
+
         if (joins) {
             joins.forEach(join => {
                 query += ` ${join.type} ${join.table} ON ${join.on} `;
             });
         }
         if (conditions && Object.keys(conditions).length != 0){
+            for (const condition in conditions) {
+                if (!this.rules.select.allowed_query_keys.includes(condition)) {
+                    throw new Error(`Not allowed to query ${condition}`)
+                }
+            }
+
             let [conditionPlaceholders, conditionValues] = objectToQueryFields(conditions);
             query += ` WHERE ` + conditionPlaceholders.join(" AND ");
             substitutions.push(...conditionValues);
@@ -66,7 +68,7 @@ module.exports = class BaseModel {
             query += ` ORDER BY ` + order_properties.join(", ");
         }
 
-        console.log(query);
+        debug(query);
         let rows;
         if (substitutions.length == 0) {
             [rows] = await this.db.execute(query);
@@ -87,7 +89,7 @@ module.exports = class BaseModel {
             substitutions.push(...conditionValues);
         }
 
-        console.log(query);
+        debug(query);
         let [result] = await this.db.execute(query, substitutions);
         return result;
     }
