@@ -45,7 +45,15 @@ class HomeScreen extends Component{
     return (
       <View style={{flex: 1, alignItems: 'stretch', justifyContent: 'center'}}>
        <Text>Alcowatch</Text>
-      <Dropdown
+      <Button
+          title="Είσοδος"
+          onPress={() => this.props.navigation.navigate('Login')}
+        />
+      <Button
+          title="Δημιουργία Λογαριασμού"
+          onPress={() => this.props.navigation.navigate('Register')}
+        />
+        <Dropdown
         label='Επιλογή Κατηγορίας'
         data={data}
       />

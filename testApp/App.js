@@ -3,12 +3,14 @@ import { StyleSheet, Text, View } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 import { createAppContainer } from 'react-navigation';
 import HomeScreen from './components/HomeScreen';
-import DetailsScreen from './components/DetailsScreen';
+import LoginPage from './components/LoginPage';
+import RegisterPage from './components/RegisterPage';
 
 const RootStack = createStackNavigator(
   {
     Home: HomeScreen,
-    Details: DetailsScreen,
+    Login: LoginPage,
+    Register: RegisterPage
   },
   {
     initialRouteName: 'Home',
