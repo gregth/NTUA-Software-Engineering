@@ -80,11 +80,13 @@ module.exports = class ProductsController extends BaseController {
 
     async patch(params, id) {
         let product_details = this.validate_patch_params(params)
-        console.log(product_details)
 
         const result = await this.model.update(product_details, {id})
+        if (result.affectedRows > 0) {
+            return this.read(id)
+        }
 
-        return result.affectedRows > 0
+        throw new Error(`Did not update product ${id}: ${params}`)
     }
 
     async delete(id) {
