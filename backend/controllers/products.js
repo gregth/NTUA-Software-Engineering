@@ -50,8 +50,11 @@ module.exports = class ProductsController extends BaseController {
         let product = this.validate_post_params(params)
 
         const result = await this.model.insert(product)
+        if (result.insertId) {
+            return this.read(result.insertId)
+        }
 
-        return result.affectedRows > 0
+        throw new Error(`Did not create product: ${JSON.stringify(params)}`)
     }
 
     async read(id) {
