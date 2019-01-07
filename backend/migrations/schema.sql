@@ -81,6 +81,7 @@ CREATE TABLE `products` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(200) NOT NULL,
   `description` text NOT NULL,
+  `category` varchar(100) NOT NULL,
   `withdrawn` tinyint(1) NOT NULL DEFAULT '0',
   `barcode` varchar(15) NOT NULL,
   PRIMARY KEY (`id`)
