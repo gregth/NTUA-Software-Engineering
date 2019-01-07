@@ -1,5 +1,5 @@
 const express = require('express')
-const { MalformedInput, NotImplemented } = require('./errors')
+const { MalformedInput, NotImplemented, NotFound } = require('./errors')
 
 const createControllerRoutes = controller => {
     const router = express.Router()

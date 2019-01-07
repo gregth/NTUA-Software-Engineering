@@ -1,6 +1,6 @@
 const BaseController = require('./base')
 const model = require('../models/product')
-const { NotFound } = require('./errors')
+const { NotFound } = require('../errors')
 
 module.exports = class ProductsController extends BaseController {
     constructor(dbConnection) {
