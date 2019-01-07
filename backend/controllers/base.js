@@ -1,4 +1,4 @@
-const { MalformedInput, NotImplemented } = require('../errors')
+const { MalformedInput, NotImplemented, NotFound } = require('../errors')
 
 function filter_keys(params, allowed_keys) {
     let filtered_params = {};
@@ -11,7 +11,8 @@ function filter_keys(params, allowed_keys) {
 }
 
 module.exports = class BaseController {
-    constructor(model) {
+    constructor(resource, model) {
+        this.resource = resource
         this.model = model
     }
     
@@ -56,27 +57,88 @@ module.exports = class BaseController {
         return required_params
     }
 
-    async list() {
-        throw new NotImplemented()
+    async list({start = 0, count = 20, status = 'ACTIVE', sort = 'id|DESC'}) {
+        const conditions = {}
+        if (status === 'WITHDRAWN') {
+            conditions.withdrawn = 1
+        } else if (status === 'ACTIVE') {
+            conditions.withdrawn = 0
+        }
+
+        const order = [{
+            field_name: sort.split('|')[0],
+            order: sort.split('|')[1]
+        }]
+
+        start = parseInt(start, 10)
+        count = parseInt(count, 10)
+
+        const list = await this.model.list(conditions, order)
+        const response = {
+            start,
+            count,
+            total: list.length,
+        }
+        response[this.resource] = list.slice(start, start + count).map(this.formatResponse)
+
+        return response
     }
 
     async read(id) {
-        throw new NotImplemented()
+        const items = await this.model.list({id})
+        if (items.length === 0) {
+            throw new NotFound()
+        }
+
+        return this.formatResponse(items[0])
     }
 
     async create(params) {
-        throw new NotImplemented()
+        let item = this.validate_post_params(params)
+
+        const result = await this.model.insert(item)
+        if (result.insertId) {
+            // TODO: possible race condition
+            return this.read(result.insertId)
+        }
+
+        throw new Error(`Did not create ${this.resource}: ${JSON.stringify(params)}`)
     }
 
     async put(params, id) {
-        throw new NotImplemented()
+        let item_details = this.validate_put_params(params)
+
+        const result = await this.model.update(item_details, {id})
+        if (result.affectedRows > 0) {
+            return this.read(id)
+        }
+
+        throw new NotFound(`Did not update ${this.resource} ${id}: ${params}`)
     }
 
     async patch(params, id) {
-        throw new NotImplemented()
+        let item_details = this.validate_patch_params(params)
+
+        const result = await this.model.update(item_details, {id})
+        if (result.affectedRows > 0) {
+            return this.read(id)
+        }
+
+        throw new NotFound(`Did not update ${this.resource} ${id}: ${params}`)
     }
 
     async delete(id) {
-        throw new NotImplemented()
+        let role = 'admin', result
+        if (role == 'admin') {
+            result = await this.model.delete({id})
+        } else {
+            result = await this.model.update({'withdrawn': true}, {id})
+        }
+
+        if (result.affectedRows > 0) {
+            return {message: 'OK'}
+        }
+
+        throw new NotFound(`Did not delete product ${id}`)
     }
 }
