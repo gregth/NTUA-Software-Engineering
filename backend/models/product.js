@@ -8,7 +8,8 @@ module.exports = class Product extends BaseModel {
                 allowed_query_keys: [
                     'id',
                     'name',
-                    'barcode'
+                    'barcode',
+                    'withdrawn'
                 ],
                 selectable_fields: [
                     'id',
