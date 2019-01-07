@@ -12,6 +12,13 @@ class NotImplemented extends Error {
     }
 }
 
+class NotFound extends Error {
+    constructor(message) {
+        super(message)
+        this.name = 'NotFound'
+    }
+}
+
 module.exports = {
     MalformedInput,
     NotImplemented
