@@ -39,7 +39,7 @@ module.exports = class BaseModel {
         return result
     }
 
-    async list(conditions, orderBy, joins) {
+    async list(conditions, orderBy, limit, joins) {
         let substitutions = [];
         let query = `SELECT ${this.rules.select.selectable_fields.join(', ')} FROM ${this.table}`;
 
@@ -66,6 +66,10 @@ module.exports = class BaseModel {
                 order_properties.push(`${order_field.field_name}  ${order_field.order}`);
             });
             query += ` ORDER BY ` + order_properties.join(", ");
+        }
+
+        if (limit) {
+            query += ` LIMIT ${parseInt(limit, 10)}`
         }
 
         debug(query);
