@@ -3,11 +3,28 @@ const model = require('../models/price')
 
 module.exports = class PricesController extends BaseController {
     constructor(dbConnection) {
-        super(new model(dbConnection))
+        super('prices', new model(dbConnection))
+
+        this.formatResponse = item => {
+            return {
+                price: item.price,
+                productId: item.productId,
+                shopId: item.shopId,
+                lat: item.lat,
+                tags: [],
+                withdrawn: !!item.withdrawn
+            }
+        }
     }
 
-    async list() {
-        const list = await this.model.list()
+    async list({start = 0, count = 20, geoDist, geoLng, geoLat, dateFrom, dateTo, shops, products, tags, sort = 'price|ASC'}) {
+        const order = [{
+            field_name: sort.split('|')[0],
+            order: sort.split('|')[1]
+        }]
+
+        const list = await this.model.list(null, order)
+
         return {prices: list}
     }
 
