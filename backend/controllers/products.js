@@ -5,6 +5,20 @@ const { NotFound } = require('../errors')
 module.exports = class ProductsController extends BaseController {
     constructor(dbConnection) {
         super(new model(dbConnection))
+
+        this.formatResponse = item => {
+            return {
+                id: +item.id,
+                name: item.name,
+                description: item.description,
+                category: item.category,
+                tags: [],
+                withdrawn: !!item.withdrawn,
+                extraData: {
+                    barcode: +item.barcode
+                }
+            }
+        }
     }
 
     async list({start = 0, count = 20, status = 'ACTIVE', sort = 'id|DESC'}) {
@@ -28,7 +42,7 @@ module.exports = class ProductsController extends BaseController {
             start,
             count,
             total: list.length,
-            products: list.slice(start, start + count)
+            products: list.slice(start, start + count).map(this.formatResponse)
         }
     }
 
