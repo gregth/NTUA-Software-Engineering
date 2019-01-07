@@ -15,6 +15,7 @@ module.exports = class Product extends BaseModel {
                     'id',
                     'name',
                     'description',
+                    'category',
                     'barcode',
                     'withdrawn'
                 ]
@@ -23,6 +24,7 @@ module.exports = class Product extends BaseModel {
                 required_fields: [
                     'name',
                     'description',
+                    'category',
                     'barcode'
                 ],
                 optional_fields: [
@@ -34,6 +36,7 @@ module.exports = class Product extends BaseModel {
                     'name',
                     'description',
                     'barcode',
+                    'category',
                     'withdrawn',
                 ],
                 allowed_query_keys: ['id']
