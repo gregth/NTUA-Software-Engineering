@@ -17,7 +17,20 @@ module.exports = class ProductsController extends BaseController {
             }
         }
 
-        const list = await this.model.list(conditions, null, count)
+        const order = []
+        if (sort) {
+            order.push({
+                field_name: sort.split('|')[0],
+                order: sort.split('|')[1]
+            })
+        } else {
+            order.push({
+                field_name: 'id',
+                order: 'DESC'
+            })
+        }
+
+        const list = await this.model.list(conditions, order, count)
         return {products: list}
     }
 
