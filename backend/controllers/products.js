@@ -20,8 +20,11 @@ module.exports = class ProductsController extends BaseController {
             order: sort.split('|')[1]
         }]
 
-        const list = await this.model.list(conditions, order, count)
-        return {products: list}
+        start = parseInt(start, 10)
+        count = parseInt(count, 10)
+
+        const list = await this.model.list(conditions, order)
+        return {products: list.slice(start, start + count)}
     }
 
     async create(params) {
