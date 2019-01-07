@@ -1,0 +1,106 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Nov 20, 2018, 12:10:22 PM
+    Author     : nikol
+*/
+$primary: lightblue;
+
+#search_btn {
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+}
+
+#logoff {
+    background-repeat:no-repeat;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+    background-color: rgb(200, 150, 100);
+    border: none;
+    color: white;
+    padding: 5px ;
+    text-align: center;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 12px;
+    width: 100px;
+    font-family: fantasy;
+    display: inline;
+}
+
+#new {
+    background-repeat:no-repeat;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+    background-color: rgb(200, 150, 100);
+    border: none;
+    color: white;
+    padding: 5px ;
+    text-align: center;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 12px;
+    width: 100px;
+    font-family: fantasy;
+    display: inline;
+}
+
+#homepage {
+    background-repeat: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+}
+
+#range {
+  -webkit-appearance: none;
+  background: black;
+  outline: none;
+  height: 6px;
+  width: 200px;
+  border-radius: 5px;
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: black;
+  }
+}
+
+#price {
+  background: $primary;
+  color: #fff;
+  border-radius: 2px;
+  padding: 3px 7px;
+  margin: 0px 10px;
+  text-align: center;
+  position: relative;
+  &::before {
+    content: '';
+    position: absolute;
+    left: -12px;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 0;
+    width: 0;
+    border: solid 6px $primary;
+    z-index: -1;
+    border-top-color: Transparent;
+    border-bottom-color: Transparent;
+    border-left-color: Transparent;
+  }
+}
