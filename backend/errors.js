@@ -21,5 +21,6 @@ class NotFound extends Error {
 
 module.exports = {
     MalformedInput,
-    NotImplemented
+    NotImplemented,
+    NotFound
 }
