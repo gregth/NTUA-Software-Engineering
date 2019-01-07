@@ -8,20 +8,26 @@ module.exports = class Price extends BaseModel {
                 allowed_query_keys: [
                     'id',
                     'product_id',
+                    'shop_id',
+                    'dateFrom',
+                    'dateTo'
                 ],
                 selectable_fields: [
                     'id',
                     'price',
                     'shop_id',
                     'product_id',
-                    'time'
+                    'dateFrom',
+                    'dateTo'
                 ]
             },
             insert: {
                 required_fields: [
                     'price',
                     'shop_id',
-                    'product_id'
+                    'product_id',
+                    'dateFrom',
+                    'dateTo'
                 ],
 		optional_fields: []
             },
