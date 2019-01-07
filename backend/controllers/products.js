@@ -60,7 +60,7 @@ module.exports = class ProductsController extends BaseController {
             throw new NotFound()
         }
 
-        return {products}
+        return this.formatResponse(products[0])
     }
 
     async put(params, id) {
