@@ -7,8 +7,17 @@ module.exports = class ProductsController extends BaseController {
         super(new model(dbConnection))
     }
 
-    async list() {
-        const list = await this.model.list()
+    async list({start, count, status, sort}) {
+        const conditions = {}
+        if (status) {
+            if (status === 'WITHDRAWN') {
+                conditions.withdrawn = 1
+            } else if (status === 'ACTIVE') {
+                conditions.withdrawn = 0
+            }
+        }
+
+        const list = await this.model.list(conditions, null, count)
         return {products: list}
     }
 
