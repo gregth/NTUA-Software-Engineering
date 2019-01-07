@@ -26,6 +26,8 @@ const createControllerRoutes = controller => {
 
             if (err instanceof MalformedInput) {
                 res.status(400).json({error: err.message})
+            } else if (err instanceof NotFound) {
+                res.status(404).send({error: 'Not Found'})
             } else if (err instanceof NotImplemented) {
                 res.status(501).json({error: 'Method Not Implemented'})
             } else {
