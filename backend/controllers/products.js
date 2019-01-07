@@ -24,7 +24,12 @@ module.exports = class ProductsController extends BaseController {
         count = parseInt(count, 10)
 
         const list = await this.model.list(conditions, order)
-        return {products: list.slice(start, start + count)}
+        return {
+            start,
+            count,
+            total: list.length,
+            products: list.slice(start, start + count)
+        }
     }
 
     async create(params) {
