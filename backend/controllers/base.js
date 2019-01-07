@@ -34,9 +34,7 @@ module.exports = class BaseController {
 
     validate_put_params(params) {
         let rules = this.model.rules.update
-        console.log(rules)
         let required_params = filter_keys(params, rules.updatable_fields);
-        console.log(required_params	)
         // For a put request to take place, all updateable fields must be passed
         if (Object.keys(required_params).length != rules.updatable_fields.length) {
             console.log("[PUT_VALIDATOR]: Not all required put params provided")
