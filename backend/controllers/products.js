@@ -75,7 +75,7 @@ module.exports = class ProductsController extends BaseController {
             return this.read(id)
         }
 
-        throw new Error(`Did not update product ${id}: ${params}`)
+        throw new NotFound(`Did not update product ${id}: ${params}`)
     }
 
     async patch(params, id) {
@@ -86,7 +86,7 @@ module.exports = class ProductsController extends BaseController {
             return this.read(id)
         }
 
-        throw new Error(`Did not update product ${id}: ${params}`)
+        throw new NotFound(`Did not update product ${id}: ${params}`)
     }
 
     async delete(id) {
@@ -101,6 +101,6 @@ module.exports = class ProductsController extends BaseController {
             return {message: 'OK'}
         }
 
-        throw new Error(`Did not delete product ${id}`)
+        throw new NotFound(`Did not delete product ${id}`)
     }
 }
