@@ -1,39 +1,39 @@
 const BaseModel = require('./base')
 
-module.exports = class Product extends BaseModel {
+module.exports = class Shop extends BaseModel {
     constructor(connection) {
-        super('products', connection)
+        super('shops', connection)
         this.rules = {
             select: {
                 allowed_query_keys: [
                     'id',
                     'name',
-                    'barcode'
+                    'withdrawn'
                 ],
                 selectable_fields: [
                     'id',
                     'name',
-                    'description',
-                    'barcode',
+                    'address',
+                    'lng',
+                    'lat',
                     'withdrawn'
                 ]
             },
             insert: {
                 required_fields: [
                     'name',
-                    'description',
-                    'barcode'
+                    'address',
+                    'lng',
+                    'lat'
                 ],
-                optional_fields: [
-                    'withdrawn'
-                ]
+		optional_fields: []
             },
             update: {
                 updatable_fields: [
                     'name',
-                    'description',
-                    'barcode',
-                    'withdrawn',
+                    'address',
+                    'lng',
+                    'lat'
                 ],
                 allowed_query_keys: ['id']
             },

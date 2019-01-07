@@ -65,7 +65,7 @@ class Product extends React.Component {
     }
     
     nearby_shops () {
-        this.setState({nearby_shops: !this.state.nearby_shops});
+        this.refs.nearby_shops.toggle();
     }
     
     async currentLocation ()  {
@@ -184,7 +184,7 @@ class Product extends React.Component {
                         </Modal>
                 </Form>
                 <Button onClick={() => this.nearby_shops()}> Test nearby shops </Button>
-                <ModalExample flag={this.state.nearby_shops}/>
+                <ModalExample ref='nearby_shops'/>
             </div>
         );
   }

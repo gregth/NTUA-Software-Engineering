@@ -20,7 +20,6 @@ import {Categories} from './categories_menu';
 import { NavbarBrand, Navbar, Nav, NavItem, NavLink, Input, InputGroupAddon, Button, Form, InputGroup, FormGroup, Label, NavbarToggler } from 'reactstrap';
 
 class Search extends Component {
- 
     constructor(props) {
         super(props);
         this.state = {search: null, price: 50, show_map: false, username: cookie.load('username'), products: [], results: false};
@@ -28,7 +27,6 @@ class Search extends Component {
         this.only_nearby_shops = this.only_nearby_shops.bind(this);
         this.updateRange = this.updateRange.bind(this);
         this.newprice = this.newprice.bind(this);
-        this.newshop = this.newshop.bind(this);
         this.favourite = this.favourite.bind(this);
     }
     
@@ -40,10 +38,6 @@ class Search extends Component {
     
     newprice () {
         browserHistory.push('/addprice');
-    }
-    
-    newshop () {
-        browserHistory.push('/addshop');
     }
   
     only_nearby_shops () {
@@ -83,9 +77,6 @@ class Search extends Component {
                         </NavItem>
                     </Nav>
                 </Navbar>
-                
-                <button className="new" id="new_shop" type="submit" onClick={() => this.newshop()}><FontAwesomeIcon icon={faBuilding}></FontAwesomeIcon> Προσθήκη Νέου Καταστήματος </button>
-                <br/>
                 
                 <div className="div_center">
                     <img src={"/public/logo_transparent.png"} className="App-logo" alt="logo" />

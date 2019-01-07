@@ -1,27 +1,48 @@
 const BaseController = require('./base')
+const model = require('../models/shop')
 
 module.exports = class ShopsController extends BaseController {
-    list(req, res) {
-        res.sendStatus(204)
+    constructor(dbConnection) {
+        super(new model(dbConnection))
     }
 
-    create(req, res) {
-        res.sendStatus(204)
+    async list() {
+        const list = await this.model.list()
+        return {shops: list}
     }
 
-    read(req, res, id) {
-        res.send(`READ ID: ${req.params.id}`)
+    async create(params) {
+        console.log(params)
+        let shop = this.validate_post_params(params)
+
+        const result = await this.model.insert(shop)
+
+        return result.affectedRows > 0
     }
 
-    put(req, res, id) {
-        res.send(`PUT ID: ${req.params.id}`)
+    async read(id) {
+        return {shops: (await this.model.list({id}))}
     }
 
-    patch(req, res, id) {
-        res.send(`PATCH ID: ${req.params.id}`)
+    async put(params, id) {
+        let shop_details = this.validate_put_params(params)
+
+        const result = await this.model.update(shop_details, {id})
+
+        return result.affectedRows > 0
     }
 
-    delete(req, res, id) {
-        res.send(`DELETE ID: ${req.params.id}`)
+    async patch(params, id) {
+        let shop_details = this.validate_patch_params(params)
+
+        const result = await this.model.update(shop_details, {id})
+
+        return result.affectedRows > 0
+    }
+
+    async delete(id) {
+        var result = await this.model.delete({id})
+
+        return result.affectedRows > 0
     }
 }

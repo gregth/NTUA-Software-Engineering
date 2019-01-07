@@ -113,7 +113,6 @@ export class MapClass extends Component {
                         position={{ lat: marker.latitude, lng: marker.longitude }}
                         key={marker.id}
                         label={marker.price.toString() + '€'}
-                        onClick={this.info}
                         labelStyle={{color: '#fff'}}
                         icon ={'https://img.icons8.com/color/48/000000/speech-bubble.png'}
                         onClick={this.onMarkerClick}
