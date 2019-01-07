@@ -7,28 +7,18 @@ module.exports = class ProductsController extends BaseController {
         super(new model(dbConnection))
     }
 
-    async list({start, count, status, sort}) {
+    async list({start = 0, count = 20, status = 'ACTIVE', sort = 'id|DESC'}) {
         const conditions = {}
-        if (status) {
-            if (status === 'WITHDRAWN') {
-                conditions.withdrawn = 1
-            } else if (status === 'ACTIVE') {
-                conditions.withdrawn = 0
-            }
+        if (status === 'WITHDRAWN') {
+            conditions.withdrawn = 1
+        } else if (status === 'ACTIVE') {
+            conditions.withdrawn = 0
         }
 
-        const order = []
-        if (sort) {
-            order.push({
-                field_name: sort.split('|')[0],
-                order: sort.split('|')[1]
-            })
-        } else {
-            order.push({
-                field_name: 'id',
-                order: 'DESC'
-            })
-        }
+        const order = [{
+            field_name: sort.split('|')[0],
+            order: sort.split('|')[1]
+        }]
 
         const list = await this.model.list(conditions, order, count)
         return {products: list}
