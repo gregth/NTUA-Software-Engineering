@@ -33,7 +33,8 @@ module.exports = class Shop extends BaseModel {
                     'name',
                     'address',
                     'lng',
-                    'lat'
+                    'lat',
+                    'withdrawn'
                 ],
                 allowed_query_keys: ['id']
             },
