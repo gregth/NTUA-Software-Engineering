@@ -90,13 +90,17 @@ module.exports = class ProductsController extends BaseController {
     }
 
     async delete(id) {
-        let role = 'user'
+        let role = 'user', result
         if (role == 'admin') {
-            var result = await this.model.delete({id})
+            result = await this.model.delete({id})
         } else {
-            var result = await this.model.update({'withdrawn': true}, {id})
+            result = await this.model.update({'withdrawn': true}, {id})
         }
 
-        return result.affectedRows > 0
+        if (result.affectedRows > 0) {
+            return {message: 'OK'}
+        }
+
+        throw new Error(`Did not delete product ${id}`)
     }
 }
