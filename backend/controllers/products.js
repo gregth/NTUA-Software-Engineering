@@ -1,5 +1,6 @@
 const BaseController = require('./base')
 const model = require('../models/product')
+const { NotFound } = require('./errors')
 
 module.exports = class ProductsController extends BaseController {
     constructor(dbConnection) {
@@ -20,7 +21,12 @@ module.exports = class ProductsController extends BaseController {
     }
 
     async read(id) {
-        return {products: (await this.model.list({id}))}
+        const products = await this.model.list({id})
+        if (products.length === 0) {
+            throw new NotFound()
+        }
+
+        return {products}
     }
 
     async put(params, id) {
