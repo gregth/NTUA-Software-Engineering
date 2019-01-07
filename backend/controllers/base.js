@@ -47,7 +47,7 @@ module.exports = class BaseController {
     validate_patch_params(params) {
         let rules = this.model.rules.update
         let required_params = filter_keys(params, rules.updatable_fields);
-        // For a put request to take place, all updateable fields must be passed
+        // For a patch request to take place, some updateable fields must be passed
         if (Object.keys(required_params).length == 0) {
             console.log('[PATCH_VALIDATOR]: No updatable attributes provided in params')
             throw new MalformedInput('No updatable attributes provided in params')
