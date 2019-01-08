@@ -6,106 +6,218 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEyeSlash, faCheck, faTimes, faHome } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faEyeSlash, faCheck, faTimes, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { browserHistory } from 'react-router';
+import {getLocation} from './current_location';
+import {send_to_server} from './send';
+import cookie from 'react-cookies';
+import { Modal, ModalHeader, ModalBody, ModalFooter, Input, Label, Button, Form, FormGroup, Row, Col, InputGroupAddon, InputGroup, FormFeedback } from 'reactstrap';
+import Geocode from "react-geocode";
+
+Geocode.setApiKey("AIzaSyAsLsF3d7bdPcNMcSwPfb8aUfcadkjOMH0");
+
+function address_to_coordinates (address) {
+    return Geocode.fromAddress(address).then(
+        response => {
+            const { lat, lng } = response.results[0].geometry.location;
+            return [lat, lng];
+        },
+        error => {
+            console.error(error);
+        }
+    );
+}
 
 class Shop extends React.Component {
     
     constructor(props) {
         super(props);
-        this.state = {name: '', latitude: '', longitude: '', address: '', post_code: null, addr_num: null, phone: null, opening: null, closing: null, days: null};
+        this.state = {success: null, error: null, current: null, checkPhone: null, error_address: null};
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.homepage = this.homepage.bind(this);
-        this.getMyLocation = this.getMyLocation.bind(this);
+        this.search = this.search.bind(this);
+        this.currentLocation = this.currentLocation.bind(this);
+        this.toggleModal = this.toggleModal.bind(this);
+        this.validatePhone = this.validatePhone.bind(this);
         this.flag = false;
     }
     
-    getMyLocation() {
-        const location = window.navigator && window.navigator.geolocation;
-
-        if (location) {
-            location.getCurrentPosition((position) => {
-                this.setState({
-                    latitude: position.coords.latitude,
-                    longitude: position.coords.longitude
-                });
-            }, (error) => {
-                this.setState({ latitude: 'err-latitude', longitude: 'err-longitude' });
-            });
+    validatePhone() {
+        const phoneRex = /^69\d{8}|^210\d{7}$/;
+        var result = null;
+        const phone = document.getElementById('new_shop_phone').value;
+        if (phoneRex.test(phone)) {
+          result = true;
+        } 
+        else {
+          result = false;
         }
-        this.flag = true;
+        this.setState({ checkPhone: result });
     }
     
-    homepage() {
+    search () {
         browserHistory.push('/search');
     }
     
-    handleSubmit () {
-       const name = document.getElementById('name').value;
-       const postal = document.getElementById('postal').value;
-       const address = document.getElementById('address').value;
-       const number = document.getElementById('number').value;
-       const temp = address + ' ' + number + ' ' + postal + ' Greece';
-       
-       
-       this.setState(() => ({name: name})); 
+    async currentLocation () {
+        var checkBox = document.getElementById("new_shop_location");
+        this.flag = !this.flag;
+        
+        if (!checkBox.checked) {
+            return;
+        }
+        
+        let result = await getLocation();
+        console.log(result);
+        var temp = this.state.show_current;
+        this.setState({ current: { latitude: result[0], longitude: result[1], address: result[2]}, show_current: !temp});
+    }
+    
+    toggleModal() {
+        this.setState({ error: !this.state.error });
+    }
+    
+    async handleSubmit (event) {
+        event.preventDefault();
+        event.nativeEvent.stopImmediatePropagation();
+        const name = document.getElementById('new_shop_name').value;
+        var lng = null;
+        var lat = null;
+        var address = null;
+        
+        var checkBox = document.getElementById("new_shop_location");
+        
+        if (checkBox.checked) {
+            lng = this.state.current.longitude;
+            lat = this.state.current.latitude;
+            address = this.state.current.address;
+        }
+        else {
+            const postal = document.getElementById('new_shop_postal').value;
+            const address_name = document.getElementById('new_shop_address').value;
+            const number = document.getElementById('new_shop_number').value;
+            const total = address_name + ' ' + number + ' ' + postal;
+            var result = await address_to_coordinates(total);
+            if (result) {
+                lat = result[0];
+                lng = result[1];
+                address = total;
+                this.setState({error_address: false});
+            }
+            else {
+                this.setState({error_address: true});
+                return;
+            }
+        }
+        
+        var shop = { 
+            name,
+            address,
+            lng,
+            lat,
+            withdrawn: 0
+        };
+        
+        console.log(shop);
+        const url = 'http://localhost:3002/shops';
+        const answer = await send_to_server(url, shop);
+        if (answer.status === 200) {
+            this.setState({success: true});
+        }
+        else {
+            this.setState({error: true});
+        }
        
     }
     
     render() {
         return(
-            <form id="register" onSubmit={() => this.handleSubmit()}>
-                <div></div>
-                <button className="homepage" type="submit" onClick={() => this.homepage()}><FontAwesomeIcon icon={faHome}></FontAwesomeIcon>Home Page</button>
-                <br/>
-                <div className="form-group">
-                    <label id="label-form" htmlFor="name">Όνομα Καταστήματος:</label>
-                    <input id="name" name="name" className="form-control" type="text" required/>
-                </div>
-                <div>
-                    <label> Τωρινή τοποθεσία </label>
-                    <input type="checkbox" name="location" id="location" onChange={() => this.getMyLocation()}></input>
-                </div>
-                <div> Ή </div>
-                <div className="form-group">
-                    <label id="label-form" htmlFor="address">Διεύθυνση:</label>
-                    <input id="address" name="address" className="form-control" pattern="[A-Za-z]+" type="text" disabled={this.flag} required/>
-                </div>
-                
-                <div className="form-group">
-                    <label id="label-form" htmlFor="number">Αριθμός:</label>
-                    <input type="text" id="number" disabled={this.flag} required/>
-                </div>
-                
-                <div className="form-group">
-                <label id="label-form" htmlFor="postal">ΤΚ:</label>
-                    <input id="postal" name="postal" className="form-control" pattern="[0-9]+" type="text" disabled={this.flag} required/>
-                </div>
-                
-                <div className="form-group">
-                    <label id="label-form" htmlFor="hours">Ωράριο:</label>
-                    <span> Από </span>
-                    <input type="time" name="opening" className="form-control" id="opening"></input>
-                    <span> Έως </span>
-                    <input type="time" name="closing" className="form-control" id="closing"></input>
-                </div>
-                
-                <div className="form-group">
-                    <label> Καθημερινές </label>
-                    <input type="checkbox" name="days" value="workdays" onChange={() => this.toggleCheckbox("Καθημερινές")}></input>
-                    <label> Σάββατο </label>
-                    <input type="checkbox" name="days" value="saturday" onChange={() => this.toggleCheckbox("Σάββατο")}></input>
-                    <label> Κυριακή </label>
-                    <input type="checkbox" name="days" value="sunday" onChange={() => this.toggleCheckbox("Κυριακή")}></input>
-                </div>
-                
-                <div className="form-group">
-                    <label id="label-form" htmlFor="phone">Τηλέφωνο Καταστήματος:</label>
-                    <input type="tel" id="phone" pattern="210\d{10}" name="phone"/>
-                </div>
-                
-                <button className="btn" type="submit" id="button1">Προσθήκη</button>
-            </form>
+            <div>
+                <Form id="new_shop" onSubmit={this.handleSubmit}>
+                    <div></div>
+                    <button className="homepage" type="submit" onClick={() => this.homepage()}><FontAwesomeIcon icon={faChevronLeft}></FontAwesomeIcon>Home Page</button>
+                    
+                    <FormGroup check row>
+                        <Label sm={3} for="name">Όνομα Καταστήματος:</Label>
+                        <Col sm={3}>
+                            <Input id="new_shop_name" name="name" type="text" required/>
+                        </Col>
+                    </FormGroup>
+                    <FormGroup check row>
+                        <Label> Τωρινή τοποθεσία </Label>
+                        <Col sm={1}>
+                            <Input type="checkbox" name="location" id="new_shop_location" onChange={() => this.currentLocation()}></Input>
+                        </Col>
+                    </FormGroup>
+                    <div> Ή </div>
+                    <FormGroup check row>
+                        <Label sm={3} for="address">Διεύθυνση:</Label>
+                        <Col sm={3}>
+                            <Input invalid={this.state.error_address} valid={false} id="new_shop_address" name="address" pattern="[A-Za-zΑ-Ωα-ω]+" type="text" disabled={this.flag} required/>
+                            <FormFeedback valid={!this.state.error_address}>Η διεύθυνση δεν είναι έγκυρη.</FormFeedback>
+                        </Col>
+                    </FormGroup>
+
+                    <FormGroup check row>
+                        <Label sm={3} for="number">Αριθμός:</Label>
+                        <Col sm={1}>
+                            <Input invalid={this.state.error_address} type="text" id="new_shop_number" pattern="[0-9]+" disabled={this.flag} required/>
+                        </Col>
+                    </FormGroup>
+
+                    <FormGroup check row>
+                        <Label sm={3} for="postal">ΤΚ:</Label>
+                        <Col sm={1}>
+                            <Input invalid={this.state.error_address} id="new_shop_postal" name="postal" pattern="[0-9]+" type="text" disabled={this.flag} required/>
+                        </Col>
+                    </FormGroup>
+
+                    <FormGroup check row>
+                        <Label sm={3} for="hours">Ωράριο:</Label>
+                        <Col sm={1}>
+                            <span> Από </span>
+                            <Input type="time" name="opening" id="new_shop_opening"></Input>
+                            <span> Έως </span>
+                            <Input type="time" name="closing" id="new_shop_closing"></Input>
+                        </Col>
+                    </FormGroup>
+
+                    <FormGroup check row>
+                        <Col sm={1}>
+                            <Label> Καθημερινές </Label>
+                            <Input type="checkbox" name="days" id="new_shop_workdays"></Input>
+                            <Label> Σάββατο </Label>
+                            <Input type="checkbox" name="days" id="new_shop_saturday"></Input>
+                            <Label> Κυριακή </Label>
+                            <Input type="checkbox" name="days" id="new_shop_sunday"></Input>
+                        </Col>
+                    </FormGroup>
+
+                    <FormGroup check row>
+                        <Label sm={3} for="phone">Τηλέφωνο Καταστήματος:</Label>
+                        <Col sm={3}>
+                            <Input type="tel" id="new_shop_phone" name="phone" invalid={this.state.checkPhone===false} valid={this.state.checkPhone} onChange={() => this.validatePhone()}/>
+                        </Col>
+                    </FormGroup>
+
+                    <Button type="submit" id="button1">Προσθήκη</Button>
+                    <Button type="button" id="button2" onClick={this.search}>Ακύρωση</Button>
+
+                </Form>
+                <Modal isOpen={this.state.error} toggle={this.toggleModal}>
+                    <ModalBody>Το αίτημα προσθήκης δεν ήταν επιτυχές.</ModalBody>
+                    <ModalFooter>
+                        <Button color="primary" onClick={this.toggleModal}>Προσπάθεια ξανά</Button>{' '}
+                        <Button color="secondary" onClick={this.search}>Αρχική σελίδα</Button>
+                    </ModalFooter>
+                </Modal>
+
+                <Modal isOpen={this.state.success}>
+                    <ModalBody>Το αίτημα προσθήκης ήταν επιτυχές.</ModalBody>
+                    <ModalFooter>
+                        <Button color="secondary" onClick={this.search}>Αρχική σελίδα</Button>
+                    </ModalFooter>
+                </Modal>
+            </div>
         );
   }
 }

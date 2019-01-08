@@ -28,21 +28,22 @@ function compare(a, b){
 
 export class Categories extends Component {
     constructor(props) {
-    super(props);
+        super(props);
 
-    this.toggle = this.toggle.bind(this);
-    this.state = { dropdownOpen: false, dropDownValue: 'Επιλογή κατηγορίας' };
-    this.changeValue = this.changeValue.bind(this);
-  }
+        this.toggle = this.toggle.bind(this);
+        this.state = { dropdownOpen: false, dropDownValue: 'Επιλογή κατηγορίας', category: null };
+        this.changeValue = this.changeValue.bind(this);
+    }
 
-  toggle() {
-    this.setState({
-      dropdownOpen: !this.state.dropdownOpen
-    });
-  }
+    toggle() {
+        this.setState({
+          dropdownOpen: !this.state.dropdownOpen
+        });
+    }
   
     changeValue(e) {
-        this.setState({dropDownValue: e.currentTarget.textContent});
+        const category = e.currentTarget.textContent;
+        this.setState({dropDownValue: category, category: category});
     }
 
     render() {
