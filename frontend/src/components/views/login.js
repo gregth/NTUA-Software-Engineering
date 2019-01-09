@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash, faUser, faKey, faHome, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { browserHistory } from 'react-router';
 import cookie from 'react-cookies';
-import { Input, InputGroupAddon, Button, Form, InputGroup, FormGroup, Label, Col } from 'reactstrap';
+import { NavbarBrand, Navbar, Nav, NavItem, NavLink, Input, InputGroupAddon, Button, Form, InputGroup, FormGroup, Label, Col } from 'reactstrap';
 import {send_to_server} from './send';
 
 class Login extends React.Component {
@@ -67,23 +67,29 @@ class Login extends React.Component {
     render() {
         return(
             <div>
-                <button className="homepage" type="submit" onClick={() => this.homepage()}><FontAwesomeIcon icon={faChevronLeft}></FontAwesomeIcon> Αρχική Σελίδα </button>
-
+                <Navbar color="faded" light>
+                <NavbarBrand><img src={"/public/logo_transparent.png"} width="150px" onClick={() => this.homepage()}/></NavbarBrand>
+                    <Nav className="ml-auto" navbar>
+                        <NavItem>
+                            <NavLink onClick={() => this.Register()}>Εγγραφή</NavLink>
+                        </NavItem>
+                    </Nav>
+                </Navbar>
                 <Form id="login" onSubmit={this.handleSubmit}>
                     <FormGroup check row>
                         <Label for="username" sm={3}>
                             <FontAwesomeIcon icon={faUser} /> {' '}
-                            Username:
+                            Όνομα Χρήστη:
                         </Label>
                         <Col sm={3}>
-                            <Input bsSize="sm" id="username" type="text" name="username" title="only letters, numbers and underscore" pattern="[A-Za-z0-9_]+" type="text" required/>
+                            <Input id="username" type="text" name="username" title="only letters, numbers and underscore" pattern="[A-Za-z0-9_]+" type="text" required/>
                         </Col>
                     </FormGroup>
 
                     <FormGroup check row>
                         <Label for="pwd" sm={3}>
                             <FontAwesomeIcon icon={faKey} />{' '}
-                            Password:
+                            Κωδικός:
                         </Label>
                             <Col sm={3}>
                                 <InputGroup>
@@ -101,7 +107,6 @@ class Login extends React.Component {
                     </FormGroup>
                     <span id="message"/><br/>
                     <Button type="submit" id="button1">Σύνδεση</Button>
-                    <Button id="button2" onClick={() => this.register()}>Εγγραφή</Button>
                </Form>
                
            </div>

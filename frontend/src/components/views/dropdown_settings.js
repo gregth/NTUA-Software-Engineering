@@ -5,30 +5,6 @@ import { faBars,} from '@fortawesome/free-solid-svg-icons';
 import { browserHistory } from 'react-router';
 import cookie from 'react-cookies';
 
-const options = [
-            {name: 'Αναψυκτικά', value: 'beverages'},
-            {name: 'Χωρίς Αλκοόλ', value: 'nonalchool'},
-            {name: 'Βότκα', value: 'vodka'},
-            {name: 'Κονιάκ', value: 'koniak'},
-            {name: 'Τζιν', value: 'gin'},
-            {name: 'Κρασί', value: 'wine'},
-            {name: 'Λικέρ', value: 'liquer'},
-            {name: 'Μπύρες', value: 'beer'},
-            {name: 'Ούζο', value: 'ouzo'},
-            {name: 'Ουίσκι', value: 'whiskey'},
-            {name: 'Ρούμι', value: 'rum'},
-            {name: 'Τεκίλα', value: 'tequila'},
-            {name: 'Τσίπουρο', value: 'tsipouro'},
-            {name: 'Σνακς', value: 'snacks'}           
-        ].sort(compare);
-
-
-function compare(a, b){
-    if (a.name > b.name) return 1;
-    if (a.name < b.name) return -1;
-    return 0;
-}
-
 export class Settings extends Component {
     constructor(props) {
     super(props);

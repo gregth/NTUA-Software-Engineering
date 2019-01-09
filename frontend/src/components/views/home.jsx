@@ -83,18 +83,16 @@ export default class Home extends Component {
                 <Search ref="search" handle={this.handleSubmit}/>
             </div>
             <div>
-                    {this.state.results
-                    ? <div> 
-                        <ProductsTable ref="results_products" products={this.state.products} onClick={this.request_price}/>
-                    </div>
-                    : null
+                {this.state.results
+                ? <ProductsTable ref="results_products" products={this.state.products} onClick={this.request_price}/>
+                : null
+                }
+                <div >
+                    {this.state.show_map
+                        ?<MapClass/>
+                        : null
                     }
-                    <div >
-                        {this.state.show_map
-                            ?<MapClass/>
-                            : null
-                        }
-                    </div>
+                </div>
             </div>
         </div>
 

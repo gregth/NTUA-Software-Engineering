@@ -5,6 +5,8 @@
  */
 import React from 'react';
 import { Tooltip } from 'reactstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faInfo } from '@fortawesome/free-solid-svg-icons';
 
 class TooltipItem extends React.Component {
     constructor(props) {
@@ -25,7 +27,7 @@ class TooltipItem extends React.Component {
     render() {
         return (
             <div>
-                <span id={'Tooltip-' + this.props.id}>{this.props.text_span}</span>
+                <span id={'Tooltip-' + this.props.id}><FontAwesomeIcon icon={faInfo}></FontAwesomeIcon></span>
                 <Tooltip placement="right" isOpen={this.state.tooltipOpen} target={'Tooltip-' + this.props.id} toggle={this.toggle}>
                     {this.props.text}
                 </Tooltip>
