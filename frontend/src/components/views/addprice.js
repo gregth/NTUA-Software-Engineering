@@ -11,50 +11,19 @@ import { browserHistory } from 'react-router';
 import Geocode from 'react-geocode';
 import cookie from 'react-cookies';
 import {Settings} from './dropdown_settings';
-import {  Modal, ModalHeader, ModalBody, ModalFooter, Input, Label, Button, Form, FormGroup, Row, Col, InputGroupAddon, InputGroup } from 'reactstrap';
+import { Navbar, Nav, NavItem, NavLink, Modal, ModalHeader, ModalBody, 
+        ModalFooter, Input, Label, Button, Form, FormGroup, Row, Col, 
+        InputGroupAddon, InputGroup, FormFeedback, NavbarBrand, Image } from 'reactstrap';
 import ModalExample from './nearby_shops';
-
-function coords_to_address (lat, long) {
-  return fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' +
-              JSON.stringify(lat) + ',' + JSON.stringify(long) +
-              '&key=' + 'AIzaSyAsLsF3d7bdPcNMcSwPfb8aUfcadkjOMH0')
-    .then((response) => response.json())
-    .then((responseJson) => {
-        if (responseJson.status === 'OK') {
-            return responseJson.results[0].formatted_address;
-        }
-        else {
-            return 'not found';
-        }
-    });
-}
-
-function getCurrentPositionPromise() {
-  const location = window.navigator && window.navigator.geolocation;
-  return new Promise(function(resolve, reject) {
-    location.getCurrentPosition(resolve, reject);
-  });
-}
-
-function getLocation() {
-  return getCurrentPositionPromise()
-    .then(async (position) => {
-        var lat = position.coords.latitude;
-        var long = position.coords.longitude;
-        let address = await coords_to_address(lat, long);
-        console.log(address);
-        return [position.coords.latitude, position.coords.longitude, address];
-    })
-    .catch((error) => {
-          console.log(error);
-    });
-}
+import { address_to_coords } from './address_to_coordinates';
+import { getLocation } from './current_location';
+import {send_to_server} from './send';
 
 class Product extends React.Component {
     
     constructor(props) {
         super(props);
-        this.state = { barcode: '', latitude: '', longitude: '', address: '', post_code: null, addr_num: null, price:null, nearby_shops: false};
+        this.state = { success: null, error: null, current: null, nearby_shops: false, error_address: null};
         this.handleSubmit = this.handleSubmit.bind(this);
         this.homepage = this.homepage.bind(this);
         this.currentLocation = this.currentLocation.bind(this);
@@ -70,7 +39,7 @@ class Product extends React.Component {
     
     async currentLocation ()  {
         this.flag = !this.flag;
-        var checkBox = document.getElementById("location_price");
+        var checkBox = document.getElementById("addprice_location");
         if (!checkBox.checked) {
             var temp = this.state.show_current;
             this.setState({ show_current: !temp});
@@ -80,30 +49,82 @@ class Product extends React.Component {
         let result = await getLocation();
         console.log(result);
         var temp = this.state.show_current;
-        this.setState({ current: [{latitude: result[0], longitude: result[1]}], show_current: !temp});
+        this.setState({ current: { latitude: result[0], longitude: result[1], address: result[2]}, show_current: !temp});
     }
     
     homepage() {
         browserHistory.push('/search');
     }
     
-    handleSubmit (event) {
+    async handleSubmit (event) {
         event.preventDefault();
         event.nativeEvent.stopImmediatePropagation();
-        this.toggleModal();
-        const barcode = document.getElementById('barcode').value;
-        const postal = document.getElementById('postal').value;
-        const address = document.getElementById('address').value;
-        const number = document.getElementById('number').value;
-        const price = document.getElementById('price').value;
-        const temp = address + ' ' + number + ' ' + postal + ' Greece';
-
-        this.setState(() => ({barcode: barcode, price: price})); 
+        const barcode = document.getElementById('addprice_barcode').value;
+        const price = document.getElementById('addprice_price').value;
+        var name = null;
+        var lng = null;
+        var lat = null;
+        var address = null;
+        
+        var checkBox = document.getElementById("addprice_location");
+        
+        if (checkBox.checked) {
+            lng = this.state.current.longitude;
+            lat = this.state.current.latitude;
+            address = this.state.current.address;
+            var priceBody = { 
+                address,
+                lng,
+                lat,
+                barcode,
+                price,
+                withdrawn: 0
+            };
+        }
+        else {
+            name = document.getElementById('addprice_name').value;
+            const postal = document.getElementById('addprice_postal').value;
+            const address_name = document.getElementById('addprice_address').value;
+            const number = document.getElementById('addprice_number').value;
+            const total = address_name + ' ' + number + ' ' + postal;
+            
+            var result = await address_to_coords(total);
+            if (result) {
+                lat = result[0];
+                lng = result[1];
+                address = total;
+                this.setState({error_address: false});
+            }
+            else {
+                this.setState({error_address: true});
+                return;
+            }
+            var priceBody = { 
+                name,
+                address,
+                lng,
+                lat,
+                barcode,
+                price,
+                withdrawn: 0
+            };
+        }
+        
+        console.log(priceBody);
+        
+        const url = 'http://localhost:3002/shops';
+        const answer = await send_to_server(url, priceBody);
+        if (answer.status === 200) {
+            this.setState({success: true});
+        }
+        else {
+            this.setState({error: true});
+        }
     }
     
     toggleModal() {
         this.setState({
-          isOpen: !this.state.isOpen
+          isOpen: !this.state.error
         });
     }
     
@@ -114,22 +135,27 @@ class Product extends React.Component {
     render() {
         return(
             <div>
-                <Settings/>
-                
-                <button className="homepage" type="submit" onClick={() => this.homepage()}><FontAwesomeIcon icon={faChevronLeft}></FontAwesomeIcon> Αρχική Σελίδα </button>
+                <Navbar color="faded" light>
+                <NavbarBrand><img src={"/public/logo_transparent.png"} width="150px" onClick={() => this.homepage()}/></NavbarBrand>
+                    <Nav className="ml-auto" navbar>
+                        <NavItem>
+                            <NavLink><Settings/></NavLink>
+                        </NavItem>
+                    </Nav>
+                </Navbar>
                 
                 <Form id="addproduct" onSubmit={this.handleSubmit}>
                         <FormGroup check row>
-                            <Label sm={3} for="barcode" className="mr-sm-2">Barcode Προϊόντος:</Label>
+                            <Label sm={3} for="addprice_barcode" className="mr-sm-2">Barcode Προϊόντος:</Label>
                             <Col sm={3}>
-                                <Input id="barcode" name="barcode" pattern="[0-9]{1,128}" type="text" required/>
+                                <Input id="addprice_barcode" name="barcode" pattern="[0-9]{1,128}" type="text" required/>
                             </Col>
                         </FormGroup>
                         
                         <FormGroup check row>
                             <Col sm={4}>
-                                <Label sm={3} for="location_price"> Τωρινή τοποθεσία</Label>
-                                <Input type="checkbox" name="location" id="location_price" onChange={() => this.currentLocation()}></Input>
+                                <Label sm={3} for="addprice_location"> Τωρινή τοποθεσία</Label>
+                                <Input type="checkbox" name="location" id="addprice_location" onChange={() => this.currentLocation()}></Input>
                             </Col>
                         </FormGroup>
                         
@@ -138,43 +164,44 @@ class Product extends React.Component {
                         </FormGroup>
                         
                         <FormGroup check row>
-                            <Label sm={3} for="address">Όνομα Καταστήματος:</Label>
+                            <Label sm={3} for="addprice_name">Όνομα Καταστήματος:</Label>
                             <Col sm={3}>
-                                <Input id="name" name="name" type="text" disabled={this.flag}/>
+                                <Input id="addprice_name" name="name" type="text" disabled={this.flag}/>
                             </Col>
                         </FormGroup>
                         
                         <FormGroup check row>
-                            <Label sm={3} for="address">Διεύθυνση:</Label>
+                            <Label sm={3} for="addprice_address">Διεύθυνση:</Label>
                             <Col sm={3}>
-                                <Input id="address" name="address" pattern="[A-Za-z]+" type="text" disabled={this.flag} required/>
+                                <Input id="addprice_address" invalid={this.state.error_address} name="address" pattern="[^\u0000-\u007F]+([/\w\.]?[\s]*[^\u0000-\u007F]*)*" type="text" disabled={this.flag} required/>
+                                <FormFeedback valid={!this.state.error_address}>Η διεύθυνση δεν είναι έγκυρη.</FormFeedback>
                             </Col>
                         </FormGroup>
                         <br/>
                         <FormGroup check inline>
                             <Col sm={2}>
-                                <Label for="number">Αριθμός:</Label>
-                                <Input id="number" name="number" pattern="[0-9]+" type="text" disabled={this.flag} required/>
+                                <Label for="addprice_number">Αριθμός:</Label>
+                                <Input id="addprice_number" invalid={this.state.error_address} name="number" type="text" disabled={this.flag} required/>
                             </Col>
                             
                             <Col sm={2}>
-                                <Label for="postal">ΤΚ:</Label>
-                                <Input id="postal" name="postal" pattern="[0-9]+" type="text" disabled={this.flag} required/>
+                                <Label for="addprice_postal">ΤΚ:</Label>
+                                <Input id="addprice_postal" invalid={this.state.error_address} name="postal" pattern="[0-9]+" type="text" disabled={this.flag} required/>
                             </Col>
                         </FormGroup>
                         
                         <FormGroup check row>
-                            <Label sm={3} for="price">Τιμή:</Label>
+                            <Label sm={3} for="addprice_price">Τιμή:</Label>
                             <Col sm={1}>
                                 <InputGroup>
-                                    <Input type="text" id="price" pattern="[0-9,]+" name="price" required/>
+                                    <Input type="text" id="addprice_price" pattern="[0-9]+" name="price" required/>
                                     <InputGroupAddon addonType="append">€</InputGroupAddon>
                                 </InputGroup>
                             </Col>
                         </FormGroup>
 
                         <button className="btn" type="submit" id="button1">Προσθήκη</button>
-                        <Modal isOpen={this.state.isOpen} toggle={this.toggleModal}>
+                        <Modal isOpen={this.state.error} toggle={this.toggleModal}>
                             <ModalBody>Το προϊόν με barcode {this.state.barcode} δε βρέθηκε.</ModalBody>
                             <ModalFooter>
                                 <Button color="primary" onClick={this.toggleModal}>Διόρθωση Barcode</Button>{' '}

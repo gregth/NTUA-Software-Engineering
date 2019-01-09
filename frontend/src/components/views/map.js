@@ -24,7 +24,7 @@ export class MapClass extends Component {
         
         var checkBox = document.getElementById("location_map");
         
-        if (!checkBox) {
+        if (!checkBox.checked) {
             var temp = this.state.show_current;
             this.setState({ show_current: !temp});
             return;

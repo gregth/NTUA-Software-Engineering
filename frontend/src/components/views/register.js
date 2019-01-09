@@ -10,6 +10,7 @@ import { faEye, faEyeSlash, faCheck, faTimes, faHome, faChevronLeft } from '@for
 import { browserHistory } from 'react-router';
 import cookie from 'react-cookies';
 import { Input, InputGroupAddon, Button, Form, InputGroup, FormGroup, Label, Col, InputGroupButton, FormFeedback, FormText } from 'reactstrap';
+import {send_to_server} from './send';
 
 class Register extends React.Component {
     
@@ -114,14 +115,14 @@ class Register extends React.Component {
                 <FormGroup check row>
                     <Label for="first_name" sm={3}>Όνομα:</Label>
                     <Col sm={3}>
-                        <Input id="first_name" name="first_name" pattern="[A-Za-z]+" type="text" required/>
+                        <Input id="first_name" name="first_name" pattern="[^\u0000-\u007F]+([/\w\.]?[\s]*[^\u0000-\u007F]*)*" type="text" required/>
                     </Col>
                 </FormGroup>
                 
                 <FormGroup check row>
                     <Label for="last_name" sm={3}>Επίθετο:</Label>
                     <Col sm={3}>
-                        <Input id="last_name" name="last_name" pattern="[A-Za-z]+" type="text" required/>
+                        <Input id="last_name" name="last_name" pattern="[^\u0000-\u007F]+([/\w\.]?[\s]*[^\u0000-\u007F]*)*" type="text" required/>
                     </Col>
                 </FormGroup>
                 
@@ -143,7 +144,7 @@ class Register extends React.Component {
                     <Label for="pwd" sm={3}>Κωδικός:</Label>
                     <Col sm={3}>
                         <InputGroup>
-                            <Input title="no special characters" type="password" name="password" pattern="[A-Za-z0-9]{8,16}" id="pwd" onKeyUp={() => this.checkPasswordMatch()} required></Input>
+                            <Input title="no special characters" type="password" name="password" pattern="[A-Za-z0-9]{8,}" id="pwd" onKeyUp={() => this.checkPasswordMatch()} required></Input>
                             <InputGroupAddon addonType="append">
                                 <button type="eye" id="eye" onClick={this.showPassword}>
                                     { this.state.show

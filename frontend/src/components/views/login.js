@@ -11,6 +11,7 @@ import { faEye, faEyeSlash, faUser, faKey, faHome, faChevronLeft } from '@fortaw
 import { browserHistory } from 'react-router';
 import cookie from 'react-cookies';
 import { Input, InputGroupAddon, Button, Form, InputGroup, FormGroup, Label, Col } from 'reactstrap';
+import {send_to_server} from './send';
 
 class Login extends React.Component {
     
@@ -45,23 +46,8 @@ class Login extends React.Component {
         }
 
         cookie.save('username', us, {path: '/'});
-        fetch('http://localhost:3002/products', {
-                 method: 'GET',
-                 headers: {
-                     Accept: 'application/json',
-                     token: 1234
-                 }
-            })
-            .then((response) => {
-                return response.json()
-            })
-            .then((responseJson) => {
-                 console.log(responseJson);
-             })
-             .catch((error) => {
-                 console.error(error);
-             });
-         browserHistory.push('/search');
+        
+        browserHistory.push('/search');
     }
     
     showPassword(event) {

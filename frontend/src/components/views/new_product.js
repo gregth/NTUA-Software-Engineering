@@ -110,13 +110,13 @@ class newProduct extends React.Component {
                 
                 <FormGroup check row>
                     <Label sm={3} for="new_product_description">Περιγραφή προϊόντος:</Label>
-                    <Col sm={1}>
+                    <Col sm={3}>
                         <Input type="textarea" name="text" id="new_product_description" />
                     </Col>
                 </FormGroup>
                 <FormGroup check row>
                     <Label sm={3} for="new_product_volume">Όγκος:</Label>
-                    <Col sm={1}>
+                    <Col sm={2}>
                         <InputGroup>
                             <Input type="text" id="new_product_volume" pattern="[0-9]+" name="new_product_volume" required/>
                             <InputGroupAddon addonType="append">ml</InputGroupAddon>

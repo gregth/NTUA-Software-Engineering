@@ -18,6 +18,7 @@ import {Shop} from './shop';
 import {Settings} from './dropdown_settings';
 import {Categories} from './categories_menu';
 import { NavbarBrand, Navbar, Nav, NavItem, NavLink, Input, InputGroupAddon, Button, Form, InputGroup, FormGroup, Label, NavbarToggler } from 'reactstrap';
+import {send_to_server} from './send';
 
 class Search extends Component {
     constructor(props) {

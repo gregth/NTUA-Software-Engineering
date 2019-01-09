@@ -8,25 +8,11 @@ import ReactDOM from 'react-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash, faCheck, faTimes, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { browserHistory } from 'react-router';
-import {getLocation} from './current_location';
-import {send_to_server} from './send';
+import { getLocation } from './current_location';
+import { send_to_server } from './send';
 import cookie from 'react-cookies';
 import { Modal, ModalHeader, ModalBody, ModalFooter, Input, Label, Button, Form, FormGroup, Row, Col, InputGroupAddon, InputGroup, FormFeedback } from 'reactstrap';
-import Geocode from "react-geocode";
-
-Geocode.setApiKey("AIzaSyAsLsF3d7bdPcNMcSwPfb8aUfcadkjOMH0");
-
-function address_to_coordinates (address) {
-    return Geocode.fromAddress(address).then(
-        response => {
-            const { lat, lng } = response.results[0].geometry.location;
-            return [lat, lng];
-        },
-        error => {
-            console.error(error);
-        }
-    );
-}
+import { address_to_coords } from './address_to_coordinates';
 
 class Shop extends React.Component {
     
@@ -96,7 +82,7 @@ class Shop extends React.Component {
             const address_name = document.getElementById('new_shop_address').value;
             const number = document.getElementById('new_shop_number').value;
             const total = address_name + ' ' + number + ' ' + postal;
-            var result = await address_to_coordinates(total);
+            var result = await address_to_coords(total);
             if (result) {
                 lat = result[0];
                 lng = result[1];
@@ -152,7 +138,7 @@ class Shop extends React.Component {
                     <FormGroup check row>
                         <Label sm={3} for="address">Διεύθυνση:</Label>
                         <Col sm={3}>
-                            <Input invalid={this.state.error_address} valid={false} id="new_shop_address" name="address" pattern="[A-Za-zΑ-Ωα-ω]+" type="text" disabled={this.flag} required/>
+                            <Input invalid={this.state.error_address} valid={false} id="new_shop_address" name="address" pattern="[A-Za-zΑ-Ωα-ωίϊΐόάέύϋΰήώ]+" type="text" disabled={this.flag} required/>
                             <FormFeedback valid={!this.state.error_address}>Η διεύθυνση δεν είναι έγκυρη.</FormFeedback>
                         </Col>
                     </FormGroup>
