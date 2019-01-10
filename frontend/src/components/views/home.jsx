@@ -14,9 +14,10 @@ import cookie from 'react-cookies';
 export default class Home extends Component {
     constructor(props) {
         super(props);
-        this.state = {show_map: false, products: [], results: false};
+        this.state = {price: 50, show_map: false, products: [], results: false};
         this.handleSubmit = this.handleSubmit.bind(this);
         this.request_prices = this.request_prices.bind(this);
+        this.updateRange = this.updateRange.bind(this);
     }
     
     request_prices () {
@@ -75,6 +76,12 @@ export default class Home extends Component {
         browserHistory.push('/register');
     }
     
+    updateRange (val) {
+        this.setState({
+            price: val
+        });
+    } 
+    
     render() {
       return (
         <div>
@@ -90,11 +97,11 @@ export default class Home extends Component {
             </Navbar>
             <div className="col-md-6 col-md-offset-3">
                 <img src={"/public/logo_transparent.png"} alt="logo" />
-                <Search ref="search" handle={this.handleSubmit}/>
+                <Search ref="search" price={this.state.price} handle={this.handleSubmit} updateRange={this.updateRange}/>
             </div>
             <div>
                 {this.state.results
-                ? <ProductsTable ref="results_products" products={this.state.products} onClick={this.request_price}/>
+                ? <ProductsTable ref="results_products" max_price={this.state.price} products={this.state.products} onClick={this.request_price}/>
                 : null
                 }
                 <div >

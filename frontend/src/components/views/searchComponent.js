@@ -23,15 +23,8 @@ export class Search extends Component {
         this.state = {price: 50};
         this.body = null;
         this.only_nearby_shops = this.only_nearby_shops.bind(this);
-        this.updateRange = this.updateRange.bind(this);
+        
     }
-    
-    updateRange (val) {
-        this.setState({
-            price: val
-        });
-    } 
-    
     
     only_nearby_shops () {
         //TODO send request
@@ -55,7 +48,7 @@ export class Search extends Component {
 
                     <FormGroup check row>
                         <Label> Μέγιστη τιμή </Label>
-                        <Range range={this.state.price} updateRange={this.updateRange}/>
+                        <Range range={this.props.price} updateRange={this.props.updateRange}/>
                     </FormGroup>
                     <FormGroup check>
                         <Label>

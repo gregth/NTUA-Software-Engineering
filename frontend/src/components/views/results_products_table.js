@@ -10,33 +10,31 @@ import { Table, Pagination, PaginationItem, PaginationLink, Tooltip } from 'reac
 
 class PapigationResults extends React.PureComponent {
   constructor(props) {
-    
     super(props);
     this.toggle = this.toggle.bind(this);
+    this.createData = this.createData.bind(this);
     this.state = {
-        tooltipOpen: false
+        tooltipOpen: false, currentPage: 0
     };
-        
-    this.dataSet = this.props.data.map(product => (
-                
-                    <tr key={product.id} onClick={() => this.props.select(product.id)} className="row_pointer">
-                        <td>{product.name}</td>
-                        <td>{product.category}</td>
-                        <td>price</td>
-                        <td>
-                            <TooltipItem id={product.id} text={product.description}/>
-                        </td>
-                    </tr>
-                ));
-
+    this.dataSet = null;    
+    this.pagesCount = null;
     this.pageSize = 10;
-    this.pagesCount = Math.ceil(this.dataSet.length / this.pageSize);
-
-    this.state = {
-        currentPage: 0
-    };
-    
   }
+  
+  createData () {
+      this.dataSet = this.props.data.map(product => (
+        <tr key={product.id} onClick={() => this.props.select(product.id)} className="row_pointer">
+            <td>{product.name}</td>
+            <td>{product.category}</td>
+            <td>Από {product.min_price}€</td>
+            <td>
+                <TooltipItem id={product.id} text={product.description}/>
+            </td>
+        </tr>
+    ));
+    this.pagesCount = Math.ceil(this.dataSet.length / this.pageSize);  
+  }
+  
   toggle() {
         this.setState({
             tooltipOpen: !this.state.tooltipOpen
@@ -55,6 +53,7 @@ class PapigationResults extends React.PureComponent {
 
   render() {
     const { currentPage } = this.state;
+    this.createData();
     return (    
         <React.Fragment>   
             <Table hover>
@@ -115,6 +114,20 @@ export class ProductsTable extends Component {
         super(props);
         this.id = null;
         this.select = this.select.bind(this);
+        this.updatePrice = this.updatePrice.bind(this);
+        this.products = [];
+    }
+    
+    updatePrice() {
+        this.products = [];
+        for( var i = 0; i < this.props.products.length-1; i++){ 
+            var p = Math.floor(Math.random() * 150) + 1;
+            if (p <= this.props.max_price) {
+                var temp = this.props.products[i];
+                temp.min_price = p;
+                this.products.push(temp);
+            }
+        }
     }
     
     select (id) {
@@ -123,8 +136,10 @@ export class ProductsTable extends Component {
     }
     
     render() {
+        const price = this.props.max_price;
+        this.updatePrice(price);
         return ( 
-            <PapigationResults data={this.props.products} select={this.select}/>
+            <PapigationResults data={this.products} select={this.select}/>
         );
     }
 };
