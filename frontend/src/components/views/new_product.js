@@ -26,13 +26,21 @@ class newProduct extends React.Component {
         super(props);
         this.state = {success: null, error: null};
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.homepage = this.homepage.bind(this);
         this.toggleModal = this.toggleModal.bind(this);
         this.search = this.search.bind(this);
     }
     
-    homepage() {
-        browserHistory.push('/');
+    componentDidMount() {
+        try {
+            var loggedin = Boolean(cookie.load('loggedin'));
+            if (!loggedin) {
+                browserHistory.push('/login');
+            }
+            cookie.save('need_login', true, {path: '/'});
+        }
+        catch(error) {
+            console.log(error);
+        }
     }
     
     toggleModal() {
@@ -77,7 +85,7 @@ class newProduct extends React.Component {
     render() {
         return(
             <div>
-            <button className="homepage" type="submit" onClick={() => this.homepage()}><FontAwesomeIcon icon={faChevronLeft}></FontAwesomeIcon> Αρχική Σελίδα </button>
+            <button className="homepage" type="submit" onClick={() => this.search()}><FontAwesomeIcon icon={faChevronLeft}></FontAwesomeIcon> Αρχική Σελίδα </button>
             <Form id="new_product_form" onSubmit={this.handleSubmit}>
                 
                 <FormGroup check row>

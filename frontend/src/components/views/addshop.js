@@ -27,6 +27,19 @@ class Shop extends React.Component {
         this.flag = false;
     }
     
+    componentDidMount() {
+        try {
+            var loggedin = Boolean(cookie.load('loggedin'));
+            if (!loggedin) {
+                browserHistory.push('/login');
+            }
+            cookie.save('need_login', true, {path: '/'});
+        }
+        catch(error) {
+            console.log(error);
+        }
+    }
+    
     validatePhone() {
         const phoneRex = /^69\d{8}|^210\d{7}$/;
         var result = null;

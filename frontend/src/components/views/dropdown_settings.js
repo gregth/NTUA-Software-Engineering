@@ -23,6 +23,7 @@ export class Settings extends Component {
     
     delete () {
         //TODO 
+        cookie.remove('loggedin', { path: '/' });
         cookie.remove('username', { path: '/' });
         browserHistory.push('/');
     }
@@ -33,6 +34,7 @@ export class Settings extends Component {
     
     logoff () {
         cookie.remove('username', { path: '/' });
+        cookie.remove('loggedin', { path: '/' });
         browserHistory.push('/');
     }
     

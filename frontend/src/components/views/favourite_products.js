@@ -8,6 +8,7 @@ import ReactDOM from 'react-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash, faCheck, faTimes, faHome, faUserTimes } from '@fortawesome/free-solid-svg-icons';
 import { browserHistory } from 'react-router';
+import cookie from 'react-cookies';
 
 class Products extends React.Component {
     
@@ -26,7 +27,20 @@ class Products extends React.Component {
         this.favourite_shops = [{'name': 'SERAFEIM', 'address':'Nea Filadelfeia'}].map((d) => <li key={d.name}>{d.name}{d.address}</li>);
         this.state = { show_products: false, show_wish: false, show_shops: false};
     }
-
+    
+    componentDidMount() {
+        try {
+            var loggedin = Boolean(cookie.load('loggedin'));
+            if (!loggedin) {
+                browserHistory.push('/login');
+            }
+            cookie.save('need_login', true, {path: '/'});
+        }
+        catch(error) {
+            console.log(error);
+        }
+    }
+    
     homepage() {
         browserHistory.push('/search');
     }

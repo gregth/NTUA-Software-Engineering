@@ -33,6 +33,19 @@ class Product extends React.Component {
         this.nearby_shops = this.nearby_shops.bind(this);
     }
     
+    componentDidMount() {
+        try {
+            var loggedin = Boolean(cookie.load('loggedin'));
+            if (!loggedin) {
+                browserHistory.push('/login');
+            }
+            cookie.save('need_login', true, {path: '/'});
+        }
+        catch(error) {
+            console.log(error);
+        }
+    }
+    
     nearby_shops () {
         this.refs.nearby_shops.toggle();
     }

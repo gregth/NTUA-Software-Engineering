@@ -9,6 +9,7 @@ import {send_to_server} from './send';
 import {receive_from_server} from './receive';
 import ProductsTable from './results_products_table';
 import Search from './searchComponent';
+import cookie from 'react-cookies';
 
 export default class Home extends Component {
     constructor(props) {
@@ -28,7 +29,16 @@ export default class Home extends Component {
     }
     
     componentDidMount() {
-      browserHistory.push('/');
+         try {
+            cookie.remove('need_login', {path: '/'});
+            var loggedin = Boolean(cookie.load('loggedin'));
+            if (loggedin) {
+                browserHistory.push('/search');
+            }
+        }
+        catch(error) {
+            console.log(error);
+        }
     }
   
     async handleSubmit (event) {

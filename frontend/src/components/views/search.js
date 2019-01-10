@@ -31,6 +31,19 @@ class Search extends Component {
         this.favourite = this.favourite.bind(this);
     }
     
+    componentDidMount() {
+        try {
+            var loggedin = Boolean(cookie.load('loggedin'));
+            if (!loggedin) {
+                browserHistory.push('/login');
+            }
+            cookie.save('need_login', true, {path: '/'});
+        }
+        catch(error) {
+            console.log(error);
+        }
+    }
+    
     updateRange (val) {
         this.setState({
             price: val

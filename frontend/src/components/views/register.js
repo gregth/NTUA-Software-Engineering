@@ -29,6 +29,19 @@ class Register extends React.Component {
         browserHistory.push('/');
     }
     
+    componentDidMount() {
+         try {
+            cookie.remove('need_login', {path: '/'});
+            var loggedin = Boolean(cookie.load('loggedin'));
+            if (loggedin) {
+                browserHistory.push('/search');
+            }
+        }
+        catch(error) {
+            console.log(error);
+        }
+    }
+    
     handleSubmit () {
        const us = document.getElementById('username').value;
        const pass = document.getElementById('pwd').value;
