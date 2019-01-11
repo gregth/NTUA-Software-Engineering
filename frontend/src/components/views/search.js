@@ -7,28 +7,30 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartPlus, faBuilding, faBars, faHeart, faSearch} from '@fortawesome/free-solid-svg-icons';
+import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
 import { browserHistory } from 'react-router';
 import MapClass from './map';
-import Range from './range';
-import { Map, GoogleApiWrapper } from 'google-maps-react';
 import cookie from 'react-cookies';
-import {Product} from './product';
-import {Shop} from './shop';
 import {Settings} from './dropdown_settings';
-import {Categories} from './categories_menu';
 import { NavbarBrand, Navbar, Nav, NavItem, NavLink, Input, InputGroupAddon, Button, Form, InputGroup, FormGroup, Label, NavbarToggler } from 'reactstrap';
 import {send_to_server} from './send';
+import {receive_from_server} from './receive';
+import ProductsTable from './results_products_table';
+import Search from './searchComponent';
 
-class Search extends Component {
+class SearchPage extends Component {
     constructor(props) {
         super(props);
-        this.state = {search: null, price: 50, show_map: false, username: cookie.load('username'), products: [], results: false};
+        this.state = {price: 50, show_map: false, username: cookie.load('username'), products: [], results: false};
         this.handleSubmit = this.handleSubmit.bind(this);
         this.only_nearby_shops = this.only_nearby_shops.bind(this);
         this.updateRange = this.updateRange.bind(this);
         this.newprice = this.newprice.bind(this);
-        this.favourite = this.favourite.bind(this);
+        this.request_prices = this.request_prices.bind(this);
+    }
+    
+    request_prices () {
+        console.log(this.refs.results_products.id);
     }
     
     componentDidMount() {
@@ -58,26 +60,30 @@ class Search extends Component {
         //TODO send request
     }
     
-    favourite (id, event) {
+    async handleSubmit (event) {
         event.preventDefault();
         event.nativeEvent.stopImmediatePropagation();
-        var temp = this.state.products[0].favourite;
-        this.state.products[id].favourite = !temp;
-        var temp_products = this.state.products;
-        this.setState({products: temp_products});
-    }
-    
-    handleSubmit (event) {
-        event.preventDefault();
-        event.nativeEvent.stopImmediatePropagation();
-        const s = document.getElementById('search').value;
-       
-        var temp = this.state.show_map;
+        const search = document.getElementById('search').value;
+        const category = this.refs.search.refs.search_category.state.category;
         
-        var shop = new Shop({name: 'cava1', id: 1, address: 'Athens 1', lat: 37.9738, lgn:23.7275});
-        var product = new Product({name: 'pr1', barcode: 12345, price: 12, shop:shop, favourite: true, id: 0});
-        this.state.products.push(product);
-        this.setState({results: true, show_map: !temp, search: s});
+        var body = {
+            search,
+            category
+        };
+        
+        console.log(body);
+        const url = 'http://localhost:3002/products';
+        const answer = await receive_from_server(url);
+        if (answer.status === 200) {
+            this.setState({success: true});
+        }
+        else {
+            this.setState({error: true});
+        }
+        var products = await answer.json().then((result) => {return result.products});
+        console.log(products);
+        
+        this.setState({results: true, show_map: !this.state.show_map, products: products});
     }
     
     render() {
@@ -92,56 +98,25 @@ class Search extends Component {
                     </Nav>
                 </Navbar>
                 
-                <div className="div_center">
-                    <img src={"/public/logo_transparent.png"} className="App-logo" alt="logo" />
-
-                    <div className="search">
-                        <Form id="searching">
-                            <FormGroup check inline>
-                                <Categories/>
-                                <InputGroup>
-                                    <Input id="search" placeholder="Αναζήτηση με όνομα.."></Input>
-                                    <InputGroupAddon addonType="append">
-                                        <button className="search_btn" id="search_btn" onClick={this.handleSubmit}>
-                                            <FontAwesomeIcon icon={faSearch}></FontAwesomeIcon>
-                                        </button>
-                                    </InputGroupAddon>
-                                </InputGroup>
-                            </FormGroup>
-
-                            <FormGroup>
-                                <label> Μέγιστη τιμή </label>
-                                <Range range={this.state.price} updateRange={this.updateRange}/>
-                            </FormGroup>
-                            <FormGroup check>
-                                <Label>
-                                    <Input type="checkbox" id="location_search" onChange={() => this.only_nearby_shops()}/>{' '}
-                                    Μόνο κοντινά καταστήματα
-                                </Label>
-                            </FormGroup>
-                        </Form> 
-                    </div>
+                 <div className="col-md-6 col-md-offset-3">
+                    <img src={"/public/logo_transparent.png"} alt="logo" />
+                    <Search ref="search" price={this.state.price} handle={this.handleSubmit} updateRange={this.updateRange}/>
                 </div>
-                <div className="map_class">
-                {this.state.results
-                    ? <div> {this.state.products.map(product => (
-                            <div> {product.name} {product.price}€ 
-                            {product.favourite 
-                            ? <button title='Αφαίρεση από τα αγαπημένα' onClick={(e) => this.favourite(product.id, e)} className='icon'><FontAwesomeIcon color="#FF0000" icon={faHeart}></FontAwesomeIcon></button>
-                            : <button title='Προσθήκη στα αγαπημένα' onClick={(e) => this.favourite(product.id, e)} className='icon'><FontAwesomeIcon icon={faHeart}></FontAwesomeIcon></button> 
-                            }
-                            </div>
-                        ))}</div>
-                    : <div></div>
-                }
-                    {this.state.show_map
-                        ?<MapClass/>
-                        : null
+                <div>
+                    {this.state.results
+                    ? <ProductsTable ref="results_products" max_price={this.state.price} products={this.state.products} onClick={this.request_price}/>
+                    : null
                     }
+                    <div >
+                        {this.state.show_map
+                            ?<MapClass/>
+                            : null
+                        }
+                    </div>
                 </div>
             </div>
         );
     }
 }
 
-export default Search;
+export default SearchPage;
