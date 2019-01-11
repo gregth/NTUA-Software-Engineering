@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text } from 'react-native';
+import { View, Text, TextInput } from 'react-native';
 import { Button, SearchBar, Input } from 'react-native-elements'
 
 class LoginPage extends Component{
@@ -10,7 +10,9 @@ class LoginPage extends Component{
     return (
       <View style={{flex: 1, alignItems: 'stretch'}}>
         <Text>Username</Text>
+        <TextInput/>
         <Text>Password</Text>
+        <TextInput/>
         <Button
             title="Login"
         />

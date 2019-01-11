@@ -5,12 +5,14 @@ import { createAppContainer } from 'react-navigation';
 import HomeScreen from './components/HomeScreen';
 import LoginPage from './components/LoginPage';
 import RegisterPage from './components/RegisterPage';
+import MapPage from './components/MapPage';
 
 const RootStack = createStackNavigator(
   {
     Home: HomeScreen,
     Login: LoginPage,
-    Register: RegisterPage
+    Register: RegisterPage,
+    Map: MapPage
   },
   {
     initialRouteName: 'Home',

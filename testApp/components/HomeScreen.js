@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, View, Text } from 'react-native';
+import { Button, View, ScrollView, Text } from 'react-native';
 import { CheckBox } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Dropdown } from 'react-native-material-dropdown';
@@ -9,11 +9,11 @@ import { Slider } from 'react-native-elements'
 //import { library } from '@fortawesome/fontawesome-svg-core'
 //import { faSearch, faHome } from '@fortawesome/free-solid-svg-icons';
 //import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-//import { GeolocatedProps, geolocated } from 'react-geolocated';
+import { GeolocatedProps, geolocated } from 'react-geolocated';
 //import { browserHistory } from 'react-router';
 //import Slider from 'react-rangeslider';
-//import Geocode from 'react-geocode';
-
+import Geocode from 'react-geocode';
+//import MapClass from './map';
 
 class HomeScreen extends Component{
   static navigationOptions = {
@@ -42,8 +42,7 @@ class HomeScreen extends Component{
       value: 'Χωρίς Αλκοόλ',
     }];
 
-    return (
-      <View style={{flex: 1, alignItems: 'stretch', justifyContent: 'center'}}>
+    return ( <View>
        <Text>Alcowatch</Text>
       <Button
           title="Είσοδος"
@@ -59,18 +58,17 @@ class HomeScreen extends Component{
       />
       <SearchBar
       lightTheme
-//  onChangeText={someMethod}
-//  onClear={someMethod}
   placeholder='Αναζήτηση με όνομα...' />
 
 
   <Slider
-  //  value={this.state.value}
-  //  onValueChange={(value) => this.setState({value})}
     />
 <Text> Μέγιστη Τιμή</Text>
-
-      </View>
+        <Button
+            title="Εμφάνιση τοποθεσίας"
+            onPress={() =>this.props.navigation.navigate('Map')}
+        />
+        </View>
     );
   }
 /*      <React.Fragment>

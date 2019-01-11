@@ -10,14 +10,20 @@
     "@expo/vector-icons": "^9.0.0",
     "@material-ui/core": "^3.8.2",
     "expo": "^32.0.0",
+    "google-maps-react": "^2.0.2",
     "react": "16.5.0",
     "react-bootstrap": "^0.32.4",
     "react-dom": "^16.7.0",
+    "react-geocode": "^0.1.2",
+    "react-geolocated": "^2.4.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
     "react-native-elements": "^0.19.1",
+    "react-native-maps": ">=0.22.1",
     "react-native-material-dropdown": "^0.11.1",
     "react-native-vector-icons": "^4.5.0",
-    "react-navigation": "^3.0.9"
+    "react-native-vertical-viewpager-android": "^1.0.0",
+    "react-navigation": "^3.0.9",
+    "reactstrap": "^7.0.2"
   },
   "devDependencies": {
     "babel-preset-expo": "^5.0.0"
