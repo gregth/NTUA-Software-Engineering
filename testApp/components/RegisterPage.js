@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { View, Text, TextInput } from 'react-native';
 import { Button, SearchBar, Input } from 'react-native-elements'
-import PasswordInputText from 'react-native-hide-show-password-input';
 
 class RegisterPage extends Component{
   static navigationOptions = {
@@ -15,9 +14,9 @@ class RegisterPage extends Component{
         <Text>Username</Text>
         <TextInput/>
         <Text>Κωδικός Πρόσβασης</Text>
-        <PasswordInputText />
+        <TextInput/>
         <Text>Επιβεβαίωση Κωδικού Πρόσβασης</Text>	
-        <PasswordInputText />
+        <TextInput/>
         <Button
             title="Εγγραφή"
         />

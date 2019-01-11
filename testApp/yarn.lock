@@ -4895,15 +4895,12 @@ react-native-gesture-handler@1.0.12, react-native-gesture-handler@^1.0.0:
     invariant "^2.2.2"
     prop-types "^15.5.10"
 
-react-native-hide-show-password-input@^1.0.7:
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/react-native-hide-show-password-input/-/react-native-hide-show-password-input-1.0.7.tgz#9b2b28b9d611acaca9023a3369df51437ed9372f"
-  integrity sha512-ijvkg535q23Xo/Z6c3AMXHUNTVqSJbt7EJSHIlkjVPqYSZQ0++6EUk8G8EMZ6G9k+cbEmaJcjdj0W7bDI1KfpA==
-  dependencies:
-    react-native-material-textfield "^0.8.4"
-    react-native-vector-icons "^4.3.0"
+react-native-maps@^0.22.1:
+  version "0.22.1"
+  resolved "https://registry.yarnpkg.com/react-native-maps/-/react-native-maps-0.22.1.tgz#ce856e71970e872e596e6fa4773279cae2c4dcdd"
+  integrity sha512-JjBpAXjzZY8AW4HTcAZxX+cGk6e6i+J5Vd//DViMUe0bRkKKv92ds1W9rqZ+o9PhUqdP++3DvKv0jrB05icqKA==
 
-react-native-maps@>=0.22.1, react-native-maps@expo/react-native-maps#v0.22.1-exp.0:
+react-native-maps@expo/react-native-maps#v0.22.1-exp.0:
   version "0.22.1"
   resolved "https://codeload.github.com/expo/react-native-maps/tar.gz/e6f98ff7272e5d0a7fe974a41f28593af2d77bb2"
 
@@ -4943,13 +4940,6 @@ react-native-material-textfield@^0.12.0:
   version "0.12.0"
   resolved "https://registry.yarnpkg.com/react-native-material-textfield/-/react-native-material-textfield-0.12.0.tgz#3fba19d76ab89f67052c81e082152fc243d82a3f"
   integrity sha1-P7oZ12q4n2cFLIHgghUvwkPYKj8=
-  dependencies:
-    prop-types "^15.5.9"
-
-react-native-material-textfield@^0.8.4:
-  version "0.8.4"
-  resolved "https://registry.yarnpkg.com/react-native-material-textfield/-/react-native-material-textfield-0.8.4.tgz#267f3a46e9257a25a6b719ebaf34131019f901a0"
-  integrity sha1-Jn86RukleiWmtxnrrzQTEBn5AaA=
   dependencies:
     prop-types "^15.5.9"
 
@@ -5007,7 +4997,7 @@ react-native-vector-icons@6.0.0:
     prop-types "^15.6.2"
     yargs "^8.0.2"
 
-react-native-vector-icons@^4.3.0, react-native-vector-icons@^4.5.0:
+react-native-vector-icons@^4.5.0:
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/react-native-vector-icons/-/react-native-vector-icons-4.6.0.tgz#e4014311ffa6de397d914ffc31b7097a874cc8d5"
   integrity sha512-rpfhfPiXCK2PX1nrNhdxSMrEGB/Gw/SvKoPM0G2wAkSoqynnes19K0VYI+Up7DqR1rFIpE4hP2erpT1tNx2tfg==
