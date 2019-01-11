@@ -74,6 +74,8 @@ class Product extends React.Component {
         event.nativeEvent.stopImmediatePropagation();
         const barcode = document.getElementById('addprice_barcode').value;
         const price = document.getElementById('addprice_price').value;
+        const dateFrom = document.getElementById('dateFrom').value;
+        const dateTo = document.getElementById('dateTo').value;
         var name = null;
         var lng = null;
         var lat = null;
@@ -91,6 +93,8 @@ class Product extends React.Component {
                 lat,
                 barcode,
                 price,
+                dateFrom,
+                dateTo,
                 withdrawn: 0
             };
         }
@@ -112,8 +116,11 @@ class Product extends React.Component {
                 this.setState({error_address: true});
                 return;
             }
+            
             var priceBody = { 
                 name,
+                dateFrom,
+                dateTo,
                 address,
                 lng,
                 lat,
@@ -146,6 +153,12 @@ class Product extends React.Component {
     }
     
     render() {
+        var curr = new Date();
+        curr.setUTCDate(curr.getDate());
+        var date = curr.toISOString().substr(0,10);
+        var min_d = new Date();
+        min_d.setUTCDate(curr.getDate()-3);
+        var min_date = min_d.toISOString().substr(0,10);
         return(
             <div>
                 <Navbar color="faded" light>
@@ -212,7 +225,20 @@ class Product extends React.Component {
                                 </InputGroup>
                             </Col>
                         </FormGroup>
-
+                        <FormGroup check row>
+                            <Label sm={3} for="dateFrom">Ημερομηνία παρατήρησης:</Label>
+                            <Col sm={2}>
+                                <Input id="dateFrom" type="date" name="dateFrom" defaultValue={date} min={min_date} max={date} required/>
+                            </Col>
+                        </FormGroup>
+                        
+                        <FormGroup check row>
+                            <Label sm={3} for="dateTo">Ημερομηνία παρατήρησης:</Label>
+                            <Col sm={2}>
+                                <Input id="dateTo" type="date" name="dateTo" min={date}/>
+                            </Col>
+                        </FormGroup>
+                        
                         <button className="btn" type="submit" id="button1">Προσθήκη</button>
                         <Modal isOpen={this.state.error} toggle={this.toggleModal}>
                             <ModalBody>Το προϊόν με barcode {this.state.barcode} δε βρέθηκε.</ModalBody>

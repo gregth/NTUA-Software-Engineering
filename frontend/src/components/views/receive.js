@@ -27,6 +27,7 @@ function receiveInfo(url) {
     })
     .catch((error) => {
         console.error(error);
+        return error;
     });
 }
 

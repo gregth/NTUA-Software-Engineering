@@ -56,12 +56,14 @@ export default class Home extends Component {
         console.log(body);
         const url = 'http://localhost:3002/products';
         const answer = await receive_from_server(url);
+        console.log(answer);
         if (answer.status === 200) {
             this.setState({success: true});
         }
         else {
             this.setState({error: true});
         }
+        
         var products = await answer.json().then((result) => {return result.products});
         console.log(products);
         

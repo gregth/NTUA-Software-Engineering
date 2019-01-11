@@ -27,7 +27,7 @@ function sendInfo(url, body) {
         return response;
     })
      .catch((error) => {
-         console.error(error);
+         console.error('aaa',error);
      });
 }
 
