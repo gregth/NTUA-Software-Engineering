@@ -121,7 +121,14 @@ export default class EditProduct extends Component {
                                 <Categories ref='edit_product_category' default={this.state.details.category}/>
                             </Col>
                         </FormGroup>
-
+                        
+                        <FormGroup check row>
+                            <Label sm={3} for="edit_product_tags">Χαρακτηριστικά Προϊόντος:</Label>
+                            <Col sm={3}>
+                                <Input type="textarea" name="text" id="edit_product_tags" value={this.state.details.tags}/>
+                            </Col>
+                        </FormGroup>
+                        
                         <FormGroup check row>
                             <Label sm={3} for="edit_product_description">Περιγραφή προϊόντος:</Label>
                             <Col sm={3}>
