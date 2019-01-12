@@ -18,7 +18,7 @@ export class AllProducts extends Component {
         this.id = null;
         this.select = this.select.bind(this);
         this.request = this.request.bind(this);
-        this.state = {products: null};
+        this.state = {products: null, error: null, success: null, not_found: null};
         this.homepage = this.homepage.bind(this);
         this.search = this.search.bind(this);
         this.edit = this.edit.bind(this);
@@ -76,6 +76,11 @@ export class AllProducts extends Component {
     edit (id) {
         this.id = id;
         console.log(this.id);
+        browserHistory.push({
+            pathname: '/edit_product',
+            search: '?id=' + id.toString()
+            }
+        );
     }
     
     delete (id) {
@@ -98,21 +103,22 @@ export class AllProducts extends Component {
     }
     
     render() {
-       return (
+        return (
             <div>
-            <Navbar color="faded" light>
-                <NavbarBrand><img src={"/public/logo_transparent.png"} width="150px" onClick={() => this.homepage()}/></NavbarBrand>
-                <Nav className="ml-auto" navbar>
-                    <NavItem>
-                        <NavLink><Settings/></NavLink>
-                    </NavItem>
-                </Nav>
-            </Navbar>
-            {this.state.products === null
-            ?<div> Loading </div>
-            : <PapigationResults data={this.state.products} select={this.select} delete={this.delete} edit={this.edit} search={this.search}/>
-            }
-        </div>
+                <Navbar color="faded" light>
+                    <NavbarBrand><img src={"/public/logo_transparent.png"} width="150px" onClick={() => this.homepage()}/></NavbarBrand>
+                    <Nav className="ml-auto" navbar>
+                        <NavItem>
+                            <NavLink><Settings/></NavLink>
+                        </NavItem>
+                    </Nav>
+                </Navbar>
+                <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά.</Alert>
+                {this.state.products === null
+                ?<div> Loading </div>
+                : <PapigationResults data={this.state.products} select={this.select} delete={this.delete} edit={this.edit} search={this.search}/>
+                }
+            </div>
         );
     }
 };
