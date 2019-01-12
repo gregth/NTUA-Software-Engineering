@@ -4,7 +4,7 @@ import MapClass from './map';
 import {Product} from './product';
 import {Shop} from './shop';
 import {Categories} from './categories_menu';
-import { Navbar, Nav, NavItem, NavLink, Input, InputGroupAddon, Button, Form, InputGroup, FormGroup, Label, Container, Row,  Col, Table } from 'reactstrap';
+import { Navbar, Nav, NavItem, NavLink, Input, InputGroupAddon, Button, Form, InputGroup, FormGroup, Label, Container, Row,  Col, Table, Alert } from 'reactstrap';
 import {send_to_server} from './send';
 import {receive_from_server} from './receive';
 import ProductsTable from './results_products_table';
@@ -14,7 +14,7 @@ import cookie from 'react-cookies';
 export default class Home extends Component {
     constructor(props) {
         super(props);
-        this.state = {price: 50, show_map: false, products: [], results: false};
+        this.state = {price: 50, show_map: false, products: [], results: false, success: null, error: null, not_found: null};
         this.handleSubmit = this.handleSubmit.bind(this);
         this.request_prices = this.request_prices.bind(this);
         this.updateRange = this.updateRange.bind(this);
@@ -56,12 +56,17 @@ export default class Home extends Component {
         console.log(body);
         const url = 'http://localhost:3002/products';
         const answer = await receive_from_server(url);
-        console.log(answer);
+        
+        if (answer === 'error') {
+            this.setState({error: true});
+            return;
+        }
+        
         if (answer.status === 200) {
             this.setState({success: true});
         }
         else {
-            this.setState({error: true});
+            this.setState({not_found: true});
         }
         
         var products = await answer.json().then((result) => {return result.products});
@@ -97,6 +102,8 @@ export default class Home extends Component {
                     </NavItem>
                 </Nav>
             </Navbar>
+            <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά.</Alert>
+            
             <div className="col-md-6 col-md-offset-3">
                 <img src={"/public/logo_transparent.png"} alt="logo" />
                 <Search ref="search" price={this.state.price} handle={this.handleSubmit} updateRange={this.updateRange}/>

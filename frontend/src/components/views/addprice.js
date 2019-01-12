@@ -13,7 +13,7 @@ import cookie from 'react-cookies';
 import {Settings} from './dropdown_settings';
 import { Navbar, Nav, NavItem, NavLink, Modal, ModalHeader, ModalBody, 
         ModalFooter, Input, Label, Button, Form, FormGroup, Row, Col, 
-        InputGroupAddon, InputGroup, FormFeedback, NavbarBrand, Image } from 'reactstrap';
+        InputGroupAddon, InputGroup, FormFeedback, NavbarBrand, Image, Alert } from 'reactstrap';
 import ModalExample from './nearby_shops';
 import { address_to_coords } from './address_to_coordinates';
 import { getLocation } from './current_location';
@@ -23,7 +23,7 @@ class Product extends React.Component {
     
     constructor(props) {
         super(props);
-        this.state = { success: null, error: null, current: null, nearby_shops: false, error_address: null};
+        this.state = { success: null, error: null, current: null, nearby_shops: false, error_address: null, not_found: null};
         this.handleSubmit = this.handleSubmit.bind(this);
         this.homepage = this.homepage.bind(this);
         this.currentLocation = this.currentLocation.bind(this);
@@ -72,6 +72,7 @@ class Product extends React.Component {
     async handleSubmit (event) {
         event.preventDefault();
         event.nativeEvent.stopImmediatePropagation();
+        this.setState({error: false});
         const barcode = document.getElementById('addprice_barcode').value;
         const price = document.getElementById('addprice_price').value;
         const dateFrom = document.getElementById('dateFrom').value;
@@ -134,11 +135,17 @@ class Product extends React.Component {
         
         const url = 'http://localhost:3002/shops';
         const answer = await send_to_server(url, priceBody);
-        if (answer.status === 200) {
-            this.setState({success: true});
+        
+        if (answer === 'error') {
+            this.setState({error: true});
         }
         else {
-            this.setState({error: true});
+            if (answer.status === 200) {
+                this.setState({success: true});
+            }
+            else {
+                this.setState({not_found: true});
+            }
         }
     }
     
@@ -169,6 +176,8 @@ class Product extends React.Component {
                         </NavItem>
                     </Nav>
                 </Navbar>
+                
+                <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά.</Alert>
                 
                 <Form id="addproduct" onSubmit={this.handleSubmit}>
                         <FormGroup check row>
@@ -240,7 +249,7 @@ class Product extends React.Component {
                         </FormGroup>
                         
                         <button className="btn" type="submit" id="button1">Προσθήκη</button>
-                        <Modal isOpen={this.state.error} toggle={this.toggleModal}>
+                        <Modal isOpen={this.state.not_found} toggle={this.toggleModal}>
                             <ModalBody>Το προϊόν με barcode {this.state.barcode} δε βρέθηκε.</ModalBody>
                             <ModalFooter>
                                 <Button color="primary" onClick={this.toggleModal}>Διόρθωση Barcode</Button>{' '}

@@ -26,9 +26,10 @@ function sendInfo(url, body) {
         console.log(response);
         return response;
     })
-     .catch((error) => {
-         console.error('aaa',error);
-     });
+    .catch((error) => {
+        console.error(error);
+        return("error");
+    });
 }
 
 export function send_to_server(url, body) {
