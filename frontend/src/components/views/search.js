@@ -9,14 +9,14 @@ import ReactDOM from 'react-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
 import { browserHistory } from 'react-router';
-import MapClass from './map';
+import MapClass from '../helper_components/map';
 import cookie from 'react-cookies';
-import {Settings} from './dropdown_settings';
+import {Settings} from '../helper_components/dropdown_settings';
 import { NavbarBrand, Navbar, Nav, NavItem, NavLink, Input, InputGroupAddon, Button, Form, InputGroup, FormGroup, Label, NavbarToggler, Alert } from 'reactstrap';
-import {send_to_server} from './send';
-import {receive_from_server} from './receive';
-import ProductsTable from './results_products_table';
-import Search from './searchComponent';
+import {send_to_server} from '../communication/send';
+import {receive_from_server} from '../communication/receive';
+import ProductsTable from '../helper_components/results_products_table';
+import Search from '../helper_components/searchComponent';
 
 class SearchPage extends Component {
     constructor(props) {
@@ -27,6 +27,9 @@ class SearchPage extends Component {
         this.updateRange = this.updateRange.bind(this);
         this.newprice = this.newprice.bind(this);
         this.request_prices = this.request_prices.bind(this);
+        this.products = this.products.bind(this);
+        this.new_product = this.new_product.bind(this);
+        this.shops = this.shops.bind(this);
     }
     
     request_prices () {
@@ -58,6 +61,18 @@ class SearchPage extends Component {
   
     only_nearby_shops () {
         //TODO send request
+    }
+    
+    shops () {
+        //TODO
+    }
+    
+    products () {
+        browserHistory.push('/products');
+    }
+    
+    new_product () {
+        browserHistory.push('/newproduct');
     }
     
     async handleSubmit (event) {
@@ -95,9 +110,18 @@ class SearchPage extends Component {
     render() {
         return (
             <div>
-                <Navbar color="faded" light>
+                <Navbar color="faded" light expand="md">
                 <NavbarBrand><Settings/></NavbarBrand>
-                    <Nav className="ml-auto" navbar>
+                    <Nav className="ml-auto" navbar >
+                        <NavItem>
+                            <NavLink onClick={() => this.products()}> Προϊόντα </NavLink>
+                        </NavItem>
+                        <NavItem>
+                            <NavLink onClick={() => this.shops()}> Καταστήματα </NavLink>
+                        </NavItem>
+                        <NavItem>
+                            <NavLink onClick={() => this.new_product()}> Προσθήκη Νέου Προϊόντος</NavLink>
+                        </NavItem>
                         <NavItem>
                             <NavLink onClick={() => this.newprice()}><FontAwesomeIcon icon={faCartPlus}></FontAwesomeIcon> Προσθήκη Νέας Τιμής</NavLink>
                         </NavItem>

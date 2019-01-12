@@ -17,8 +17,8 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { browserHistory } from 'react-router';
 import cookie from 'react-cookies';
 import { Modal, ModalHeader, ModalBody, ModalFooter, Input, Label, Button, Form, FormGroup, Row, Col, InputGroupAddon, InputGroup } from 'reactstrap';
-import {Categories} from './categories_menu';
-import {send_to_server} from './send';
+import {Categories} from '../helper_components/categories_menu';
+import {send_to_server} from '../communication/send';
 
 class newProduct extends React.Component {
     

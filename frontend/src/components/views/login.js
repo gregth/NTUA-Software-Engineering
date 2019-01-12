@@ -11,7 +11,8 @@ import { faEye, faEyeSlash, faUser, faKey, faHome, faChevronLeft } from '@fortaw
 import { browserHistory } from 'react-router';
 import cookie from 'react-cookies';
 import { Alert, NavbarBrand, Navbar, Nav, NavItem, NavLink, Input, InputGroupAddon, Button, Form, InputGroup, FormGroup, Label, Col } from 'reactstrap';
-import {send_to_server} from './send';
+import {send_to_server} from '../communication/send';
+
 class Login extends React.Component {
     
     constructor(props) {

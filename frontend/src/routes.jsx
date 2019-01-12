@@ -10,6 +10,7 @@ import Shop from './components/views/addshop';
 import Product from './components/views/addprice';
 import Products from './components/views/favourite_products';
 import newProduct from './components/views/new_product';
+import AllProducts from './components/views/all_products';
 
 export default (
   <Route path='/' component={App}>
@@ -20,8 +21,9 @@ export default (
     <Route path='search' component={Search}/> 
     <Route path='addshop' component={Shop} />
     <Route path='addprice' component={Product} />
-    <Route path='products' component={Products} />
+    <Route path='favouriteproducts' component={Products} />
     <Route path='newproduct' component={newProduct} />
+    <Route path='products' component={AllProducts} />
     <Route path='*' component={Home} />
   </Route>
 );

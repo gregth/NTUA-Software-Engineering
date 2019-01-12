@@ -10,7 +10,7 @@ import { faEye, faEyeSlash, faCheck, faTimes, faHome, faChevronLeft } from '@for
 import { browserHistory } from 'react-router';
 import cookie from 'react-cookies';
 import { Input, InputGroupAddon, Button, Form, InputGroup, FormGroup, Label, Col, InputGroupButton, FormFeedback, FormText } from 'reactstrap';
-import {send_to_server} from './send';
+import {send_to_server} from '../communication/send';
 
 class Register extends React.Component {
     

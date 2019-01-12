@@ -1,14 +1,12 @@
 import React, { Component } from "react";
 import { browserHistory } from 'react-router';
-import MapClass from './map';
-import {Product} from './product';
-import {Shop} from './shop';
-import {Categories} from './categories_menu';
+import MapClass from '../helper_components/map';
+import {Categories} from '../helper_components/categories_menu';
 import { Navbar, Nav, NavItem, NavLink, Input, InputGroupAddon, Button, Form, InputGroup, FormGroup, Label, Container, Row,  Col, Table, Alert } from 'reactstrap';
-import {send_to_server} from './send';
-import {receive_from_server} from './receive';
-import ProductsTable from './results_products_table';
-import Search from './searchComponent';
+import {send_to_server} from '../communication/send';
+import {receive_from_server} from '../communication/receive';
+import ProductsTable from '../helper_components/results_products_table';
+import Search from '../helper_components/searchComponent';
 import cookie from 'react-cookies';
 
 export default class Home extends Component {

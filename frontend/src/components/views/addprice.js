@@ -10,14 +10,14 @@ import { faChevronLeft, faBars } from '@fortawesome/free-solid-svg-icons';
 import { browserHistory } from 'react-router';
 import Geocode from 'react-geocode';
 import cookie from 'react-cookies';
-import {Settings} from './dropdown_settings';
+import {Settings} from '../helper_components/dropdown_settings';
 import { Navbar, Nav, NavItem, NavLink, Modal, ModalHeader, ModalBody, 
         ModalFooter, Input, Label, Button, Form, FormGroup, Row, Col, 
         InputGroupAddon, InputGroup, FormFeedback, NavbarBrand, Image, Alert } from 'reactstrap';
-import ModalExample from './nearby_shops';
-import { address_to_coords } from './address_to_coordinates';
-import { getLocation } from './current_location';
-import {send_to_server} from './send';
+import ModalExample from '../helper_components/nearby_shops';
+import { address_to_coords } from '../functions/address_to_coordinates';
+import { getLocation } from '../functions/current_location';
+import {send_to_server} from '../communication/send';
 
 class Product extends React.Component {
     

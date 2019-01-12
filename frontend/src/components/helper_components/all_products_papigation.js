@@ -4,11 +4,10 @@
  * and open the template in the editor.
  */
 import TooltipItem from './tooltip';
-import React, { Component } from "react";
 import { Table, Pagination, PaginationItem, PaginationLink, Tooltip } from 'reactstrap';
+import React, { Component } from "react";
 
-
-class PapigationResults extends React.PureComponent {
+export default class PapigationResults extends React.PureComponent {
   constructor(props) {
     super(props);
     this.toggle = this.toggle.bind(this);
@@ -26,7 +25,6 @@ class PapigationResults extends React.PureComponent {
         <tr key={product.id} onClick={() => this.props.select(product.id)} className="row_pointer">
             <td>{product.name}</td>
             <td>{product.category}</td>
-            <td>Από {product.min_price}€</td>
             <td>
                 <TooltipItem id={product.id} text={product.description}/>
             </td>
@@ -61,7 +59,8 @@ class PapigationResults extends React.PureComponent {
                     <tr>
                         <th>Όνομα Προϊόντος</th>
                         <th>Κατηγορία</th>
-                        <th>Τιμή</th>
+                        <th>Περιγραφή</th>
+                        <th>Μάρκα</th>
                     </tr>
                 </thead>
                 {this.dataSet
@@ -108,41 +107,3 @@ class PapigationResults extends React.PureComponent {
   }
   
 }
-
-export class ProductsTable extends Component {
-    constructor(props) {
-        super(props);
-        this.id = null;
-        this.select = this.select.bind(this);
-        this.updatePrice = this.updatePrice.bind(this);
-        this.products = [];
-    }
-    
-    updatePrice() {
-        this.products = [];
-        for( var i = 0; i < this.props.products.length-1; i++){ 
-            var p = Math.floor(Math.random() * 150) + 1;
-            if (p <= this.props.max_price) {
-                var temp = this.props.products[i];
-                temp.min_price = p;
-                this.products.push(temp);
-            }
-        }
-    }
-    
-    select (id) {
-        this.id = id;
-        console.log(this.id);
-    }
-    
-    render() {
-        const price = this.props.max_price;
-        this.updatePrice(price);
-        return ( 
-            <PapigationResults data={this.products} select={this.select}/>
-        );
-    }
-};
-
-export default ProductsTable;
-    
