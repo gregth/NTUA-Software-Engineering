@@ -4,8 +4,11 @@
  * and open the template in the editor.
  */
 import TooltipItem from './tooltip';
-import { Table, Pagination, PaginationItem, PaginationLink, Tooltip } from 'reactstrap';
+import { Table, Pagination, PaginationItem, PaginationLink, Tooltip, Button } from 'reactstrap';
 import React, { Component } from "react";
+import ReactDOM from 'react-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch, faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
 export default class PapigationResults extends React.PureComponent {
   constructor(props) {
@@ -27,6 +30,12 @@ export default class PapigationResults extends React.PureComponent {
             <td>{product.category}</td>
             <td>
                 <TooltipItem id={product.id} text={product.description}/>
+            </td>
+            <td>Brand</td>
+            <td>
+                <button className="search_btn" id="edit_btn" onClick={() => this.props.edit(product.id)}><FontAwesomeIcon icon={faEdit}></FontAwesomeIcon></button>
+                <button className="search_btn" id="delete_btn" onClick={() => this.props.delete(product.id)}><FontAwesomeIcon icon={faTrashAlt}></FontAwesomeIcon></button>     
+                <button className="search_btn" id="search_product_btn" onClick={() => this.props.search(product.id)}><FontAwesomeIcon icon={faSearch}></FontAwesomeIcon></button>
             </td>
         </tr>
     ));

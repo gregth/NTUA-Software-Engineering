@@ -8,7 +8,9 @@ import React, { Component } from "react";
 import {receive_from_server} from '../communication/receive';
 import { browserHistory } from 'react-router';
 import cookie from 'react-cookies';
+import {Settings} from '../helper_components/dropdown_settings';
 import PapigationResults from '../helper_components/all_products_papigation';
+import { Navbar, Nav, NavItem, NavLink, Button, NavbarBrand, Image, Alert } from 'reactstrap';
 
 export class AllProducts extends Component {
     constructor(props) {
@@ -17,6 +19,10 @@ export class AllProducts extends Component {
         this.select = this.select.bind(this);
         this.request = this.request.bind(this);
         this.state = {products: null};
+        this.homepage = this.homepage.bind(this);
+        this.search = this.search.bind(this);
+        this.edit = this.edit.bind(this);
+        this.delete = this.delete.bind(this);
     }
     
     componentDidMount () {
@@ -66,19 +72,48 @@ export class AllProducts extends Component {
         this.setState({products: products});
         return products;
     }
-        
+    
+    edit (id) {
+        this.id = id;
+        console.log(this.id);
+    }
+    
+    delete (id) {
+        this.id = id;
+        console.log(this.id);
+    }
+    
+    search (id) {
+        this.id = id;
+        console.log(this.id);
+    }
+    
     select (id) {
         this.id = id;
         console.log(this.id);
     }
     
+    homepage() {
+        browserHistory.push('/search');
+    }
+    
     render() {
-        if (this.state.products === null) {
-            return (<div> Loading </div>);
-        }
-        else {
-            return (<PapigationResults data={this.state.products} select={this.select}/>);
-        }
+       return (
+            <div>
+            <Navbar color="faded" light>
+                <NavbarBrand><img src={"/public/logo_transparent.png"} width="150px" onClick={() => this.homepage()}/></NavbarBrand>
+                <Nav className="ml-auto" navbar>
+                    <NavItem>
+                        <NavLink><Settings/></NavLink>
+                    </NavItem>
+                </Nav>
+            </Navbar>
+            {this.state.products === null
+            ?<div> Loading </div>
+            : <PapigationResults data={this.state.products} select={this.select} delete={this.delete} edit={this.edit} search={this.search}/>
+            }
+        </div>
+        );
     }
 };
 
