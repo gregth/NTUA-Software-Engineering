@@ -138,15 +138,16 @@ class Product extends React.Component {
         
         if (answer === 'error') {
             this.setState({error: true});
+            return;
+        }
+        if (answer.status === 200) {
+            this.setState({success: true});
         }
         else {
-            if (answer.status === 200) {
-                this.setState({success: true});
-            }
-            else {
-                this.setState({not_found: true});
-            }
+            this.setState({not_found: true});
+            return;
         }
+        
     }
     
     toggleModal() {

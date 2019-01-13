@@ -140,6 +140,9 @@ export default class EditProduct extends Component {
     async handleSubmit(event) {
         event.preventDefault();
         event.nativeEvent.stopImmediatePropagation();
+        
+        this.setState({success_edit: null, error_edit: null, not_found_edit: null});
+        
         const name = document.getElementById('edit_product_name').value;
         const barcode = document.getElementById('edit_product_barcode').value;
         const brand = document.getElementById('edit_product_brand').value;

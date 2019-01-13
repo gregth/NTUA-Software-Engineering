@@ -11,14 +11,16 @@ import { browserHistory } from 'react-router';
 import { getLocation } from '../functions/current_location';
 import { send_to_server } from '../communication/send';
 import cookie from 'react-cookies';
-import { Modal, ModalHeader, ModalBody, ModalFooter, Input, Label, Button, Form, FormGroup, Row, Col, InputGroupAddon, InputGroup, FormFeedback } from 'reactstrap';
+import { Navbar, Nav, NavItem, NavbarBrand, NavLink, Modal, ModalHeader, ModalBody, ModalFooter, Input, Label, 
+        Button, Form, FormGroup, Row, Col, InputGroupAddon, InputGroup, FormFeedback, Alert } from 'reactstrap';
 import { address_to_coords } from '../functions/address_to_coordinates';
+import {Settings} from '../helper_components/dropdown_settings';
 
 class Shop extends React.Component {
     
     constructor(props) {
         super(props);
-        this.state = {success: null, error: null, current: null, checkPhone: null, error_address: null};
+        this.state = {success: null, error: null, current: null, checkPhone: null, error_address: null, not_found: null};
         this.handleSubmit = this.handleSubmit.bind(this);
         this.search = this.search.bind(this);
         this.currentLocation = this.currentLocation.bind(this);
@@ -78,6 +80,7 @@ class Shop extends React.Component {
     async handleSubmit (event) {
         event.preventDefault();
         event.nativeEvent.stopImmediatePropagation();
+        this.setState({success: null, error: null, need_login: null, not_found: null});
         const name = document.getElementById('new_shop_name').value;
         var lng = null;
         var lat = null;
@@ -119,11 +122,17 @@ class Shop extends React.Component {
         console.log(shop);
         const url = 'http://localhost:3002/shops';
         const answer = await send_to_server(url, shop);
+        
+        if (answer === 'error') {
+            this.setState({error: true});
+            return;
+        }
+        
         if (answer.status === 200) {
             this.setState({success: true});
         }
         else {
-            this.setState({error: true});
+            this.setState({not_found: true});
         }
        
     }
@@ -131,9 +140,16 @@ class Shop extends React.Component {
     render() {
         return(
             <div>
+                <Navbar color="faded" light>
+                    <NavbarBrand><img src={"/public/logo_transparent.png"} width="150px" onClick={() => this.search()}/></NavbarBrand>
+                    <Nav className="ml-auto" navbar>
+                        <NavItem>
+                            <NavLink><Settings/></NavLink>
+                        </NavItem>
+                    </Nav>
+                </Navbar>
                 <Form id="new_shop" onSubmit={this.handleSubmit}>
-                    <div></div>
-                    <button className="homepage" type="submit" onClick={() => this.homepage()}><FontAwesomeIcon icon={faChevronLeft}></FontAwesomeIcon>Home Page</button>
+                    <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά.</Alert>
                     
                     <FormGroup check row>
                         <Label sm={3} for="name">Όνομα Καταστήματος:</Label>
