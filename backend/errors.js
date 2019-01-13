@@ -19,8 +19,24 @@ class NotFound extends Error {
     }
 }
 
+class NotAllowed extends Error {
+    constructor(message) {
+        super(message)
+        this.name = 'NotAllowed'
+    }
+}
+
+class Unauthorized extends Error {
+    constructor(message) {
+        super(message)
+        this.name = 'Unauthorized'
+    }
+}
+
 module.exports = {
     MalformedInput,
     NotImplemented,
-    NotFound
+    NotFound,
+    NotAllowed,
+    Unauthorized
 }
