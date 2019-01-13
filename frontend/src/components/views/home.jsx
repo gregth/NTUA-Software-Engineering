@@ -102,10 +102,12 @@ export default class Home extends Component {
             </Navbar>
             <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά.</Alert>
             <div className="front-img">
-            <div className="App-logo">
-                <img src={"/public/logo_transparent.png"} alt="logo" />
+            <div class="container">
+                <div class="header">
+                    <img src="/public/logo_transparent.png" alt="logo" />
+                </div>
                 <Search ref="search" price={this.state.price} handle={this.handleSubmit} updateRange={this.updateRange}/>
-            </div>
+           
             </div>
             <div>
                 {this.state.results
@@ -118,7 +120,7 @@ export default class Home extends Component {
                         : null
                     }
                 </div>
-            
+                </div>
             </div>
         </div>
 
