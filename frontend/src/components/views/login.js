@@ -17,7 +17,7 @@ class Login extends React.Component {
     
     constructor(props) {
         super(props);
-        this.state = {isOpen: false, need_login: null, show: true, username: '', password: ''};
+        this.state = {isOpen: false, need_login: null, show: true, success: null, error: null, not_found: null};
         this.handleSubmit = this.handleSubmit.bind(this);
         this.homepage = this.homepage.bind(this);
         this.register = this.register.bind(this);
@@ -45,14 +45,36 @@ class Login extends React.Component {
         browserHistory.push('/register');
     }
     
-    handleSubmit(event) {
+    async handleSubmit (event) {
         event.preventDefault();
-        const us = document.getElementById('username').value;
-        const pass = document.getElementById('pwd').value;
+        event.nativeEvent.stopImmediatePropagation();
+        this.setState({success: null, error: null, need_login: null, not_found: null});
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('pwd').value;
 
-        this.setState(() => ({ username: us, password: pass}));   
-
-        cookie.save('username', us, {path: '/'});
+        var body = { 
+            username,
+            password
+        };
+        
+        console.log(body);
+        const url = 'http://localhost:3002/login';
+        const answer = await send_to_server(url, body);
+        
+        if (answer === 'error') {
+            this.setState({error: true});
+            return;
+        }
+        
+        if (answer.status === 200) {
+            this.setState({success: true});
+        }
+        else {
+            this.setState({not_found: true});
+            return;
+        }
+        
+        cookie.save('username', username, {path: '/'});
         cookie.save('loggedin', true, {path: '/'});
         cookie.remove('need_login', {path: '/'});
         
@@ -84,7 +106,11 @@ class Login extends React.Component {
                         </NavItem>
                     </Nav>
                 </Navbar>
+                
                 <Alert color="danger" isOpen={this.state.need_login===true}>Απαιτείται σύνδεση.</Alert>
+                <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά.</Alert>
+                <Alert color="danger" isOpen={this.state.not_found===true}>Λάθος όνομα χρήστη ή κωδικός.</Alert>
+                
                 <Form id="login" onSubmit={this.handleSubmit}>
                     <FormGroup check row>
                         <Label for="username" sm={3}>
@@ -92,7 +118,7 @@ class Login extends React.Component {
                             Όνομα Χρήστη:
                         </Label>
                         <Col sm={3}>
-                            <Input id="username" type="text" name="username" title="only letters, numbers and underscore" pattern="[A-Za-z0-9_]+" type="text" required/>
+                            <Input id="username" type="text" name="username" pattern="[A-Za-z0-9_]+" type="text" required/>
                         </Col>
                     </FormGroup>
 
@@ -103,7 +129,7 @@ class Login extends React.Component {
                         </Label>
                             <Col sm={3}>
                                 <InputGroup>
-                                    <Input title="8-16 no special characters" type="password" name="password" pattern="[A-Za-z0-9]{8,16}" id="pwd" required></Input>
+                                    <Input type="password" name="password" pattern="[A-Za-z0-9]{8,}" id="pwd" required></Input>
                                     <InputGroupAddon addonType="append">
                                         <button type="eye" id="eye" onClick={this.showPassword}>
                                             { this.state.show
@@ -115,7 +141,6 @@ class Login extends React.Component {
                                 </InputGroup>
                             </Col>
                     </FormGroup>
-                    <span id="message"/><br/>
                     <Button type="submit" id="button1">Σύνδεση</Button>
                </Form>
                

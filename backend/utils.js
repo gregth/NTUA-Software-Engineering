@@ -1,5 +1,5 @@
 const express = require('express')
-const { MalformedInput, NotImplemented, NotFound } = require('./errors')
+const { MalformedInput, NotImplemented, NotFound, Unauthorized } = require('./errors')
 
 const createControllerRoutes = controller => {
     const router = express.Router()
@@ -30,6 +30,8 @@ const createControllerRoutes = controller => {
                 res.status(404).send({error: 'Not Found'})
             } else if (err instanceof NotImplemented) {
                 res.status(501).json({error: 'Method Not Implemented'})
+            } else if (err instanceof Unauthorized) {
+                res.status(401).json({error: 'Unauthorized'})
             } else {
                 res.status(500).send()
             }
