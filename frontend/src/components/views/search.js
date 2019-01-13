@@ -64,7 +64,7 @@ class SearchPage extends Component {
     }
     
     shops () {
-        //TODO
+        browserHistory.push('/shops');
     }
     
     products () {

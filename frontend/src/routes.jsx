@@ -12,6 +12,7 @@ import Products from './components/views/favourite_products';
 import newProduct from './components/views/new_product';
 import AllProducts from './components/views/all_products';
 import EditProduct from './components/views/edit_product';
+import AllShops from './components/views/all_shops';
 
 export default (
   <Route path='/' component={App}>
@@ -25,6 +26,7 @@ export default (
     <Route path='favouriteproducts' component={Products} />
     <Route path='newproduct' component={newProduct} />
     <Route path='products' component={AllProducts} />
+    <Route path='shops' component={AllShops} />
     <Route path='edit_product' component={EditProduct} />
     <Route path='*' component={Home} />
   </Route>
