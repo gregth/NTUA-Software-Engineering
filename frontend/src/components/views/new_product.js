@@ -20,6 +20,10 @@ import { Modal, ModalHeader, ModalBody, ModalFooter, Input, Label, Button, Form,
 import {Categories} from '../helper_components/categories_menu';
 import {send_to_server} from '../communication/send';
 
+function onlyUnique(value, index, self) { 
+    return self.indexOf(value) === index;
+}
+
 class newProduct extends React.Component {
     
     constructor(props) {
@@ -60,6 +64,16 @@ class newProduct extends React.Component {
         const volume = document.getElementById('new_product_volume').value;
         const description = document.getElementById('new_product_description').value; 
         const category = this.refs.new_product_category.state.category;
+        var tags_list = (document.getElementById('new_product_tags').value).split(',');
+        
+        tags_list = tags_list.filter(onlyUnique);
+        var tags = [];
+        for (var i=0; i<tags_list.length; i++) {
+            var temp = tags_list[i].replace(/\s+/g,' ').trim();
+            tags.push(temp);
+        }
+        
+        tags = tags.filter( onlyUnique );
         
         var product = { 
             description,
@@ -68,6 +82,7 @@ class newProduct extends React.Component {
             brand,
             volume,
             category,
+            tags,
             withdrawn: 0
         };
         
@@ -113,6 +128,13 @@ class newProduct extends React.Component {
                     <Label sm={3} for="new_product_category">Κατηγορία:</Label>
                     <Col sm={1}>
                         <Categories ref='new_product_category'/>
+                    </Col>
+                </FormGroup>
+                
+                <FormGroup check row>
+                    <Label sm={3} for="new_product_tags">Χαρακτηριστικά Προϊόντος:</Label>
+                    <Col sm={3}>
+                        <Input type="textarea" name="text" id="new_product_tags" onChange={this.handleChangeTags} value={this.state.tags}/>
                     </Col>
                 </FormGroup>
                 

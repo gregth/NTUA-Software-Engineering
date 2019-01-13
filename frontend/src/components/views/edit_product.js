@@ -8,24 +8,64 @@ import React, { Component } from "react";
 import { browserHistory } from 'react-router';
 import MapClass from '../helper_components/map';
 import {Categories} from '../helper_components/categories_menu';
-import { Navbar, Nav, NavItem, NavbarBrand, NavLink, Input, InputGroupAddon, Button, Form, InputGroup, FormGroup, Label, Container, Row,  Col, Table, Alert } from 'reactstrap';
+import { Navbar, Nav, NavItem, NavbarBrand, NavLink, Input, InputGroupAddon, Button, Form, InputGroup, 
+        Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Label, Container, Row,  Col, Table, Alert } from 'reactstrap';
 import {send_to_server} from '../communication/send';
 import {Settings} from '../helper_components/dropdown_settings';
 import {receive_from_server} from '../communication/receive';
 import ProductsTable from '../helper_components/results_products_table';
 import Search from '../helper_components/searchComponent';
 import cookie from 'react-cookies';
+import {put} from '../communication/put';
+import {patch} from '../communication/patch';
 
-function onlyUnique(value, index, self) { 
+
+function arraysEqual(arr1, arr2) {
+    if(arr1.length !== arr2.length)
+        return false;
+    for(var i = arr1.length; i--;) {
+        if(arr1[i] !== arr2[i])
+            return false;
+    }
+
+    return true;
+}
+
+function onlyUnique (value, index, self) { 
     return self.indexOf(value) === index;
+}
+
+function check_changes (original, edited) {
+    const keys = Object.keys(edited);
+    var changed = [];
+    
+    var unchanged = ['withdrawn', 'barcode', 'tags'];
+    for (var i=0; i<unchanged.length; i++) {
+        var index = keys.indexOf(unchanged[i]); 
+        if (index > -1) {
+            keys.splice(index, 1);
+        }
+    }
+    
+    for (var i=0; i<keys.length; i++) {
+        if (original[keys[i]] !== edited[keys[i]]) {
+            changed.push(keys[i]);
+        }
+    }
+    
+    if (!arraysEqual(original.tags, edited.tags)) {
+        changed.push('tags');
+    }
+    return changed;
 }
 
 export default class EditProduct extends Component {
     constructor(props) {
         super(props);
         this.request = this.request.bind(this);
-        this.state = {details: null, error: null, success: null, not_found: null, description: '', tags: ''};
-        
+        this.state = {details: null, error: null, success: null, not_found: null, 
+                    description: '', tags: '', success_edit: null, error_edit: null, not_found: null};
+        this.toggleModal = this.toggleModal.bind(this);
         this.homepage = this.homepage.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChangeDescription = this.handleChangeDescription.bind(this);
@@ -87,9 +127,14 @@ export default class EditProduct extends Component {
     handleChangeDescription (event) {
         this.setState({description:  event.target.value});
     }
-  
+    
+    
     homepage() {
         browserHistory.push('/search');
+    }
+    
+    toggleModal() {
+        this.setState({ error: !this.state.error });
     }
     
     async handleSubmit(event) {
@@ -103,16 +148,21 @@ export default class EditProduct extends Component {
         var tags_list = (document.getElementById('edit_product_tags').value).split(',');
         const category = this.refs.edit_product_category.state.category;
         
-        tags_list = tags_list.filter(onlyUnique);
         var tags = [];
+        tags_list = tags_list.filter(onlyUnique);
         for (var i=0; i<tags_list.length; i++) {
             var temp = tags_list[i].replace(/\s+/g,' ').trim();
             tags.push(temp);
         }
-        
+
         tags = tags.filter( onlyUnique );
+        if (tags.length > 0) {
+            if (tags[0] === "") {
+                tags = [];
+            }
+        }
         
-        var product = { 
+        var product = {
             description,
             name,
             barcode,
@@ -120,18 +170,40 @@ export default class EditProduct extends Component {
             volume,
             category,
             tags,
-            withdrawn: 0
+            withdrawn: this.state.details.withdrawn
         };
         
         console.log(product);
-        /*const url = 'http://localhost:3002/products';
-        const answer = await send_to_server(url, product);
-        if (answer.status === 200) {
-            this.setState({success: true});
+        
+        var changed = check_changes(this.state.details, product);
+        
+        const url = 'http://localhost:3002/products/' + this.props.location.query.id;
+        
+        var answer;
+        
+        if (changed.length === 1) {
+            var key = changed[0];
+            answer = await patch(url, {key: this.state.details[key]});
+        }
+        else if (changed.length > 1) {
+            answer = await put(url, product); 
         }
         else {
-            this.setState({error: true});
-        }*/
+            browserHistory.push('/products');
+        }
+        
+        if (answer === 'error') {
+            this.setState({error_edit: true});
+            return;
+        }
+        
+        if (answer.status === 200) {
+            this.setState({success_edit: true});
+        }
+        else {
+            this.setState({not_found_edit: true});
+            return;
+        }
     }
     
     render() {
@@ -154,7 +226,7 @@ export default class EditProduct extends Component {
                     <FormGroup check row>
                         <Label sm={3} for="edit_product_barcode" className="mr-sm-2">Barcode Προϊόντος:</Label>
                         <Col sm={3}>
-                            <Input id="edit_product_barcode" name="edit_product_barcode" pattern="[0-9]{1,128}" value={this.state.details.extraData.barcode} type="text"/>
+                            <Input disabled id="edit_product_barcode" name="edit_product_barcode" pattern="[0-9]{1,128}" value={this.state.details.extraData.barcode} type="text"/>
                         </Col>
                     </FormGroup>
 
@@ -206,6 +278,21 @@ export default class EditProduct extends Component {
                 <Button type="button" onClick={browserHistory.goBack}>Ακύρωση</Button>
             </div>
             }
+            
+            <Modal isOpen={this.state.error_edit} toggle={this.toggleModal}>
+                <ModalBody>Η επεξεργασία δεν ολοκληρώθηκε επιτυχώς.</ModalBody>
+                <ModalFooter>
+                    <Button color="primary" onClick={this.toggleModal}>Προσπάθεια ξανά</Button>{' '}
+                    <Button color="secondary" onClick={this.homepage}>Αρχική σελίδα</Button>
+                </ModalFooter>
+            </Modal>
+                
+            <Modal isOpen={this.state.success_edit}>
+                <ModalBody>Η επεξεργασία ολοκληρώθηκε επιτυχώς.</ModalBody>
+                <ModalFooter>
+                    <Button color="secondary" onClick={this.homepage}>Αρχική σελίδα</Button>
+                </ModalFooter>
+            </Modal>
         </div>
 
           );
