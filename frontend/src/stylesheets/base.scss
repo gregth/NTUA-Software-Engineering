@@ -1,8 +1,15 @@
-$var: #EEEEEE;
+$var:#EEEE;
 
 body {
   background: $var;
   font-family: verdana;
+ 
+    background-size: cover;
+    min-height: 800px;
+    @media (max-width: 992px) {
+        min-height: 700px;
+    }
+
 }
 
 .App-logo {
