@@ -13,7 +13,10 @@ body {
 }
 
 .header img {
-    width: 300px;
     background: transparent;
-    align-self: center;
+    display: block;
+    margin: 0 auto;
+    max-width: 30%;
+    height: auto;
+    width: auto\9;
   }
