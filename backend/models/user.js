@@ -7,7 +7,8 @@ module.exports = class User extends BaseModel {
             select: {
                 allowed_query_keys: [
                     'id',
-                    'username'
+                    'username',
+                    'password_hash'
                 ],
                 selectable_fields: [
                     'id',
