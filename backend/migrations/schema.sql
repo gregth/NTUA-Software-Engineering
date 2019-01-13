@@ -119,13 +119,13 @@ CREATE TABLE `users` (
   `username` varchar(40) NOT NULL,
   `first_name` varchar(40) NOT NULL,
   `last_name` varchar(40) NOT NULL,
-  `e-mail` varchar(50) NOT NULL,
+  `email` varchar(50) NOT NULL,
   `telephone` varchar(14) DEFAULT NULL,
   `password_hash` varchar(300) NOT NULL,
   `birthdate` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`),
-  UNIQUE KEY `e-mail` (`e-mail`)
+  UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
