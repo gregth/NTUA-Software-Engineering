@@ -34,7 +34,7 @@ export default class PapigationResults extends React.PureComponent {
             <td>Brand</td>
             <td>
                 <button className="search_btn" id="edit_btn" onClick={() => this.props.edit(product.id)}><FontAwesomeIcon icon={faEdit}></FontAwesomeIcon></button>
-                <button className="search_btn" id="delete_btn" onClick={() => this.props.delete(product.id)}><FontAwesomeIcon icon={faTrashAlt}></FontAwesomeIcon></button>     
+                <button className="search_btn" id="delete_btn" onClick={() => this.props.delete(product.id, product.name)}><FontAwesomeIcon icon={faTrashAlt}></FontAwesomeIcon></button>     
                 <button className="search_btn" id="search_product_btn" onClick={() => this.props.search(product.id)}><FontAwesomeIcon icon={faSearch}></FontAwesomeIcon></button>
             </td>
         </tr>

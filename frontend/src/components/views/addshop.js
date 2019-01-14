@@ -16,8 +16,12 @@ import { Navbar, Nav, NavItem, NavbarBrand, NavLink, Modal, ModalHeader, ModalBo
 import { address_to_coords } from '../functions/address_to_coordinates';
 import {Settings} from '../helper_components/dropdown_settings';
 
+
+function onlyUnique (value, index, self) { 
+    return self.indexOf(value) === index;
+}
+
 class Shop extends React.Component {
-    
     constructor(props) {
         super(props);
         this.state = {success: null, error: null, current: null, checkPhone: null, error_address: null, not_found: null};
@@ -82,6 +86,23 @@ class Shop extends React.Component {
         event.nativeEvent.stopImmediatePropagation();
         this.setState({success: null, error: null, need_login: null, not_found: null});
         const name = document.getElementById('new_shop_name').value;
+        var tags_list = (document.getElementById('new_shop_tags').value).split(',');
+        
+        var tags = [];
+        tags_list = tags_list.filter(onlyUnique);
+        for (var i=0; i<tags_list.length; i++) {
+            var temp = tags_list[i].replace(/\s+/g,' ').trim();
+            if (temp === "") continue;
+            tags.push(temp);
+        }
+
+        tags = tags.filter( onlyUnique );
+        if (tags.length > 0) {
+            if (tags[0] === "") {
+                tags = [];
+            }
+        }
+        
         var lng = null;
         var lat = null;
         var address = null;
@@ -116,6 +137,7 @@ class Shop extends React.Component {
             address,
             lng,
             lat,
+            tags,
             withdrawn: 0
         };
         
@@ -206,7 +228,14 @@ class Shop extends React.Component {
                             <Input type="checkbox" name="days" id="new_shop_sunday"></Input>
                         </Col>
                     </FormGroup>
-
+                    
+                    <FormGroup check row>
+                        <Label sm={3} for="new_shop_tags">Χαρακτηριστικά Καταστήματος:</Label>
+                        <Col sm={3}>
+                            <Input type="textarea" name="text" id="new_shop_tags"/>
+                        </Col>
+                    </FormGroup>
+                    
                     <FormGroup check row>
                         <Label sm={3} for="phone">Τηλέφωνο Καταστήματος:</Label>
                         <Col sm={3}>

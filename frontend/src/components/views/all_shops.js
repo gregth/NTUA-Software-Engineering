@@ -31,6 +31,7 @@ export class AllShops extends Component {
         this.search = this.search.bind(this);
         this.edit = this.edit.bind(this);
         this.delete = this.delete.bind(this);
+        this.delete_complete = this.delete_complete.bind(this);
         this.name = null;
         this.id = null;
     }
@@ -93,6 +94,16 @@ export class AllShops extends Component {
         );
     }
     
+    async delete_complete () {
+        this._asyncRequest = await this.request().then(
+            shops => {
+                this._asyncRequest = null;
+                this.setState({shops});
+            }
+        );
+        this.refs.delete.closeall();
+    }
+    
     delete (id, name) {
         this.refs.delete.toggle_delete(id, name);
     }
@@ -127,7 +138,7 @@ export class AllShops extends Component {
                 ?<div> Loading </div>
                 : <PapigationShops data={this.state.shops} select={this.select} delete={this.delete} edit={this.edit} search={this.search}/>
                 }
-                <Delete ref='delete' category="shop" id={this.id} name={this.name}/>
+                <Delete ref='delete' back={this.delete_complete} category="shop" id={this.id} name={this.name}/>
             </div>
         );
     }

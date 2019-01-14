@@ -155,6 +155,7 @@ export default class EditProduct extends Component {
         tags_list = tags_list.filter(onlyUnique);
         for (var i=0; i<tags_list.length; i++) {
             var temp = tags_list[i].replace(/\s+/g,' ').trim();
+            if (temp === "") continue;
             tags.push(temp);
         }
 
