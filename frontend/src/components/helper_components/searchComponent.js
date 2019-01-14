@@ -32,20 +32,26 @@ export class Search extends Component {
     
     render() {
         return ( 
-            <div>
+            <div className="container">
                 <Form id="searching" onSubmit={this.props.handle}>
                     <FormGroup check inline>
                         <Categories ref='search_category'/>
                         <InputGroup>
-                            <Input id="search" placeholder="Αναζήτηση με όνομα.."></Input>
+                        <div className="col-sm-12 pull-center well">
+                        <div class="input-group custom-search-form">
+                            <Input id="search" class="form-control" placeholder="Αναζήτηση με όνομα.."></Input>
                             <InputGroupAddon addonType="append">
-                                <button className="search_btn" id="search_btn" type="submit">
-                                    <FontAwesomeIcon icon={faSearch}></FontAwesomeIcon>
-                                </button>
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" id="search_btn" type="submit">
+                                      <i>search</i>
+                                    </button>
+                                </span>
                             </InputGroupAddon>
+                            </div>
+                            </div>
                         </InputGroup>
                     </FormGroup>
-
+                  
                     <FormGroup check row>
                         <Label> Μέγιστη τιμή </Label>
                         <Range range={this.props.price} updateRange={this.props.updateRange}/>
@@ -58,6 +64,7 @@ export class Search extends Component {
                     </FormGroup>
                 </Form>   
             </div>
+          
         );
     }
 };
