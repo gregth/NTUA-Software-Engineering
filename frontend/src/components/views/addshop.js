@@ -87,7 +87,7 @@ class Shop extends React.Component {
         this.setState({success: null, error: null, need_login: null, not_found: null});
         const name = document.getElementById('new_shop_name').value;
         var tags_list = (document.getElementById('new_shop_tags').value).split(',');
-        
+        const telephone = document.getElementById('new_shop_phone').value;
         var tags = [];
         tags_list = tags_list.filter(onlyUnique);
         for (var i=0; i<tags_list.length; i++) {
@@ -138,6 +138,7 @@ class Shop extends React.Component {
             lng,
             lat,
             tags,
+            telephone,
             withdrawn: 0
         };
         
