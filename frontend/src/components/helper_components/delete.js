@@ -17,18 +17,23 @@ class Delete extends React.Component {
         this.toggle_delete = this.toggle_delete.bind(this);
         this.delete_request = this.delete_request.bind(this);
         this.homepage = this.homepage.bind(this);
-        this.back = this.back.bind(this);
         this.id = this.props.id;
         this.message = null;
-    }
-    
-    back () {
-        window.location.reload();
+        this.closeall = this.closeall.bind(this);
     }
     
     toggle() {
         this.setState({
             modal: !this.state.modal
+        });
+    }
+    
+    closeall () {
+        this.setState({
+            modal: false,
+            error: null,
+            success: null,
+            not_found: null
         });
     }
     
@@ -82,7 +87,7 @@ class Delete extends React.Component {
                     <ModalBody> Το αίτημα διαγραφής καταχωρήθηκε επιτυχώς.</ModalBody>
                         <ModalFooter>
                             <Button color="primary" onClick={this.homepage}>Αρχική σελίδα</Button>
-                            <Button color="primary" onClick={this.back}>Επιστροφή</Button>
+                            <Button color="primary" onClick={this.props.back}>Επιστροφή</Button>
                         </ModalFooter>
                 </Modal>
                 <Modal isOpen={this.state.not_found} className={this.props.className}>
@@ -90,7 +95,7 @@ class Delete extends React.Component {
                         <ModalFooter>
                             <Button color="primary" onClick={this.delete_request}>Προσπάθεια ξανά</Button>
                             <Button color="primary" onClick={this.homepage}>Αρχική σελίδα</Button>
-                            <Button color="primary" onClick={this.back}>Επιστροφή</Button>
+                            <Button color="primary" onClick={this.props.back}>Επιστροφή</Button>
                         </ModalFooter>
                 </Modal>
             </div>

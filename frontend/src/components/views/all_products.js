@@ -11,6 +11,7 @@ import cookie from 'react-cookies';
 import {Settings} from '../helper_components/dropdown_settings';
 import PapigationResults from '../helper_components/all_products_papigation';
 import { Navbar, Nav, NavItem, NavLink, Button, NavbarBrand, Image, Alert } from 'reactstrap';
+import Delete from '../helper_components/delete';
 
 export class AllProducts extends Component {
     constructor(props) {
@@ -23,6 +24,7 @@ export class AllProducts extends Component {
         this.search = this.search.bind(this);
         this.edit = this.edit.bind(this);
         this.delete = this.delete.bind(this);
+        this.delete_complete = this.delete_complete.bind(this);
     }
     
     componentDidMount () {
@@ -73,6 +75,16 @@ export class AllProducts extends Component {
         return products;
     }
     
+    async delete_complete () {
+        this._asyncRequest = await this.request().then(
+            shops => {
+                this._asyncRequest = null;
+                this.setState({shops});
+            }
+        );
+        this.refs.delete.closeall();
+    }
+    
     edit (id) {
         this.id = id;
         console.log(this.id);
@@ -83,9 +95,8 @@ export class AllProducts extends Component {
         );
     }
     
-    delete (id) {
-        this.id = id;
-        console.log(this.id);
+    delete (id, name) {
+        this.refs.delete.toggle_delete(id, name);
     }
     
     search (id) {
@@ -118,6 +129,7 @@ export class AllProducts extends Component {
                 ?<div> Loading </div>
                 : <PapigationResults data={this.state.products} select={this.select} delete={this.delete} edit={this.edit} search={this.search}/>
                 }
+                <Delete ref='delete' back={this.delete_complete} category="product" id={this.id} name={this.name}/>
             </div>
         );
     }

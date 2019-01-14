@@ -29,6 +29,7 @@ class SearchPage extends Component {
         this.request_prices = this.request_prices.bind(this);
         this.products = this.products.bind(this);
         this.new_product = this.new_product.bind(this);
+        this.new_shop = this.new_shop.bind(this);
         this.shops = this.shops.bind(this);
     }
     
@@ -73,6 +74,10 @@ class SearchPage extends Component {
     
     new_product () {
         browserHistory.push('/newproduct');
+    }
+    
+    new_shop () {
+        browserHistory.push('/addshop');
     }
     
     async handleSubmit (event) {
@@ -121,6 +126,9 @@ class SearchPage extends Component {
                         </NavItem>
                         <NavItem>
                             <NavLink onClick={() => this.new_product()}> Προσθήκη Νέου Προϊόντος</NavLink>
+                        </NavItem>
+                        <NavItem>
+                            <NavLink onClick={() => this.new_shop()}> Προσθήκη Νέου Καταστήματος</NavLink>
                         </NavItem>
                         <NavItem>
                             <NavLink onClick={() => this.newprice()}><FontAwesomeIcon icon={faCartPlus}></FontAwesomeIcon> Προσθήκη Νέας Τιμής</NavLink>

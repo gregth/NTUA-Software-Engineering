@@ -102,7 +102,7 @@ export default class Home extends Component {
             </Navbar>
             <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά.</Alert>
             <div className="front-img">
-            <div class="container">
+            <div className="container">
                 <div className="header">
                     <img src="/public/logo_transparent.png" alt="logo" />
                 </div>
