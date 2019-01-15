@@ -8,28 +8,19 @@ import React from 'react';
 import { browserHistory } from 'react-router';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Table } from 'reactstrap';
 
-class ModalExample extends React.Component {
+class Shops extends React.Component {
     constructor(props) {
       super(props);
-      this.state = {
-        modal: false,
-        shops: []
-      };
-
+      this.state = { modal: false, shops: [], empty: null };
       this.toggle = this.toggle.bind(this);
       this.addshop = this.addshop.bind(this);
       this.homepage = this.homepage.bind(this);
       this.select = this.select.bind(this);
-    }
-    
-    componentDidMount() {
-        //TODO request results
-        this.setState({shops : [{latitude: 37.9763, longitude:23.79763, id:0, address: 'Address1', name: 'CAVA_0'}, 
-                    {latitude: 37.9738, longitude:23.7275, id:1, address: 'address2', name: 'CAVA_1'}]});
+      this.close = this.close.bind(this);
     }
     
     select (id) {
-        console.log(id);
+        this.props.select(id);
     }
     
     addshop () {
@@ -37,19 +28,24 @@ class ModalExample extends React.Component {
     }
     
     homepage() {
-        browserHistory.push('/search');
+        browserHistory.push('/');
     }
     
-    toggle() {
+    close () {
+        this.setState({modal: false});
+    }
+    
+    toggle(shops) {
+        var empty = shops.shops.length === 0;
         this.setState({
-            modal: !this.state.modal
+            modal: !this.state.modal, shops: shops.shops, empty
         });
     }
  
     render() {
         return (
             <div>
-                <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
+                <Modal isOpen={this.state.modal} toggle={this.close} className={this.props.className}>
                     {this.state.shops.length > 0
                     ? <div>
                         <ModalHeader>Επιλογή Καταστήματος</ModalHeader>
@@ -77,7 +73,7 @@ class ModalExample extends React.Component {
                         </ModalFooter>
                         </div>
                     : <div>
-                        <ModalBody> Δε βρέθηκαν κοντινά καταστήματα στην τοποθεσία σας. </ModalBody>
+                        <ModalBody> Δε βρέθηκαν καταστήματα σε αυτή την τοποθεσία. </ModalBody>
                         <ModalFooter>
                             <Button color="primary" onClick={this.addshop}>Προσθήκη Νέου Καταστήματος</Button>
                             <Button color="secondary" onClick={this.homepage}>Αρχική Σελίδα</Button>
@@ -90,4 +86,4 @@ class ModalExample extends React.Component {
     }
 }
 
-export default ModalExample;
+export default Shops;

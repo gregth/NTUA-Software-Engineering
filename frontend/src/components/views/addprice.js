@@ -14,24 +14,29 @@ import {Settings} from '../helper_components/dropdown_settings';
 import { Navbar, Nav, NavItem, NavLink, Modal, ModalHeader, ModalBody, 
         ModalFooter, Input, Label, Button, Form, FormGroup, Row, Col, 
         InputGroupAddon, InputGroup, FormFeedback, NavbarBrand, Image, Alert } from 'reactstrap';
-import ModalExample from '../helper_components/nearby_shops';
+import Shops from '../helper_components/nearby_shops';
 import { address_to_coords } from '../functions/address_to_coordinates';
 import { getLocation } from '../functions/current_location';
 import {send_to_server} from '../communication/send';
 import NavBarClass from '../helper_components/navbar';
+import {receive_from_server} from '../communication/receive';
 
 class Product extends React.Component {
     
     constructor(props) {
         super(props);
-        this.state = { success: null, error: null, current: null, nearby_shops: false, error_address: null, not_found: null};
+        this.state = { success: null, error: null, current: null, nearby_shops: false, error_address: null, not_found: null, message: null, fail: null};
         this.handleSubmit = this.handleSubmit.bind(this);
         this.homepage = this.homepage.bind(this);
+        this.find_barcode = this.find_barcode.bind(this);
+        this.find_shop = this.find_shop.bind(this);
         this.currentLocation = this.currentLocation.bind(this);
-        this.flag = false;
         this.toggleModal = this.toggleModal.bind(this);
         this.new_product = this.new_product.bind(this);
         this.nearby_shops = this.nearby_shops.bind(this);
+        this.add_price = this.add_price.bind(this);
+        this.flag = false;
+        this.body = {productId: null, shopId: null, price: null, dateFrom: null, dateTo: null};
     }
     
     componentDidMount() {
@@ -70,72 +75,76 @@ class Product extends React.Component {
         browserHistory.push('/search');
     }
     
-    async handleSubmit (event) {
-        event.preventDefault();
-        event.nativeEvent.stopImmediatePropagation();
-        this.setState({error: false});
+    async find_barcode () {
         const barcode = document.getElementById('addprice_barcode').value;
-        const price = document.getElementById('addprice_price').value;
-        const dateFrom = document.getElementById('dateFrom').value;
-        const dateTo = document.getElementById('dateTo').value;
-        var name = null;
+        var url = 'http://localhost:3002/products?barcode=' + barcode;
+        var answer = await receive_from_server(url);
+        if (answer === 'error') {
+            this.setState({error: true});
+            return false;
+        }
+        if (answer.status !== 200) {
+            this.setState({not_found: true});
+            this.setState({message: 'Το προϊόν με barcode ' +  barcode + ' δε βρέθηκε.'});
+            return false;
+        }
+        var details = await answer.json().then((result) => {return result.id;});
+        var id = details;
+        return id;
+    }
+    
+    async find_shop () {
+        const barcode = document.getElementById('addprice_barcode').value;
         var lng = null;
         var lat = null;
-        var address = null;
         
         var checkBox = document.getElementById("addprice_location");
         
         if (checkBox.checked) {
             lng = this.state.current.longitude;
             lat = this.state.current.latitude;
-            address = this.state.current.address;
-            var priceBody = { 
-                address,
-                lng,
-                lat,
-                barcode,
-                price,
-                dateFrom,
-                dateTo,
-                withdrawn: 0
-            };
         }
         else {
-            name = document.getElementById('addprice_name').value;
             const postal = document.getElementById('addprice_postal').value;
             const address_name = document.getElementById('addprice_address').value;
             const number = document.getElementById('addprice_number').value;
             const total = address_name + ' ' + number + ' ' + postal;
-            
             var result = await address_to_coords(total);
             if (result) {
                 lat = result[0];
                 lng = result[1];
-                address = total;
                 this.setState({error_address: false});
             }
             else {
                 this.setState({error_address: true});
                 return;
             }
-            
-            var priceBody = { 
-                name,
-                dateFrom,
-                dateTo,
-                address,
-                lng,
-                lat,
-                barcode,
-                price,
-                withdrawn: 0
-            };
         }
         
-        console.log(priceBody);
+        var url = 'http://localhost:3002/shops?lat=' + lat + '&lng=' + lng;
+        var answer = await receive_from_server(url);
+        if (answer === 'error') {
+            this.setState({error: true});
+            return;
+        }
+        if (answer.status !== 200) {
+            this.setState({not_found: true});
+            this.setState({message: 'Δε βρέθηκαν καταστήματα σε αυτή την τοποθεσία'});
+            return;
+        }
         
-        const url = 'http://localhost:3002/shops';
-        const answer = await send_to_server(url, priceBody);
+        var details = await answer.json().then((result) => {return result;});
+        console.log(details);
+        this.refs.nearby_shops.toggle(details);
+    }
+    
+    async add_price (id) {
+        this.refs.nearby_shops.close();
+        this.body.shopId = id;
+        console.log(this.body);
+        
+        var url = 'http://localhost:3002/prices';
+        var answer = await send_to_server(url, this.body);
         
         if (answer === 'error') {
             this.setState({error: true});
@@ -145,15 +154,40 @@ class Product extends React.Component {
             this.setState({success: true});
         }
         else {
-            this.setState({not_found: true});
+            this.setState({fail: true});
             return;
         }
         
     }
     
+    async handleSubmit (event) {
+        event.preventDefault();
+        event.nativeEvent.stopImmediatePropagation();
+        this.setState({error: false});
+        
+        var result = await this.find_barcode().then((result) => {return result;});
+        if (result === false) {
+            this.setState({not_found: true});
+            this.setState({message: 'Το προϊόν με barcode ' +  document.getElementById('addprice_barcode').value + ' δε βρέθηκε.'});
+            return;
+        }
+        this.body.productId = result;
+        
+        const price = document.getElementById('addprice_price').value;
+        const dateFrom = document.getElementById('dateFrom').value;
+        const dateTo = document.getElementById('dateTo').value;
+        
+        this.body.price = price;
+        this.body.dateFrom = dateFrom;
+        this.body.dateTo = dateTo;
+        console.log(this.body);
+
+        var result = await this.find_shop();        
+    }
+    
     toggleModal() {
         this.setState({
-          isOpen: !this.state.error
+            isOpen: !this.state.not_found
         });
     }
     
@@ -237,24 +271,39 @@ class Product extends React.Component {
                         </FormGroup>
                         
                         <FormGroup check row>
-                            <Label sm={3} for="dateTo">Ημερομηνία παρατήρησης:</Label>
+                            <Label sm={3} for="dateTo">Ημερομηνία λήξης τιμής:</Label>
                             <Col sm={2}>
                                 <Input id="dateTo" type="date" name="dateTo" min={date}/>
                             </Col>
                         </FormGroup>
                         
-                        <button className="btn" type="submit" id="button1">Προσθήκη</button>
-                        <Modal isOpen={this.state.not_found} toggle={this.toggleModal}>
-                            <ModalBody>Το προϊόν με barcode {this.state.barcode} δε βρέθηκε.</ModalBody>
-                            <ModalFooter>
-                                <Button color="primary" onClick={this.toggleModal}>Διόρθωση Barcode</Button>{' '}
-                                <Button color="secondary" onClick={this.homepage}>Ακύρωση</Button>
-                                <Button color="secondary" onClick={this.new_product}>Προσθήκη νέου προϊόντος</Button>
-                            </ModalFooter>
-                        </Modal>
+                        <Button className="btn" type="submit" id="button1">Προσθήκη</Button>
                 </Form>
-                <Button onClick={() => this.nearby_shops()}> Test nearby shops </Button>
-                <ModalExample ref='nearby_shops'/>
+                
+                <Modal isOpen={this.state.not_found} toggle={this.toggleModal}>
+                    <ModalBody> {this.state.message}</ModalBody>
+                    <ModalFooter>
+                        <Button color="primary" onClick={this.toggleModal}>Διόρθωση</Button>{' '}
+                        <Button color="secondary" onClick={this.homepage}>Ακύρωση</Button>
+                    </ModalFooter>
+                </Modal>
+
+                <Modal isOpen={this.state.success}>
+                    <ModalBody> Η τιμή καταχωρήθηκε επιτυχώς.</ModalBody>
+                    <ModalFooter>
+                        <Button color="primary" onClick={this.homepage}>Αρχική Σελίδα</Button>
+                    </ModalFooter>
+                </Modal>
+
+                <Modal isOpen={this.state.fail} toggle={() => this.setState({fail: null})}>
+                    <ModalBody> Η καταχώρηση τιμής απέτυχε. </ModalBody>
+                    <ModalFooter>
+                        <Button color="primary" onClick={() => this.setState({fail: null})}>Προσπάθεια ξανά</Button>{' '}
+                        <Button color="secondary" onClick={this.homepage}>Ακύρωση</Button>
+                    </ModalFooter>
+                </Modal>
+                
+                <Shops ref='nearby_shops' select={this.add_price}/>
             </div>
         );
   }
