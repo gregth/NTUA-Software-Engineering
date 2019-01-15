@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import {receive_from_server} from '../communication/receive';
 import SortDropdown from '../helper_components/sort_products_shops';
+import StatusDropdown from '../helper_components/status_products_shops';
 
 export default class PapigationResults extends React.PureComponent {
     constructor(props) {
@@ -19,12 +20,13 @@ export default class PapigationResults extends React.PureComponent {
         this.createData = this.createData.bind(this);
         this.request = this.request.bind(this);
         this.sortChoose = this.sortChoose.bind(this);
+        this.statusChoose = this.statusChoose.bind(this);
         this.state = {
             tooltipOpen: false, currentPage: 0, error: null, success: null, not_found: null, ready: null
         };
         this.dataSet = null;    
         this.pagesCount = null;
-        this.pageSize = 3;
+        this.pageSize = 20;
         this.sort = 'id|DESC';
         this.status = 'ACTIVE';
         this.start = 0;
@@ -104,11 +106,31 @@ export default class PapigationResults extends React.PureComponent {
         this.setState({ready: true});
     }
     
+    async statusChoose () {
+        this.setState({ready: false});
+        this.status = this.refs.status.status;
+        this._isMounted = await this.request();
+        this.setState({ready: true});
+    }
+    
     render() {
         const { currentPage } = this.state;
         return ( 
             <div>
-                <SortDropdown ref="sort" click={this.sortChoose}/>
+                <Table borderless>
+                    <thead>
+                        <tr>
+                            <th>Ταξινόμηση κατά:</th>
+                            <th>Προϊόντα προς εμφάνιση:</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><SortDropdown ref="sort" click={this.sortChoose}/></td>
+                            <td><StatusDropdown ref="status" click={this.statusChoose}/></td>
+                        </tr>
+                    </tbody>
+                </Table>
                 {!this.state.ready
                 ?<div> Loading </div>
                 :<React.Fragment>   

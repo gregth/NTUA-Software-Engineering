@@ -35,7 +35,7 @@ export class Categories extends Component {
             this.state = { dropdownOpen: false, dropDownValue: this.props.default, category: this.props.default };
         }
         else {
-            this.state = { dropdownOpen: false, dropDownValue: 'Επιλογή κατηγορίας', category: null };
+            this.state = { dropdownOpen: false, dropDownValue: 'Επιλογή κατηγορίας', category: 'Όλες οι κατηγορίες' };
         }
         this.changeValue = this.changeValue.bind(this);
     }
@@ -54,7 +54,7 @@ export class Categories extends Component {
     render() {
         return ( 
             <div>
-                <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle} caret>
+                <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
                     <DropdownToggle caret>
                         {this.state.dropDownValue}
                     </DropdownToggle>

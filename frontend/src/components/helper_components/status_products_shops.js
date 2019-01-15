@@ -4,22 +4,27 @@
  * and open the template in the editor.
  */
 
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 import React from 'react';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 
 const options = [
-            {name: 'Όνομα - Αύξουσα', value: 'name|ASC'},
-            {name: 'Όνομα - Φθίνουσα', value: 'name|DESC'},
-            {name: 'id - Αύξουσα', value: 'id|ASC'},
-            {name: 'id - Φθίνουσα', value: 'id|DESC'}         
+            {name: 'Όλα', value: 'ALL'},
+            {name: 'Αποσυρθέντα', value: 'WITHDRAWN'},
+            {name: 'Ενεργά', value: 'ACTIVE'}        
         ];
         
-export default class SortDropdown extends React.Component {
+export default class StatusDropdown extends React.Component {
     constructor(props) {
         super(props);
 
         this.toggle = this.toggle.bind(this);
-        this.state = { dropdownOpen: false, dropDownValue: 'id - Φθίνουσα', sort: 'id|DESC' };
+        this.state = { dropdownOpen: false, dropDownValue: 'Ενεργά', status: 'ACTIVE' };
         this.changeValue = this.changeValue.bind(this);
     }
 
@@ -32,8 +37,8 @@ export default class SortDropdown extends React.Component {
     changeValue(e) {
         const choice = e.currentTarget.textContent;
         const value = e.currentTarget.value;
-        this.setState({dropDownValue: choice, sort: value});
-        this.sort = value;
+        this.setState({dropDownValue: choice, status: value});
+        this.status = value;
         this.props.click();
     }
 
@@ -56,3 +61,4 @@ export default class SortDropdown extends React.Component {
         );
     }
 }
+
