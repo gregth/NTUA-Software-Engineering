@@ -63,8 +63,8 @@ export default class EditProduct extends Component {
     constructor(props) {
         super(props);
         this.request = this.request.bind(this);
-        this.state = {details: null, error: null, success: null, not_found: null, 
-                    description: '', tags: '', success_edit: null, error_edit: null, not_found: null};
+        this.state = {details: null, error: null, success: null, not_found: null, volume: '',
+                    description: '', tags: '', name: '', brand: '', success_edit: null, error_edit: null, not_found: null};
         this.toggleModal = this.toggleModal.bind(this);
         this.homepage = this.homepage.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -87,7 +87,8 @@ export default class EditProduct extends Component {
         this._asyncRequest = this.request().then(
             details => {
                 this._asyncRequest = null;
-                this.setState({details, description: details.description, tags: details.tags});
+                this.setState({details, description: details.description, tags: details.tags, 
+                    name: details.name, brand: details.brand, volume: details.volume});
             }
         );
     }
@@ -237,14 +238,14 @@ export default class EditProduct extends Component {
                     <FormGroup check row>
                         <Label sm={3} for="edit_product_name" className="mr-sm-2">Όνομα Προϊόντος:</Label>
                         <Col sm={3}>
-                            <Input id="edit_product_name" name="edit_product_name" value={this.state.details.name} type="text"/>
+                            <Input id="edit_product_name" name="edit_product_name" value={this.state.name} onChange={e => this.setState({ name: e.target.value })} type="text"/>
                         </Col>
                     </FormGroup>
 
                     <FormGroup check row>
                         <Label sm={3} for="edit_product_brand" className="mr-sm-2">Μάρκα Προϊόντος:</Label>
                         <Col sm={3}>
-                            <Input id="edit_product_brand" name="edit_product_brand" value={this.state.details.brand} type="text"/>
+                            <Input id="edit_product_brand" name="edit_product_brand" value={this.state.brand} onChange={e => this.setState({ brand: e.target.value })} type="text"/>
                         </Col>
                     </FormGroup>
 
@@ -272,7 +273,7 @@ export default class EditProduct extends Component {
                         <Label sm={3} for="edit_product_volume">Όγκος:</Label>
                         <Col sm={2}>
                             <InputGroup>
-                                <Input type="text" id="edit_product_volume" pattern="[0-9]+" value={this.state.details.volume} name="edit_product_volume"/>
+                                <Input type="text" id="edit_product_volume" pattern="[0-9]+" value={this.state.volume} onChange={e => this.setState({ volume: e.target.value })} name="edit_product_volume"/>
                                 <InputGroupAddon addonType="append">ml</InputGroupAddon>
                             </InputGroup>
                         </Col>
