@@ -154,6 +154,7 @@ class Register extends React.Component {
             
                 <Container className="Register">
                 <h2 align="center">Εγγραφή</h2>
+                <hr></hr>
                 <Form id="register" onSubmit={this.handleSubmit}>
                     <FormGroup check row>
                         <Label for="register_first_name" sm={3}>Όνομα:</Label>

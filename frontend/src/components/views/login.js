@@ -10,9 +10,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash, faUser, faKey, faHome, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { browserHistory } from 'react-router';
 import cookie from 'react-cookies';
-import { Alert, Input, InputGroupAddon, Button, Form, InputGroup, FormGroup, Label, Col } from 'reactstrap';
+import { Alert, Input, InputGroupAddon, Button, Form, InputGroup, FormGroup, Label, Container, Col } from 'reactstrap';
 import {send_to_server} from '../communication/send';
 import NavBarClass from '../helper_components/navbar';
+import 'stylesheets/login.scss';
 
 class Login extends React.Component {
     
@@ -95,22 +96,20 @@ class Login extends React.Component {
                 <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά.</Alert>
                 <Alert color="danger" isOpen={this.state.not_found===true}>Λάθος όνομα χρήστη ή κωδικός.</Alert>
                 
+                <Container className="Login">
+                <h2 align="center">Σύνδεση</h2>
+                <hr></hr>
                 <Form id="login" onSubmit={this.handleSubmit}>
                     <FormGroup check row>
-                        <Label for="username" sm={3}>
-                            <FontAwesomeIcon icon={faUser} /> {' '}
-                            Όνομα Χρήστη:
-                        </Label>
+                        <Label for="username" sm={3}> <FontAwesomeIcon icon={faUser} /> {' '} Όνομα Χρήστη: </Label>
                         <Col sm={3}>
-                            <Input id="username" type="text" name="username" pattern="[A-Za-z0-9_]+" type="text" required/>
+                            <Input id="username" name="username" pattern="[A-Za-z0-9_]+" type="text" required/>
                         </Col>
                     </FormGroup>
 
                     <FormGroup check row>
                         <Label for="pwd" sm={3}>
-                            <FontAwesomeIcon icon={faKey} />{' '}
-                            Κωδικός:
-                        </Label>
+                            <FontAwesomeIcon icon={faKey} />{' '} Κωδικός:</Label>
                             <Col sm={3}>
                                 <InputGroup>
                                     <Input type="password" name="password" pattern="[A-Za-z0-9]{8,}" id="pwd" required></Input>
@@ -125,9 +124,10 @@ class Login extends React.Component {
                                 </InputGroup>
                             </Col>
                     </FormGroup>
-                    <Button type="submit" id="button1">Σύνδεση</Button>
+                    <hr></hr>
+                    <Button type="submit">Σύνδεση</Button>
                </Form>
-               
+               </Container>
            </div>
         );
   }
