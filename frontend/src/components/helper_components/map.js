@@ -12,7 +12,7 @@ export class MapClass extends Component {
         super(props);
         this.currentLocation = this.currentLocation.bind(this);
         this.state = {current: [], show_current: false,
-            markers : [], activeMarker: {},  showingInfoWindow: false, modal: false};
+            markers : this.props.shops, activeMarker: {},  showingInfoWindow: false, modal: false};
         this.onMarkerClick = this.onMarkerClick.bind(this);
         this.info = this.info.bind(this);
         this.toggle = this.toggle.bind(this);
@@ -20,8 +20,10 @@ export class MapClass extends Component {
     
     componentDidMount() {
         //TODO request results
-        this.setState({markers : [{latitude: 37.9763, longitude:23.79763, id:0, price: 17, name: 'CAVA_0'}, 
-                    {latitude: 37.9738, longitude:23.7275, id:1, price: 21, name: 'CAVA_1'}]});
+        if (this.props.shops === null) {
+            this.setState({markers : [{lat: 37.9763, lng:23.79763, id:0, price: 17, name: 'CAVA_0'}, 
+                    {lat: 37.9738, lng:23.7275, id:1, price: 21, name: 'CAVA_1'}]});
+        }
     }
     
     toggle() {
@@ -43,7 +45,7 @@ export class MapClass extends Component {
         let result = await getLocation();
         console.log(result);
         var temp = this.state.show_current;
-        this.setState({ current: [{latitude: result[0], longitude: result[1]}], show_current: !temp});
+        this.setState({ current: [{lat: result[0], lng: result[1]}], show_current: !temp});
     }
     
     info (id) {
@@ -87,7 +89,7 @@ export class MapClass extends Component {
                             {this.state.markers.map(marker => (
                             <Marker
                                 className='marker'
-                                position={{ lat: marker.latitude, lng: marker.longitude }}
+                                position={{ lat: marker.lat, lng: marker.lng }}
                                 key={marker.id}
                                 label={marker.price.toString() + '€'}
                                 labelStyle={{color: '#fff'}}
@@ -98,9 +100,9 @@ export class MapClass extends Component {
                             </Marker>
                             ))}
                             {this.state.current.map(marker => (
-                                this.state.show_current
+                                this.state.show_current && this.state.shops
                                 ? <Marker
-                                    position={{ lat: marker.latitude, lng: marker.longitude }}
+                                    position={{ lat: marker.lat, lng: marker.lng }}
                                     key={3} icon={'https://www.robotwoods.com/dev/misc/bluecircle.png'}
                                 >
                                 </Marker>

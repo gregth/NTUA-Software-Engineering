@@ -2,12 +2,13 @@ import React, { Component } from "react";
 import { browserHistory } from 'react-router';
 import MapClass from '../helper_components/map';
 import {Categories} from '../helper_components/categories_menu';
-import { Navbar, Nav, NavItem, NavLink, Input, InputGroupAddon, Button, Form, InputGroup, FormGroup, Label, Container, Row,  Col, Table, Alert } from 'reactstrap';
+import { Input, InputGroupAddon, Button, Form, InputGroup, FormGroup, Label, Container, Row,  Col, Table, Alert } from 'reactstrap';
 import {send_to_server} from '../communication/send';
 import {receive_from_server} from '../communication/receive';
 import ProductsTable from '../helper_components/results_products_table';
 import Search from '../helper_components/searchComponent';
 import cookie from 'react-cookies';
+import NavBarClass from '../helper_components/navbar';
 
 export default class Home extends Component {
     constructor(props) {
@@ -90,16 +91,7 @@ export default class Home extends Component {
     render() {
       return (
         <div>
-            <Navbar light expand="md">
-                <Nav className="ml-auto" navbar>
-                    <NavItem>
-                        <NavLink onClick={() => this.Login()}>Σύνδεση</NavLink>
-                    </NavItem>
-                    <NavItem>
-                      <NavLink onClick={() => this.Register()}>Εγγραφή</NavLink>
-                    </NavItem>
-                </Nav>
-            </Navbar>
+            <NavBarClass/>
             <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά.</Alert>
             <div className="front-img">
             <div className="container">
