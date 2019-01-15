@@ -96,13 +96,9 @@ export class AllShops extends Component {
     }
     
     async delete_complete () {
-        this._asyncRequest = await this.request().then(
-            shops => {
-                this._asyncRequest = null;
-                this.setState({shops});
-            }
-        );
+        this.refs.result.setState({ready: false});
         this.refs.delete.closeall();
+        this.refs.result.request();
     }
     
     delete (id, name) {
@@ -128,10 +124,7 @@ export class AllShops extends Component {
             <div>
                 <NavBarClass/>
                 <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά.</Alert>
-                {this.state.shops === null
-                ?<div> Loading </div>
-                : <PapigationShops data={this.state.shops} select={this.select} delete={this.delete} edit={this.edit} search={this.search}/>
-                }
+                <PapigationShops ref='result' data={this.state.shops} select={this.select} delete={this.delete} edit={this.edit} search={this.search}/>
                 <Delete ref='delete' back={this.delete_complete} category="shop" id={this.id} name={this.name}/>
             </div>
         );

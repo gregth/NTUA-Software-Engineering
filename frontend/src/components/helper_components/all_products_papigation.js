@@ -42,8 +42,14 @@ export default class PapigationResults extends React.PureComponent {
             <tr key={product.id} onClick={() => this.props.select(product.id)} className="row_pointer">
                 <td>{product.name}</td>
                 <td>{product.category}</td>
-                <td>Brand</td>
-                <td>{product.tags.join(', ')}</td>
+                <td>{product.brand}</td>
+                <td></td>
+                <td>
+                    {!product.withdrawn
+                    ? <div>Ενεργό</div>
+                    : <div>Αποσυρθέν</div>
+                    }
+                </td>
                 <td>
                     <TooltipItem id={product.id} text={product.description}/>
                 </td>
@@ -153,6 +159,7 @@ export default class PapigationResults extends React.PureComponent {
                                 <th>Κατηγορία</th>
                                 <th>Μάρκα</th>
                                 <th>Χαρακτηριστικά</th>
+                                <th>Κατάσταση</th>
                                 <th>Περιγραφή</th>
                             </tr>
                         </thead>
@@ -190,10 +197,7 @@ export default class PapigationResults extends React.PureComponent {
                     </div>
                 </React.Fragment>
             }
-            </div>
-    
+        </div>
     );
-  
-  }
-  
+  }  
 }

@@ -40,9 +40,9 @@ export class AllProducts extends Component {
     }
     
     delete_complete () {
-        this.setState({products: false});
+        this.refs.result.setState({ready: false});
         this.refs.delete.closeall();
-        this.setState({products: true});
+        this.refs.result.request();
     }
     
     edit (id) {
@@ -78,7 +78,7 @@ export class AllProducts extends Component {
             <div>
                 <NavBarClass/>
                 <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά.</Alert>
-                <PapigationResults select={this.select} delete={this.delete} edit={this.edit} search={this.search}/>
+                <PapigationResults ref='result' select={this.select} delete={this.delete} edit={this.edit} search={this.search}/>
                 <Delete ref='delete' back={this.delete_complete} category="product" id={this.id} name={this.name}/>
             </div>
         );
