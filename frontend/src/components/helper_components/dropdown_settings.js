@@ -11,7 +11,6 @@ export class Settings extends Component {
     this.logoff = this.logoff.bind(this);        
     this.delete = this.delete.bind(this);
     this.toggle = this.toggle.bind(this);
-    this.favourite_products = this.favourite_products.bind(this);
     this.state = { dropdownOpen: false };
   }
 
@@ -25,16 +24,14 @@ export class Settings extends Component {
         //TODO 
         cookie.remove('loggedin', { path: '/' });
         cookie.remove('username', { path: '/' });
+        cookie.remove('need_login', { path: '/' });
         browserHistory.push('/');
-    }
-    
-    favourite_products () {
-        browserHistory.push('/products');
     }
     
     logoff () {
         cookie.remove('username', { path: '/' });
         cookie.remove('loggedin', { path: '/' });
+        cookie.remove('need_login', { path: '/' });
         browserHistory.push('/');
     }
     
@@ -46,9 +43,6 @@ export class Settings extends Component {
                         <FontAwesomeIcon icon={faBars}></FontAwesomeIcon> {cookie.load('username')}
                     </DropdownToggle>
                     <DropdownMenu right>
-                        <DropdownItem onClick={() => this.favourite_products()}>
-                            Αγαπημένα Προϊόντα
-                        </DropdownItem>
                         <DropdownItem onClick={() => this.delete()}>
                             Απενεργοποίηση Λογαριασμού
                         </DropdownItem>

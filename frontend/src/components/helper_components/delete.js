@@ -52,7 +52,7 @@ class Delete extends React.Component {
     }
     
     homepage () {
-        browserHistory.push('/search');
+        browserHistory.push('/');
     }
     
     async delete_request() {

@@ -16,7 +16,6 @@ import { NavbarBrand, Navbar, Nav, NavItem, NavLink, Input, InputGroupAddon, But
 class NavBarClass extends React.Component {
     constructor(props) {
         super(props);
-        this.loggedin = Boolean(cookie.load('loggedin'));
         this.products = this.products.bind(this);
         this.new_product = this.new_product.bind(this);
         this.new_shop = this.new_shop.bind(this);
@@ -60,8 +59,6 @@ class NavBarClass extends React.Component {
     }
   
     render() {
-        // console.log(this.props);
-        const { range } = this.props;
         return (
             <Navbar color="faded" light expand="md">
                 <NavbarBrand><img src={"/public/logo_transparent.png"} width="150px" onClick={() => this.homepage()}/></NavbarBrand>
@@ -81,17 +78,17 @@ class NavBarClass extends React.Component {
                     <NavItem>
                         <NavLink onClick={() => this.newprice()}><FontAwesomeIcon icon={faCartPlus}></FontAwesomeIcon> Προσθήκη Νέας Τιμής</NavLink>
                     </NavItem>
-                    {this.loggedin 
+                    {Boolean(cookie.load('loggedin'))
                     ? <NavItem><Settings/></NavItem>
                     : null
                     }
-                    {!this.loggedin
+                    {!Boolean(cookie.load('loggedin'))
                     ? <NavItem>
                         <NavLink onClick={() => this.login()}> Σύνδεση </NavLink>
                     </NavItem>
                     : null
                     }
-                    {!this.loggedin
+                    {!Boolean(cookie.load('loggedin'))
                     ?<NavItem>
                         <NavLink onClick={() => this.register()}> Εγγραφή </NavLink>
                     </NavItem>
