@@ -72,7 +72,7 @@ class Product extends React.Component {
     }
     
     homepage() {
-        browserHistory.push('/search');
+        browserHistory.push('/');
     }
     
     async find_barcode () {
@@ -142,7 +142,7 @@ class Product extends React.Component {
         this.refs.nearby_shops.close();
         this.body.shopId = id;
         console.log(this.body);
-        
+       
         var url = 'http://localhost:3002/prices';
         var answer = await send_to_server(url, this.body);
         
@@ -150,7 +150,7 @@ class Product extends React.Component {
             this.setState({error: true});
             return;
         }
-        if (answer.status === 200) {
+        if (answer.status === 200 || answer.status === 204) {
             this.setState({success: true});
         }
         else {
@@ -166,7 +166,7 @@ class Product extends React.Component {
         this.setState({error: false});
         
         var result = await this.find_barcode().then((result) => {return result;});
-        if (result === false) {
+        if (!result) {
             this.setState({not_found: true});
             this.setState({message: 'Το προϊόν με barcode ' +  document.getElementById('addprice_barcode').value + ' δε βρέθηκε.'});
             return;
