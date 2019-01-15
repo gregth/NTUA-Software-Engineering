@@ -56,7 +56,7 @@ export default class Home extends Component {
         const answer = await receive_from_server(url);
         
         if (answer === 'error') {
-            this.setState({error: true});
+            cd.setState({error: true});
             return;
         }
         
