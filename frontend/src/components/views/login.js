@@ -10,8 +10,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash, faUser, faKey, faHome, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { browserHistory } from 'react-router';
 import cookie from 'react-cookies';
-import { Alert, NavbarBrand, Navbar, Nav, NavItem, NavLink, Input, InputGroupAddon, Button, Form, InputGroup, FormGroup, Label, Col } from 'reactstrap';
+import { Alert, Input, InputGroupAddon, Button, Form, InputGroup, FormGroup, Label, Col } from 'reactstrap';
 import {send_to_server} from '../communication/send';
+import NavBarClass from '../helper_components/navbar';
 
 class Login extends React.Component {
     
@@ -19,13 +20,7 @@ class Login extends React.Component {
         super(props);
         this.state = {isOpen: false, need_login: null, show: true, success: null, error: null, not_found: null};
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.homepage = this.homepage.bind(this);
-        this.register = this.register.bind(this);
         this.showPassword = this.showPassword.bind(this);
-    }
-    
-    homepage() {
-        browserHistory.push('/');
     }
     
     componentDidMount() {
@@ -39,10 +34,6 @@ class Login extends React.Component {
         catch(error) {
             console.log(error);
         }
-    }
-    
-    register() {
-        browserHistory.push('/register');
     }
     
     async handleSubmit (event) {
@@ -98,14 +89,7 @@ class Login extends React.Component {
     render() {
         return(
             <div>
-                <Navbar color="faded" light>
-                <NavbarBrand><img src={"/public/logo_transparent.png"} width="150px" onClick={() => this.homepage()}/></NavbarBrand>
-                    <Nav className="ml-auto" navbar>
-                        <NavItem>
-                            <NavLink onClick={() => this.register()}>Εγγραφή</NavLink>
-                        </NavItem>
-                    </Nav>
-                </Navbar>
+                <NavBarClass/>
                 
                 <Alert color="danger" isOpen={this.state.need_login===true}>Απαιτείται σύνδεση.</Alert>
                 <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά.</Alert>

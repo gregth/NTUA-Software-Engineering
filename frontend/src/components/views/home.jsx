@@ -74,14 +74,6 @@ export default class Home extends Component {
         this.setState({results: true, show_map: !this.state.show_map, products: products});
     }
     
-    Login() {
-        browserHistory.push('/login');
-    }
-   
-    Register() {
-        browserHistory.push('/register');
-    }
-    
     updateRange (val) {
         this.setState({
             price: val

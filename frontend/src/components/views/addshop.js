@@ -11,11 +11,11 @@ import { browserHistory } from 'react-router';
 import { getLocation } from '../functions/current_location';
 import { send_to_server } from '../communication/send';
 import cookie from 'react-cookies';
-import { Navbar, Nav, NavItem, NavbarBrand, NavLink, Modal, ModalHeader, ModalBody, ModalFooter, Input, Label, 
+import { Modal, ModalHeader, ModalBody, ModalFooter, Input, Label, 
         Button, Form, FormGroup, Row, Col, InputGroupAddon, InputGroup, FormFeedback, Alert } from 'reactstrap';
 import { address_to_coords } from '../functions/address_to_coordinates';
 import {Settings} from '../helper_components/dropdown_settings';
-
+import NavBarClass from '../helper_components/navbar';
 
 function onlyUnique (value, index, self) { 
     return self.indexOf(value) === index;
@@ -163,14 +163,7 @@ class Shop extends React.Component {
     render() {
         return(
             <div>
-                <Navbar color="faded" light>
-                    <NavbarBrand><img src={"/public/logo_transparent.png"} width="150px" onClick={() => this.search()}/></NavbarBrand>
-                    <Nav className="ml-auto" navbar>
-                        <NavItem>
-                            <NavLink><Settings/></NavLink>
-                        </NavItem>
-                    </Nav>
-                </Navbar>
+                <NavBarClass/>
                 <Form id="new_shop" onSubmit={this.handleSubmit}>
                     <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά.</Alert>
                     

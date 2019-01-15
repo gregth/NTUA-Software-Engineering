@@ -14,7 +14,7 @@ import React, { Component } from "react";
 import { browserHistory } from 'react-router';
 import MapClass from '../helper_components/map';
 import {Categories} from '../helper_components/categories_menu';
-import { Navbar, Nav, NavItem, NavbarBrand, NavLink, Input, InputGroupAddon, Button, Form, InputGroup, FormFeedback,
+import { Input, InputGroupAddon, Button, Form, InputGroup, FormFeedback,
         Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Label, Container, Row,  Col, Table, Alert } from 'reactstrap';
 import {send_to_server} from '../communication/send';
 import {Settings} from '../helper_components/dropdown_settings';
@@ -24,6 +24,7 @@ import cookie from 'react-cookies';
 import {put} from '../communication/put';
 import {patch} from '../communication/patch';
 import { address_to_coords } from '../functions/address_to_coordinates';
+import NavBarClass from '../helper_components/navbar';
 
 function arraysEqual(arr1, arr2) {
     if(arr1.length !== arr2.length)
@@ -266,14 +267,7 @@ export default class EditShop extends Component {
     render() {
       return (
         <div>
-            <Navbar color="faded" light>
-                    <NavbarBrand><img src={"/public/logo_transparent.png"} width="150px" onClick={() => this.homepage()}/></NavbarBrand>
-                    <Nav className="ml-auto" navbar>
-                        <NavItem>
-                            <NavLink><Settings/></NavLink>
-                        </NavItem>
-                    </Nav>
-                </Navbar>
+            <NavBarClass/>
             
             <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά.</Alert>
             {this.state.details === null
