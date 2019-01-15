@@ -37,17 +37,17 @@ export class Search extends Component {
                     <FormGroup check inline>
                         <Categories ref='search_category'/>
                         <InputGroup>
-                        <div className="col-sm-12 pull-center well">
-                        <div class="input-group custom-search-form">
-                            <Input id="search" class="form-control" placeholder="Αναζήτηση με όνομα.."></Input>
-                            <InputGroupAddon addonType="append">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-default" id="search_btn" type="submit">
-                                      <i>search</i>
-                                    </button>
-                                </span>
-                            </InputGroupAddon>
-                            </div>
+                            <div className="col-sm-12 pull-center well">
+                                <div className="input-group custom-search-form">
+                                    <Input id="search" className="form-control" placeholder="Αναζήτηση με όνομα.."></Input>
+                                    <InputGroupAddon addonType="append">
+                                        <span className="input-group-btn">
+                                            <button className="btn btn-default" id="search_btn" type="submit">
+                                              <i>search</i>
+                                            </button>
+                                        </span>
+                                    </InputGroupAddon>
+                                </div>
                             </div>
                         </InputGroup>
                     </FormGroup>
