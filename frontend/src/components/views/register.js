@@ -10,7 +10,7 @@ import { faEye, faEyeSlash, faCheck, faTimes, faHome, faChevronLeft } from '@for
 import { browserHistory } from 'react-router';
 import cookie from 'react-cookies';
 import { Navbar, Nav, NavItem, NavbarBrand, NavLink, Alert, Input, InputGroupAddon, Button, Form, InputGroup, 
-        FormGroup, Label, Col, InputGroupButton, FormFeedback, FormText } from 'reactstrap';
+        FormGroup, Label, Col, Container, InputGroupButton, FormFeedback, FormText } from 'reactstrap';
 import {send_to_server} from '../communication/send';
 
 class Register extends React.Component {
@@ -168,7 +168,8 @@ class Register extends React.Component {
                 </Navbar>
 
                 <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά.</Alert>
-
+                
+                <Container className="Register">
                 <Form id="register" onSubmit={this.handleSubmit}>
                     <FormGroup check row>
                         <Label for="register_first_name" sm={3}>Όνομα:</Label>
@@ -237,6 +238,7 @@ class Register extends React.Component {
                     </FormGroup>
                     <Button type="submit">Εγγραφή</Button>
                 </Form>
+              </Container>
             </div>
         );
   }
