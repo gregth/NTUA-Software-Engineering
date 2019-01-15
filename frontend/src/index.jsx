@@ -10,6 +10,7 @@ require('./stylesheets/base.scss');
 require('./stylesheets/register.scss');
 require('./stylesheets/search.scss');
 require('./stylesheets/bootstrap.scss');
+require('./stylesheets/login.scss');
 
 ReactDom.render(
   <Router history={browserHistory} routes={routes} />,
