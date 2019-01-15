@@ -168,75 +168,6 @@ class Register extends React.Component {
                 </Navbar>
 
                 <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά.</Alert>
-<<<<<<< HEAD
-                
-                <div className="container">
-                    <div className="row">
-                    <div className="col-lg-10 col-xl-9 mx-auto">
-                        <div className="card card-signin flex-row my-5">
-                        <div className="card-img-left d-none d-md-flex">
-                            
-                    </div>
-                    <div className="card-body">
-                        <h5 className="card-title text-center">Εγγραφή</h5>
-                        <Form className="register-form" id="register" onSubmit={this.handleSubmit}>
-
-                        <div className="form-label-group">
-                            <Input id="register_first_name" name="register_first_name" placeholder="Όνομα" pattern="([^\u0000-\u007F]*[A-Za-z]*)+([/\w\.]?[\s]*[^\u0000-\u007F]*[A-Za-z]*)*" type="text" className="form-control" required autoFocus/>
-                            <Label for="register_first_name" sm={3}>Όνομα</Label>  
-                        </div>
-
-                        <div className="form-label-group">    
-                            <Input id="register_last_name" name="register_last_name" placeholder="Επίθετο" pattern="([^\u0000-\u007F]*[A-Za-z]*)+([/\w\.]?[\s]*[^\u0000-\u007F]*[A-Za-z]*)*" type="text" required/>
-                            <Label for="register_last_name" sm={4}>Επίθετο</Label>   
-                        </div>
-
-                        <div className="form-label-group">
-                            <Input type="register_email" id="register_email" placeholder="Email" invalid={this.state.checkEmail===false} valid={this.state.checkEmail} onChange={() => this.validateEmail()} required/>
-                            <Label for="register_email" sm={3}>Email</Label>
-                        </div>
-
-                        <div className="form-label-group">
-                            <Input id="register_username" name="register_username" placeholder="Username" title="only letters, numbers and underscore" pattern="[A-Za-z0-9_]+" type="text" required autoFocus/>
-                            <Label for="register_username">Username</Label>
-                        </div>
-                        <hr></hr>
-                        <div className="form-label-group">
-                            <div className="input-group add-on col-md-2">
-                                <Input title="no special characters" type="password" placeholder="Κωδικός" name="register_pwd" pattern="[A-Za-z0-9]{8,}" id="register_pwd" onKeyUp={() => this.checkPasswordMatch()} required></Input>
-                                <div className="input-group-btn">
-                                    <button id="showPassword"><i class="fa fa-eye" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <Label for="register_pwd" sm={5}>Κωδικός</Label>
-
-                        </div>
-
-                        <div class="form-label-group">
-                            <Input valid={this.state.checkPass} invalid={this.state.checkPass===false} placeholder="Επαλήθευση Κωδικού" id="register_re_pass" name="re_pass" type="password" onInput={() => this.checkPasswordMatch()} required/>                   
-                            <Label for="register_re_pass" sm={6}>Επαλήθευση Κωδικού</Label>  
-                        </div> 
-                        <div className="form-label-group">
-                            <Input type="date" id="register_birth_date" placeholder="Ημερομηνία Γέννησης" name="register_birth_date" max="2000-12-31" required/>  
-                            <Label for="register_birth_date" sm={6}>Ημερομηνία Γέννησης</Label> 
-                        </div>
-
-                        <div class="form-label-group">
-                            <Input type="tel" id="register_phone" placeholder="Τηλέφωνο" name="register_phone" invalid={this.state.checkPhone===false} valid={this.state.checkPhone} onChange={() => this.validatePhone()} required/>
-                            <Label for="register_phone" sm={4}>Τηλέφωνο</Label> 
-                        </div>
-
-                        <hr></hr>
-                        <div className="col text-center">
-                            <button className="btn btn-lg btn-primary" type="submit">Εγγραφή</button>                               
-                        </div>
-                    </Form>
-                </div>
-            </div>
-            </div>
-            </div>
-=======
 
                 <Form id="register" onSubmit={this.handleSubmit}>
                     <FormGroup check row>
@@ -306,7 +237,6 @@ class Register extends React.Component {
                     </FormGroup>
                     <Button type="submit">Εγγραφή</Button>
                 </Form>
->>>>>>> 80b271f7f76a22a731834c40a7d7af77317bdf03
             </div>
         );
   }
