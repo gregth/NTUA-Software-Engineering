@@ -12,6 +12,7 @@ import { faSearch, faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import {receive_from_server} from '../communication/receive';
 import SortDropdown from '../helper_components/sort_products_shops';
 import StatusDropdown from '../helper_components/status_products_shops';
+import CountDropdown from '../helper_components/count_products_shops';
 
 export default class PapigationResults extends React.PureComponent {
     constructor(props) {
@@ -21,6 +22,7 @@ export default class PapigationResults extends React.PureComponent {
         this.request = this.request.bind(this);
         this.sortChoose = this.sortChoose.bind(this);
         this.statusChoose = this.statusChoose.bind(this);
+        this.countChoose = this.countChoose.bind(this);
         this.state = {
             tooltipOpen: false, currentPage: 0, error: null, success: null, not_found: null, ready: null
         };
@@ -78,13 +80,14 @@ export default class PapigationResults extends React.PureComponent {
         }
         var result = await answer.json().then((result) => {return result;});
         console.log(result);
-        if (this.start !== result.start || this.pageSize !== result.count) {
+        if (this.start !== result.start || parseInt(this.pageSize) !== result.count) {
             this.setState({not_found: true, success: false});
             return;
         }
         this.total = result.total;
         this.products = result.products;
         this.pagesCount = Math.ceil(this.total / this.pageSize);
+        console.log(this.pagesCount)
         this.createData();
         this.setState({ready: true});
     }
@@ -113,6 +116,13 @@ export default class PapigationResults extends React.PureComponent {
         this.setState({ready: true});
     }
     
+    async countChoose () {
+        this.setState({ready: false});
+        this.pageSize = this.refs.count.count;
+        this._isMounted = await this.request();
+        this.setState({ready: true});
+    }
+    
     render() {
         const { currentPage } = this.state;
         return ( 
@@ -122,12 +132,14 @@ export default class PapigationResults extends React.PureComponent {
                         <tr>
                             <th>Ταξινόμηση κατά:</th>
                             <th>Προϊόντα προς εμφάνιση:</th>
+                            <th>Προϊόντα ανά σελίδα:</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td><SortDropdown ref="sort" click={this.sortChoose}/></td>
                             <td><StatusDropdown ref="status" click={this.statusChoose}/></td>
+                            <td><CountDropdown ref="count" click={this.countChoose}/></td>
                         </tr>
                     </tbody>
                 </Table>

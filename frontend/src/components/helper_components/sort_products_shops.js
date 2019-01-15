@@ -21,6 +21,7 @@ export default class SortDropdown extends React.Component {
         this.toggle = this.toggle.bind(this);
         this.state = { dropdownOpen: false, dropDownValue: 'id - Φθίνουσα', sort: 'id|DESC' };
         this.changeValue = this.changeValue.bind(this);
+        this.sort = 'id|DESC';
     }
 
     toggle() {
