@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {DropdownMenu, DropdownToggle, ButtonDropdown, DropdownItem  } from 'reactstrap';
+import {DropdownMenu, DropdownToggle, Dropdown, DropdownItem  } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars,} from '@fortawesome/free-solid-svg-icons';
 import { browserHistory } from 'react-router';
@@ -38,7 +38,7 @@ export class Settings extends Component {
     render() {
         return ( 
             <div>
-                <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+                <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
                     <DropdownToggle>
                         <FontAwesomeIcon icon={faBars}></FontAwesomeIcon> {cookie.load('username')}
                     </DropdownToggle>
@@ -50,7 +50,7 @@ export class Settings extends Component {
                             Αποσύνδεση
                         </DropdownItem>
                     </DropdownMenu>
-                </ButtonDropdown>
+                </Dropdown>
             </div>
         );
     }

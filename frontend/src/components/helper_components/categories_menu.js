@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import SelectSearch from 'react-select-search';
-import {DropdownMenu, DropdownToggle, ButtonDropdown, DropdownItem  } from 'reactstrap';
+import {DropdownMenu, DropdownToggle, Dropdown, DropdownItem  } from 'reactstrap';
 
 const options = [
             {name: 'Αναψυκτικά', value: 'beverages'},
@@ -54,7 +54,7 @@ export class Categories extends Component {
     render() {
         return ( 
             <div>
-                <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+                <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle} caret>
                     <DropdownToggle caret>
                         {this.state.dropDownValue}
                     </DropdownToggle>
@@ -69,7 +69,7 @@ export class Categories extends Component {
                             </DropdownItem>
                         ))}
                     </DropdownMenu>
-                </ButtonDropdown>
+                </Dropdown>
             </div>
         );
     }

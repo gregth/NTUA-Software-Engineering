@@ -10,13 +10,15 @@ import ReactDOM from 'react-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import {receive_from_server} from '../communication/receive';
+import SortDropdown from '../helper_components/sort_products_shops';
 
 export default class PapigationResults extends React.PureComponent {
-  constructor(props) {
-    super(props);
+    constructor(props) {
+        super(props);
         this.toggle = this.toggle.bind(this);
         this.createData = this.createData.bind(this);
         this.request = this.request.bind(this);
+        this.sortChoose = this.sortChoose.bind(this);
         this.state = {
             tooltipOpen: false, currentPage: 0, error: null, success: null, not_found: null, ready: null
         };
@@ -29,7 +31,7 @@ export default class PapigationResults extends React.PureComponent {
         this.total = null;
         this.products = null;
         this.request();
-  }
+    }
   
     createData () {
         this.dataSet = this.products.map(product => (
@@ -94,11 +96,19 @@ export default class PapigationResults extends React.PureComponent {
             currentPage: index
         });
     }
-
+    
+    async sortChoose () {
+        this.setState({ready: false});
+        this.sort = this.refs.sort.sort;
+        this._isMounted = await this.request();
+        this.setState({ready: true});
+    }
+    
     render() {
         const { currentPage } = this.state;
         return ( 
             <div>
+                <SortDropdown ref="sort" click={this.sortChoose}/>
                 {!this.state.ready
                 ?<div> Loading </div>
                 :<React.Fragment>   
