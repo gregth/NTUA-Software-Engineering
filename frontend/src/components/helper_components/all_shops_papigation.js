@@ -97,6 +97,7 @@ export default class PapigationShops extends React.PureComponent {
     }
     
     async handleClick(e, index) {
+        this.setState({ready: false});
         e.preventDefault();
         this.start = index*this.pageSize;
         this._isMounted = await this.request();
@@ -104,6 +105,7 @@ export default class PapigationShops extends React.PureComponent {
         this.setState({
             currentPage: index
         });
+        this.setState({ready: true});
     }
     
     async sortChoose () {
