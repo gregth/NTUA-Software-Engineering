@@ -68,8 +68,7 @@ export default class EditProduct extends Component {
         this.toggleModal = this.toggleModal.bind(this);
         this.homepage = this.homepage.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleChangeDescription = this.handleChangeDescription.bind(this);
-        this.handleChangeTags = this.handleChangeTags.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
     
      componentDidMount () {
@@ -93,13 +92,13 @@ export default class EditProduct extends Component {
         );
     }
     
-    componentWilldUnmount() {
+    componentWilldUnmount () {
         if (this._asyncRequest) {
             this._asyncRequest.cancel();
         }
     }
 
-    async request() {
+    async request () {
         const url = 'http://localhost:3002/products/' + this.props.location.query.id;
         const answer = await receive_from_server(url);
         
@@ -121,14 +120,10 @@ export default class EditProduct extends Component {
         return details;
     }
     
-    handleChangeTags (event) {
-        this.setState({tags:  event.target.value});
+    handleChange(event) {
+        var name = event.target.name;
+        this.setState({[name]: event.target.value});
     }
-    
-    handleChangeDescription (event) {
-        this.setState({description:  event.target.value});
-    }
-    
     
     homepage() {
         browserHistory.push('/search');
@@ -224,21 +219,21 @@ export default class EditProduct extends Component {
                     <FormGroup check row>
                         <Label sm={3} for="edit_product_barcode" className="mr-sm-2">Barcode Προϊόντος:</Label>
                         <Col sm={3}>
-                            <Input disabled id="edit_product_barcode" name="edit_product_barcode" pattern="[0-9]{1,128}" value={this.state.details.extraData.barcode} type="text"/>
+                            <Input disabled id="edit_product_barcode" name="barcode" pattern="[0-9]{1,128}" onChange={this.handleChange} value={this.state.details.extraData.barcode} type="text"/>
                         </Col>
                     </FormGroup>
 
                     <FormGroup check row>
                         <Label sm={3} for="edit_product_name" className="mr-sm-2">Όνομα Προϊόντος:</Label>
                         <Col sm={3}>
-                            <Input id="edit_product_name" name="edit_product_name" value={this.state.name} onChange={e => this.setState({ name: e.target.value })} type="text"/>
+                            <Input id="edit_product_name" name="name" value={this.state.name} onChange={this.handleChange} type="text"/>
                         </Col>
                     </FormGroup>
 
                     <FormGroup check row>
                         <Label sm={3} for="edit_product_brand" className="mr-sm-2">Μάρκα Προϊόντος:</Label>
                         <Col sm={3}>
-                            <Input id="edit_product_brand" name="edit_product_brand" value={this.state.brand} onChange={e => this.setState({ brand: e.target.value })} type="text"/>
+                            <Input id="edit_product_brand" name="brand" value={this.state.brand} onChange={this.handleChange} type="text"/>
                         </Col>
                     </FormGroup>
 
@@ -252,21 +247,21 @@ export default class EditProduct extends Component {
                     <FormGroup check row>
                         <Label sm={3} for="edit_product_tags">Χαρακτηριστικά Προϊόντος:</Label>
                         <Col sm={3}>
-                            <Input type="textarea" name="text" id="edit_product_tags" onChange={this.handleChangeTags} value={this.state.tags}/>
+                            <Input type="textarea" name="tags" id="edit_product_tags" onChange={this.handleChange} value={this.state.tags}/>
                         </Col>
                     </FormGroup>
 
                     <FormGroup check row>
                         <Label sm={3} for="edit_product_description">Περιγραφή προϊόντος:</Label>
                         <Col sm={3}>
-                            <Input type="textarea" name="text" id="edit_product_description" onChange={this.handleChangeDescription} value={this.state.description}/>
+                            <Input type="textarea" name="description" id="edit_product_description" onChange={this.handleChange} value={this.state.description}/>
                         </Col>
                     </FormGroup>
                     <FormGroup check row>
                         <Label sm={3} for="edit_product_volume">Όγκος:</Label>
                         <Col sm={2}>
                             <InputGroup>
-                                <Input type="text" id="edit_product_volume" pattern="[0-9]+" value={this.state.volume} onChange={e => this.setState({ volume: e.target.value })} name="edit_product_volume"/>
+                                <Input type="text" id="edit_product_volume" pattern="[0-9]+" value={this.state.volume} onChange={this.handleChange} name="volume"/>
                                 <InputGroupAddon addonType="append">ml</InputGroupAddon>
                             </InputGroup>
                         </Col>

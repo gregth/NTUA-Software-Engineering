@@ -74,8 +74,8 @@ export default class EditShop extends Component {
         this.homepage = this.homepage.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.currentLocation = this.currentLocation.bind(this);
-        this.handleChangeTags = this.handleChangeTags.bind(this);
         this.validatePhone = this.validatePhone.bind(this);
+        this.handleChange = this.handleChange.bind(this);
         this.flag = false;
     }
     
@@ -154,14 +154,10 @@ export default class EditShop extends Component {
         return details;
     }
     
-    handleChangeTags (event) {
-        this.setState({tags:  event.target.value});
+    handleChange(event) {
+        var name = event.target.name;
+        this.setState({[name]: event.target.value});
     }
-    
-    handleChangeDescription (event) {
-        this.setState({description:  event.target.value});
-    }
-    
     
     homepage() {
         browserHistory.push('/search');
@@ -240,7 +236,6 @@ export default class EditShop extends Component {
         
         if (changed.length === 1) {
             var key = changed[0];
-            console.log(key, shop[key]);
             answer = await patch(url, {key: shop[key]});
         }
         else if (changed.length > 1) {
@@ -279,20 +274,20 @@ export default class EditShop extends Component {
                     <FormGroup check row>
                         <Label sm={3} for="name">Όνομα Καταστήματος:</Label>
                         <Col sm={3}>
-                            <Input id="edit_shop_name" name="name" value={this.state.name} onChange={e => this.setState({ name: e.target.value })} type="text" required/>
+                            <Input id="edit_shop_name" name="name" value={this.state.name} onChange={this.handleChange} type="text" required/>
                         </Col>
                     </FormGroup>
                     <FormGroup check row>
                         <Label> Τωρινή τοποθεσία </Label>
                         <Col sm={1}>
-                            <Input type="checkbox" name="location" id="edit_shop_location" onChange={() => this.currentLocation()}></Input>
+                            <Input type="checkbox" name="location" id="edit_shop_location" onChange={this.handleChange}></Input>
                         </Col>
                     </FormGroup>
                     <div> Ή </div>
                     <FormGroup check row>
                         <Label sm={3} for="address">Διεύθυνση:</Label>
                         <Col sm={3}>
-                            <Input invalid={this.state.error_address} value={this.state.address} onChange={e => this.setState({ address: e.target.value })} valid={false} id="edit_shop_address" name="address" type="text" disabled={this.flag} required/>
+                            <Input invalid={this.state.error_address} value={this.state.address} onChange={this.handleChange} valid={false} id="edit_shop_address" name="address" type="text" disabled={this.flag} required/>
                             <FormFeedback valid={!this.state.error_address}>Η διεύθυνση δεν είναι έγκυρη.</FormFeedback>
                         </Col>
                     </FormGroup>
@@ -300,14 +295,14 @@ export default class EditShop extends Component {
                     <FormGroup check row>
                         <Label sm={3} for="edit_shop_tags">Χαρακτηριστικά Καταστήματος:</Label>
                         <Col sm={3}>
-                            <Input type="textarea" name="text" id="edit_shop_tags" onChange={this.handleChangeTags} value={this.state.tags}/>
+                            <Input type="textarea" name="text" id="edit_shop_tags" onChange={this.handleChange} value={this.state.tags}/>
                         </Col>
                     </FormGroup>
                     
                     <FormGroup check row>
                         <Label sm={3} for="phone">Τηλέφωνο Καταστήματος:</Label>
                         <Col sm={3}>
-                            <Input type="tel" id="edit_shop_phone" name="phone" value={this.state.telephone} onChange={e => this.setState({ phone: e.target.value })} invalid={this.state.checkPhone===false} valid={this.state.checkPhone} onChange={() => this.validatePhone()}/>
+                            <Input type="tel" id="edit_shop_phone" name="phone" value={this.state.telephone} onChange={this.handleChange} invalid={this.state.checkPhone===false} valid={this.state.checkPhone} onChange={() => this.validatePhone()}/>
                         </Col>
                     </FormGroup>
                     <Button type="submit" id="button1">Αποθήκευση</Button>

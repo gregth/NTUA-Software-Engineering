@@ -20,6 +20,7 @@ import {receive_from_server} from '../communication/receive';
 import SortDropdown from '../helper_components/sort_products_shops';
 import StatusDropdown from '../helper_components/status_products_shops';
 import CountDropdown from '../helper_components/count_products_shops';
+import MapClass from '../helper_components/map';
 
 export default class PapigationShops extends React.PureComponent {
     constructor(props) {
@@ -191,6 +192,7 @@ export default class PapigationShops extends React.PureComponent {
                             </PaginationItem>
                         </Pagination>
                     </div>
+                    <MapClass shops={this.shops}/>
                 </React.Fragment>
             }
         </div>
