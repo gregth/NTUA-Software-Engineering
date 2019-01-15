@@ -210,27 +210,6 @@ class Shop extends React.Component {
                     </FormGroup>
 
                     <FormGroup check row>
-                        <Label sm={3} for="hours">Ωράριο:</Label>
-                        <Col sm={1}>
-                            <span> Από </span>
-                            <Input type="time" name="opening" id="new_shop_opening"></Input>
-                            <span> Έως </span>
-                            <Input type="time" name="closing" id="new_shop_closing"></Input>
-                        </Col>
-                    </FormGroup>
-
-                    <FormGroup check row>
-                        <Col sm={1}>
-                            <Label> Καθημερινές </Label>
-                            <Input type="checkbox" name="days" id="new_shop_workdays"></Input>
-                            <Label> Σάββατο </Label>
-                            <Input type="checkbox" name="days" id="new_shop_saturday"></Input>
-                            <Label> Κυριακή </Label>
-                            <Input type="checkbox" name="days" id="new_shop_sunday"></Input>
-                        </Col>
-                    </FormGroup>
-                    
-                    <FormGroup check row>
                         <Label sm={3} for="new_shop_tags">Χαρακτηριστικά Καταστήματος:</Label>
                         <Col sm={3}>
                             <Input type="textarea" name="text" id="new_shop_tags"/>
