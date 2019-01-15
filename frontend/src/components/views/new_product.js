@@ -32,6 +32,7 @@ class newProduct extends React.Component {
         this.state = {success: null, error: null};
         this.handleSubmit = this.handleSubmit.bind(this);
         this.toggleModal = this.toggleModal.bind(this);
+        this.homepage = this.homepage.bind(this);
     }
     
     componentDidMount() {
@@ -45,6 +46,10 @@ class newProduct extends React.Component {
         catch(error) {
             console.log(error);
         }
+    }
+    
+    homepage () {
+        browserHistory.push('/');
     }
     
     toggleModal() {
@@ -152,20 +157,20 @@ class newProduct extends React.Component {
                 </FormGroup>
                 <Button type="submit" id="button1">Προσθήκη</Button>
             </Form>
-            <Button type="button" id="button2" onClick={this.search}>Ακύρωση</Button>
+            <Button type="button" id="button2" onClick={this.homepage}>Ακύρωση</Button>
             
             <Modal isOpen={this.state.error} toggle={this.toggleModal}>
                 <ModalBody>Το αίτημα προσθήκης δεν ήταν επιτυχές.</ModalBody>
                 <ModalFooter>
                     <Button color="primary" onClick={this.toggleModal}>Προσπάθεια ξανά</Button>{' '}
-                    <Button color="secondary" onClick={this.search}>Αρχική σελίδα</Button>
+                    <Button color="secondary" onClick={this.homepage}>Αρχική σελίδα</Button>
                 </ModalFooter>
             </Modal>
             
             <Modal isOpen={this.state.success}>
                 <ModalBody>Το αίτημα προσθήκης ήταν επιτυχές.</ModalBody>
                 <ModalFooter>
-                    <Button color="secondary" onClick={this.search}>Αρχική σελίδα</Button>
+                    <Button color="secondary" onClick={this.homepage}>Αρχική σελίδα</Button>
                 </ModalFooter>
             </Modal>
             

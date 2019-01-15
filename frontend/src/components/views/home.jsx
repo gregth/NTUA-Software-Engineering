@@ -12,8 +12,6 @@ import { browserHistory } from 'react-router';
 import MapClass from '../helper_components/map';
 import cookie from 'react-cookies';
 import { Input, InputGroupAddon, Button, Form, InputGroup, FormGroup, Label, Alert } from 'reactstrap';
-import {send_to_server} from '../communication/send';
-import {receive_from_server} from '../communication/receive';
 import ProductsTable from '../helper_components/results_products_table';
 import Search from '../helper_components/searchComponent';
 import NavBarClass from '../helper_components/navbar';
@@ -21,7 +19,7 @@ import NavBarClass from '../helper_components/navbar';
 class SearchPage extends Component {
     constructor(props) {
         super(props);
-        this.state = {price: 50, show_map: false, products: [], 
+        this.state = {price: 50, show_map: false,
                         results: false, success: null, error: null, not_found: null};
         this.handleSubmit = this.handleSubmit.bind(this);
         this.only_nearby_shops = this.only_nearby_shops.bind(this);
@@ -44,36 +42,11 @@ class SearchPage extends Component {
         //TODO send request
     }
     
-    async handleSubmit (event) {
+    handleSubmit (event) {
         event.preventDefault();
         event.nativeEvent.stopImmediatePropagation();
-        const search = document.getElementById('search').value;
-        const category = this.refs.search.refs.search_category.state.category;
         
-        var body = {
-            search,
-            category
-        };
-        
-        console.log(body);
-        const url = 'http://localhost:3002/products';
-        const answer = await receive_from_server(url);
-        
-        if (answer === 'error') {
-            this.setState({error: true});
-            return;
-        }
-        
-        if (answer.status === 200) {
-            this.setState({success: true});
-        }
-        else {
-            this.setState({not_found: true});
-        }
-        var products = await answer.json().then((result) => {return result.products;});
-        console.log(products);
-        
-        this.setState({results: true, show_map: !this.state.show_map, products: products});
+        this.setState({results: true, show_map: !this.state.show_map});
     }
     
     render() {
@@ -88,11 +61,11 @@ class SearchPage extends Component {
                 </div>
                 <div>
                     {this.state.results
-                    ? <ProductsTable ref="results_products" max_price={this.state.price} products={this.state.products} onClick={this.request_price}/>
+                    ? <ProductsTable ref="results_products" category={this.refs.search.refs.search_category.state.category} max_price={this.state.price} products={this.state.products} onClick={this.request_price}/>
                     : null
                     }
                     <div >
-                        {this.state.show_map
+                        {this.state.show_map && false
                             ?<MapClass/>
                             : null
                         }
