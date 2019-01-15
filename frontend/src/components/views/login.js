@@ -13,7 +13,6 @@ import cookie from 'react-cookies';
 import { Alert, Input, InputGroupAddon, Button, Form, InputGroup, FormGroup, Label, Container, Col } from 'reactstrap';
 import {send_to_server} from '../communication/send';
 import NavBarClass from '../helper_components/navbar';
-import 'stylesheets/login.scss';
 
 class Login extends React.Component {
     
