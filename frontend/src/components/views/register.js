@@ -201,21 +201,21 @@ class Register extends React.Component {
                     </FormGroup>
 
                      <FormGroup check row>
-                        <Label for="pwd_repeat" sm={3}>Επαλήθευση Κωδικού:</Label>
+                        <Label for="pwd_repeat" sm={6}>Επαλήθευση Κωδικού:</Label>
                         <Col sm={3}>
                             <Input  valid={this.state.checkPass} invalid={this.state.checkPass===false} id="register_re_pass" name="re_pass" type="password" onInput={() => this.checkPasswordMatch()} required/>
                         </Col>
                     </FormGroup>
 
                     <FormGroup check row>
-                        <Label for="register_birth_date" sm={3}>Ημερομηνία Γέννησης:</Label>
+                        <Label for="register_birth_date" sm={6}>Ημερομηνία Γέννησης:</Label>
                         <Col sm={3}>
                             <Input type="date" id="register_birth_date" name="register_birth_date" max="2000-12-31" required/>
                         </Col>
                     </FormGroup>
 
                     <FormGroup check row>
-                        <Label for="register_phone" sm={3}>Κινητό/Σταθερό Τηλέφωνο:</Label>
+                        <Label for="register_phone" sm={8}>Κινητό/Σταθερό Τηλέφωνο:</Label>
                         <Col sm={3}>
                             <Input type="tel" id="register_phone" name="register_phone" invalid={this.state.checkPhone===false} valid={this.state.checkPhone} onChange={() => this.validatePhone()} required/>
                         </Col>
