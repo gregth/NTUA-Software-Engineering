@@ -11,26 +11,23 @@ import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
 import { browserHistory } from 'react-router';
 import MapClass from '../helper_components/map';
 import cookie from 'react-cookies';
-import {Settings} from '../helper_components/dropdown_settings';
-import { NavbarBrand, Navbar, Nav, NavItem, NavLink, Input, InputGroupAddon, Button, Form, InputGroup, FormGroup, Label, NavbarToggler, Alert } from 'reactstrap';
+import { Input, InputGroupAddon, Button, Form, InputGroup, FormGroup, Label, Alert } from 'reactstrap';
 import {send_to_server} from '../communication/send';
 import {receive_from_server} from '../communication/receive';
 import ProductsTable from '../helper_components/results_products_table';
 import Search from '../helper_components/searchComponent';
+import NavBarClass from '../helper_components/navbar';
 
 class SearchPage extends Component {
     constructor(props) {
         super(props);
-        this.state = {price: 50, show_map: false, username: cookie.load('username'), products: [], results: false, success: null, error: null, not_found: null};
+        this.state = {price: 50, show_map: false, username: cookie.load('username'), products: [], 
+                        results: false, success: null, error: null, not_found: null};
         this.handleSubmit = this.handleSubmit.bind(this);
         this.only_nearby_shops = this.only_nearby_shops.bind(this);
         this.updateRange = this.updateRange.bind(this);
-        this.newprice = this.newprice.bind(this);
         this.request_prices = this.request_prices.bind(this);
-        this.products = this.products.bind(this);
-        this.new_product = this.new_product.bind(this);
-        this.new_shop = this.new_shop.bind(this);
-        this.shops = this.shops.bind(this);
+        
     }
     
     request_prices () {
@@ -55,29 +52,9 @@ class SearchPage extends Component {
             price: val
         });
     } 
-    
-    newprice () {
-        browserHistory.push('/addprice');
-    }
-  
+      
     only_nearby_shops () {
         //TODO send request
-    }
-    
-    shops () {
-        browserHistory.push('/shops');
-    }
-    
-    products () {
-        browserHistory.push('/products');
-    }
-    
-    new_product () {
-        browserHistory.push('/newproduct');
-    }
-    
-    new_shop () {
-        browserHistory.push('/addshop');
     }
     
     async handleSubmit (event) {
@@ -104,9 +81,9 @@ class SearchPage extends Component {
             this.setState({success: true});
         }
         else {
-            this.setState({error: true});
+            this.setState({not_found: true});
         }
-        var products = await answer.json().then((result) => {return result.products});
+        var products = await answer.json().then((result) => {return result.products;});
         console.log(products);
         
         this.setState({results: true, show_map: !this.state.show_map, products: products});
@@ -115,26 +92,7 @@ class SearchPage extends Component {
     render() {
         return (
             <div>
-                <Navbar color="faded" light expand="md">
-                <NavbarBrand><Settings/></NavbarBrand>
-                    <Nav className="ml-auto" navbar >
-                        <NavItem>
-                            <NavLink onClick={() => this.products()}> Προϊόντα </NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <NavLink onClick={() => this.shops()}> Καταστήματα </NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <NavLink onClick={() => this.new_product()}> Προσθήκη Νέου Προϊόντος</NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <NavLink onClick={() => this.new_shop()}> Προσθήκη Νέου Καταστήματος</NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <NavLink onClick={() => this.newprice()}><FontAwesomeIcon icon={faCartPlus}></FontAwesomeIcon> Προσθήκη Νέας Τιμής</NavLink>
-                        </NavItem>
-                    </Nav>
-                </Navbar>
+                <NavBarClass/>
                 <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά.</Alert>
                 
                 <div className="col-md-6 col-md-offset-3">

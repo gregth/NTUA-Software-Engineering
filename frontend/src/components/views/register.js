@@ -12,6 +12,7 @@ import cookie from 'react-cookies';
 import { Navbar, Nav, NavItem, NavbarBrand, NavLink, Alert, Input, InputGroupAddon, Button, Form, InputGroup, 
         FormGroup, Label, Col, Container, InputGroupButton, FormFeedback, FormText } from 'reactstrap';
 import {send_to_server} from '../communication/send';
+import NavBarClass from '../helper_components/navbar';
 
 class Register extends React.Component {
     
@@ -21,18 +22,8 @@ class Register extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.checkPasswordMatch = this.checkPasswordMatch.bind(this);
         this.showPassword = this.showPassword.bind(this);
-        this.homepage = this.homepage.bind(this);
         this.validateEmail = this.validateEmail.bind(this);
         this.validatePhone = this.validatePhone.bind(this);
-        this.login = this.login.bind(this);
-    }
-    
-    homepage () {
-        browserHistory.push('/');
-    }
-    
-    login () {
-        browserHistory.push('/login');
     }
     
     componentDidMount() {
@@ -158,15 +149,7 @@ class Register extends React.Component {
     render() {
         return(
             <div>
-                <Navbar color="faded" light>
-                    <NavbarBrand><img src={"/public/logo_transparent.png"} width="150px" onClick={() => this.homepage()}/></NavbarBrand>
-                    <Nav className="ml-auto" navbar>
-                        <NavItem>
-                            <NavLink onClick={() => this.login()}>Σύνδεση</NavLink>
-                        </NavItem>
-                    </Nav>
-                </Navbar>
-
+                <NavBarClass/>
                 <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά.</Alert>
                 
                 <Container className="Register">

@@ -19,6 +19,7 @@ import cookie from 'react-cookies';
 import { Modal, ModalHeader, ModalBody, ModalFooter, Input, Label, Button, Form, FormGroup, Row, Col, InputGroupAddon, InputGroup } from 'reactstrap';
 import {Categories} from '../helper_components/categories_menu';
 import {send_to_server} from '../communication/send';
+import NavBarClass from '../helper_components/navbar';
 
 function onlyUnique(value, index, self) { 
     return self.indexOf(value) === index;
@@ -31,7 +32,6 @@ class newProduct extends React.Component {
         this.state = {success: null, error: null};
         this.handleSubmit = this.handleSubmit.bind(this);
         this.toggleModal = this.toggleModal.bind(this);
-        this.search = this.search.bind(this);
     }
     
     componentDidMount() {
@@ -49,10 +49,6 @@ class newProduct extends React.Component {
     
     toggleModal() {
         this.setState({ error: !this.state.error });
-    }
-    
-    search() {
-        browserHistory.push('/search');
     }
     
     async handleSubmit(event) {
@@ -101,7 +97,7 @@ class newProduct extends React.Component {
     render() {
         return(
             <div>
-            <button className="homepage" type="submit" onClick={() => this.search()}><FontAwesomeIcon icon={faChevronLeft}></FontAwesomeIcon> Αρχική Σελίδα </button>
+            <NavBarClass/>
             <Form id="new_product_form" onSubmit={this.handleSubmit}>
                 
                 <FormGroup check row>

@@ -10,8 +10,9 @@ import { browserHistory } from 'react-router';
 import cookie from 'react-cookies';
 import {Settings} from '../helper_components/dropdown_settings';
 import PapigationResults from '../helper_components/all_products_papigation';
-import { Navbar, Nav, NavItem, NavLink, Button, NavbarBrand, Image, Alert } from 'reactstrap';
+import { Button, NavbarBrand, Image, Alert } from 'reactstrap';
 import Delete from '../helper_components/delete';
+import NavBarClass from '../helper_components/navbar';
 
 export class AllProducts extends Component {
     constructor(props) {
@@ -116,14 +117,7 @@ export class AllProducts extends Component {
     render() {
         return (
             <div>
-                <Navbar color="faded" light>
-                    <NavbarBrand><img src={"/public/logo_transparent.png"} width="150px" onClick={() => this.homepage()}/></NavbarBrand>
-                    <Nav className="ml-auto" navbar>
-                        <NavItem>
-                            <NavLink><Settings/></NavLink>
-                        </NavItem>
-                    </Nav>
-                </Navbar>
+                <NavBarClass/>
                 <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά.</Alert>
                 {this.state.products === null
                 ?<div> Loading </div>

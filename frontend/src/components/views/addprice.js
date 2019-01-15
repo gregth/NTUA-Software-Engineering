@@ -18,6 +18,7 @@ import ModalExample from '../helper_components/nearby_shops';
 import { address_to_coords } from '../functions/address_to_coordinates';
 import { getLocation } from '../functions/current_location';
 import {send_to_server} from '../communication/send';
+import NavBarClass from '../helper_components/navbar';
 
 class Product extends React.Component {
     
@@ -169,14 +170,7 @@ class Product extends React.Component {
         var min_date = min_d.toISOString().substr(0,10);
         return(
             <div>
-                <Navbar color="faded" light>
-                <NavbarBrand><img src={"/public/logo_transparent.png"} width="150px" onClick={() => this.homepage()}/></NavbarBrand>
-                    <Nav className="ml-auto" navbar>
-                        <NavItem>
-                            <NavLink><Settings/></NavLink>
-                        </NavItem>
-                    </Nav>
-                </Navbar>
+                <NavBarClass/>
                 
                 <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά.</Alert>
                 

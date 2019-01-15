@@ -138,6 +138,7 @@ export class ProductsTable extends Component {
     render() {
         const price = this.props.max_price;
         this.updatePrice(price);
+        console.log(this.products);
         return ( 
             <PapigationResults data={this.products} select={this.select}/>
         );
