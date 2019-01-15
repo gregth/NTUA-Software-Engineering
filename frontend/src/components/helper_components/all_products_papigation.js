@@ -42,10 +42,11 @@ export default class PapigationResults extends React.PureComponent {
             <tr key={product.id} onClick={() => this.props.select(product.id)} className="row_pointer">
                 <td>{product.name}</td>
                 <td>{product.category}</td>
+                <td>Brand</td>
+                <td>{product.tags.join(', ')}</td>
                 <td>
                     <TooltipItem id={product.id} text={product.description}/>
                 </td>
-                <td>Brand</td>
                 <td>
                     <button className="search_btn" id="edit_btn" onClick={() => this.props.edit(product.id)}><FontAwesomeIcon icon={faEdit}></FontAwesomeIcon></button>
                     <button className="search_btn" id="delete_btn" onClick={() => this.props.delete(product.id, product.name)}><FontAwesomeIcon icon={faTrashAlt}></FontAwesomeIcon></button>     
@@ -87,7 +88,6 @@ export default class PapigationResults extends React.PureComponent {
         this.total = result.total;
         this.products = result.products;
         this.pagesCount = Math.ceil(this.total / this.pageSize);
-        console.log(this.pagesCount)
         this.createData();
         this.setState({ready: true});
     }
@@ -151,8 +151,9 @@ export default class PapigationResults extends React.PureComponent {
                             <tr>
                                 <th>Όνομα Προϊόντος</th>
                                 <th>Κατηγορία</th>
-                                <th>Περιγραφή</th>
                                 <th>Μάρκα</th>
+                                <th>Χαρακτηριστικά</th>
+                                <th>Περιγραφή</th>
                             </tr>
                         </thead>
                         {this.dataSet.map((data, i) => 
