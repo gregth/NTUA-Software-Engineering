@@ -151,8 +151,9 @@ class Register extends React.Component {
             <div>
                 <NavBarClass/>
                 <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά.</Alert>
-                
+            
                 <Container className="Register">
+                <h2 align="center">Εγγραφή</h2>
                 <Form id="register" onSubmit={this.handleSubmit}>
                     <FormGroup check row>
                         <Label for="register_first_name" sm={3}>Όνομα:</Label>
@@ -184,7 +185,7 @@ class Register extends React.Component {
 
                     <FormGroup check row>
                         <Label for="register_pwd" sm={3}>Κωδικός:</Label>
-                        <Col sm={3}>
+                        <Col sm={8}>
                             <InputGroup>
                                 <Input title="no special characters" type="password" name="register_pwd" pattern="[A-Za-z0-9]{8,}" id="register_pwd" onKeyUp={() => this.checkPasswordMatch()} required></Input>
                                 <InputGroupAddon addonType="append">
@@ -219,6 +220,7 @@ class Register extends React.Component {
                             <Input type="tel" id="register_phone" name="register_phone" invalid={this.state.checkPhone===false} valid={this.state.checkPhone} onChange={() => this.validatePhone()} required/>
                         </Col>
                     </FormGroup>
+                    <hr></hr>
                     <Button type="submit">Εγγραφή</Button>
                 </Form>
               </Container>
