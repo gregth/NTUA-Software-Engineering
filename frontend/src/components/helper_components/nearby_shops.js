@@ -10,13 +10,13 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Table } from 'react
 
 class Shops extends React.Component {
     constructor(props) {
-      super(props);
-      this.state = { modal: false, shops: [], empty: null };
-      this.toggle = this.toggle.bind(this);
-      this.addshop = this.addshop.bind(this);
-      this.homepage = this.homepage.bind(this);
-      this.select = this.select.bind(this);
-      this.close = this.close.bind(this);
+        super(props);
+        this.state = { modal: false, shops: [], empty: null };
+        this.toggle = this.toggle.bind(this);
+        this.addshop = this.addshop.bind(this);
+        this.homepage = this.homepage.bind(this);
+        this.select = this.select.bind(this);
+        this.close = this.close.bind(this);
     }
     
     select (id) {
