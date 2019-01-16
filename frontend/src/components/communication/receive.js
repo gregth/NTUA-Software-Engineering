@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import cookie from 'react-cookies';
 
 function receivePromise(url) {
     return new Promise(function(resolve, reject) {
@@ -13,12 +14,18 @@ function receivePromise(url) {
 }
 
 function receiveInfo(url) {
+    try {
+        var token = cookie.load('token');
+    }
+    catch(error) {
+        console.log(error);
+    }
     return fetch(url, {
         method: 'GET',
         headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
-            token: 1234
+            token: token
         }
     })
     .then((response) => {

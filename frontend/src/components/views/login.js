@@ -65,6 +65,8 @@ class Login extends React.Component {
             return;
         }
         
+        var token = answer.headers['XOBSERVATORY-AUTH'];
+        cookie.save('token', token, {path: '/'});
         cookie.save('username', username, {path: '/'});
         cookie.save('loggedin', true, {path: '/'});
         cookie.remove('need_login', {path: '/'});
