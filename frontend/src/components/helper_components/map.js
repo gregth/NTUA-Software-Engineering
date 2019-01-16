@@ -80,7 +80,7 @@ export class MapClass extends Component {
                             </Marker>
                             ))}
                             {this.state.current.map(marker => (
-                                this.state.show_current && this.state.shops
+                                this.state.show_current 
                                 ? <Marker
                                     position={{ lat: marker.lat, lng: marker.lng }}
                                     key={3} icon={'https://www.robotwoods.com/dev/misc/bluecircle.png'}

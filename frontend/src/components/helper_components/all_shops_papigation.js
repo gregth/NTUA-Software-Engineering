@@ -11,7 +11,8 @@
  * and open the template in the editor.
  */
 import TooltipItem from './tooltip';
-import { Table, Pagination, PaginationItem, PaginationLink, Tooltip, Button } from 'reactstrap';
+import { browserHistory } from 'react-router';
+import { Alert, Input, Table, Pagination, PaginationItem, PaginationLink, Tooltip, Button } from 'reactstrap';
 import React, { Component } from "react";
 import ReactDOM from 'react-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -30,8 +31,11 @@ export default class PapigationShops extends React.PureComponent {
         this.sortChoose = this.sortChoose.bind(this);
         this.statusChoose = this.statusChoose.bind(this);
         this.countChoose = this.countChoose.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.search = this.search.bind(this);
+        this.search_shop = this.search_shop.bind(this);
         this.state = {
-            tooltipOpen: false, currentPage: 0, error: null, success: null, not_found: null, ready: null
+            tooltipOpen: false, currentPage: 0, error: null, success: null, not_found: null, ready: null, selected_shops: [], noshops: false
         };
         this.dataSet = null;    
         this.pagesCount = null;
@@ -41,12 +45,13 @@ export default class PapigationShops extends React.PureComponent {
         this.start = 0;
         this.total = null;
         this.shops = null;
+        this.selected_shops = [];
         this.request();
     }
   
     createData () {
         this.dataSet = this.shops.map(shop => (
-        <tr key={shop.id} onClick={() => this.props.select(shop.id)} className="row_pointer">
+        <tr key={shop.id} className="row_pointer">
             <td>{shop.name}</td>
             <td>{shop.address}</td>
             <td>{shop.phone}</td>
@@ -60,10 +65,43 @@ export default class PapigationShops extends React.PureComponent {
             <td>
                 <button className="search_btn" id="edit_btn" onClick={() => this.props.edit(shop.id)}><FontAwesomeIcon icon={faEdit}></FontAwesomeIcon></button>
                 <button className="search_btn" id="delete_btn" onClick={() => this.props.delete(shop.id, shop.name)}><FontAwesomeIcon icon={faTrashAlt}></FontAwesomeIcon></button>     
-                <button className="search_btn" id="search_shop_btn" onClick={() => this.props.search(shop.id)}><FontAwesomeIcon icon={faSearch}></FontAwesomeIcon></button>
+                <button className="search_btn" id="search_shop_btn" onClick={() => this.search_shop(shop.id)}><FontAwesomeIcon icon={faSearch}></FontAwesomeIcon></button>
             </td>
+            <td><Input type="checkbox" id={'shop'+shop.id} onChange={() => this.handleChange(shop.id)}></Input></td>
         </tr>
         )); 
+    }
+    
+    search_shop (id) {
+        browserHistory.push({
+            pathname: '/search_shop',
+            search: '?shops=' + id.toString()
+        });
+    }
+    search () {
+        if (this.selected_shops.length === 0) {
+            this.setState({noshops: true});
+            return;
+        }
+        browserHistory.push({
+            pathname: '/search_shop',
+            search: '?shops=' + this.selected_shops.join('&shops=')
+        });
+    }
+    
+    handleChange(id) {
+        if (this.selected_shops.includes(id)) {
+            var index = this.selected_shops.indexOf(id);
+            if (index > -1) {
+                this.selected_shops.splice(index, 1);
+            }
+        }
+        else {
+            this.setState({noshops: false});
+            this.selected_shops.push(id);
+        }
+        this.setState({selected_shops: this.selected_shops});
+        this.setState({ready: true});
     }
     
     async request () {        
@@ -133,69 +171,72 @@ export default class PapigationShops extends React.PureComponent {
     const { currentPage } = this.state;
     return (    
         <div>
-                <Table borderless>
+            <Alert color="danger" isOpen={this.state.noshops===true}>Δεν έχει επιλεχθεί κανένα κατάστημα.</Alert>
+            <Table borderless>
+                <thead>
+                    <tr>
+                        <th>Ταξινόμηση κατά:</th>
+                        <th>Προϊόντα προς εμφάνιση:</th>
+                        <th>Προϊόντα ανά σελίδα:</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><SortDropdown ref="sort" click={this.sortChoose}/></td>
+                        <td><StatusDropdown ref="status" click={this.statusChoose}/></td>
+                        <td><CountDropdown ref="count" click={this.countChoose}/></td>
+                        <td><Button onClick={this.search}> Αναζήτηση τιμών επιλεγμένων καταστημάτων </Button></td>
+                    </tr>
+                </tbody>
+            </Table>
+            {!this.state.ready
+            ?<div> Loading </div>
+            :<React.Fragment>   
+                <Table hover>
                     <thead>
                         <tr>
-                            <th>Ταξινόμηση κατά:</th>
-                            <th>Προϊόντα προς εμφάνιση:</th>
-                            <th>Προϊόντα ανά σελίδα:</th>
+                            <th>Όνομα Καταστήματος</th>
+                            <th>Διεύθυνση</th>
+                            <th>Τηλέφωνο</th>
+                            <th>Χαρακτηριστικά</th>
+                            <th>Κατάσταση</th>
+                            <th/>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td><SortDropdown ref="sort" click={this.sortChoose}/></td>
-                            <td><StatusDropdown ref="status" click={this.statusChoose}/></td>
-                            <td><CountDropdown ref="count" click={this.countChoose}/></td>
-                        </tr>
+                    {this.dataSet.map((data, i) => 
+                    <tbody className="data-slice" key={i}>
+                        {data}
                     </tbody>
-                </Table>
-                {!this.state.ready
-                ?<div> Loading </div>
-                :<React.Fragment>   
-                    <Table hover>
-                        <thead>
-                            <tr>
-                                <th>Όνομα Καταστήματος</th>
-                                <th>Διεύθυνση</th>
-                                <th>Τηλέφωνο</th>
-                                <th>Χαρακτηριστικά</th>
-                                <th>Κατάσταση</th>
-                            </tr>
-                        </thead>
-                        {this.dataSet.map((data, i) => 
-                        <tbody className="data-slice" key={i}>
-                            {data}
-                        </tbody>
 
+                    )}
+                </Table>
+                <div className="pagination-wrapper">          
+                    <Pagination aria-label="Page navigation example">            
+                        <PaginationItem disabled={currentPage <= 0}>              
+                            <PaginationLink
+                                onClick={e => this.handleClick(e, currentPage - 1)}
+                                previous
+                                href="#"
+                            />              
+                        </PaginationItem>
+                        {[...Array(this.pagesCount)].map((page, i) => 
+                            <PaginationItem active={i === currentPage} key={i}>
+                                <PaginationLink onClick={e => this.handleClick(e, i)} href="#">
+                                    {i + 1}
+                                </PaginationLink>
+                            </PaginationItem>
                         )}
-                    </Table>
-                    <div className="pagination-wrapper">          
-                        <Pagination aria-label="Page navigation example">            
-                            <PaginationItem disabled={currentPage <= 0}>              
-                                <PaginationLink
-                                    onClick={e => this.handleClick(e, currentPage - 1)}
-                                    previous
-                                    href="#"
-                                />              
-                            </PaginationItem>
-                            {[...Array(this.pagesCount)].map((page, i) => 
-                                <PaginationItem active={i === currentPage} key={i}>
-                                    <PaginationLink onClick={e => this.handleClick(e, i)} href="#">
-                                        {i + 1}
-                                    </PaginationLink>
-                                </PaginationItem>
-                            )}
-                            <PaginationItem disabled={currentPage >= this.pagesCount - 1}>
-                                <PaginationLink
-                                    onClick={e => this.handleClick(e, currentPage + 1)}
-                                    next
-                                    href="#"
-                                />
-                            </PaginationItem>
-                        </Pagination>
-                    </div>
-                    <MapClass shops={this.shops}/>
-                </React.Fragment>
+                        <PaginationItem disabled={currentPage >= this.pagesCount - 1}>
+                            <PaginationLink
+                                onClick={e => this.handleClick(e, currentPage + 1)}
+                                next
+                                href="#"
+                            />
+                        </PaginationItem>
+                    </Pagination>
+                </div>
+                <MapClass shops={this.shops}/>
+            </React.Fragment>
             }
         </div>
     );
