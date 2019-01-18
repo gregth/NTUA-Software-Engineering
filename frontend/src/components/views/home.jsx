@@ -55,7 +55,7 @@ class SearchPage extends Component {
                 <NavBarClass/>
                 <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά.</Alert>
                 
-                <div className="col-md-6 col-md-offset-3">
+                <div>
                     <img src={"/public/logo_transparent.png"} alt="logo" />
                     <Search ref="search" price={this.state.price} handle={this.handleSubmit} updateRange={this.updateRange}/>
                 </div>

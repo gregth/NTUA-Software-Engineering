@@ -22,13 +22,16 @@ import ProductsTable from '../helper_components/results_products_table';
 import Search from '../helper_components/searchComponent';
 import NavBarClass from '../helper_components/navbar';
 
-class SearchShop extends Component {
+class SearchShopProduct extends Component {
     constructor(props) {
         super(props);
+        this.searches = this.props.location.query;
+        Object.entries(this.searches).forEach(([key, value]) => {
+            console.log(key, value);
+        });
         this.state = {price: 50, show_map: false,
                         results: false, success: null, error: null, not_found: null};
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.only_nearby_shops = this.only_nearby_shops.bind(this);
         this.updateRange = this.updateRange.bind(this);
         this.request_prices = this.request_prices.bind(this);
         
@@ -44,10 +47,6 @@ class SearchShop extends Component {
         });
     } 
       
-    only_nearby_shops () {
-        //TODO send request
-    }
-    
     handleSubmit (event) {
         event.preventDefault();
         event.nativeEvent.stopImmediatePropagation();
@@ -60,6 +59,7 @@ class SearchShop extends Component {
             <div>
                 <NavBarClass/>
                 <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά.</Alert>
+                        <Search/>
                         <div> TODO </div>
                 
             </div>
@@ -67,4 +67,4 @@ class SearchShop extends Component {
     }
 }
 
-export default SearchShop;
+export default SearchShopProduct;

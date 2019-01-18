@@ -74,7 +74,7 @@ export default class PapigationShops extends React.PureComponent {
     
     search_shop (id) {
         browserHistory.push({
-            pathname: '/search_shop',
+            pathname: '/search',
             search: '?shops=' + id.toString()
         });
     }
