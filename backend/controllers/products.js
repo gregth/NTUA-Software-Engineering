@@ -25,6 +25,14 @@ module.exports = class ProductsController extends BaseController {
         }
     }
 
+    async read(id) {
+        const product = await super.read(id)
+        const tags = await this.tagModel.list({product_id: product.id})
+        product.tags = tags.map(tag => tag.tag)
+
+        return product
+    }
+
     async create(params) {
         const { tags } = params
 
