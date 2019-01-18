@@ -85,7 +85,10 @@ CREATE TABLE `products` (
   `category` varchar(100) NOT NULL,
   `withdrawn` tinyint(1) NOT NULL DEFAULT '0',
   `barcode` varchar(15) NOT NULL,
-  PRIMARY KEY (`id`)
+  `brand` varchar(200) NOT NULL,
+  `volume` int(10) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `barcode` (`barcode`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
