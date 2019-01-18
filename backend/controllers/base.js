@@ -57,8 +57,7 @@ module.exports = class BaseController {
         return required_params
     }
 
-    async list({start = 0, count = 20, status = 'ACTIVE', sort = 'id|DESC'}) {
-        const conditions = {}
+    async list({start = 0, count = 20, status = 'ACTIVE', sort = 'id|DESC'}, conditions = {}) {
         if (status === 'WITHDRAWN') {
             conditions.withdrawn = 1
         } else if (status === 'ACTIVE') {

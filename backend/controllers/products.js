@@ -32,6 +32,10 @@ module.exports = class ProductsController extends BaseController {
             conditions.barcode = +params.barcode
         }
 
+        if (params.categories) {
+            conditions.category = params.categories.split(',')
+        }
+
         return super.list(params, conditions)
     }
 
