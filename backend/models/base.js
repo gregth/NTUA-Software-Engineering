@@ -3,9 +3,21 @@ const debug = require('debug')('backend:base-model')
 function objectToQueryFields(fields) {
     let keys = Object.keys(fields);
     let placeholders = keys.map((key) => {
+        if (fields[key] instanceof Array) {
+            // WHERE .. IN (...) clause
+            return key + ' IN (' + fields[key].map(_ => '?').join(',') + ')'
+        }
         return key + ' = ? ';
     });
-    let fieldValues = keys.map((key) => fields[key]);
+
+    let fieldValues = []
+    for (const key in fields) {
+        if (fields[key] instanceof Array) {
+            fieldValues.push(...fields[key])
+        } else {
+            fieldValues.push(fields[key])
+        }
+    }
 
     return [placeholders, fieldValues]
 }
