@@ -17,7 +17,9 @@ module.exports = class Product extends BaseModel {
                     'description',
                     'category',
                     'barcode',
-                    'withdrawn'
+                    'withdrawn',
+                    'brand',
+                    'volume',
                 ]
             },
             insert: {
@@ -25,7 +27,9 @@ module.exports = class Product extends BaseModel {
                     'name',
                     'description',
                     'category',
-                    'barcode'
+                    'barcode',
+                    'brand',
+                    'volume'
                 ],
                 optional_fields: [
                     'withdrawn'
@@ -38,6 +42,8 @@ module.exports = class Product extends BaseModel {
                     'barcode',
                     'category',
                     'withdrawn',
+                    'brand',
+                    'volume'
                 ],
                 allowed_query_keys: ['id']
             },
