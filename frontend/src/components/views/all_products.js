@@ -27,6 +27,7 @@ export class AllProducts extends Component {
     }
     
     componentDidMount () {
+        /*
         try {
             var loggedin = Boolean(cookie.load('loggedin'));
             if (!loggedin) {
@@ -36,7 +37,7 @@ export class AllProducts extends Component {
         }
         catch(error) {
             console.log(error);
-        }
+        }*/
     }
     
     delete_complete () {

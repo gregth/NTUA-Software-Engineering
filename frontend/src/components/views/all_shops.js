@@ -38,6 +38,7 @@ export class AllShops extends Component {
     }
     
     componentDidMount () {
+        /*
         try {
             var loggedin = Boolean(cookie.load('loggedin'));
             if (!loggedin) {
@@ -54,7 +55,7 @@ export class AllShops extends Component {
                 this._asyncRequest = null;
                 this.setState({shops});
             }
-        );
+        );*/
     }
     
     componentWilldUnmount() {
