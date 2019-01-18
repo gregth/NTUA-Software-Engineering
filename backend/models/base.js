@@ -6,6 +6,12 @@ function objectToQueryFields(fields) {
         if (fields[key] instanceof Array) {
             // WHERE .. IN (...) clause
             return key + ' IN (' + fields[key].map(_ => '?').join(',') + ')'
+        } else if (fields[key] instanceof Object) {
+            if (fields[key].type === 'LIKE') {
+                return key + ' LIKE ?'
+            }
+
+            throw new Error(`Invalid condition: ${JSON.stringify(fields[key])}`)
         }
         return key + ' = ? ';
     });
@@ -14,6 +20,10 @@ function objectToQueryFields(fields) {
     for (const key in fields) {
         if (fields[key] instanceof Array) {
             fieldValues.push(...fields[key])
+        } else if (fields[key] instanceof Object) {
+            if (fields[key].type === 'LIKE') {
+                fieldValues.push(`%${fields[key].value}%`)
+            }
         } else {
             fieldValues.push(fields[key])
         }
