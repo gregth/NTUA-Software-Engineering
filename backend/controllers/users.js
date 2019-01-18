@@ -24,6 +24,7 @@ module.exports = class UserController extends BaseController {
     }
 
     async create(params) {
+        // TODO: throw error if password is missing
         params.passwordHash = params.password + 'hashed'
 
         return super.create(params)

@@ -15,9 +15,9 @@ module.exports = class UserController extends BaseController {
 
     async create(params) {
         const { username, password } = params
-        const password_hash = password + 'hashed'
+        const passwordHash = password + 'hashed'
 
-        const [user] = await this.model.list({username, password_hash})
+        const [user] = await this.model.list({username, passwordHash})
         if (typeof user !== 'undefined') {
             return {token: connectedUsers++}
         }
