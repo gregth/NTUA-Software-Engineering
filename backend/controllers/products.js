@@ -11,10 +11,12 @@ module.exports = class ProductsController extends BaseController {
                 name: item.name,
                 description: item.description,
                 category: item.category,
-                tags: [],
+                tags: [], // fetched later
                 withdrawn: !!item.withdrawn,
                 extraData: {
-                    barcode: +item.barcode
+                    barcode: +item.barcode,
+                    brand: item.brand,
+                    volume: +item.volume
                 }
             }
         }
