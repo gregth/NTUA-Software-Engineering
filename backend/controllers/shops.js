@@ -24,7 +24,7 @@ module.exports = class ShopsController extends BaseController {
 
     async read(id) {
         const shop = await super.read(id)
-        const tags = await this.tagModel.list({shop_id: shop.id})
+        const tags = await this.tagModel.list({shopId: shop.id})
         shop.tags = tags.map(tag => tag.tag)
 
         return shop
@@ -39,7 +39,7 @@ module.exports = class ShopsController extends BaseController {
             const tagList = tags.split(',')
             for (const tag of tagList) {
                 this.tagModel.insert({
-                    shop_id: shop.id,
+                    shopId: shop.id,
                     tag
                 })
             }

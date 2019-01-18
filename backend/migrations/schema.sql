@@ -27,8 +27,8 @@ DROP TABLE IF EXISTS `favorite_products`;
 
 CREATE TABLE `favorite_products` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
-  `product_id` int(11) NOT NULL,
+  `userId` int(11) NOT NULL,
+  `productId` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -41,13 +41,13 @@ DROP TABLE IF EXISTS `favorite_shops`;
 
 CREATE TABLE `favorite_shops` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
-  `shop_id` int(11) NOT NULL,
+  `userId` int(11) NOT NULL,
+  `shopId` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `favorite_shops_shop_id_fk` (`shop_id`),
-  KEY `favorite_shops_user_id_fk` (`user_id`),
-  CONSTRAINT `favorite_shops_shop_id_fk` FOREIGN KEY (`shop_id`) REFERENCES `shops` (`id`) ON UPDATE CASCADE,
-  CONSTRAINT `favorite_shops_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON UPDATE CASCADE
+  KEY `favorite_shops_shop_id_fk` (`shopId`),
+  KEY `favorite_shops_userId_fk` (`userId`),
+  CONSTRAINT `favorite_shops_shop_id_fk` FOREIGN KEY (`shopId`) REFERENCES `shops` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `favorite_shops_userId_fk` FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -60,15 +60,15 @@ DROP TABLE IF EXISTS `prices`;
 CREATE TABLE `prices` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `price` float NOT NULL,
-  `shop_id` int(11) NOT NULL,
-  `product_id` int(11) NOT NULL,
+  `shopId` int(11) NOT NULL,
+  `productId` int(11) NOT NULL,
   `dateFrom` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `dateTo` datetime NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `price_shop_id_fk` (`shop_id`),
-  KEY `price_product_id_fk` (`product_id`),
-  CONSTRAINT `price_product_id_fk` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON UPDATE CASCADE,
-  CONSTRAINT `price_shop_id_fk` FOREIGN KEY (`shop_id`) REFERENCES `shops` (`id`) ON UPDATE CASCADE
+  KEY `price_shop_id_fk` (`shopId`),
+  KEY `price_product_id_fk` (`productId`),
+  CONSTRAINT `price_product_id_fk` FOREIGN KEY (`productId`) REFERENCES `products` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `price_shop_id_fk` FOREIGN KEY (`shopId`) REFERENCES `shops` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -79,10 +79,10 @@ CREATE TABLE `prices` (
 DROP TABLE IF EXISTS `product_tags`;
 
 CREATE TABLE `product_tags` (
-  `product_id` int(11) NOT NULL,
+  `productId` int(11) NOT NULL,
   `tag` varchar(200) NOT NULL DEFAULT '',
-  KEY `product_id` (`product_id`),
-  CONSTRAINT `product_id` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE
+  KEY `productId` (`productId`),
+  CONSTRAINT `productId` FOREIGN KEY (`productId`) REFERENCES `products` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -113,10 +113,10 @@ CREATE TABLE `products` (
 DROP TABLE IF EXISTS `shop_tags`;
 
 CREATE TABLE `shop_tags` (
-  `shop_id` int(11) NOT NULL,
+  `shopId` int(11) NOT NULL,
   `tag` varchar(200) NOT NULL DEFAULT '',
-  KEY `shop_id` (`shop_id`),
-  CONSTRAINT `shop_id` FOREIGN KEY (`shop_id`) REFERENCES `shops` (`id`) ON DELETE CASCADE
+  KEY `shopId` (`shopId`),
+  CONSTRAINT `shopId` FOREIGN KEY (`shopId`) REFERENCES `shops` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -147,11 +147,11 @@ DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(40) NOT NULL,
-  `first_name` varchar(40) NOT NULL,
-  `last_name` varchar(40) NOT NULL,
+  `firstName` varchar(40) NOT NULL,
+  `lastName` varchar(40) NOT NULL,
   `email` varchar(50) NOT NULL,
   `telephone` varchar(14) DEFAULT NULL,
-  `password_hash` varchar(300) NOT NULL,
+  `passwordHash` varchar(300) NOT NULL,
   `birthdate` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`),

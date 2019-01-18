@@ -7,26 +7,26 @@ module.exports = class ProductTag extends BaseModel {
         this.rules = {
             select: {
                 allowed_query_keys: [
-                    'product_id',
+                    'productId',
                 ],
                 selectable_fields: [
-                    'product_id',
+                    'productId',
                     'tag'
                 ]
             },
             insert: {
                 required_fields: [
-                    'product_id',
+                    'productId',
                     'tag'
                 ],
                 optional_fields: []
             },
             update: {
                 updatable_fields: [],
-                allowed_query_keys: ['product_id']
+                allowed_query_keys: ['productId']
             },
             delete: {
-                allowed_query_keys: ['product_id', 'tag']
+                allowed_query_keys: ['productId', 'tag']
             }
         }
     }
