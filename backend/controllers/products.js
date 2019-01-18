@@ -48,6 +48,6 @@ module.exports = class ProductsController extends BaseController {
             }
         }
 
-        return product
+        return this.read(product.id)
     }
 }
