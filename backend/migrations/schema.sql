@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.7.23)
 # Database: nerdtech
-# Generation Time: 2019-01-18 21:34:27 +0000
+# Generation Time: 2019-01-18 22:07:23 +0000
 # ************************************************************
 
 
@@ -133,6 +133,7 @@ CREATE TABLE `shops` (
   `lng` double NOT NULL,
   `lat` double NOT NULL,
   `withdrawn` tinyint(1) NOT NULL DEFAULT '0',
+  `telephone` varchar(14) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
