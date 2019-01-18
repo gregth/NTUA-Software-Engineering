@@ -36,6 +36,10 @@ module.exports = class ProductsController extends BaseController {
             conditions.category = params.categories.split(',')
         }
 
+        if (params.search) {
+            conditions.name = {type: 'LIKE', value: params.search}
+        }
+
         return super.list(params, conditions)
     }
 
