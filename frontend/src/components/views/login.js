@@ -28,7 +28,7 @@ class Login extends React.Component {
             this.setState({need_login: Boolean(cookie.load('need_login'))});
             var loggedin = Boolean(cookie.load('loggedin'));
             if (loggedin) {
-                browserHistory.push('/search');
+                browserHistory.push('/');
             }
         }
         catch(error) {
@@ -71,7 +71,7 @@ class Login extends React.Component {
         cookie.save('loggedin', true, {path: '/'});
         cookie.remove('need_login', {path: '/'});
         
-        browserHistory.push('/search');
+        browserHistory.push('/');
     }
     
     showPassword(event) {
