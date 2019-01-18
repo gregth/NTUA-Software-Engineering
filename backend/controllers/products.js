@@ -1,9 +1,12 @@
 const BaseController = require('./base')
 const model = require('../models/product')
+const tagModel = require('../models/product_tag')
 
 module.exports = class ProductsController extends BaseController {
     constructor(dbConnection) {
         super('products', new model(dbConnection))
+
+        this.tagModel = new tagModel(dbConnection)
 
         this.formatResponse = item => {
             return {
@@ -20,5 +23,23 @@ module.exports = class ProductsController extends BaseController {
                 }
             }
         }
+    }
+
+    async create(params) {
+        const { tags } = params
+
+        const product = await super.create(params)
+
+        if (typeof tags !== 'undefined') {
+            const tagList = tags.split(',')
+            for (const tag of tagList) {
+                this.tagModel.insert({
+                    product_id: product.id,
+                    tag
+                })
+            }
+        }
+
+        return product
     }
 }
