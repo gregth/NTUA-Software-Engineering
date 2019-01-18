@@ -16,7 +16,8 @@ module.exports = class ShopsController extends BaseController {
                 lng: item.lng,
                 lat: item.lat,
                 tags: [], // fetched later
-                withdrawn: !!item.withdrawn
+                withdrawn: !!item.withdrawn,
+                telephone: item.telephone
             }
         }
     }
