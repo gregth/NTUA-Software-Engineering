@@ -9,7 +9,8 @@ module.exports = class Product extends BaseModel {
                     'id',
                     'name',
                     'barcode',
-                    'withdrawn'
+                    'withdrawn',
+                    'category'
                 ],
                 selectable_fields: [
                     'id',
