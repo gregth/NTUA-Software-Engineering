@@ -55,10 +55,12 @@ class SearchPage extends Component {
                 <NavBarClass/>
                 <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά.</Alert>
                 
-                <div>
+                <div className="header">
                     <img src={"/public/logo_transparent.png"} alt="logo" />
-                    <Search ref="search" price={this.state.price} handle={this.handleSubmit} updateRange={this.updateRange}/>
                 </div>
+                
+                <Search ref="search" price={this.state.price} handle={this.handleSubmit} updateRange={this.updateRange}/>
+                
                 <div>
                     {this.state.results
                     ? <ProductsTable ref="results_products" category={this.refs.search.refs.search_category.state.category} max_price={this.state.price} products={this.state.products} onClick={this.request_price}/>

@@ -1,9 +1,3 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -111,7 +105,7 @@ class Login extends React.Component {
                     <FormGroup check row>
                         <Label for="pwd" sm={3}>
                             <FontAwesomeIcon icon={faKey} />{' '} Κωδικός:</Label>
-                            <Col sm={3}>
+                            <Col sm={8}>
                                 <InputGroup>
                                     <Input type="password" name="password" pattern="[A-Za-z0-9]{8,}" id="pwd" required></Input>
                                     <InputGroupAddon addonType="append">
