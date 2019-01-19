@@ -69,28 +69,16 @@ export default class EditShop extends Component {
     constructor(props) {
         super(props);
         this.request = this.request.bind(this);
-        this.state = {details: null, name: '', address: '', phone: '', error: null, success: null, not_found: null, tags: '', success_edit: null, error_edit: null, not_found: null};
+        this.state = {flag: false, details: null, name: '', address: '', phone: '', error: null, success: null, not_found: null, tags: '', success_edit: null, error_edit: null, not_found: null};
         this.toggleModal = this.toggleModal.bind(this);
         this.homepage = this.homepage.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.currentLocation = this.currentLocation.bind(this);
         this.validatePhone = this.validatePhone.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        this.flag = false;
     }
     
-     componentDidMount () {
-        try {
-            var loggedin = Boolean(cookie.load('loggedin'));
-            if (!loggedin) {
-                browserHistory.push('/login');
-            }
-            cookie.save('need_login', true, {path: '/'});
-        }
-        catch(error) {
-            console.log(error);
-        }
-        
+     componentDidMount () {        
         this._asyncRequest = this.request().then(
             details => {
                 this._asyncRequest = null;
@@ -120,7 +108,7 @@ export default class EditShop extends Component {
     
     async currentLocation () {
         var checkBox = document.getElementById("edit_shop_location");
-        this.flag = !this.flag;
+        this.setState({flag: !this.state.flag});
         
         if (!checkBox.checked) {
             return;
@@ -287,7 +275,7 @@ export default class EditShop extends Component {
                     <FormGroup check row>
                         <Label sm={3} for="address">Διεύθυνση:</Label>
                         <Col sm={3}>
-                            <Input invalid={this.state.error_address} value={this.state.address} onChange={this.handleChange} valid={false} id="edit_shop_address" name="address" type="text" disabled={this.flag} required/>
+                            <Input invalid={this.state.error_address} value={this.state.address} onChange={this.handleChange} valid={false} id="edit_shop_address" name="address" type="text" disabled={this.state.flag} required/>
                             <FormFeedback valid={!this.state.error_address}>Η διεύθυνση δεν είναι έγκυρη.</FormFeedback>
                         </Col>
                     </FormGroup>
