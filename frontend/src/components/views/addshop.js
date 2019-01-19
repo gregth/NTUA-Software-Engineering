@@ -19,27 +19,14 @@ function onlyUnique (value, index, self) {
 class Shop extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {success: null, error: null, current: null, checkPhone: null, error_address: null, not_found: null};
+        this.state = {flag: false, success: null, error: null, current: null, checkPhone: null, error_address: null, not_found: null};
         this.handleSubmit = this.handleSubmit.bind(this);
         this.search = this.search.bind(this);
         this.currentLocation = this.currentLocation.bind(this);
         this.toggleModal = this.toggleModal.bind(this);
         this.validatePhone = this.validatePhone.bind(this);
-        this.flag = false;
     }
     
-    componentDidMount() {
-        try {
-            var loggedin = Boolean(cookie.load('loggedin'));
-            if (!loggedin) {
-                browserHistory.push('/login');
-            }
-            cookie.save('need_login', true, {path: '/'});
-        }
-        catch(error) {
-            console.log(error);
-        }
-    }
     
     validatePhone() {
         const phoneRex = /^69\d{8}|^210\d{7}$/;
@@ -60,8 +47,7 @@ class Shop extends React.Component {
     
     async currentLocation () {
         var checkBox = document.getElementById("new_shop_location");
-        this.flag = !this.flag;
-        console.log(this.flag);
+        this.setState({flag : !this.state.flag});
         if (!checkBox.checked) {
             return;
         }
@@ -184,7 +170,7 @@ class Shop extends React.Component {
                     <FormGroup check row>
                         <Label sm={3} for="address">Διεύθυνση:</Label>
                         <Col sm={3}>
-                            <Input invalid={this.state.error_address} valid={false} id="new_shop_address" name="address" pattern="[A-Za-zΑ-Ωα-ωίϊΐόάέύϋΰήώ]+" type="text" disabled={this.flag} required/>
+                            <Input invalid={this.state.error_address} valid={false} id="new_shop_address" name="address" pattern="[A-Za-zΑ-Ωα-ωίϊΐόάέύϋΰήώ]+" type="text" disabled={this.state.flag} required/>
                             <FormFeedback valid={!this.state.error_address}>Η διεύθυνση δεν είναι έγκυρη.</FormFeedback>
                         </Col>
                     </FormGroup>
@@ -192,14 +178,14 @@ class Shop extends React.Component {
                     <FormGroup check row>
                         <Label sm={3} for="number">Αριθμός:</Label>
                         <Col sm={1}>
-                            <Input invalid={this.state.error_address} type="text" id="new_shop_number" pattern="[0-9]+" disabled={this.flag} required/>
+                            <Input invalid={this.state.error_address} type="text" id="new_shop_number" pattern="[0-9]+" disabled={this.state.flag} required/>
                         </Col>
                     </FormGroup>
 
                     <FormGroup check row>
                         <Label sm={3} for="postal">ΤΚ:</Label>
                         <Col sm={1}>
-                            <Input invalid={this.state.error_address} id="new_shop_postal" name="postal" pattern="[0-9]+" type="text" disabled={this.flag} required/>
+                            <Input invalid={this.state.error_address} id="new_shop_postal" name="postal" pattern="[0-9]+" type="text" disabled={this.state.flag} required/>
                         </Col>
                     </FormGroup>
 
