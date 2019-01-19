@@ -1,15 +1,3 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 import React, { Component } from "react";
 import { browserHistory } from 'react-router';
 import MapClass from '../helper_components/map';
@@ -256,22 +244,28 @@ export default class EditShop extends Component {
             {this.state.details === null
             ?<div> Loading </div>
             : <div>
+                <Container className="EditShop">
+                <h2 align="center">Επεξεργασία Καταστήματος</h2>
+                <hr></hr>
                 <Form id="edit_shop" onSubmit={this.handleSubmit}>
                     <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά.</Alert>
                     
                     <FormGroup check row>
-                        <Label sm={3} for="name">Όνομα Καταστήματος:</Label>
+                        <Label sm={6} for="name">Όνομα Καταστήματος:</Label>
                         <Col sm={3}>
                             <Input id="edit_shop_name" name="name" value={this.state.name} onChange={this.handleChange} type="text" required/>
                         </Col>
                     </FormGroup>
-                    <FormGroup check row>
-                        <Label> Τωρινή τοποθεσία </Label>
-                        <Col sm={1}>
-                            <Input type="checkbox" name="location" id="edit_shop_location" onChange={this.handleChange}></Input>
-                        </Col>
+                    <div className="row mt-3"></div>
+                    <FormGroup check>
+                        <Label check>
+                            <Col sm={9}>
+                                <Input type="checkbox" name="location" id="edit_shop_location" onChange={this.handleChange}></Input>
+                            </Col>
+                            Tωρινή Τοποθεσία
+                        </Label>
                     </FormGroup>
-                    <div> Ή </div>
+                    
                     <FormGroup check row>
                         <Label sm={3} for="address">Διεύθυνση:</Label>
                         <Col sm={3}>
@@ -279,23 +273,28 @@ export default class EditShop extends Component {
                             <FormFeedback valid={!this.state.error_address}>Η διεύθυνση δεν είναι έγκυρη.</FormFeedback>
                         </Col>
                     </FormGroup>
-                    
+                    <div className="row mt-3"></div>
                     <FormGroup check row>
-                        <Label sm={3} for="edit_shop_tags">Χαρακτηριστικά Καταστήματος:</Label>
-                        <Col sm={3}>
+                        <Label sm={6} for="edit_shop_tags">Χαρακτηριστικά Καταστήματος:</Label>
+                        <Col sm={8}>
                             <Input type="textarea" name="text" id="edit_shop_tags" onChange={this.handleChange} value={this.state.tags}/>
                         </Col>
                     </FormGroup>
-                    
+                    <div className="row mt-3"></div>
                     <FormGroup check row>
-                        <Label sm={3} for="phone">Τηλέφωνο Καταστήματος:</Label>
+                        <Label sm={6} for="phone">Τηλέφωνο Καταστήματος:</Label>
                         <Col sm={3}>
                             <Input type="tel" id="edit_shop_phone" name="phone" value={this.state.telephone} onChange={this.handleChange} invalid={this.state.checkPhone===false} valid={this.state.checkPhone} onChange={() => this.validatePhone()}/>
                         </Col>
                     </FormGroup>
-                    <Button type="submit" id="button1">Αποθήκευση</Button>
+                    <hr></hr>
+                    <div className="text-center">
+                        <Button type="submit" id="button1">Αποθήκευση</Button>{' '}
+                        <Button type="button" id="button2" onClick={browserHistory.goBack}>Ακύρωση</Button>
+                    </div>
                 </Form>
-                <Button type="button" onClick={browserHistory.goBack}>Ακύρωση</Button>
+
+                </Container>
             </div>
             }
             
