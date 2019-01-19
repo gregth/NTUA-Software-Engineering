@@ -61,7 +61,7 @@ class Shop extends React.Component {
     async currentLocation () {
         var checkBox = document.getElementById("new_shop_location");
         this.flag = !this.flag;
-        
+        console.log(this.flag);
         if (!checkBox.checked) {
             return;
         }
@@ -166,16 +166,19 @@ class Shop extends React.Component {
                 <hr></hr>
                 <Form id="new_shop" onSubmit={this.handleSubmit}>                     
                     <FormGroup check row>
-                        <Label sm={3} for="name">Όνομα Καταστήματος:</Label>
+                        <Label sm={6} for="name">Όνομα Καταστήματος:</Label>
                         <Col sm={3}>
                             <Input id="new_shop_name" name="name" type="text" required/>
                         </Col>
                     </FormGroup>
-                    <FormGroup check row>
-                        <Label> Τωρινή τοποθεσία </Label>
-                        <Col sm={1}>
-                            <Input type="checkbox" name="location" id="new_shop_location" onChange={() => this.currentLocation()}></Input>
-                        </Col>
+                    <FormGroup check>
+                        <Label check>
+                        <Col sm={9}>
+                            <Input type="checkbox" name="location" id="new_shop_location" onChange={() => this.currentLocation()} />{' '}
+                        </Col>  
+                            Tωρινή Τοποθεσία
+                        </Label>
+                       
                     </FormGroup>
                     <div> Ή </div>
                     <FormGroup check row>
@@ -201,22 +204,23 @@ class Shop extends React.Component {
                     </FormGroup>
 
                     <FormGroup check row>
-                        <Label sm={3} for="new_shop_tags">Χαρακτηριστικά Καταστήματος:</Label>
-                        <Col sm={3}>
+                        <Label sm={6} for="new_shop_tags">Χαρακτηριστικά Καταστήματος:</Label>
+                        <Col sm={8}>
                             <Input type="textarea" name="text" id="new_shop_tags"/>
                         </Col>
                     </FormGroup>
                     
                     <FormGroup check row>
-                        <Label sm={3} for="phone">Τηλέφωνο Καταστήματος:</Label>
-                        <Col sm={3}>
+                        <Label sm={6} for="phone">Τηλέφωνο Καταστήματος:</Label>
+                        <Col sm={2}>
                             <Input type="tel" id="new_shop_phone" name="phone" invalid={this.state.checkPhone===false} valid={this.state.checkPhone} onChange={() => this.validatePhone()}/>
                         </Col>
                     </FormGroup>
                     <hr></hr>
-                    <Button type="submit" id="button1">Προσθήκη</Button>{'  '}
+                    <div className="text-center">
+                    <Button type="submit" id="button1" >Προσθήκη</Button>{'  '}
                     <Button type="button" id="button2" onClick={this.search}>Ακύρωση</Button>
-
+                    </div>
                 </Form>
                 </Container>
                 <Modal isOpen={this.state.error} toggle={this.toggleModal}>
