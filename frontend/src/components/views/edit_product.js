@@ -3,7 +3,7 @@ import { browserHistory } from 'react-router';
 import MapClass from '../helper_components/map';
 import {Categories} from '../helper_components/categories_menu';
 import { Input, InputGroupAddon, Button, Form, InputGroup, 
-        Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Label, Container, Row,  Col, Table, Alert } from 'reactstrap';
+        Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Label, Container, FormText, Row,  Col, Table, Alert } from 'reactstrap';
 import {send_to_server} from '../communication/send';
 import {Settings} from '../helper_components/dropdown_settings';
 import {receive_from_server} from '../communication/receive';
@@ -230,7 +230,9 @@ export default class EditProduct extends Component {
                     </FormGroup>
                     <div className="row mt-3"></div>
                     <FormGroup check row>
-                        <Label sm={6} for="edit_product_tags">Χαρακτηριστικά Προϊόντος:</Label>
+                        <Label sm={6} for="edit_product_tags">Χαρακτηριστικά Προϊόντος:
+                        <FormText>Διαχωρισμός χαρακτηριστικών με κόμμα (,)</FormText>
+                        </Label>
                         <Col sm={8}>
                             <Input type="textarea" name="tags" id="edit_product_tags" onChange={this.handleChange} value={this.state.tags}/>
                         </Col>

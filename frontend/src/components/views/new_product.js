@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { browserHistory } from 'react-router';
 import cookie from 'react-cookies';
-import { Modal, ModalHeader, ModalBody, ModalFooter, Input, Label, Button, Form, Container, FormGroup, Row, Col, InputGroupAddon, InputGroup } from 'reactstrap';
+import { Modal, ModalHeader, ModalBody, ModalFooter, FormText, Input, Label, Button, Form, Container, FormGroup, Row, Col, InputGroupAddon, InputGroup } from 'reactstrap';
 import {Categories} from '../helper_components/categories_menu';
 import {send_to_server} from '../communication/send';
 import NavBarClass from '../helper_components/navbar';
@@ -124,10 +124,12 @@ class newProduct extends React.Component {
                         <Categories ref='new_product_category'/>
                     </Col>
                 </FormGroup>
-                
+                <div className="row mt-3"></div>
                 <FormGroup check row>
-                    <Label sm={6} for="new_product_tags">Χαρακτηριστικά Προϊόντος:</Label>
+                    <Label sm={6} for="new_product_tags">Χαρακτηριστικά Προϊόντος:
+                    <FormText>Διαχωρισμός χαρακτηριστικών με κόμμα (,)</FormText></Label>
                     <Col sm={6}>
+                  
                         <Input type="textarea" name="text" id="new_product_tags" onChange={this.handleChangeTags} value={this.state.tags}/>
                     </Col>
                 </FormGroup>
