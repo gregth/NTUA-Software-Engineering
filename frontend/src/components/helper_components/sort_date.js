@@ -10,16 +10,26 @@ import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap
 export default class SortDate extends React.Component {
     constructor(props) {
         super(props);
-
-        this.toggle = this.toggle.bind(this);
-        this.state = { dropdownOpen: false, dropDownValue: 'Καμία Επιλογή', sort: null };
-        this.changeValue = this.changeValue.bind(this);
-        this.sort = null;
         this.options = [
             {name: 'Καμία επιλογή', value: null},
             {name: 'Ημερομηνία - Αύξουσα', value: 'date|ASC'},
             {name: 'Ημερομηνία - Φθίνουσα', value: 'date|DESC'}   
         ];
+        
+        this.toggle = this.toggle.bind(this);
+        if (this.props.default) {
+            var name = null;
+            Object.entries(this.options).forEach(([key, value]) => {
+                if (value.value === this.props.default) name = value.name;
+            });
+            this.state = { dropdownOpen: false, dropDownValue: name, sort: this.props.default };
+        }
+        else {
+            this.state = { dropdownOpen: false, dropDownValue: 'Καμία επιλογή', sort: null };
+        }
+        this.changeValue = this.changeValue.bind(this);
+        this.sort = null;
+        
     }
 
     toggle() {

@@ -38,10 +38,11 @@ function onlyUnique (value, index, self) {
 export class Search extends Component {
     constructor(props) {
         super(props);
-        this.state = {price: 50};
+        this.state = {price: 50, params: null, geodist: null};
         this.updateRange = this.updateRange.bind(this); 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.filters = this.filters.bind(this);
+        this.handleChange = this.handleChange.bind(this);
         this.sort_distance = null;
         this.sort_date = null;
         this.sort_price = null;
@@ -49,8 +50,7 @@ export class Search extends Component {
         this.geodist = null;
         this.datefrom = null;
         this.dateto = null;
-        this.price = 50;
-        
+        this.price = 50;      
     }
     
     filters () {
@@ -67,6 +67,11 @@ export class Search extends Component {
         this.datefrom = document.getElementById('search_datefrom').value;
         this.dateto = document.getElementById('search_dateto').value;
         this.props.handle();
+    }
+    
+    handleChange(event) {
+        var name = event.target.name;
+        this.setState({[name]: event.target.value});
     }
     
     updateRange (val) {
@@ -102,6 +107,10 @@ export class Search extends Component {
     }
     
     render() {
+        var from = new Date(this.props.params.datefrom);
+        var datefrom = from.toISOString().substr(0,10);
+        var to = new Date(this.props.params.dateto);
+        var dateto = to.toISOString().substr(0,10);
         return ( 
             <div>
                 <Table borderless>
@@ -118,16 +127,16 @@ export class Search extends Component {
                     </thead>
                     <tbody>
                         <tr>
-                            <td><Categories ref='search_category'/></td>
-                            <td><SortDistance ref="sort_distance"/></td>
-                            <td><SortDate ref="sort_date"/></td>
-                            <td><SortPrice ref="sort_price"/></td>
-                            <td><Input type="date" id="search_datefrom"/></td>
-                            <td><Input type="date" id="search_dateto"/></td>
+                            <td><Categories ref='search_category' default={this.props.params.category}/></td>
+                            <td><SortDistance ref="sort_distance" default={this.props.params.sort_distance}/></td>
+                            <td><SortDate ref="sort_date" default={this.props.params.sort_date}/></td>
+                            <td><SortPrice ref="sort_price" default={this.props.params.sort_price}/></td>
+                            <td><Input type="date" id="search_datefrom" name="datefrom" defaultValue={datefrom} /></td>
+                            <td><Input type="date" id="search_dateto" name="dateto" defaultValue={dateto} /></td>
                             <td>
                                 <Col sm={5}>
                                     <InputGroup>
-                                        <Input type="text" id="search_geodist" pattern="[0-9]+" name="geodist"/>
+                                        <Input type="text" id="search_geodist" pattern="[0-9]+" name="geodist" onChange={this.handleChange} value={this.props.params.geodist}/>
                                         <InputGroupAddon addonType="append">km</InputGroupAddon>
                                     </InputGroup>
                                 </Col>

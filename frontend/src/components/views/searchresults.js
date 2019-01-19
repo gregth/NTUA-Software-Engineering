@@ -25,28 +25,24 @@ import NavBarClass from '../helper_components/navbar';
 class Results extends Component {
     constructor(props) {
         super(props);
-        this.params = []
+        this.params = [];
         this.searches = this.props.location.query;
         Object.entries(this.searches).forEach(([key, value]) => {
            this.params.push({key, value});
         });
-        this.searches = this. props.location.state;
-        console.log(this.searches);
-        Object.entries(this.searches).forEach(([key, value]) => {
-            if (value !== null && value !== "" ) {
-                if (key === 'tags') {
-                    if (value.length > 0) this.params.push({key, value});
-                }
-                else this.params.push({key, value});
-            }
-        });
-        console.log(this.params);
-        this.state = {search: null, show_map: false,
+        this.state = {params: this.params, search: this.props.location.state, show_map: false,
                         results: false, success: null, error: null, not_found: null};
         this.handleSubmit = this.handleSubmit.bind(this);
         this.updateRange = this.updateRange.bind(this);
         this.request_prices = this.request_prices.bind(this);
+        this._isMounted = null;
         
+    }
+    
+    componentWilldUnmount() {
+        if (this._isMounted) {
+            this._isMounted.cancel();
+        }
     }
     
     request_prices () {
@@ -59,8 +55,8 @@ class Results extends Component {
         });
     } 
       
-    handleSubmit () {
-        this.setState({search: {
+    async handleSubmit () {
+        this._isMounted = await this.setState({search: {
                 sort_distance: this.refs.search.sort_distance,
                 sort_price: this.refs.search.sort_price,
                 sort_date: this.refs.search.sort_date,
@@ -68,8 +64,8 @@ class Results extends Component {
                 dateto: this.refs.search.dateto,
                 category: this.refs.search.category,
                 tags: this.refs.search.tags,
-                price: this.refs.search.price}});
-        console.log(this.state)
+                price: this.refs.search.price,
+                geodist: this.refs.search.geodist }});
         this.setState({ show_map: !this.state.show_map});
     }
     
@@ -79,10 +75,11 @@ class Results extends Component {
                 <NavBarClass/>
                 <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά.</Alert>
 
-                <Search ref="search" handle={this.handleSubmit}/>
+                <Search ref="search" params={this.state.search} handle={this.handleSubmit}/>
                 
                 <div>
-                    
+                    <PricesTable ref="result" params={this.state.search}/>
+
                     <div >
                         {this.state.show_map && false
                             ?<MapClass/>

@@ -14,7 +14,7 @@ import SortDropdown from '../helper_components/sort_products_shops';
 import StatusDropdown from '../helper_components/status_products_shops';
 import CountDropdown from '../helper_components/count_products_shops';
 
-export default class PapigationResults extends React.PureComponent {
+export default class ProductsResults extends React.PureComponent {
     constructor(props) {
         super(props);
         this.toggle = this.toggle.bind(this);

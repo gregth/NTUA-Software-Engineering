@@ -3,25 +3,35 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import TooltipItem from './tooltip';
-import React, { Component } from "react";
-import { Table, Pagination, PaginationItem, PaginationLink, Tooltip } from 'reactstrap';
-import {receive_from_server} from '../communication/receive';
 
-class PapigationResults extends React.PureComponent {
+import TooltipItem from './tooltip';
+import { Table, Pagination, PaginationItem, PaginationLink, Tooltip, Button } from 'reactstrap';
+import React, { Component } from "react";
+import ReactDOM from 'react-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMapMarkedAlt, faWineBottle, faBuilding } from '@fortawesome/free-solid-svg-icons';
+import {receive_from_server} from '../communication/receive';
+import SortDropdown from '../helper_components/sort_products_shops';
+import StatusDropdown from '../helper_components/status_products_shops';
+import CountDropdown from '../helper_components/count_products_shops';
+
+export default class PricesTable extends React.PureComponent {
     constructor(props) {
         super(props);
-        this.toggle = this.toggle.bind(this);
         this.createData = this.createData.bind(this);
         this.request = this.request.bind(this);
+        this.countChoose = this.countChoose.bind(this);
+        this.shop_info = this.shop_info.bind(this);
+        this.product_info = this.product_info.bind(this);
+        this.show_map = this.show_map.bind(this);
+        this.make_url = this.make_url.bind(this);
         this.state = {
             tooltipOpen: false, currentPage: 0, error: null, success: null, not_found: null, ready: null
         };
         this.dataSet = null;    
         this.pagesCount = null;
-        this.pageSize = 3;
+        this.pageSize = 20;
         this.sort = 'id|DESC';
-        this.status = 'ACTIVE';
         this.start = 0;
         this.total = null;
         this.products = null;
@@ -29,34 +39,71 @@ class PapigationResults extends React.PureComponent {
     }
   
     createData () {
-        this.dataSet = this.products.map(product => (
-            <tr key={product.id} onClick={() => this.props.select(product.id)} className="row_pointer">
-                <td>{product.name}</td>
-                <td>{product.category}</td>
-                <td>Από {product.min_price}€</td>
+        this.dataSet = this.products.map(price => (
+            <tr key={price.id}>
+                <td>{price.productName}</td>
+                <td>{price.productTags}</td>
+                <td>{price.shopName}</td>
+                <td>{price.shopTags}</td>
+                <td>{price.shopAddress}</td>
+                <td>{price.date}</td>
+                <td>{price.shopDist}</td>
+                <td>{price.price}</td>
                 <td>
-                    <TooltipItem id={product.id} text={product.description}/>
+                    <button className="search_btn" id="product_btn" title='Πληροφορίες προϊόντος' onClick={() => this.product_info(price.productId)}>
+                        <FontAwesomeIcon icon={faWineBottle}></FontAwesomeIcon>
+                    </button>
+                    <button className="search_btn" id="shop_btn" title='Πληροφορίες καταστήματος' onClick={() => this.shop_info(price.shopId)}>
+                        <FontAwesomeIcon icon={faBuilding}></FontAwesomeIcon>
+                    </button>
+                    <button className="search_btn" id="map_btn" title='Εμφάνιση στον χάρτη' onClick={() => this.show_map(price.productId, price.shopId, price.price)}>
+                        <FontAwesomeIcon icon={faMapMarkedAlt}></FontAwesomeIcon>
+                    </button>
                 </td>
             </tr>
-        ));  
-    }
-  
-    toggle() {
-        this.setState({
-            tooltipOpen: !this.state.tooltipOpen
-        });
+        ));
+    } 
+    
+    shop_info (id) {
+        //TODO
     }
     
+    product_info (id) {
+        //TODO
+    }
+    
+    show_map (product_id, shop_id, price){
+        //TODO
+    }
+    
+    make_url () {
+        var url = 'http://localhost:3002/prices?';
+        var params = [];
+        if (this.props.params.datefrom) {
+            params.push('dateFrom='+ this.props.params.datefrom);
+        }
+        if (this.props.params.dateto) {
+            params.push('dateTo='+ this.props.params.dateto);
+        }
+        if (this.props.params.sort_distance) {
+            params.push('sort='+ this.props.params.sort_distance);
+        }
+        if (this.props.params.sort_price) {
+            params.push('sort='+ this.props.params.sort_price);
+        }
+        if (this.props.params.sort_date) {
+            params.push('sort='+ this.props.params.sort_date);
+        }
+        if (this.props.params.sort_distance) {
+            for (var i; i<this.props.params.tags; i++) {
+                params.push('tags='+ this.props.params.tags[i]);
+            }
+        }
+        var temp = params.join('&');
+        return url + temp;
+    }
     async request () {
-        const search = document.getElementById('search').value;
-        const category = this.props.category;
-        
-        var body = {
-            search,
-            category
-        };
-        
-        console.log(body);
+        console.log(this.make_url());
         const url = 'http://localhost:3002/products?start=' + this.start + 
                     '&count=' +  this.pageSize + '&sort=' + this.sort +
                     '&status=' + this.status;
@@ -75,7 +122,7 @@ class PapigationResults extends React.PureComponent {
         }
         var result = await answer.json().then((result) => {return result;});
         console.log(result);
-        if (this.start !== result.start || this.pageSize !== result.count) {
+        if (this.start !== result.start || parseInt(this.pageSize) !== result.count) {
             this.setState({not_found: true, success: false});
             return;
         }
@@ -95,81 +142,83 @@ class PapigationResults extends React.PureComponent {
             currentPage: index
         });
     }
-
+    
+    async countChoose () {
+        this.setState({ready: false});
+        this.pageSize = this.refs.count.count;
+        this._isMounted = await this.request();
+        this.setState({ready: true});
+    }
+    
     render() {
         const { currentPage } = this.state;
-        return (
+        return ( 
             <div>
-            {!this.state.ready
-            ?<div> Loading </div>
-            :<React.Fragment>   
-                <Table hover>
+                <Table borderless>
                     <thead>
                         <tr>
-                            <th>Όνομα Προϊόντος</th>
-                            <th>Κατηγορία</th>
-                            <th>Τιμή</th>
+                            <th>Προϊόντα ανά σελίδα:</th>
                         </tr>
                     </thead>
-                    {this.dataSet.map((data, i) => 
-                    <tbody className="data-slice" key={i}>
-                        {data}
+                    <tbody>
+                        <tr>
+                            <td><CountDropdown ref="count" click={this.countChoose}/></td>
+                        </tr>
                     </tbody>
-                    )}
                 </Table>
-                <div className="pagination-wrapper">          
-                    <Pagination aria-label="Page navigation example">            
-                        <PaginationItem disabled={currentPage <= 0}>              
-                            <PaginationLink
-                                onClick={e => this.handleClick(e, currentPage - 1)}
-                                previous
-                                href="#"
-                            />              
-                        </PaginationItem>
-                        {[...Array(this.pagesCount)].map((page, i) => 
-                            <PaginationItem active={i === currentPage} key={i}>
-                                <PaginationLink onClick={e => this.handleClick(e, i)} href="#">
-                                    {i + 1}
-                                </PaginationLink>
-                            </PaginationItem>
+                {!this.state.ready
+                ?<div> Loading </div>
+                :<React.Fragment>   
+                    <Table hover>
+                        <thead>
+                            <tr>
+                                <th>Όνομα Προϊόντος</th>
+                                <th>Χαρακτηριστικά Προϊόντος</th>
+                                <th>Όνομα Καταστήματος</th>
+                                <th>Χαρακτηριστικά Καταστήματος</th>
+                                <th>Διεύθυνση Καταστήματος</th>
+                                <th>Ημερομηνία Παρατήρησης</th>
+                                <th>Απόσταση</th>
+                                <th>Τιμή</th>
+                                
+                            </tr>
+                        </thead>
+                        {this.dataSet.map((data, i) => 
+                        <tbody className="data-slice" key={i}>
+                            {data}
+                        </tbody>
+
                         )}
-                        <PaginationItem disabled={currentPage >= this.pagesCount - 1}>
-                            <PaginationLink
-                                onClick={e => this.handleClick(e, currentPage + 1)}
-                                next
-                                href="#"
-                            />
-                        </PaginationItem>
-                    </Pagination>
-                </div>
-        </React.Fragment>
-        }
+                    </Table>
+                    <div className="pagination-wrapper">          
+                        <Pagination aria-label="Page navigation example">            
+                            <PaginationItem disabled={currentPage <= 0}>              
+                                <PaginationLink
+                                    onClick={e => this.handleClick(e, currentPage - 1)}
+                                    previous
+                                    href="#"
+                                />              
+                            </PaginationItem>
+                            {[...Array(this.pagesCount)].map((page, i) => 
+                                <PaginationItem active={i === currentPage} key={i}>
+                                    <PaginationLink onClick={e => this.handleClick(e, i)} href="#">
+                                        {i + 1}
+                                    </PaginationLink>
+                                </PaginationItem>
+                            )}
+                            <PaginationItem disabled={currentPage >= this.pagesCount - 1}>
+                                <PaginationLink
+                                    onClick={e => this.handleClick(e, currentPage + 1)}
+                                    next
+                                    href="#"
+                                />
+                            </PaginationItem>
+                        </Pagination>
+                    </div>
+                </React.Fragment>
+            }
         </div>
     );
+  }  
 }
-  
-}
-
-export class PricesTable extends Component {
-    constructor(props) {
-        super(props);
-        this.id = null;
-        this.select = this.select.bind(this);
-    }
-    
-    
-    select (id) {
-        this.id = id;
-        console.log(this.id);
-    }
-    
-    render() {
-        const price = this.props.max_price;
-        return ( 
-            <PapigationResults category={this.props.category} select={this.select}/>
-        );
-    }
-};
-
-export default PricesTable;
     

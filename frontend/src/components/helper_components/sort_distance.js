@@ -7,19 +7,29 @@
 import React from 'react';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 
-export default class SortDistnce extends React.Component {
+export default class SortDistance extends React.Component {
     constructor(props) {
         super(props);
-
-        this.toggle = this.toggle.bind(this);
-        this.state = { dropdownOpen: false, dropDownValue: 'Καμία επιλογή', sort: null };
-        this.changeValue = this.changeValue.bind(this);
-        this.sort = null;
         this.options = [
             {name: 'Καμία επιλογή', value: null},
             {name: 'Απόσταση - Αύξουσα', value: 'dist|ASC'},
             {name: 'Απόσταση - Φθίνουσα', value: 'dist|DESC'}   
         ];
+
+        this.toggle = this.toggle.bind(this);
+        if (this.props.default) {
+            var name = null;
+            Object.entries(this.options).forEach(([key, value]) => {
+                if (value.value === this.props.default) name = value.name;
+            });
+            this.state = { dropdownOpen: false, dropDownValue: name, sort: this.props.default };
+        }
+        else {
+            this.state = { dropdownOpen: false, dropDownValue: 'Καμία επιλογή', sort: null };
+        }
+        
+        this.changeValue = this.changeValue.bind(this);
+        this.sort = null;
     }
 
     toggle() {

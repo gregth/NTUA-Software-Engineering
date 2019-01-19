@@ -114,7 +114,7 @@ export default class EditProduct extends Component {
     }
     
     homepage() {
-        browserHistory.push('/search');
+        browserHistory.push('/');
     }
     
     toggleModal() {

@@ -10,16 +10,26 @@ import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap
 export default class SortPrice extends React.Component {
     constructor(props) {
         super(props);
-
-        this.toggle = this.toggle.bind(this);
-        this.state = { dropdownOpen: false, dropDownValue: 'Τιμή - Αύξουσα', sort: 'price|ASC' };
-        this.changeValue = this.changeValue.bind(this);
-        this.sort = 'price|ASC';
         this.options = [
             {name: 'Καμία επιλογή', value: null},
             {name: 'Τιμή - Αύξουσα', value: 'price|ASC'},
             {name: 'Τιμή - Φθίνουσα', value: 'price|DESC'}   
         ];
+
+        this.toggle = this.toggle.bind(this);
+        if (this.props.default) {
+            var name = null;
+            Object.entries(this.options).forEach(([key, value]) => {
+                if (value.value === this.props.default) name = value.name;
+            });
+            this.state = { dropdownOpen: false, dropDownValue: name, sort: this.props.default };
+        }
+        else {
+            this.state = { dropdownOpen: false, dropDownValue: 'Τιμή - Αύξουσα', sort: 'price|ASC' };
+        }
+        
+        this.changeValue = this.changeValue.bind(this);
+        this.sort = 'price|ASC';
     }
 
     toggle() {

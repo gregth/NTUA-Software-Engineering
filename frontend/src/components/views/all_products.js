@@ -8,7 +8,7 @@ import React, { Component } from "react";
 import { browserHistory } from 'react-router';
 import cookie from 'react-cookies';
 import {Settings} from '../helper_components/dropdown_settings';
-import PapigationResults from '../helper_components/all_products_papigation';
+import ProductsResults from '../helper_components/all_products_papigation';
 import { Button, NavbarBrand, Image, Alert } from 'reactstrap';
 import Delete from '../helper_components/delete';
 import NavBarClass from '../helper_components/navbar';
@@ -79,7 +79,7 @@ export class AllProducts extends Component {
             <div>
                 <NavBarClass/>
                 <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά.</Alert>
-                <PapigationResults ref='result' select={this.select} delete={this.delete} edit={this.edit} search={this.search}/>
+                <ProductsResults ref='result' select={this.select} delete={this.delete} edit={this.edit} search={this.search}/>
                 <Delete ref='delete' back={this.delete_complete} category="product" id={this.id} name={this.name}/>
             </div>
         );

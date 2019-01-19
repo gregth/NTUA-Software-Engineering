@@ -16,7 +16,7 @@ class SearchPage extends Component {
         this.state = {search: null, success: null, error: null, not_found: null};
         this.handleSubmit = this.handleSubmit.bind(this);
         this._isMounted = null;
-        this.url = "https://www.youtube.com/watch?v=lKXaxGNeuXs";
+        this.url = "https://www.youtube.com/watch?v=1hvzLV274Rg";
     }
     
     componentWilldUnmount() {
@@ -34,7 +34,8 @@ class SearchPage extends Component {
                                     dateto: this.refs.search.dateto,
                                     category: this.refs.search.category,
                                     tags: this.refs.search.tags,
-                                    price: this.refs.search.price}});
+                                    price: this.refs.search.price, 
+                                    geodist: this.refs.search.geodist}});
 
         browserHistory.push({
             pathname: '/results',
@@ -49,7 +50,7 @@ class SearchPage extends Component {
                 <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά.</Alert>
                 <div className="header"><img src={"/public/logo_transparent.png"} alt="logo" /></div>
 
-                <Search ref="search" handle={this.handleSubmit} />
+                <Search ref="search" handle={this.handleSubmit} params={[]}/>
                 <ReactPlayer url={this.url} playing/>
             </div>
         );
