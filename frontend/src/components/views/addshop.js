@@ -1,8 +1,3 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -12,7 +7,7 @@ import { getLocation } from '../functions/current_location';
 import { send_to_server } from '../communication/send';
 import cookie from 'react-cookies';
 import { Modal, ModalHeader, ModalBody, ModalFooter, Input, Label, 
-        Button, Form, FormGroup, Row, Col, InputGroupAddon, InputGroup, FormFeedback, Alert } from 'reactstrap';
+        Button, Form, FormGroup, Row, Container, Col, InputGroupAddon, InputGroup, FormFeedback, Alert } from 'reactstrap';
 import { address_to_coords } from '../functions/address_to_coordinates';
 import {Settings} from '../helper_components/dropdown_settings';
 import NavBarClass from '../helper_components/navbar';
@@ -164,9 +159,12 @@ class Shop extends React.Component {
         return(
             <div>
                 <NavBarClass/>
-                <Form id="new_shop" onSubmit={this.handleSubmit}>
-                    <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά.</Alert>
-                    
+                <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά.</Alert>
+                
+                <Container className="Shop">
+                <h2 align="center">Εισαγωγή Καταστήματος</h2>
+                <hr></hr>
+                <Form id="new_shop" onSubmit={this.handleSubmit}>                     
                     <FormGroup check row>
                         <Label sm={3} for="name">Όνομα Καταστήματος:</Label>
                         <Col sm={3}>
@@ -215,11 +213,12 @@ class Shop extends React.Component {
                             <Input type="tel" id="new_shop_phone" name="phone" invalid={this.state.checkPhone===false} valid={this.state.checkPhone} onChange={() => this.validatePhone()}/>
                         </Col>
                     </FormGroup>
-
-                    <Button type="submit" id="button1">Προσθήκη</Button>
+                    <hr></hr>
+                    <Button type="submit" id="button1">Προσθήκη</Button>{'  '}
                     <Button type="button" id="button2" onClick={this.search}>Ακύρωση</Button>
 
                 </Form>
+                </Container>
                 <Modal isOpen={this.state.error} toggle={this.toggleModal}>
                     <ModalBody>Το αίτημα προσθήκης δεν ήταν επιτυχές.</ModalBody>
                     <ModalFooter>
