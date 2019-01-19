@@ -204,11 +204,13 @@ class Product extends React.Component {
                         <div className="row mt-3"></div>
                         <FormGroup check>
                         <Label check>
-                            <Col sm={9}>   
-                                <Input type="checkbox" name="location" id="addprice_location" onChange={() => this.currentLocation()}/>
-                            </Col>
-                                Τωρινή Τοποθεσία
+                        <Col sm={9}>
+                            <Input type="checkbox" name="location" id="addprice_location" onChange={() => this.currentLocation()}/>      
+                        </Col>
+                            Τωρινή Τοποθεσία
                         </Label>
+
+                    
                         </FormGroup>    
                         <FormGroup check row>
                             <Label sm={8} for="addprice_name">Όνομα Καταστήματος:</Label>
@@ -224,32 +226,24 @@ class Product extends React.Component {
                                 <FormFeedback valid={!this.state.error_address}>Η διεύθυνση δεν είναι έγκυρη.</FormFeedback>
                             </Col>
                         </FormGroup>
-                        <br/>
-                      
-                       
-                        <Row form>
-                             <Col md={2}>
-                                <FormGroup>
-                                    <Label for="addprice_number">Αριθμός:</Label>
-                
+        
+                        <FormGroup check row>
+                                <Label sm={3} for="addprice_number">Αριθμός:</Label>
+                                <Col sm={1}>
                                     <Input id="addprice_number" invalid={this.state.error_address} name="number" type="text" disabled={this.state.flag} required/>
-                                </FormGroup>
+                            </Col>
+                        </FormGroup>
                       
-                                </Col>
-                                
-                                <Col md={2}>
-                                <FormGroup>
-                                <Label for="addprice_postal">ΤΚ:</Label>
-                            
+                        <FormGroup check row>
+                            <Label sm={3} for="addprice_postal">ΤΚ:</Label>
+                                <Col sm={1}>
                                 <Input id="addprice_postal" invalid={this.state.error_address} name="postal" pattern="[0-9]+" type="text" disabled={this.state.flag} required/>
-                                </FormGroup>
                                 </Col>
-                        </Row>
-                     
-
+                                </FormGroup>
+  
                         <FormGroup check row>
                             <Label sm={3} for="addprice_price">Τιμή:</Label>
-                            <Col sm={1}>
+                            <Col sm={3}>
                                 <InputGroup>
                                     <Input type="text" id="addprice_price" pattern="[0-9]+" name="price" required/>
                                     <InputGroupAddon addonType="append">€</InputGroupAddon>
