@@ -25,7 +25,7 @@ class Product extends React.Component {
     
     constructor(props) {
         super(props);
-        this.state = { success: null, error: null, current: null, nearby_shops: false, error_address: null, not_found: null, message: null, fail: null};
+        this.state = { flag: false, success: null, error: null, current: null, nearby_shops: false, error_address: null, not_found: null, message: null, fail: null};
         this.handleSubmit = this.handleSubmit.bind(this);
         this.homepage = this.homepage.bind(this);
         this.find_barcode = this.find_barcode.bind(this);
@@ -35,21 +35,7 @@ class Product extends React.Component {
         this.new_product = this.new_product.bind(this);
         this.nearby_shops = this.nearby_shops.bind(this);
         this.add_price = this.add_price.bind(this);
-        this.flag = false;
         this.body = {productId: null, shopId: null, price: null, dateFrom: null, dateTo: null};
-    }
-    
-    componentDidMount() {
-        try {
-            var loggedin = Boolean(cookie.load('loggedin'));
-            if (!loggedin) {
-                browserHistory.push('/login');
-            }
-            cookie.save('need_login', true, {path: '/'});
-        }
-        catch(error) {
-            console.log(error);
-        }
     }
     
     nearby_shops () {
@@ -57,11 +43,9 @@ class Product extends React.Component {
     }
     
     async currentLocation ()  {
-        this.flag = !this.flag;
+        this.setState({flag: !this.state.flag});
         var checkBox = document.getElementById("addprice_location");
         if (!checkBox.checked) {
-            var temp = this.state.show_current;
-            this.setState({ show_current: !temp});
             return;
         }
         
@@ -229,14 +213,14 @@ class Product extends React.Component {
                         <FormGroup check row>
                             <Label sm={8} for="addprice_name">Όνομα Καταστήματος:</Label>
                             <Col sm={3}>
-                                <Input id="addprice_name" name="name" type="text" disabled={this.flag}/>
+                                <Input id="addprice_name" name="name" type="text" disabled={this.state.flag}/>
                             </Col>
                         </FormGroup>
                         
                         <FormGroup check row>
                             <Label sm={3} for="addprice_address">Διεύθυνση:</Label>
                             <Col sm={3}>
-                                <Input id="addprice_address" invalid={this.state.error_address} name="address" pattern="[^\u0000-\u007F]+([/\w\.]?[\s]*[^\u0000-\u007F]*)*" type="text" disabled={this.flag} required/>
+                                <Input id="addprice_address" invalid={this.state.error_address} name="address" pattern="[^\u0000-\u007F]+([/\w\.]?[\s]*[^\u0000-\u007F]*)*" type="text" disabled={this.state.flag} required/>
                                 <FormFeedback valid={!this.state.error_address}>Η διεύθυνση δεν είναι έγκυρη.</FormFeedback>
                             </Col>
                         </FormGroup>
@@ -248,7 +232,7 @@ class Product extends React.Component {
                                 <FormGroup>
                                     <Label for="addprice_number">Αριθμός:</Label>
                 
-                                    <Input id="addprice_number" invalid={this.state.error_address} name="number" type="text" disabled={this.flag} required/>
+                                    <Input id="addprice_number" invalid={this.state.error_address} name="number" type="text" disabled={this.state.flag} required/>
                                 </FormGroup>
                       
                                 </Col>
@@ -257,7 +241,7 @@ class Product extends React.Component {
                                 <FormGroup>
                                 <Label for="addprice_postal">ΤΚ:</Label>
                             
-                                <Input id="addprice_postal" invalid={this.state.error_address} name="postal" pattern="[0-9]+" type="text" disabled={this.flag} required/>
+                                <Input id="addprice_postal" invalid={this.state.error_address} name="postal" pattern="[0-9]+" type="text" disabled={this.state.flag} required/>
                                 </FormGroup>
                                 </Col>
                         </Row>

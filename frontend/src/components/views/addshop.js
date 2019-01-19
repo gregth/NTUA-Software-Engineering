@@ -19,7 +19,7 @@ function onlyUnique (value, index, self) {
 class Shop extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {flag: false, success: null, error: null, current: null, checkPhone: null, error_address: null, not_found: null};
+        this.state = {message: null, flag: false, success: null, error: null, current: null, checkPhone: null, error_address: null, not_found: null};
         this.handleSubmit = this.handleSubmit.bind(this);
         this.search = this.search.bind(this);
         this.currentLocation = this.currentLocation.bind(this);
@@ -135,8 +135,25 @@ class Shop extends React.Component {
         if (answer.status === 200) {
             this.setState({success: true});
         }
+        else if (answer.status === 404) {
+            this.setState({message: 'Error 404 - Το αίτημα δεν ήταν επιτυχές', not_found: true});
+            return;
+        }
+        else if (answer.status === 401) {
+            this.setState({message: 'Error 401 - Μη επιτρεπόμενη ενέργεια', not_found: true});
+            return;
+        }
+        else if (answer.status === 403) {
+            this.setState({message: 'Error 403 - Απαιτείται σύνδεση', not_found: true});
+            return;
+        }
+        else if (answer.status === 400) {
+            this.setState({message: 'Error 400 - Μη έγκυρες παράμετροι αιτήματος.', not_found: true});
+            return;
+        }
         else {
-            this.setState({not_found: true});
+            this.setState({message: 'Error ' + answer.status.toString() + ' - Πρόβλημα με την ολοκλήρωση του αιτήματος.', not_found: true});
+            return;
         }
        
     }
@@ -211,7 +228,7 @@ class Shop extends React.Component {
                 
                 </Container>
                 <Modal isOpen={this.state.error} toggle={this.toggleModal}>
-                    <ModalBody>H προσθήκη δεν ήταν επιτυχής.</ModalBody>
+                    <ModalBody>H προσθήκη δεν ήταν επιτυχής. {this.state.message} </ModalBody>
                     <ModalFooter>
                         <Button color="primary" onClick={this.toggleModal}>Προσπάθεια ξανά</Button>{' '}
                         <Button color="secondary" onClick={this.search}>Αρχική σελίδα</Button>
