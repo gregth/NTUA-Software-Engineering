@@ -16,6 +16,8 @@ import StatusDropdown from '../helper_components/status_products_shops';
 import CountDropdown from '../helper_components/count_products_shops';
 import { getLocation } from '../functions/current_location';
 import MapClass from '../helper_components/map_price';
+import ProductInfo from '../helper_components/product_info';
+import ShopInfo from '../helper_components/shop_info';
 
 export default class PricesTable extends React.PureComponent {
     constructor(props) {
@@ -23,8 +25,6 @@ export default class PricesTable extends React.PureComponent {
         this.createData = this.createData.bind(this);
         this.request = this.request.bind(this);
         this.countChoose = this.countChoose.bind(this);
-        this.shop_info = this.shop_info.bind(this);
-        this.product_info = this.product_info.bind(this);
         this.make_url = this.make_url.bind(this);
         this.refresh = this.refresh.bind(this);
         this.state = {
@@ -52,25 +52,13 @@ export default class PricesTable extends React.PureComponent {
                 <td>{price.shopDist}</td>
                 <td>{price.price}</td>
                 <td>
-                    <button className="search_btn" id="product_btn" title='Πληροφορίες προϊόντος' onClick={() => this.product_info(price.productId)}>
-                        <FontAwesomeIcon icon={faWineBottle}></FontAwesomeIcon>
-                    </button>
-                    <button className="search_btn" id="shop_btn" title='Πληροφορίες καταστήματος' onClick={() => this.shop_info(price.shopId)}>
-                        <FontAwesomeIcon icon={faBuilding}></FontAwesomeIcon>
-                    </button>
+                    <ProductInfo id={price.productId}/>
+                    <ShopInfo id={price.shopId}/>
                     <MapClass product_id={price.productId} shop_id={price.shopId} price={price.price}/>
                 </td>
             </tr>
         ));
     } 
-    
-    shop_info (id) {
-        //TODO
-    }
-    
-    product_info (id) {
-        //TODO
-    }
     
     async make_url () {
         var url = 'http://localhost:3002/prices?start=' + this.start + 
