@@ -14,6 +14,7 @@ import {receive_from_server} from '../communication/receive';
 import SortDropdown from '../helper_components/sort_products_shops';
 import StatusDropdown from '../helper_components/status_products_shops';
 import CountDropdown from '../helper_components/count_products_shops';
+import { getLocation } from '../functions/current_location';
 
 export default class PricesTable extends React.PureComponent {
     constructor(props) {
@@ -25,6 +26,7 @@ export default class PricesTable extends React.PureComponent {
         this.product_info = this.product_info.bind(this);
         this.show_map = this.show_map.bind(this);
         this.make_url = this.make_url.bind(this);
+        this.refresh = this.refresh.bind(this);
         this.state = {
             tooltipOpen: false, currentPage: 0, error: null, success: null, not_found: null, ready: null
         };
@@ -34,12 +36,12 @@ export default class PricesTable extends React.PureComponent {
         this.sort = 'id|DESC';
         this.start = 0;
         this.total = null;
-        this.products = null;
+        this.prices = null;
         this.request();
     }
   
     createData () {
-        this.dataSet = this.products.map(price => (
+        this.dataSet = this.prices.map(price => (
             <tr key={price.id}>
                 <td>{price.productName}</td>
                 <td>{price.productTags}</td>
@@ -75,38 +77,56 @@ export default class PricesTable extends React.PureComponent {
     show_map (product_id, shop_id, price){
         //TODO
     }
-    
-    make_url () {
-        var url = 'http://localhost:3002/prices?';
+
+    async make_url () {
+        var url = 'http://localhost:3002/prices?start=' + this.start + 
+                    '&count=' +  this.pageSize;
         var params = [];
-        if (this.props.params.datefrom) {
-            params.push('dateFrom='+ this.props.params.datefrom);
+        if (this.props.params) {
+            if (this.props.params.datefrom) {
+                params.push('dateFrom='+ this.props.params.datefrom);
+            }
+            if (this.props.params.dateto) {
+                params.push('dateTo='+ this.props.params.dateto);
+            }
+            if (this.props.params.sort_distance) {
+                params.push('sort='+ this.props.params.sort_distance);
+            }
+            if (this.props.params.sort_price) {
+                params.push('sort='+ this.props.params.sort_price);
+            }
+            if (this.props.params.sort_date) {
+                params.push('sort='+ this.props.params.sort_date);
+            }
+            if (this.props.params.tags) {
+                for (var i=0; i<this.props.params.tags.length; i++) {
+                    params.push('tags='+ this.props.params.tags[i]);
+                }
+            }
+            if (this.props.params.geodist) {
+                let result = await getLocation();
+                params.push('geoDist='+ this.props.params.geodist);
+                params.push('geoLng='+ result[1]);
+                params.push('geoLat='+ result[0]);
+            }
         }
-        if (this.props.params.dateto) {
-            params.push('dateTo='+ this.props.params.dateto);
+        if (this.props.shops) {
+            for (var i=0; i<this.props.shops.length; i++) {
+                params.push('shops='+ this.props.shops[i]);
+            }
         }
-        if (this.props.params.sort_distance) {
-            params.push('sort='+ this.props.params.sort_distance);
-        }
-        if (this.props.params.sort_price) {
-            params.push('sort='+ this.props.params.sort_price);
-        }
-        if (this.props.params.sort_date) {
-            params.push('sort='+ this.props.params.sort_date);
-        }
-        if (this.props.params.sort_distance) {
-            for (var i; i<this.props.params.tags; i++) {
-                params.push('tags='+ this.props.params.tags[i]);
+        if (this.props.products) {
+            for (var i=0; i<this.props.products.length; i++) {
+                params.push('products='+ this.props.products[i]);
             }
         }
         var temp = params.join('&');
         return url + temp;
     }
     async request () {
-        console.log(this.make_url());
-        const url = 'http://localhost:3002/products?start=' + this.start + 
-                    '&count=' +  this.pageSize + '&sort=' + this.sort +
-                    '&status=' + this.status;
+        var temp = await this.make_url().then(url => {return url;});
+        console.log(temp)
+        const url = temp;
         const answer = await receive_from_server(url);
         
         if (answer === 'error') {
@@ -122,13 +142,18 @@ export default class PricesTable extends React.PureComponent {
         }
         var result = await answer.json().then((result) => {return result;});
         console.log(result);
-        if (this.start !== result.start || parseInt(this.pageSize) !== result.count) {
+        if (this.start !== result.start || parseInt(this.pageSize) !== result.count, this.start) {
+            console.log(result.start, result.count, parseInt(this.pageSize), )
             this.setState({not_found: true, success: false});
             return;
         }
-        this.total = result.total;
-        this.products = result.products;
+        /*this.total = result.total;
+        this.prices = result.prices;*/
+            this.total = result.prices.length;
+            this.prices = result.prices;
+            console.log(this.prices);
         this.pagesCount = Math.ceil(this.total / this.pageSize);
+            
         this.createData();
         this.setState({ready: true});
     }
@@ -141,6 +166,12 @@ export default class PricesTable extends React.PureComponent {
         this.setState({
             currentPage: index
         });
+    }
+    
+    async refresh () {
+        this.setState({ready: false});
+        this._isMounted = await this.request();
+        this.setState({ready: true});
     }
     
     async countChoose () {
@@ -167,7 +198,7 @@ export default class PricesTable extends React.PureComponent {
                     </tbody>
                 </Table>
                 {!this.state.ready
-                ?<div> Loading </div>
+                ?<div> Δε βρέθηκαν αποτελέσματα. </div>
                 :<React.Fragment>   
                     <Table hover>
                         <thead>

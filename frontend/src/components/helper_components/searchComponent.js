@@ -26,7 +26,7 @@ function onlyUnique (value, index, self) {
 export class Search extends Component {
     constructor(props) {
         super(props);
-        this.state = {price: 50, params: null, geodist: null};
+        this.state = {price: 50, params: null, geodist: null, tags: null};
         this.updateRange = this.updateRange.bind(this); 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.filters = this.filters.bind(this);
@@ -41,6 +41,12 @@ export class Search extends Component {
         this.price = 50;      
     }
     
+    componentDidMount() {
+        if (this.props.params) {
+            if (this.props.params.geodist) this.setState({geodist: this.props.params.geodist});
+            if (this.props.params.tags) this.setState({tags: this.props.params.tags.join(', ')});
+        }
+    }
     filters () {
         this.sort_distance = this.refs.sort_distance.sort;
         this.sort_date = this.refs.sort_date.sort;
@@ -95,15 +101,16 @@ export class Search extends Component {
     }
     
     render() {
-        if (this.props.params.datefrom){
-            var from = new Date(this.props.params.datefrom);
-            var datefrom = from.toISOString().substr(0,10);
+        if (this.props.params) {
+            if (this.props.params.datefrom){
+                var from = new Date(this.props.params.datefrom);
+                var datefrom = from.toISOString().substr(0,10);
+            }
+            if (this.props.params.dateto) {
+                var to = new Date(this.props.params.dateto);
+                var dateto = to.toISOString().substr(0,10);
+            }
         }
-        if (this.props.params.dateto) {
-            var to = new Date(this.props.params.dateto);
-            var dateto = to.toISOString().substr(0,10);
-        }
-            
         return ( 
             <div>
                 <Table borderless>
@@ -120,16 +127,16 @@ export class Search extends Component {
                     </thead>
                     <tbody>
                         <tr>
-                            <td><Categories ref='search_category' default={this.props.params.category}/></td>
-                            <td><SortDistance ref="sort_distance" default={this.props.params.sort_distance}/></td>
-                            <td><SortDate ref="sort_date" default={this.props.params.sort_date}/></td>
-                            <td><SortPrice ref="sort_price" default={this.props.params.sort_price}/></td>
-                            <td><Input type="date" id="search_datefrom" name="datefrom" defaultValue={datefrom} /></td>
-                            <td><Input type="date" id="search_dateto" name="dateto" defaultValue={dateto} /></td>
+                            <td><Categories ref='search_category' default={this.props.params ? this.props.params.category : null}/></td>
+                            <td><SortDistance ref="sort_distance" default={this.props.params ? this.props.params.sort_distance : null}/></td>
+                            <td><SortDate ref="sort_date" default={this.props.params ? this.props.params.sort_date : null}/></td>
+                            <td><SortPrice ref="sort_price" default={this.props.params ? this.props.params.sort_price : null}/></td>
+                            <td><Input type="date" id="search_datefrom" name="datefrom" defaultValue={this.props.params ? datefrom : null} /></td>
+                            <td><Input type="date" id="search_dateto" name="dateto" defaultValue={this.props.params ? dateto : null} /></td>
                             <td>
                                 <Col sm={5}>
                                     <InputGroup>
-                                        <Input type="text" id="search_geodist" pattern="[0-9]+" name="geodist" onChange={this.handleChange} value={this.props.params.geodist}/>
+                                        <Input type="text" id="search_geodist" pattern="[0-9]+" name="geodist" onChange={this.handleChange} value={this.state.geodist ? this.state.geodist : ''}/>
                                         <InputGroupAddon addonType="append">km</InputGroupAddon>
                                     </InputGroup>
                                 </Col>
@@ -144,7 +151,7 @@ export class Search extends Component {
                 <Form>
                     <FormGroup>
                         <InputGroup>
-                            <Input id="search_tags" placeholder="Αναζήτηση με όνομα ή χαρακτηριστικά.."></Input>
+                            <Input id="search_tags" placeholder="Αναζήτηση με όνομα ή χαρακτηριστικά.." name="tags" onChange={this.handleChange} value={this.state.tags ? this.state.tags : ''}></Input>
                             <InputGroupAddon addonType="append">
                                 <Button className="btn btn-default" id="search_btn" onClick={this.handleSubmit}>search</Button>
                             </InputGroupAddon>

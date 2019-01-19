@@ -13,13 +13,21 @@ import NavBarClass from '../helper_components/navbar';
 class Results extends Component {
     constructor(props) {
         super(props);
-        this.params = [];
+        this.shops = [];
+        this.products = [];
         this.searches = this.props.location.query;
         Object.entries(this.searches).forEach(([key, value]) => {
-           this.params.push({key, value});
+           if (key === 'products') this.products.push([value]);
+           if (key === 'shops') this.shops.push([value]);
         });
-        this.state = {params: this.params, search: this.props.location.state, show_map: false,
+        if (this.props.location.state) {
+            this.state = {shops: this.shops, products: this.products, search: this.props.location.state, show_map: false,
                         results: false, success: null, error: null, not_found: null};
+        }
+        else {
+            this.state = {shops: this.shops, products: this.products, search: null, 
+                        results: false, success: null, error: null, not_found: null};
+        }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.updateRange = this.updateRange.bind(this);
         this.request_prices = this.request_prices.bind(this);
@@ -54,7 +62,7 @@ class Results extends Component {
                 tags: this.refs.search.tags,
                 price: this.refs.search.price,
                 geodist: this.refs.search.geodist }});
-        this.setState({ show_map: !this.state.show_map});
+        this.refs.result.refresh();
     }
     
     render() {
@@ -64,17 +72,9 @@ class Results extends Component {
                 <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά.</Alert>
 
                 <Search ref="search" params={this.state.search} handle={this.handleSubmit}/>
-                
-                <div>
-                    <PricesTable ref="result" params={this.state.search}/>
 
-                    <div >
-                        {this.state.show_map && false
-                            ?<MapClass/>
-                            : null
-                        }
-                    </div>
-                </div>
+                <PricesTable ref="result" params={this.state.search} shops={this.state.shops} products={this.state.products}/>
+
             </div>
         );
     }
