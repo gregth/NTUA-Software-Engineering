@@ -72,7 +72,7 @@ class newProduct extends React.Component {
             brand,
             volume,
             category,
-            tags,
+            tags: tags.join(','),
             withdrawn: 0
         };
         

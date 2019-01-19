@@ -151,7 +151,7 @@ export default class EditProduct extends Component {
             brand,
             volume,
             category,
-            tags,
+            tags: tags.join(','),
             withdrawn: this.state.details.withdrawn
         };
         

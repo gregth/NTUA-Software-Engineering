@@ -198,7 +198,7 @@ export default class EditShop extends Component {
             address,
             lng,
             lat,
-            tags,
+            tags: tags.join(','),
             withdrawn: this.state.details.withdrawn
         };
         

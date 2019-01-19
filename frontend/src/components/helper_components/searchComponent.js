@@ -95,10 +95,15 @@ export class Search extends Component {
     }
     
     render() {
-        var from = new Date(this.props.params.datefrom);
-        var datefrom = from.toISOString().substr(0,10);
-        var to = new Date(this.props.params.dateto);
-        var dateto = to.toISOString().substr(0,10);
+        if (this.props.params.datefrom){
+            var from = new Date(this.props.params.datefrom);
+            var datefrom = from.toISOString().substr(0,10);
+        }
+        if (this.props.params.dateto) {
+            var to = new Date(this.props.params.dateto);
+            var dateto = to.toISOString().substr(0,10);
+        }
+            
         return ( 
             <div>
                 <Table borderless>

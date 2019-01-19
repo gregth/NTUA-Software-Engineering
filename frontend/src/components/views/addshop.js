@@ -118,7 +118,7 @@ class Shop extends React.Component {
             address,
             lng,
             lat,
-            tags,
+            tags: tags.join(','),
             telephone,
             withdrawn: 0
         };
