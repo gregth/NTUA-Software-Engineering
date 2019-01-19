@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import TooltipItem from './tooltip';
+import Description from './product_description';
 import { Input, Table, Pagination, PaginationItem, PaginationLink, Tooltip, Button } from 'reactstrap';
 import React, { Component } from "react";
 import ReactDOM from 'react-dom';
@@ -62,7 +62,7 @@ export default class ProductsResults extends React.PureComponent {
                     }
                 </td>
                 <td>
-                    <TooltipItem id={product.id} text={product.description}/>
+                    <Description id={product.id} text={product.description}/>
                 </td>
                 <td>
                     <button className="search_btn" id="edit_btn" onClick={() => this.props.edit(product.id)}><FontAwesomeIcon icon={faEdit}></FontAwesomeIcon></button>

@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 
-import TooltipItem from './tooltip';
 import { Table, Pagination, PaginationItem, PaginationLink, Tooltip, Button } from 'reactstrap';
 import React, { Component } from "react";
 import ReactDOM from 'react-dom';
