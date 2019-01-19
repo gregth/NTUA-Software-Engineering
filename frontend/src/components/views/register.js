@@ -18,7 +18,7 @@ class Register extends React.Component {
     
     constructor(props) {
         super(props);
-        this.state = {show: true, checkPass: null, checkEmail: null, checkPhone: null, check_show: false, success: null, error: null, not_found: null};
+        this.state = {message: null, show: true, checkPass: null, checkEmail: null, checkPhone: null, check_show: false, success: null, error: null, not_found: null};
         this.handleSubmit = this.handleSubmit.bind(this);
         this.checkPasswordMatch = this.checkPasswordMatch.bind(this);
         this.showPassword = this.showPassword.bind(this);
@@ -53,8 +53,8 @@ class Register extends React.Component {
 
         var body = {
             username: us,
-            first_name: fname,
-            last_name: lname,
+            firstName: fname,
+            lastName: lname,
             telephone: number,
             birthdate: bdate,
             password: pass,
@@ -74,8 +74,24 @@ class Register extends React.Component {
         if (answer.status === 200) {
             this.setState({success: true});
         }
+        else if (answer.status === 404) {
+            this.setState({message: 'Error 404 - Το αίτημα δεν ήταν επιτυχές', not_found: true});
+            return;
+        }
+        else if (answer.status === 401) {
+            this.setState({message: 'Error 401 - Μη επιτρεπόμενη ενέργεια', not_found: true});
+            return;
+        }
+        else if (answer.status === 403) {
+            this.setState({message: 'Error 403 - Απαιτείται σύνδεση', not_found: true});
+            return;
+        }
+        else if (answer.status === 400) {
+            this.setState({message: 'Error 400 - Μη έγκυρες παράμετροι αιτήματος.', not_found: true});
+            return;
+        }
         else {
-            this.setState({not_found: true});
+            this.setState({message: 'Error ' + answer.status.toString() + ' - Πρόβλημα με την ολοκλήρωση του αιτήματος.', not_found: true});
             return;
         }
        
@@ -151,6 +167,7 @@ class Register extends React.Component {
             <div>
                 <NavBarClass/>
                 <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά.</Alert>
+                <Alert color="danger" isOpen={this.state.not_found===true}>{this.state.message}</Alert>
             
                 <Container className="Register">
                 <h2 align="center">Εγγραφή</h2>
