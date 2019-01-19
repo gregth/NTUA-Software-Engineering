@@ -149,11 +149,12 @@ class newProduct extends React.Component {
                 </FormGroup>
                 <hr></hr>
                 <div className="text-center">
-                <Button type="submit" id="button1">Προσθήκη</Button>
+                <Button type="submit" id="button1">Προσθήκη</Button>{'  '}
+                <Button type="button" id="button2" onClick={this.homepage}>Ακύρωση</Button>
                 </div>
             </Form>
             </Container>
-            <Button type="button" id="button2" onClick={this.homepage}>Ακύρωση</Button>
+            
             
             <Modal isOpen={this.state.error} toggle={this.toggleModal}>
                 <ModalBody>Το αίτημα προσθήκης δεν ήταν επιτυχές.</ModalBody>
