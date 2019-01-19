@@ -25,11 +25,22 @@ import NavBarClass from '../helper_components/navbar';
 class Results extends Component {
     constructor(props) {
         super(props);
-        this.searches = this.props.location;
-        /*Object.entries(this.searches).forEach(([key, value]) => {
-            console.log(key, value);
-        });*/
-        console.log('aaa', this.searches)
+        this.params = []
+        this.searches = this.props.location.query;
+        Object.entries(this.searches).forEach(([key, value]) => {
+           this.params.push({key, value});
+        });
+        this.searches = this. props.location.state;
+        console.log(this.searches);
+        Object.entries(this.searches).forEach(([key, value]) => {
+            if (value !== null && value !== "" ) {
+                if (key === 'tags') {
+                    if (value.length > 0) this.params.push({key, value});
+                }
+                else this.params.push({key, value});
+            }
+        });
+        console.log(this.params);
         this.state = {search: null, show_map: false,
                         results: false, success: null, error: null, not_found: null};
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -48,9 +59,7 @@ class Results extends Component {
         });
     } 
       
-    handleSubmit (event) {
-        event.preventDefault();
-        event.nativeEvent.stopImmediatePropagation();
+    handleSubmit () {
         this.setState({search: {
                 sort_distance: this.refs.search.sort_distance,
                 sort_price: this.refs.search.sort_price,
@@ -73,7 +82,7 @@ class Results extends Component {
                 <Search ref="search" handle={this.handleSubmit}/>
                 
                 <div>
-                    <PricesTable ref="results_products"/>
+                    
                     <div >
                         {this.state.show_map && false
                             ?<MapClass/>

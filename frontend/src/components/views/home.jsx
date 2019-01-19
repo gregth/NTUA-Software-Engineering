@@ -23,10 +23,7 @@ class SearchPage extends Component {
         }
     }
     
-    async handleSubmit (event) {
-        event.preventDefault();
-        event.nativeEvent.stopImmediatePropagation();
-        
+    async handleSubmit () {
         this._isMounted = await this.setState({search: {
                                     sort_distance: this.refs.search.sort_distance,
                                     sort_price: this.refs.search.sort_price,
