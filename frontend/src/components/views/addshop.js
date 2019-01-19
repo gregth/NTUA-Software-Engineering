@@ -42,7 +42,7 @@ class Shop extends React.Component {
     }
     
     search () {
-        browserHistory.push('/search');
+        browserHistory.push('/');
     }
     
     async currentLocation () {
