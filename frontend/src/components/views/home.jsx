@@ -8,6 +8,7 @@ import cookie from 'react-cookies';
 import { Input, InputGroupAddon, Button, Form, InputGroup, FormGroup, Label, Alert } from 'reactstrap';
 import Search from '../helper_components/searchComponent';
 import NavBarClass from '../helper_components/navbar';
+import ReactPlayer from 'react-player';
 
 class SearchPage extends Component {
     constructor(props) {
@@ -15,6 +16,7 @@ class SearchPage extends Component {
         this.state = {search: null, success: null, error: null, not_found: null};
         this.handleSubmit = this.handleSubmit.bind(this);
         this._isMounted = null;
+        this.url = "https://www.youtube.com/watch?v=lKXaxGNeuXs";
     }
     
     componentWilldUnmount() {
@@ -46,8 +48,9 @@ class SearchPage extends Component {
                 <NavBarClass/>
                 <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά.</Alert>
                 <div className="header"><img src={"/public/logo_transparent.png"} alt="logo" /></div>
-                
+
                 <Search ref="search" handle={this.handleSubmit} />
+                <ReactPlayer url={this.url} playing/>
             </div>
         );
     }
