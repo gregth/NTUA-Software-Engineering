@@ -18,18 +18,19 @@ import { browserHistory } from 'react-router';
 import MapClass from '../helper_components/map';
 import cookie from 'react-cookies';
 import { Input, InputGroupAddon, Button, Form, InputGroup, FormGroup, Label, Alert } from 'reactstrap';
-import ProductsTable from '../helper_components/results_products_table';
+import PricesTable from '../helper_components/results_prices';
 import Search from '../helper_components/searchComponent';
 import NavBarClass from '../helper_components/navbar';
 
 class Results extends Component {
     constructor(props) {
         super(props);
-        this.searches = this.props.location.query;
-        Object.entries(this.searches).forEach(([key, value]) => {
+        this.searches = this.props.location;
+        /*Object.entries(this.searches).forEach(([key, value]) => {
             console.log(key, value);
-        });
-        this.state = {price: 50, show_map: false,
+        });*/
+        console.log('aaa', this.searches)
+        this.state = {search: null, show_map: false,
                         results: false, success: null, error: null, not_found: null};
         this.handleSubmit = this.handleSubmit.bind(this);
         this.updateRange = this.updateRange.bind(this);
@@ -50,8 +51,17 @@ class Results extends Component {
     handleSubmit (event) {
         event.preventDefault();
         event.nativeEvent.stopImmediatePropagation();
-        
-        this.setState({results: true, show_map: !this.state.show_map});
+        this.setState({search: {
+                sort_distance: this.refs.search.sort_distance,
+                sort_price: this.refs.search.sort_price,
+                sort_date: this.refs.search.sort_date,
+                datefrom: this.refs.search.datefrom,
+                dateto: this.refs.search.dateto,
+                category: this.refs.search.category,
+                tags: this.refs.search.tags,
+                price: this.refs.search.price}});
+        console.log(this.state)
+        this.setState({ show_map: !this.state.show_map});
     }
     
     render() {
@@ -60,10 +70,10 @@ class Results extends Component {
                 <NavBarClass/>
                 <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά.</Alert>
 
-                <Search ref="search" price={this.state.price} handle={this.handleSubmit} updateRange={this.updateRange}/>
+                <Search ref="search" handle={this.handleSubmit}/>
                 
                 <div>
-                    <ProductsTable ref="results_products" category={this.refs.search.refs.search_category.state.category} max_price={this.state.price} products={this.state.products} onClick={this.request_price}/>
+                    <PricesTable ref="results_products"/>
                     <div >
                         {this.state.show_map && false
                             ?<MapClass/>

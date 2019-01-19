@@ -13,7 +13,6 @@ import { Input, InputGroupAddon, Button, Form, InputGroup,
 import {send_to_server} from '../communication/send';
 import {Settings} from '../helper_components/dropdown_settings';
 import {receive_from_server} from '../communication/receive';
-import ProductsTable from '../helper_components/results_products_table';
 import Search from '../helper_components/searchComponent';
 import cookie from 'react-cookies';
 import {put} from '../communication/put';

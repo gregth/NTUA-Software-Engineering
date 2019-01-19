@@ -150,7 +150,7 @@ class PapigationResults extends React.PureComponent {
   
 }
 
-export class ProductsTable extends Component {
+export class PricesTable extends Component {
     constructor(props) {
         super(props);
         this.id = null;
@@ -171,5 +171,5 @@ export class ProductsTable extends Component {
     }
 };
 
-export default ProductsTable;
+export default PricesTable;
     
