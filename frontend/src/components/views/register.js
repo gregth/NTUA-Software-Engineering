@@ -95,10 +95,7 @@ class Register extends React.Component {
             return;
         }
        
-        cookie.save('username', us, {path: '/'});
-        cookie.save('loggedin', true, {path: '/'});
-        cookie.remove('need_login', {path: '/'});
-        browserHistory.push('/search');
+        browserHistory.push('/login');
     }
     
     showPassword(event) {
