@@ -227,8 +227,8 @@ class Shop extends React.Component {
                 </Form>
                 
                 </Container>
-                <Modal isOpen={this.state.error} toggle={this.toggleModal}>
-                    <ModalBody>H προσθήκη δεν ήταν επιτυχής. {this.state.message} </ModalBody>
+                <Modal isOpen={this.state.not_found} toggle={this.toggleModal}>
+                    <ModalBody>{this.state.message} </ModalBody>
                     <ModalFooter>
                         <Button color="primary" onClick={this.toggleModal}>Προσπάθεια ξανά</Button>{' '}
                         <Button color="secondary" onClick={this.search}>Αρχική σελίδα</Button>
