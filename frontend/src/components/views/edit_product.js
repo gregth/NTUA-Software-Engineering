@@ -71,17 +71,6 @@ export default class EditProduct extends Component {
     }
     
      componentDidMount () {
-        try {
-            var loggedin = Boolean(cookie.load('loggedin'));
-            if (!loggedin) {
-                browserHistory.push('/login');
-            }
-            cookie.save('need_login', true, {path: '/'});
-        }
-        catch(error) {
-            console.log(error);
-        }
-        
         this._asyncRequest = this.request().then(
             details => {
                 this._asyncRequest = null;

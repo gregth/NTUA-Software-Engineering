@@ -16,7 +16,9 @@ import { FormText, Table, Input, InputGroupAddon, Button, Form, InputGroup, Form
 import Range from './range';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faHome } from '@fortawesome/free-solid-svg-icons';
-import SortDropdown from '../helper_components/sort_products_shops';
+import SortPrice from '../helper_components/sort_price';
+import SortDistance from '../helper_components/sort_distance';
+import SortDate from '../helper_components/sort_date';
 
 function arraysEqual(arr1, arr2) {
     if(arr1.length !== arr2.length)
@@ -38,6 +40,7 @@ export class Search extends Component {
         super(props);
         this.state = {price: 50};
         this.updateRange = this.updateRange.bind(this); 
+        this.handleSubmit = this.handleSubmit.bind(this);
         this.filters = this.filters.bind(this);
         this.sort_distance = null;
         this.sort_date = null;
@@ -46,6 +49,7 @@ export class Search extends Component {
         this.geodist = null;
         this.datefrom = null;
         this.dateto = null;
+        this.price = 50;
         
     }
     
@@ -53,7 +57,12 @@ export class Search extends Component {
         this.sort_distance = this.refs.sort_distance.sort;
         this.sort_date = this.refs.sort_date.sort;
         this.sort_price = this.refs.sort_price.sort;
-        this.category = this.refs.search_category.category;
+        if ( this.refs.search_category.state.category === 'Όλες οι κατηγορίες'){
+            this.category = null;
+        }
+         else{
+             this.category = this.refs.search_category.state.category;
+         }
         this.geodist = document.getElementById('search_geodist').value;
         this.datefrom = document.getElementById('search_datefrom').value;
         this.dateto = document.getElementById('search_dateto').value;
@@ -64,7 +73,7 @@ export class Search extends Component {
         this.setState({
             price: val
         });
-        this.props.handle();
+        this.price = val;
     }
     
     handleSubmit (event) {
@@ -110,15 +119,15 @@ export class Search extends Component {
                     <tbody>
                         <tr>
                             <td><Categories ref='search_category'/></td>
-                            <td><SortDropdown ref="sort_distance"/></td>
-                            <td><SortDropdown ref="sort_date"/></td>
-                            <td><SortDropdown ref="sort_price"/></td>
+                            <td><SortDistance ref="sort_distance"/></td>
+                            <td><SortDate ref="sort_date"/></td>
+                            <td><SortPrice ref="sort_price"/></td>
                             <td><Input type="date" id="search_datefrom"/></td>
                             <td><Input type="date" id="search_dateto"/></td>
                             <td>
                                 <Col sm={5}>
                                     <InputGroup>
-                                        <Input type="text" id="search_geodist" pattern="[0-9]+" name="geodist" onChange={this.geodist}/>
+                                        <Input type="text" id="search_geodist" pattern="[0-9]+" name="geodist"/>
                                         <InputGroupAddon addonType="append">km</InputGroupAddon>
                                     </InputGroup>
                                 </Col>
@@ -130,16 +139,12 @@ export class Search extends Component {
                     </tbody>
                 </Table>
                 
-                <Form onSubmit={this.props.handle}>
+                <Form>
                     <FormGroup>
                         <InputGroup>
                             <Input id="search_tags" placeholder="Αναζήτηση με όνομα ή χαρακτηριστικά.."></Input>
                             <InputGroupAddon addonType="append">
-                                <span className="input-group-btn">
-                                    <Button className="btn btn-default" id="search_btn" type="submit">
-                                      <i>search</i>
-                                    </Button>
-                                </span>
+                                <Button className="btn btn-default" id="search_btn" onClick={this.handleSubmit}>search</Button>
                             </InputGroupAddon>
                         </InputGroup>
                         <FormText>Διαχωρισμός χαρακτηριστικών με κόμμα (,)</FormText>

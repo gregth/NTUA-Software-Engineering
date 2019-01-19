@@ -24,10 +24,8 @@ import NavBarClass from '../helper_components/navbar';
 export class AllShops extends Component {
     constructor(props) {
         super(props);
-        this.select = this.select.bind(this);
-        this.state = {shops: null, error: null, success: null, not_found: null};
+        this.state = {error: null, success: null, not_found: null};
         this.homepage = this.homepage.bind(this);
-        this.search = this.search.bind(this);
         this.edit = this.edit.bind(this);
         this.delete = this.delete.bind(this);
         this.delete_complete = this.delete_complete.bind(this);
@@ -55,18 +53,8 @@ export class AllShops extends Component {
         this.refs.delete.toggle_delete(id, name);
     }
     
-    search (id) {
-        this.id = id;
-        console.log(this.id);
-    }
-    
-    select (id) {
-        this.id = id;
-        console.log(this.id);
-    }
-    
     homepage() {
-        browserHistory.push('/search');
+        browserHistory.push('/');
     }
     
     render() {
@@ -74,7 +62,7 @@ export class AllShops extends Component {
             <div>
                 <NavBarClass/>
                 <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά.</Alert>
-                <PapigationShops ref='result' data={this.state.shops} select={this.select} delete={this.delete} edit={this.edit} search={this.search}/>
+                <PapigationShops ref='result' data={this.state.shops} delete={this.delete} edit={this.edit} />
                 <Delete ref='delete' back={this.delete_complete} category="shop" id={this.id} name={this.name}/>
             </div>
         );
