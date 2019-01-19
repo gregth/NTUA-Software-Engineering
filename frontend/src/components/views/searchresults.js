@@ -29,8 +29,6 @@ class Results extends Component {
                         results: false, success: null, error: null, not_found: null};
         }
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.updateRange = this.updateRange.bind(this);
-        this.request_prices = this.request_prices.bind(this);
         this._isMounted = null;
         
     }
@@ -40,17 +38,7 @@ class Results extends Component {
             this._isMounted.cancel();
         }
     }
-    
-    request_prices () {
-        console.log(this.refs.results_products.id);
-    }
-    
-    updateRange (val) {
-        this.setState({
-            price: val
-        });
-    } 
-      
+          
     async handleSubmit () {
         this._isMounted = await this.setState({search: {
                 sort_distance: this.refs.search.sort_distance,
@@ -61,7 +49,7 @@ class Results extends Component {
                 category: this.refs.search.category,
                 tags: this.refs.search.tags,
                 price: this.refs.search.price,
-                geodist: this.refs.search.geodist }});
+                geodist: this.refs.search.geodist}});
         this.refs.result.refresh();
     }
     

@@ -109,6 +109,9 @@ export default class PricesTable extends React.PureComponent {
                 params.push('geoLng='+ result[1]);
                 params.push('geoLat='+ result[0]);
             }
+            if (this.props.params.price) {
+                params.push('price='+ this.props.params.price);
+            }
         }
         if (this.props.shops) {
             for (var i=0; i<this.props.shops.length; i++) {

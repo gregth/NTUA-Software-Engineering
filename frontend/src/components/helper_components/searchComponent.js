@@ -45,8 +45,14 @@ export class Search extends Component {
         if (this.props.params) {
             if (this.props.params.geodist) this.setState({geodist: this.props.params.geodist});
             if (this.props.params.tags) this.setState({tags: this.props.params.tags.join(', ')});
+            
+            if (this.props.params.price) {
+                this.price = this.props.params.price;
+                this.setState({price: this.props.params.price});
+            }
         }
     }
+    
     filters () {
         this.sort_distance = this.refs.sort_distance.sort;
         this.sort_date = this.refs.sort_date.sort;
@@ -113,16 +119,13 @@ export class Search extends Component {
         }
         return ( 
             <div>
-                <Table borderless>
+                <Table style={{width: '70%'}} borderless>
                     <thead>
                         <tr>
                             <th>Επιλογή Κατηγορίας</th>
                             <th>Ταξινόμηση απόστασης:</th>
                             <th>Ταξινόμηση ημερομηνίας:</th>
                             <th>Ταξινόμηση τιμής:</th>
-                            <th>Ημερομηνία από:</th>
-                            <th>Ημερομηνία έως:</th>
-                            <th>Απόσταση:</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -131,16 +134,32 @@ export class Search extends Component {
                             <td><SortDistance ref="sort_distance" default={this.props.params ? this.props.params.sort_distance : null}/></td>
                             <td><SortDate ref="sort_date" default={this.props.params ? this.props.params.sort_date : null}/></td>
                             <td><SortPrice ref="sort_price" default={this.props.params ? this.props.params.sort_price : null}/></td>
+                        </tr>
+                    </tbody>
+                </Table>
+                
+                <Table style={{width: '70%'}}borderless>
+                    <thead>
+                        <tr>
+                            <th>Ημερομηνία από:</th>
+                            <th>Ημερομηνία έως:</th>
+                            <th>Απόσταση:</th>
+                            <th>Μέγιστη τιμή</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
                             <td><Input type="date" id="search_datefrom" name="datefrom" defaultValue={this.props.params ? datefrom : null} /></td>
                             <td><Input type="date" id="search_dateto" name="dateto" defaultValue={this.props.params ? dateto : null} /></td>
                             <td>
-                                <Col sm={5}>
+                                <Col sm={7}>
                                     <InputGroup>
                                         <Input type="text" id="search_geodist" pattern="[0-9]+" name="geodist" onChange={this.handleChange} value={this.state.geodist ? this.state.geodist : ''}/>
                                         <InputGroupAddon addonType="append">km</InputGroupAddon>
                                     </InputGroup>
                                 </Col>
                             </td>
+                            <td><Range range={this.state.price} updateRange={this.updateRange}/></td>
                         </tr>
                         <tr>
                             <td><Button onClick={this.filters}>Εφαρμογή φίλτρων</Button></td>
