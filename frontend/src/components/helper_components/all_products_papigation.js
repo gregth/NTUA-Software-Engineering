@@ -4,9 +4,10 @@
  * and open the template in the editor.
  */
 import TooltipItem from './tooltip';
-import { Table, Pagination, PaginationItem, PaginationLink, Tooltip, Button } from 'reactstrap';
+import { Input, Table, Pagination, PaginationItem, PaginationLink, Tooltip, Button } from 'reactstrap';
 import React, { Component } from "react";
 import ReactDOM from 'react-dom';
+import { browserHistory } from 'react-router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import {receive_from_server} from '../communication/receive';
@@ -23,9 +24,12 @@ export default class ProductsResults extends React.PureComponent {
         this.sortChoose = this.sortChoose.bind(this);
         this.statusChoose = this.statusChoose.bind(this);
         this.countChoose = this.countChoose.bind(this);
+        this.search = this.search.bind(this);
+        this.search_product = this.search_product.bind(this);
         this.state = {
             tooltipOpen: false, currentPage: 0, error: null, success: null, not_found: null, ready: null
         };
+        this._asyncRequest = null;
         this.dataSet = null;    
         this.pagesCount = null;
         this.pageSize = 20;
@@ -34,12 +38,19 @@ export default class ProductsResults extends React.PureComponent {
         this.start = 0;
         this.total = null;
         this.products = null;
+        this.selected_products = [];
         this.request();
     }
-  
+    
+    componentWilldUnmount() {
+        if (this._asyncRequest) {
+            this._asyncRequest.cancel();
+        }
+    }
+    
     createData () {
         this.dataSet = this.products.map(product => (
-            <tr key={product.id} onClick={() => this.props.select(product.id)} className="row_pointer">
+            <tr key={product.id} className="row_pointer">
                 <td>{product.name}</td>
                 <td>{product.category}</td>
                 <td>{product.brand}</td>
@@ -56,11 +67,30 @@ export default class ProductsResults extends React.PureComponent {
                 <td>
                     <button className="search_btn" id="edit_btn" onClick={() => this.props.edit(product.id)}><FontAwesomeIcon icon={faEdit}></FontAwesomeIcon></button>
                     <button className="search_btn" id="delete_btn" onClick={() => this.props.delete(product.id, product.name)}><FontAwesomeIcon icon={faTrashAlt}></FontAwesomeIcon></button>     
-                    <button className="search_btn" id="search_product_btn" onClick={() => this.props.search(product.id)}><FontAwesomeIcon icon={faSearch}></FontAwesomeIcon></button>
+                    <button className="search_btn" id="search_product_btn" onClick={() => this.search_product(product.id)}><FontAwesomeIcon icon={faSearch}></FontAwesomeIcon></button>
                 </td>
+                <td><Input type="checkbox" id={'product'+product.id} onChange={() => this.handleChange(product.id)}></Input></td>
             </tr>
         ));
     } 
+    
+    search_product (id) {
+        browserHistory.push({
+            pathname: '/results',
+            search: '?products=' + id.toString()
+        });
+    }
+    
+    search () {
+        if (this.selected_products.length === 0) {
+            this.setState({noproducts: true});
+            return;
+        }
+        browserHistory.push({
+            pathname: '/results',
+            search: '?products=' + this.selected_products.join('&products=')
+        });
+    }
     
     toggle() {
         this.setState({
@@ -68,11 +98,28 @@ export default class ProductsResults extends React.PureComponent {
         });
     }
     
-    async request () {        
+    handleChange(id) {
+        if (this.selected_products.includes(id)) {
+            var index = this.selected_products.indexOf(id);
+            if (index > -1) {
+                this.selected_products.splice(index, 1);
+            }
+        }
+        else {
+            this.setState({noproducts: false});
+            this.selected_products.push(id);
+        }
+        this.setState({selected_products: this.selected_products});
+        this.setState({ready: true});
+    }
+    
+    async request () {   
+        this.selected_products = [];
         const url = 'http://localhost:3002/products?start=' + this.start + 
                     '&count=' +  this.pageSize + '&sort=' + this.sort +
                     '&status=' + this.status;
-        const answer = await receive_from_server(url);
+        this._asyncRequest = await receive_from_server(url);
+        const answer = this._asyncRequest;
         
         if (answer === 'error') {
             this.setState({error: true});
@@ -112,21 +159,18 @@ export default class ProductsResults extends React.PureComponent {
         this.setState({ready: false});
         this.sort = this.refs.sort.sort;
         this._isMounted = await this.request();
-        this.setState({ready: true});
     }
     
     async statusChoose () {
         this.setState({ready: false});
         this.status = this.refs.status.status;
         this._isMounted = await this.request();
-        this.setState({ready: true});
     }
     
     async countChoose () {
         this.setState({ready: false});
         this.pageSize = this.refs.count.count;
         this._isMounted = await this.request();
-        this.setState({ready: true});
     }
     
     render() {
@@ -146,6 +190,7 @@ export default class ProductsResults extends React.PureComponent {
                             <td><SortDropdown ref="sort" click={this.sortChoose}/></td>
                             <td><StatusDropdown ref="status" click={this.statusChoose}/></td>
                             <td><CountDropdown ref="count" click={this.countChoose}/></td>
+                            <td><Button onClick={this.search}> Αναζήτηση τιμών επιλεγμένων προϊόντων</Button></td>
                         </tr>
                     </tbody>
                 </Table>

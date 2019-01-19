@@ -17,27 +17,11 @@ export class AllProducts extends Component {
     constructor(props) {
         super(props);
         this.id = null;
-        this.select = this.select.bind(this);
         this.state = {products: null, error: null, success: null, not_found: null};
         this.homepage = this.homepage.bind(this);
-        this.search = this.search.bind(this);
         this.edit = this.edit.bind(this);
         this.delete = this.delete.bind(this);
         this.delete_complete = this.delete_complete.bind(this);
-    }
-    
-    componentDidMount () {
-        /*
-        try {
-            var loggedin = Boolean(cookie.load('loggedin'));
-            if (!loggedin) {
-                browserHistory.push('/login');
-            }
-            cookie.save('need_login', true, {path: '/'});
-        }
-        catch(error) {
-            console.log(error);
-        }*/
     }
     
     delete_complete () {
@@ -58,16 +42,6 @@ export class AllProducts extends Component {
     
     delete (id, name) {
         this.refs.delete.toggle_delete(id, name);
-    }
-    
-    search (id) {
-        this.id = id;
-        console.log(this.id);
-    }
-    
-    select (id) {
-        this.id = id;
-        console.log(this.id);
     }
     
     homepage() {

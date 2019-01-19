@@ -1,4 +1,3 @@
-import TooltipItem from './tooltip';
 import { browserHistory } from 'react-router';
 import { Alert, Input, Table, Pagination, PaginationItem, PaginationLink, Tooltip, Button } from 'reactstrap';
 import React, { Component } from "react";
@@ -101,10 +100,12 @@ export default class PapigationShops extends React.PureComponent {
     }
     
     async request () {        
+        this.selected_shops = [];
         const url = 'http://localhost:3002/shops?start=' + this.start + 
                     '&count=' +  this.pageSize + '&sort=' + this.sort +
                     '&status=' + this.status;
-        const answer = await receive_from_server(url);
+        this._asyncRequest = await receive_from_server(url);
+        const answer = this._asyncRequest;
         
         if (answer === 'error') {
             this.setState({error: true});
@@ -117,6 +118,7 @@ export default class PapigationShops extends React.PureComponent {
         else {
             this.setState({not_found: true});
         }
+        
         this._asyncRequest = await answer.json().then((result) => {return result;});
         var result = this._asyncRequest;
         console.log(result);
@@ -131,7 +133,7 @@ export default class PapigationShops extends React.PureComponent {
         this.setState({ready: true});
     }
     
-    async handleClick(e, index) {
+    async handleClick (e, index) {
         this.setState({ready: false});
         e.preventDefault();
         this.start = index*this.pageSize;
@@ -140,28 +142,24 @@ export default class PapigationShops extends React.PureComponent {
         this.setState({
             currentPage: index
         });
-        this.setState({ready: true});
     }
     
     async sortChoose () {
         this.setState({ready: false});
         this.sort = this.refs.sort.sort;
         this._isMounted = await this.request();
-        this.setState({ready: true});
     }
     
     async statusChoose () {
         this.setState({ready: false});
         this.status = this.refs.status.status;
         this._isMounted = await this.request();
-        this.setState({ready: true});
     }
     
     async countChoose () {
         this.setState({ready: false});
         this.pageSize = this.refs.count.count;
         this._isMounted = await this.request();
-        this.setState({ready: true});
     }
 
   render() {

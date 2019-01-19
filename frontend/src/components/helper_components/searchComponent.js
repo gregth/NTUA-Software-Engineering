@@ -138,7 +138,7 @@ export class Search extends Component {
                     </tbody>
                 </Table>
                 
-                <Table style={{width: '70%'}}borderless>
+                <Table style={{width: '70%'}} borderless>
                     <thead>
                         <tr>
                             <th>Ημερομηνία από:</th>

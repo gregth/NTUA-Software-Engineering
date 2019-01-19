@@ -166,7 +166,7 @@ class Product extends React.Component {
     
     toggleModal() {
         this.setState({
-            isOpen: !this.state.not_found
+            not_found: !this.state.not_found
         });
     }
     
@@ -246,14 +246,14 @@ class Product extends React.Component {
                             </Col>
                         </FormGroup>
                         <FormGroup check row>
-                            <Label sm={3} for="dateFrom">Ημερομηνία παρατήρησης:</Label>
+                            <Label sm={8} for="dateFrom">Ημερομηνία παρατήρησης:</Label>
                             <Col sm={2}>
                                 <Input id="dateFrom" type="date" name="dateFrom" defaultValue={date} min={min_date} max={date} required/>
                             </Col>
                         </FormGroup>
                         
                         <FormGroup check row>
-                            <Label sm={3} for="dateTo">Ημερομηνία λήξης τιμής:</Label>
+                            <Label sm={8} for="dateTo">Ημερομηνία λήξης τιμής:</Label>
                             <Col sm={2}>
                                 <Input id="dateTo" type="date" name="dateTo" min={date}/>
                             </Col>

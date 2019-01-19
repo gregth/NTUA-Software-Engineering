@@ -9,12 +9,13 @@ import { Table, Pagination, PaginationItem, PaginationLink, Tooltip, Button } fr
 import React, { Component } from "react";
 import ReactDOM from 'react-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMapMarkedAlt, faWineBottle, faBuilding } from '@fortawesome/free-solid-svg-icons';
+import { faWineBottle, faBuilding } from '@fortawesome/free-solid-svg-icons';
 import {receive_from_server} from '../communication/receive';
 import SortDropdown from '../helper_components/sort_products_shops';
 import StatusDropdown from '../helper_components/status_products_shops';
 import CountDropdown from '../helper_components/count_products_shops';
 import { getLocation } from '../functions/current_location';
+import MapClass from '../helper_components/map_price';
 
 export default class PricesTable extends React.PureComponent {
     constructor(props) {
@@ -24,7 +25,6 @@ export default class PricesTable extends React.PureComponent {
         this.countChoose = this.countChoose.bind(this);
         this.shop_info = this.shop_info.bind(this);
         this.product_info = this.product_info.bind(this);
-        this.show_map = this.show_map.bind(this);
         this.make_url = this.make_url.bind(this);
         this.refresh = this.refresh.bind(this);
         this.state = {
@@ -58,9 +58,7 @@ export default class PricesTable extends React.PureComponent {
                     <button className="search_btn" id="shop_btn" title='Πληροφορίες καταστήματος' onClick={() => this.shop_info(price.shopId)}>
                         <FontAwesomeIcon icon={faBuilding}></FontAwesomeIcon>
                     </button>
-                    <button className="search_btn" id="map_btn" title='Εμφάνιση στον χάρτη' onClick={() => this.show_map(price.productId, price.shopId, price.price)}>
-                        <FontAwesomeIcon icon={faMapMarkedAlt}></FontAwesomeIcon>
-                    </button>
+                    <MapClass product_id={price.productId} shop_id={price.shopId} price={price.price}/>
                 </td>
             </tr>
         ));
@@ -74,10 +72,6 @@ export default class PricesTable extends React.PureComponent {
         //TODO
     }
     
-    show_map (product_id, shop_id, price){
-        //TODO
-    }
-
     async make_url () {
         var url = 'http://localhost:3002/prices?start=' + this.start + 
                     '&count=' +  this.pageSize;
@@ -123,8 +117,13 @@ export default class PricesTable extends React.PureComponent {
                 params.push('products='+ this.props.products[i]);
             }
         }
-        var temp = params.join('&');
-        return url + temp;
+        if (params.length > 0){
+            var temp = params.join('&');
+            return url + '&' + temp;
+        }
+        else{
+            return url;
+        }
     }
     async request () {
         var temp = await this.make_url().then(url => {return url;});

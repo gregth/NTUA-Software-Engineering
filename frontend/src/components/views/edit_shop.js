@@ -66,7 +66,7 @@ export default class EditShop extends Component {
         this.handleChange = this.handleChange.bind(this);
     }
     
-     componentDidMount () {        
+    componentDidMount () {        
         this._asyncRequest = this.request().then(
             details => {
                 this._asyncRequest = null;
