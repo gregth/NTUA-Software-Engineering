@@ -187,8 +187,10 @@ export default class PricesTable extends React.PureComponent {
                     </tbody>
                 </Table>
                 {!this.state.ready
-                ?<div> Δε βρέθηκαν αποτελέσματα. </div>
-                :<React.Fragment>   
+                ?<div> Loading... </div>
+                :<div>
+                {this.dataSet.length > 0
+                ?<React.Fragment>   
                     <Table hover>
                         <thead>
                             <tr>
@@ -236,6 +238,9 @@ export default class PricesTable extends React.PureComponent {
                         </Pagination>
                     </div>
                 </React.Fragment>
+                : <div>Δε βρέθηκαν αποτελέσματα.</div>
+                }
+            </div>
             }
         </div>
     );

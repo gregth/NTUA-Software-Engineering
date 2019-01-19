@@ -185,53 +185,58 @@ export default class PapigationShops extends React.PureComponent {
                 </tbody>
             </Table>
             {!this.state.ready
-            ?<div> Loading </div>
-            :<React.Fragment>   
-                <Table hover>
-                    <thead>
-                        <tr>
-                            <th>Όνομα Καταστήματος</th>
-                            <th>Διεύθυνση</th>
-                            <th>Τηλέφωνο</th>
-                            <th>Χαρακτηριστικά</th>
-                            <th>Κατάσταση</th>
-                            <th/>
-                        </tr>
-                    </thead>
-                    {this.dataSet.map((data, i) => 
-                    <tbody className="data-slice" key={i}>
-                        {data}
-                    </tbody>
+            ?<div> Loading... </div>
+            : <div>
+                {this.dataSet.length >0
+                ?<React.Fragment> 
+                    <Table hover>
+                        <thead>
+                            <tr>
+                                <th>Όνομα Καταστήματος</th>
+                                <th>Διεύθυνση</th>
+                                <th>Τηλέφωνο</th>
+                                <th>Χαρακτηριστικά</th>
+                                <th>Κατάσταση</th>
+                                <th/>
+                            </tr>
+                        </thead>
+                        {this.dataSet.map((data, i) => 
+                        <tbody className="data-slice" key={i}>
+                            {data}
+                        </tbody>
 
-                    )}
-                </Table>
-                <div className="pagination-wrapper">          
-                    <Pagination aria-label="Page navigation example">            
-                        <PaginationItem disabled={currentPage <= 0}>              
-                            <PaginationLink
-                                onClick={e => this.handleClick(e, currentPage - 1)}
-                                previous
-                                href="#"
-                            />              
-                        </PaginationItem>
-                        {[...Array(this.pagesCount)].map((page, i) => 
-                            <PaginationItem active={i === currentPage} key={i}>
-                                <PaginationLink onClick={e => this.handleClick(e, i)} href="#">
-                                    {i + 1}
-                                </PaginationLink>
-                            </PaginationItem>
                         )}
-                        <PaginationItem disabled={currentPage >= this.pagesCount - 1}>
-                            <PaginationLink
-                                onClick={e => this.handleClick(e, currentPage + 1)}
-                                next
-                                href="#"
-                            />
-                        </PaginationItem>
-                    </Pagination>
-                </div>
-                <MapClass shops={this.shops}/>
-            </React.Fragment>
+                    </Table>
+                    <div className="pagination-wrapper">          
+                        <Pagination aria-label="Page navigation example">            
+                            <PaginationItem disabled={currentPage <= 0}>              
+                                <PaginationLink
+                                    onClick={e => this.handleClick(e, currentPage - 1)}
+                                    previous
+                                    href="#"
+                                />              
+                            </PaginationItem>
+                            {[...Array(this.pagesCount)].map((page, i) => 
+                                <PaginationItem active={i === currentPage} key={i}>
+                                    <PaginationLink onClick={e => this.handleClick(e, i)} href="#">
+                                        {i + 1}
+                                    </PaginationLink>
+                                </PaginationItem>
+                            )}
+                            <PaginationItem disabled={currentPage >= this.pagesCount - 1}>
+                                <PaginationLink
+                                    onClick={e => this.handleClick(e, currentPage + 1)}
+                                    next
+                                    href="#"
+                                />
+                            </PaginationItem>
+                        </Pagination>
+                    </div>
+                    <MapClass shops={this.shops}/>
+                </React.Fragment>
+                : <div> Δε βρέθηκαν αποτελέσματα. </div>
+                }
+            </div>
             }
         </div>
     );

@@ -195,8 +195,10 @@ export default class ProductsResults extends React.PureComponent {
                     </tbody>
                 </Table>
                 {!this.state.ready
-                ?<div> Loading </div>
-                :<React.Fragment>   
+                ?<div> Loading... </div>
+                :<div>
+                {this.dataSet.length > 0
+                ? <React.Fragment>   
                     <Table hover>
                         <thead>
                             <tr>
@@ -241,6 +243,9 @@ export default class ProductsResults extends React.PureComponent {
                         </Pagination>
                     </div>
                 </React.Fragment>
+                : <div>Δε βρέθηκαν αποτελέσματα.</div>
+                }
+            </div>
             }
         </div>
     );
