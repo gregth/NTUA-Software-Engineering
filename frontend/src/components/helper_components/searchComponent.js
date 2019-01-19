@@ -24,44 +24,51 @@ export class Search extends Component {
         this.state = {price: 50};
         this.body = null;
         this.geodist = this.geodist.bind(this);
-        
+        this.updateRange = this.updateRange.bind(this); 
     }
     
     geodist () {
         //TODO send request
     }
     
+    updateRange (val) {
+        this.setState({
+            price: val
+        });
+    }
+    
     render() {
         return ( 
             <div>
-                <Table borderless>
+                <Table style={{width: '70%'}} borderless>
                     <thead>
                         <tr>
-                            <th>Ταξινόμηση απόστασης:</th>
-                            <th>Ταξινόμηση ημερομηνίας:</th>
-                            <th>Ταξινόμηση τιμής:</th>
-                            <th>Ημερομηνία από:</th>
-                            <th>Ημερομηνία έως:</th>
-                            <th>Απόσταση από την τωρινή τοποθεσία:</th>
+                            <th style={{width: '18%'}}>Επιλογή Κατηγορίας</th>
+                            <th style={{width: '18%'}}>Ταξινόμηση απόστασης:</th>
+                            <th style={{width: '18%'}}>Ταξινόμηση ημερομηνίας:</th>
+                            <th style={{width: '18%'}}>Ταξινόμηση τιμής:</th>
+                            <th style={{width: '9'}}>Ημερομηνία από:</th>
+                            <th style={{width: '9%'}}>Ημερομηνία έως:</th>
+                            <th style={{width: '10%'}}>Απόσταση:</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
+                            <td><Categories ref='search_category'/></td>
                             <td><SortDropdown ref="sort" click={this.sortChoose}/></td>
                             <td><SortDropdown ref="sort" click={this.sortChoose}/></td>
                             <td><SortDropdown ref="sort" click={this.sortChoose}/></td>
                             <td><Input type="date" id="search_datefrom"/></td>
                             <td><Input type="date" id="search_dateto"/></td>
                             <td>
-                                <Col sm={5}>
                                 <InputGroup>
                                     <Input type="text" id="search_geodist" pattern="[0-9]+" name="geodist" onChange={this.geodist}/>
                                     <InputGroupAddon addonType="append">km</InputGroupAddon>
                                 </InputGroup>
-                                </Col>
                             </td>
                         </tr>
                         <tr>
+                            <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
@@ -73,7 +80,6 @@ export class Search extends Component {
                 </Table>
                 <Form id="searching" onSubmit={this.props.handle}>
                     <FormGroup check inline>
-                        <Categories ref='search_category'/>
                         <InputGroup>
                             <div className="col-sm-12 pull-center well">
                                 <div className="input-group custom-search-form">
@@ -91,18 +97,8 @@ export class Search extends Component {
                     </FormGroup>
 
                     <FormGroup check row>
-                        <Label sm={3} for="edit_product_volume">Απόσταση από την τωρινή τοποθεσία:</Label>
-                        <Col sm={2}>
-                            <InputGroup>
-                                <Input type="text" id="search_geodist" pattern="[0-9]+" name="geodist" onChange={this.geodist}/>
-                                <InputGroupAddon addonType="append">km</InputGroupAddon>
-                            </InputGroup>
-                        </Col>
-                    </FormGroup>
-
-                    <FormGroup check row>
                         <Label> Μέγιστη τιμή </Label>
-                        <Range range={this.props.price} updateRange={this.props.updateRange}/>
+                        <Range range={this.props.price} updateRange={this.updateRange}/>
                     </FormGroup>
                 </Form> 
             </div>

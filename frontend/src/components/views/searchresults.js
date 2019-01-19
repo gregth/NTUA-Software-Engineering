@@ -22,7 +22,7 @@ import ProductsTable from '../helper_components/results_products_table';
 import Search from '../helper_components/searchComponent';
 import NavBarClass from '../helper_components/navbar';
 
-class SearchShopProduct extends Component {
+class Results extends Component {
     constructor(props) {
         super(props);
         this.searches = this.props.location.query;
@@ -59,12 +59,21 @@ class SearchShopProduct extends Component {
             <div>
                 <NavBarClass/>
                 <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά.</Alert>
-                        <Search/>
-                        <div> TODO </div>
+
+                <Search ref="search" price={this.state.price} handle={this.handleSubmit} updateRange={this.updateRange}/>
                 
+                <div>
+                    <ProductsTable ref="results_products" category={this.refs.search.refs.search_category.state.category} max_price={this.state.price} products={this.state.products} onClick={this.request_price}/>
+                    <div >
+                        {this.state.show_map && false
+                            ?<MapClass/>
+                            : null
+                        }
+                    </div>
+                </div>
             </div>
         );
     }
 }
 
-export default SearchShopProduct;
+export default Results;
