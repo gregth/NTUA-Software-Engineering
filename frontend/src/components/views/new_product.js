@@ -1,22 +1,10 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { browserHistory } from 'react-router';
 import cookie from 'react-cookies';
-import { Modal, ModalHeader, ModalBody, ModalFooter, Input, Label, Button, Form, FormGroup, Row, Col, InputGroupAddon, InputGroup } from 'reactstrap';
+import { Modal, ModalHeader, ModalBody, ModalFooter, Input, Label, Button, Form, Container, FormGroup, Row, Col, InputGroupAddon, InputGroup } from 'reactstrap';
 import {Categories} from '../helper_components/categories_menu';
 import {send_to_server} from '../communication/send';
 import NavBarClass from '../helper_components/navbar';
@@ -103,6 +91,10 @@ class newProduct extends React.Component {
         return(
             <div>
             <NavBarClass/>
+            
+            <Container className="newProduct">
+                <h2 align="center">Εισαγωγή Προϊόντος</h2>
+                <hr></hr>
             <Form id="new_product_form" onSubmit={this.handleSubmit}>
                 
                 <FormGroup check row>
@@ -128,35 +120,39 @@ class newProduct extends React.Component {
                 
                 <FormGroup check row>
                     <Label sm={3} for="new_product_category">Κατηγορία:</Label>
-                    <Col sm={1}>
+                    <Col sm={6}>
                         <Categories ref='new_product_category'/>
                     </Col>
                 </FormGroup>
                 
                 <FormGroup check row>
-                    <Label sm={3} for="new_product_tags">Χαρακτηριστικά Προϊόντος:</Label>
-                    <Col sm={3}>
+                    <Label sm={6} for="new_product_tags">Χαρακτηριστικά Προϊόντος:</Label>
+                    <Col sm={6}>
                         <Input type="textarea" name="text" id="new_product_tags" onChange={this.handleChangeTags} value={this.state.tags}/>
                     </Col>
                 </FormGroup>
                 
                 <FormGroup check row>
-                    <Label sm={3} for="new_product_description">Περιγραφή προϊόντος:</Label>
-                    <Col sm={3}>
+                    <Label sm={6} for="new_product_description">Περιγραφή προϊόντος:</Label>
+                    <Col sm={6}>
                         <Input type="textarea" name="text" id="new_product_description" />
                     </Col>
                 </FormGroup>
                 <FormGroup check row>
                     <Label sm={3} for="new_product_volume">Όγκος:</Label>
-                    <Col sm={2}>
+                    <Col sm={3}>
                         <InputGroup>
                             <Input type="text" id="new_product_volume" pattern="[0-9]+" name="new_product_volume" required/>
                             <InputGroupAddon addonType="append">ml</InputGroupAddon>
                         </InputGroup>
                     </Col>
                 </FormGroup>
+                <hr></hr>
+                <div className="text-center">
                 <Button type="submit" id="button1">Προσθήκη</Button>
+                </div>
             </Form>
+            </Container>
             <Button type="button" id="button2" onClick={this.homepage}>Ακύρωση</Button>
             
             <Modal isOpen={this.state.error} toggle={this.toggleModal}>
