@@ -157,6 +157,7 @@ class Shop extends React.Component {
                             <Input id="new_shop_name" name="name" type="text" required/>
                         </Col>
                     </FormGroup>
+                    <div className="row mt-3"></div>
                     <FormGroup check>
                         <Label check>
                         <Col sm={9}>
@@ -166,7 +167,6 @@ class Shop extends React.Component {
                         </Label>
                        
                     </FormGroup>
-                    <div> Ή </div>
                     <FormGroup check row>
                         <Label sm={3} for="address">Διεύθυνση:</Label>
                         <Col sm={3}>
@@ -205,9 +205,10 @@ class Shop extends React.Component {
                     <hr></hr>
                     <div className="text-center">
                     <Button type="submit" id="button1">Προσθήκη</Button>{'  '}
+                    <Button type="button" id="button2" onClick={this.search}>Ακύρωση</Button>
                     </div>
                 </Form>
-                <Button type="button" id="button2" onClick={this.search}>Ακύρωση</Button>
+                
                 </Container>
                 <Modal isOpen={this.state.error} toggle={this.toggleModal}>
                     <ModalBody>H προσθήκη δεν ήταν επιτυχής.</ModalBody>
