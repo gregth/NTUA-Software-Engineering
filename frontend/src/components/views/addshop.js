@@ -7,7 +7,7 @@ import { getLocation } from '../functions/current_location';
 import { send_to_server } from '../communication/send';
 import cookie from 'react-cookies';
 import { Modal, ModalHeader, ModalBody, ModalFooter, Input, Label, 
-        Button, Form, FormGroup, Row, Container, Col, InputGroupAddon, InputGroup, FormFeedback, Alert } from 'reactstrap';
+        Button, Form, FormGroup, Row, FormText, Container, Col, InputGroupAddon, InputGroup, FormFeedback, Alert } from 'reactstrap';
 import { address_to_coords } from '../functions/address_to_coordinates';
 import {Settings} from '../helper_components/dropdown_settings';
 import NavBarClass from '../helper_components/navbar';
@@ -207,7 +207,8 @@ class Shop extends React.Component {
                     </FormGroup>
 
                     <FormGroup check row>
-                        <Label sm={6} for="new_shop_tags">Χαρακτηριστικά Καταστήματος:</Label>
+                        <Label sm={6} for="new_shop_tags">Χαρακτηριστικά Καταστήματος:
+                        <FormText>Διαχωρισμός χαρακτηριστικών με κόμμα (,)</FormText></Label>
                         <Col sm={8}>
                             <Input type="textarea" name="text" id="new_shop_tags" required/>
                         </Col>

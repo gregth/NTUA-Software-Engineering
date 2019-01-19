@@ -15,6 +15,7 @@ require('./stylesheets/addshop.scss');
 require('./stylesheets/addprice.scss');
 require('./stylesheets/new_product.scss');
 require('./stylesheets/editshop.scss');
+require('./stylesheets/editproduct.scss');
 
 ReactDom.render(
   <Router history={browserHistory} routes={routes} />,

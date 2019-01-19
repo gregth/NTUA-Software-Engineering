@@ -1,15 +1,9 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 import React, { Component } from "react";
 import { browserHistory } from 'react-router';
 import MapClass from '../helper_components/map';
 import {Categories} from '../helper_components/categories_menu';
 import { Input, InputGroupAddon, Button, Form, InputGroup, 
-        Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Label, Container, Row,  Col, Table, Alert } from 'reactstrap';
+        Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Label, Container, FormText, Row,  Col, Table, Alert } from 'reactstrap';
 import {send_to_server} from '../communication/send';
 import {Settings} from '../helper_components/dropdown_settings';
 import {receive_from_server} from '../communication/receive';
@@ -203,6 +197,9 @@ export default class EditProduct extends Component {
             {this.state.details === null
             ?<div> Loading </div>
             : <div>
+                <Container className="EditProduct">
+                <h2 align="center">Επεξεργασία Προϊόντος</h2>
+                <hr></hr>
                 <Form id="edit_product_form" onSubmit={this.handleSubmit}>
                     <FormGroup check row>
                         <Label sm={3} for="edit_product_barcode" className="mr-sm-2">Barcode Προϊόντος:</Label>
@@ -227,36 +224,43 @@ export default class EditProduct extends Component {
 
                     <FormGroup check row>
                         <Label sm={3} for="edit_product_category">Κατηγορία:</Label>
-                        <Col sm={1}>
+                        <Col sm={8}>
                             <Categories ref='edit_product_category' default={this.state.details.category}/>
                         </Col>
                     </FormGroup>
-
+                    <div className="row mt-3"></div>
                     <FormGroup check row>
-                        <Label sm={3} for="edit_product_tags">Χαρακτηριστικά Προϊόντος:</Label>
-                        <Col sm={3}>
+                        <Label sm={6} for="edit_product_tags">Χαρακτηριστικά Προϊόντος:
+                        <FormText>Διαχωρισμός χαρακτηριστικών με κόμμα (,)</FormText>
+                        </Label>
+                        <Col sm={8}>
                             <Input type="textarea" name="tags" id="edit_product_tags" onChange={this.handleChange} value={this.state.tags}/>
                         </Col>
                     </FormGroup>
 
                     <FormGroup check row>
-                        <Label sm={3} for="edit_product_description">Περιγραφή προϊόντος:</Label>
-                        <Col sm={3}>
+                        <Label sm={6} for="edit_product_description">Περιγραφή προϊόντος:</Label>
+                        <Col sm={8}>
                             <Input type="textarea" name="description" id="edit_product_description" onChange={this.handleChange} value={this.state.description}/>
                         </Col>
                     </FormGroup>
                     <FormGroup check row>
                         <Label sm={3} for="edit_product_volume">Όγκος:</Label>
-                        <Col sm={2}>
+                        <Col sm={3}>
                             <InputGroup>
                                 <Input type="text" id="edit_product_volume" pattern="[0-9]+" value={this.state.volume} onChange={this.handleChange} name="volume"/>
                                 <InputGroupAddon addonType="append">ml</InputGroupAddon>
                             </InputGroup>
                         </Col>
                     </FormGroup>
-                    <Button type="submit" id="button1">Αποθήκευση</Button>
+                    <hr></hr>
+                    <div className="text-center">
+                    <Button type="submit" id="button1">Αποθήκευση</Button>{'  '}
+                    <Button type="button" onClick={browserHistory.goBack}>Ακύρωση</Button>
+                    </div>
                 </Form>
-                <Button type="button" onClick={browserHistory.goBack}>Ακύρωση</Button>
+                </Container>
+                
             </div>
             }
             
