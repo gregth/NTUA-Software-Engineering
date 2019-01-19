@@ -192,7 +192,7 @@ class Shop extends React.Component {
                     <FormGroup check row>
                         <Label sm={6} for="new_shop_tags">Χαρακτηριστικά Καταστήματος:</Label>
                         <Col sm={8}>
-                            <Input type="textarea" name="text" id="new_shop_tags"/>
+                            <Input type="textarea" name="text" id="new_shop_tags" required/>
                         </Col>
                     </FormGroup>
                     
@@ -204,13 +204,13 @@ class Shop extends React.Component {
                     </FormGroup>
                     <hr></hr>
                     <div className="text-center">
-                    <Button type="submit" id="button1" >Προσθήκη</Button>{'  '}
-                    <Button type="button" id="button2" onClick={this.search}>Ακύρωση</Button>
+                    <Button type="submit" id="button1">Προσθήκη</Button>{'  '}
                     </div>
                 </Form>
+                <Button type="button" id="button2" onClick={this.search}>Ακύρωση</Button>
                 </Container>
                 <Modal isOpen={this.state.error} toggle={this.toggleModal}>
-                    <ModalBody>Το αίτημα προσθήκης δεν ήταν επιτυχές.</ModalBody>
+                    <ModalBody>H προσθήκη δεν ήταν επιτυχής.</ModalBody>
                     <ModalFooter>
                         <Button color="primary" onClick={this.toggleModal}>Προσπάθεια ξανά</Button>{' '}
                         <Button color="secondary" onClick={this.search}>Αρχική σελίδα</Button>
@@ -218,7 +218,7 @@ class Shop extends React.Component {
                 </Modal>
 
                 <Modal isOpen={this.state.success}>
-                    <ModalBody>Το αίτημα προσθήκης ήταν επιτυχές.</ModalBody>
+                    <ModalBody>Η προσθήκη ήταν επιτυχής.</ModalBody>
                     <ModalFooter>
                         <Button color="secondary" onClick={this.search}>Αρχική σελίδα</Button>
                     </ModalFooter>
