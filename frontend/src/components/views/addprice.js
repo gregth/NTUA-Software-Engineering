@@ -12,7 +12,7 @@ import Geocode from 'react-geocode';
 import cookie from 'react-cookies';
 import {Settings} from '../helper_components/dropdown_settings';
 import { Navbar, Nav, NavItem, NavLink, Modal, ModalHeader, ModalBody, 
-        ModalFooter, Input, Label, Button, Form, FormGroup, Row, Col, 
+        ModalFooter, Input, Label, Button, Form, FormGroup, Container, Row, Col, 
         InputGroupAddon, InputGroup, FormFeedback, NavbarBrand, Image, Alert } from 'reactstrap';
 import Shops from '../helper_components/nearby_shops';
 import { address_to_coords } from '../functions/address_to_coordinates';
@@ -121,7 +121,7 @@ class Product extends React.Component {
             }
         }
         
-        var url = 'http://localhost:3002/shops?lat=' + lat + '&lng=' + lng;
+        var url = 'http://localhost:3002/shops?geoDist=0.1&lat=' + lat + '&lng=' + lng;
         var answer = await receive_from_server(url);
         if (answer === 'error') {
             this.setState({error: true});
@@ -205,9 +205,11 @@ class Product extends React.Component {
         return(
             <div>
                 <NavBarClass/>
-                
                 <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά.</Alert>
                 
+                <Container className="Product">
+                <h2 align="center">Εισαγωγή Τιμής</h2>
+                <hr></hr>
                 <Form id="addproduct" onSubmit={this.handleSubmit}>
                         <FormGroup check row>
                             <Label sm={3} for="addprice_barcode" className="mr-sm-2">Barcode Προϊόντος:</Label>
@@ -215,20 +217,17 @@ class Product extends React.Component {
                                 <Input id="addprice_barcode" name="barcode" pattern="[0-9]{1,128}" type="text" required/>
                             </Col>
                         </FormGroup>
-                        
-                        <FormGroup check row>
-                            <Col sm={4}>
-                                <Label sm={3} for="addprice_location"> Τωρινή τοποθεσία</Label>
-                                <Input type="checkbox" name="location" id="addprice_location" onChange={() => this.currentLocation()}></Input>
+                        <div className="row mt-3"></div>
+                        <FormGroup check>
+                        <Label check>
+                            <Col sm={9}>   
+                                <Input type="checkbox" name="location" id="addprice_location" onChange={() => this.currentLocation()}/>
                             </Col>
-                        </FormGroup>
-                        
+                                Τωρινή Τοποθεσία
+                        </Label>
+                        </FormGroup>    
                         <FormGroup check row>
-                            <Label sm={3}>Ή</Label>
-                        </FormGroup>
-                        
-                        <FormGroup check row>
-                            <Label sm={3} for="addprice_name">Όνομα Καταστήματος:</Label>
+                            <Label sm={8} for="addprice_name">Όνομα Καταστήματος:</Label>
                             <Col sm={3}>
                                 <Input id="addprice_name" name="name" type="text" disabled={this.flag}/>
                             </Col>
@@ -242,18 +241,28 @@ class Product extends React.Component {
                             </Col>
                         </FormGroup>
                         <br/>
-                        <FormGroup check inline>
-                            <Col sm={2}>
-                                <Label for="addprice_number">Αριθμός:</Label>
-                                <Input id="addprice_number" invalid={this.state.error_address} name="number" type="text" disabled={this.flag} required/>
-                            </Col>
-                            
-                            <Col sm={2}>
+                      
+                       
+                        <Row form>
+                             <Col md={2}>
+                                <FormGroup>
+                                    <Label for="addprice_number">Αριθμός:</Label>
+                
+                                    <Input id="addprice_number" invalid={this.state.error_address} name="number" type="text" disabled={this.flag} required/>
+                                </FormGroup>
+                      
+                                </Col>
+                                
+                                <Col md={2}>
+                                <FormGroup>
                                 <Label for="addprice_postal">ΤΚ:</Label>
+                            
                                 <Input id="addprice_postal" invalid={this.state.error_address} name="postal" pattern="[0-9]+" type="text" disabled={this.flag} required/>
-                            </Col>
-                        </FormGroup>
-                        
+                                </FormGroup>
+                                </Col>
+                        </Row>
+                     
+
                         <FormGroup check row>
                             <Label sm={3} for="addprice_price">Τιμή:</Label>
                             <Col sm={1}>
@@ -276,10 +285,12 @@ class Product extends React.Component {
                                 <Input id="dateTo" type="date" name="dateTo" min={date}/>
                             </Col>
                         </FormGroup>
-                        
+                        <hr></hr>
+                        <div className="text-center">
                         <Button className="btn" type="submit" id="button1">Προσθήκη</Button>
+                        </div>
                 </Form>
-                
+                </Container>
                 <Modal isOpen={this.state.not_found} toggle={this.toggleModal}>
                     <ModalBody> {this.state.message}</ModalBody>
                     <ModalFooter>

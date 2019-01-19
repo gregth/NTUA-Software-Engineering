@@ -12,6 +12,7 @@ require('./stylesheets/search.scss');
 require('./stylesheets/bootstrap.scss');
 require('./stylesheets/login.scss');
 require('./stylesheets/addshop.scss');
+require('./stylesheets/addprice.scss');
 
 ReactDom.render(
   <Router history={browserHistory} routes={routes} />,
