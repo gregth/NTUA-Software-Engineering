@@ -34,6 +34,7 @@ export default class PapigationShops extends React.PureComponent {
         this.handleChange = this.handleChange.bind(this);
         this.search = this.search.bind(this);
         this.search_shop = this.search_shop.bind(this);
+        this._asyncRequest = null;
         this.state = {
             tooltipOpen: false, currentPage: 0, error: null, success: null, not_found: null, ready: null, selected_shops: [], noshops: false
         };
@@ -48,7 +49,13 @@ export default class PapigationShops extends React.PureComponent {
         this.selected_shops = [];
         this.request();
     }
-  
+    
+    componentWilldUnmount() {
+        if (this._asyncRequest) {
+            this._asyncRequest.cancel();
+        }
+    }
+    
     createData () {
         this.dataSet = this.shops.map(shop => (
         <tr key={shop.id} className="row_pointer">
@@ -78,6 +85,7 @@ export default class PapigationShops extends React.PureComponent {
             search: '?shops=' + id.toString()
         });
     }
+    
     search () {
         if (this.selected_shops.length === 0) {
             this.setState({noshops: true});
@@ -121,7 +129,8 @@ export default class PapigationShops extends React.PureComponent {
         else {
             this.setState({not_found: true});
         }
-        var result = await answer.json().then((result) => {return result;});
+        this._asyncRequest = await answer.json().then((result) => {return result;});
+        var result = this._asyncRequest;
         console.log(result);
         if (this.start !== result.start || parseInt(this.pageSize) !== result.count) {
             this.setState({not_found: true, success: false});

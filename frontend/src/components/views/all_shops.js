@@ -24,9 +24,7 @@ import NavBarClass from '../helper_components/navbar';
 export class AllShops extends Component {
     constructor(props) {
         super(props);
-        this.id = null;
         this.select = this.select.bind(this);
-        this.request = this.request.bind(this);
         this.state = {shops: null, error: null, success: null, not_found: null};
         this.homepage = this.homepage.bind(this);
         this.search = this.search.bind(this);
@@ -35,55 +33,6 @@ export class AllShops extends Component {
         this.delete_complete = this.delete_complete.bind(this);
         this.name = null;
         this.id = null;
-    }
-    
-    componentDidMount () {
-        /*
-        try {
-            var loggedin = Boolean(cookie.load('loggedin'));
-            if (!loggedin) {
-                browserHistory.push('/login');
-            }
-            cookie.save('need_login', true, {path: '/'});
-        }
-        catch(error) {
-            console.log(error);
-        }
-        
-        this._asyncRequest = this.request().then(
-            shops => {
-                this._asyncRequest = null;
-                this.setState({shops});
-            }
-        );*/
-    }
-    
-    componentWilldUnmount() {
-        if (this._asyncRequest) {
-            this._asyncRequest.cancel();
-        }
-    }
-
-    async request() {
-        const url = 'http://localhost:3002/shops';
-        const answer = await receive_from_server(url);
-        
-        if (answer === 'error') {
-            this.setState({error: true});
-            return;
-        }
-        
-        if (answer.status === 200) {
-            this.setState({success: true});
-        }
-        else {
-            this.setState({not_found: true});
-        }
-        
-        var shops = await answer.json().then((result) => {return result.shops;});
-        console.log(shops);
-        this.setState({shops: shops});
-        return shops;
     }
     
     edit (id) {
