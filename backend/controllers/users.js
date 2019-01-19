@@ -10,8 +10,8 @@ module.exports = class UserController extends BaseController {
             return {
                 id: +item.id,
                 username: item.username,
-                first_name: item.first_name,
-                last_name: item.last_name,
+                firstName: item.firstName,
+                lastName: item.lastName,
                 email: item.email,
                 telephone: item.telephone,
                 birthdate: item.birthdate
@@ -24,7 +24,8 @@ module.exports = class UserController extends BaseController {
     }
 
     async create(params) {
-        params.password_hash = params.password + 'hashed'
+        // TODO: throw error if password is missing
+        params.passwordHash = params.password + 'hashed'
 
         return super.create(params)
     }

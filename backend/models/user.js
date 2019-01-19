@@ -8,13 +8,13 @@ module.exports = class User extends BaseModel {
                 allowed_query_keys: [
                     'id',
                     'username',
-                    'password_hash'
+                    'passwordHash'
                 ],
                 selectable_fields: [
                     'id',
                     'username',
-                    'first_name',
-                    'last_name',
+                    'firstName',
+                    'lastName',
                     'email',
                     'telephone',
                     'birthdate'
@@ -23,11 +23,11 @@ module.exports = class User extends BaseModel {
             insert: {
                 required_fields: [
                     'username',
-                    'first_name',
-                    'last_name',
+                    'firstName',
+                    'lastName',
                     'email',
                     'telephone',
-                    'password_hash',
+                    'passwordHash',
                     'birthdate'
                 ],
                 optional_fields: []

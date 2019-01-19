@@ -84,7 +84,7 @@ export default class PapigationShops extends React.PureComponent {
             return;
         }
         browserHistory.push({
-            pathname: '/search_shop',
+            pathname: '/results',
             search: '?shops=' + this.selected_shops.join('&shops=')
         });
     }

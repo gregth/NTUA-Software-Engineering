@@ -16,7 +16,8 @@ module.exports = class Shop extends BaseModel {
                     'address',
                     'lng',
                     'lat',
-                    'withdrawn'
+                    'withdrawn',
+                    'telephone',
                 ]
             },
             insert: {
@@ -26,7 +27,7 @@ module.exports = class Shop extends BaseModel {
                     'lng',
                     'lat'
                 ],
-		optional_fields: []
+		optional_fields: ['telephone']
             },
             update: {
                 updatable_fields: [
@@ -34,7 +35,8 @@ module.exports = class Shop extends BaseModel {
                     'address',
                     'lng',
                     'lat',
-                    'withdrawn'
+                    'withdrawn',
+                    'telephone'
                 ],
                 allowed_query_keys: ['id']
             },
