@@ -1,8 +1,3 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -236,7 +231,9 @@ class Register extends React.Component {
                         </Col>
                     </FormGroup>
                     <hr></hr>
-                    <Button type="submit">Εγγραφή</Button>
+                    <div className="text-center">
+                        <Button className="btn" type="submit">Εγγραφή</Button>
+                    </div>
                 </Form>
               </Container>
             </div>
