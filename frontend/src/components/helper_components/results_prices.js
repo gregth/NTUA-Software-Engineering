@@ -7,6 +7,7 @@
 import { Table, Pagination, PaginationItem, PaginationLink, Tooltip, Button } from 'reactstrap';
 import React, { Component } from "react";
 import ReactDOM from 'react-dom';
+import { browserHistory } from 'react-router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWineBottle, faBuilding } from '@fortawesome/free-solid-svg-icons';
 import {receive_from_server} from '../communication/receive';
@@ -136,11 +137,11 @@ export default class PricesTable extends React.PureComponent {
             this.setState({not_found: true, success: false});
             return;
         }
-        /*this.total = result.total;
-        this.prices = result.prices;*/
-            this.total = result.prices.length;
-            this.prices = result.prices;
-            console.log(this.prices);
+        this.total = result.total;
+        this.prices = result.prices;
+            /*this.total = result.prices.length;
+            this.prices = result.prices;*/
+        console.log(this.prices);
         this.pagesCount = Math.ceil(this.total / this.pageSize);
             
         this.createData();

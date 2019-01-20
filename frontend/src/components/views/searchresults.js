@@ -29,6 +29,8 @@ class Results extends Component {
                         results: false, success: null, error: null, not_found: null};
         }
         this.handleSubmit = this.handleSubmit.bind(this);
+        
+        this.homepage = this.homepage.bind(this);
         this._isMounted = null;
         
     }
@@ -53,12 +55,18 @@ class Results extends Component {
         this.refs.result.refresh();
     }
     
+    homepage() {
+        browserHistory.push('/');
+    }
+    
     render() {
         return (
             <div>
                 <NavBarClass/>
                 <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά.</Alert>
-
+                
+                <Button onClick={this.homepage}>Νέα αναζήτηση</Button>
+                
                 <Search ref="search" params={this.state.search} handle={this.handleSubmit}/>
 
                 <PricesTable ref="result" params={this.state.search} shops={this.state.shops} products={this.state.products}/>

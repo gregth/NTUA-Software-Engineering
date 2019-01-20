@@ -177,11 +177,6 @@ export class Search extends Component {
                         </InputGroup>
                         <FormText>Διαχωρισμός χαρακτηριστικών με κόμμα (,)</FormText>
                     </FormGroup>
-
-                    <FormGroup check row>
-                        <Label> Μέγιστη τιμή </Label>
-                        <Range range={this.state.price} updateRange={this.updateRange}/>
-                    </FormGroup>
                 </Form> 
             </div>
         );

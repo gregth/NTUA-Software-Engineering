@@ -12,9 +12,16 @@ class Login extends React.Component {
     
     constructor(props) {
         super(props);
-        this.state = {message: null, isOpen: false, show: true, success: null, error: null, not_found: null};
+        this.state = {message: null, isOpen: false, show: true, success: null, error: null, not_found: null, error_message: null};
         this.handleSubmit = this.handleSubmit.bind(this);
         this.showPassword = this.showPassword.bind(this);
+        this._isMounted = null;
+    }
+    
+    componentWilldUnmount() {
+        if (this._isMounted) {
+            this._isMounted.cancel();
+        }
     }
     
     async handleSubmit (event) {
@@ -31,34 +38,36 @@ class Login extends React.Component {
         
         console.log(body);
         const url = 'http://localhost:3002/login';
-        const answer = await send_to_server(url, body);
+        this._isMounted = await send_to_server(url, body);
+        const answer = this._isMounted;
         
-        if (answer === 'error') {
-            this.setState({error: true});
-            return;
+        try {
+            if (answer.status === 200) {
+                this.setState({success: true});
+            }
+            else if (answer.status === 404) {
+                this.setState({message: 'Error 404 - Το αίτημα δεν ήταν επιτυχές', not_found: true});
+                return;
+            }
+            else if (answer.status === 401) {
+                this.setState({message: 'Error 401 - Λάθος στοιχεία χρήστη', not_found: true});
+                return;
+            }
+            else if (answer.status === 403) {
+                this.setState({message: 'Error 403 - Απαιτείται σύνδεση', not_found: true});
+                return;
+            }
+            else if (answer.status === 400) {
+                this.setState({message: 'Error 400 - Μη έγκυρες παράμετροι αιτήματος.', not_found: true});
+                return;
+            }
+            else {
+                this.setState({message: 'Error ' + answer.status.toString() + ' - Πρόβλημα με την ολοκλήρωση του αιτήματος.', not_found: true});
+                return;
+            }
         }
-        
-        if (answer.status === 200) {
-            this.setState({success: true});
-        }
-        else if (answer.status === 404) {
-            this.setState({message: 'Error 404 - Το αίτημα δεν ήταν επιτυχές', not_found: true});
-            return;
-        }
-        else if (answer.status === 401) {
-            this.setState({message: 'Error 401 - Λάθος στοιχεία χρήστη', not_found: true});
-            return;
-        }
-        else if (answer.status === 403) {
-            this.setState({message: 'Error 403 - Απαιτείται σύνδεση', not_found: true});
-            return;
-        }
-        else if (answer.status === 400) {
-            this.setState({message: 'Error 400 - Μη έγκυρες παράμετροι αιτήματος.', not_found: true});
-            return;
-        }
-        else {
-            this.setState({message: 'Error ' + answer.status.toString() + ' - Πρόβλημα με την ολοκλήρωση του αιτήματος.', not_found: true});
+        catch (error) {
+            this.setState({error: true, error_message: error});
             return;
         }
         
@@ -89,7 +98,7 @@ class Login extends React.Component {
             <div>
                 <NavBarClass/>
                 
-                <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά.</Alert>
+                <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα. Δοκιμάστε ξανά. {this.state.error_message}</Alert>
                 <Alert color="danger" isOpen={this.state.not_found===true}>{this.state.message}</Alert>
                 
                 <Container className="Login">
