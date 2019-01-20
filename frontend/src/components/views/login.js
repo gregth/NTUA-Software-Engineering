@@ -130,7 +130,9 @@ class Login extends React.Component {
                                 </Col>
                         </FormGroup>
                         <hr></hr>
-                        <Button type="submit">Σύνδεση</Button>
+                        <div className="text-center">
+                            <Button className="btn" type="submit">Σύνδεση</Button>
+                        </div>
                    </Form>
                </Container>
            </div>
