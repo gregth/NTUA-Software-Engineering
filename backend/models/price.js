@@ -15,8 +15,10 @@ module.exports = class Price extends BaseModel {
                 selectable_fields: [
                     'id',
                     'price',
-                    'shopId',
+                    'productName',
                     'productId',
+                    'shopId',
+                    'shopName',
                     'dateFrom',
                     'dateTo'
                 ]
@@ -29,16 +31,14 @@ module.exports = class Price extends BaseModel {
                     'dateFrom',
                     'dateTo'
                 ],
-		optional_fields: []
+                optional_fields: []
             },
             update: {
-                updatable_fields: [
-                    'price',
-                ],
-                allowed_query_keys: ['id']
+                updatable_fields: [],
+                allowed_query_keys: []
             },
             delete: {
-                allowed_query_keys: ['id']
+                allowed_query_keys: []
             }
         }
     }
