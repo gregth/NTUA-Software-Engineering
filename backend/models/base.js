@@ -10,6 +10,11 @@ function objectToQueryFields(fields) {
             if (fields[key].type === 'LIKE') {
                 return key + ' LIKE ?'
             }
+            if (fields[key].type === 'BETWEEN_DATE') {
+                str = key + ' BETWEEN CAST(\'' + fields[key].lower + '\' AS DATE)' +
+                    ' AND CAST(\'' + fields[key].upper + '\' AS DATE) '
+                return str
+            }
 
             throw new Error(`Invalid condition: ${JSON.stringify(fields[key])}`)
         }
