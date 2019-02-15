@@ -1,7 +1,7 @@
 const BaseController = require('./base')
 const model = require('../models/price')
 const dateformat = require('dateformat');
-
+const {MalformedInput} = require('../errors')
 
 module.exports = class PricesController extends BaseController {
     constructor(dbConnection) {
@@ -24,16 +24,20 @@ module.exports = class PricesController extends BaseController {
         }
     }
 
-    async list({start = 0, count = 20, geoDist, geoLng, geoLat, dateFrom, dateTo, shops, products, tags, sort = 'price|ASC'}) {
-        const order = [{
-            field_name: sort.split('|')[0],
-            order: sort.split('|')[1]
-        }]
+    async list(params) {
+        //{start = 0, count = 20, geoDist, geoLng, geoLat, dateFrom, dateTo, shops, products, tags, sort = 'price|ASC'}) {
+        const conditions = {}
 
-        console.log(this.model)
-        const list = await this.model.list(null, order)
+        if (!params.dateFrom && !params.dateTo) {
+            // Case where bpth dates are missing, acceptable
+            conditions.dateFrom = params.date = (new Date()).toISOString().split('T')[0]
+            conditions.dateTo = conditions.dateFrom
+        } else if (!params.dateFrom || !params.dateTo) {
+            // One only missing, unacceptable
+            throw new MalformedInput('Only single date parameter provided!')
+        }
 
-        return {prices: list}
+        return super.list()
     }
 
     async create(params) {
