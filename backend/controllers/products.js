@@ -50,10 +50,17 @@ module.exports = class ProductsController extends BaseController {
         if (params.sort) {
             sort = params.sort
         }
-        const order = [{
-            field_name: sort.split('|')[0],
-            order: sort.split('|')[1]
-        }]
+        let field_name = sort.split('|')[0]
+        let order = sort.split('|')[1]
+        let allowed_field_names = ['id', 'name']
+        let allowed_order= ['ASC', 'DESC']
+        if (!(allowed_field_names.includes(field_name) && 
+                allowed_order.includes(order))) {
+            field_name = 'id',
+            order = 'DESC'
+        }
+        const order_by = [{field_name, order}]
+        console.log(order_by)
 
         let start = 0
         let count = 20
@@ -64,7 +71,7 @@ module.exports = class ProductsController extends BaseController {
             count = parseInt(count, 20)
         }
 
-        return super.list(conditions, order, start, count)
+        return super.list(conditions, order_by, start, count)
     }
 
     async read(id) {
