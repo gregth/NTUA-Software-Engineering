@@ -108,8 +108,11 @@ module.exports = class BaseModel {
 
         if (orderBy && orderBy.length != 0){
             let order_properties = [];
+            let mappings = this.rules.select.ambiguous_fields_mappings
             orderBy.forEach( order_field => {
-                order_properties.push(`${order_field.field_name}  ${order_field.order}`);
+                if (mappings && mappings[order_field.field_name]) {
+                    order_properties.push(`${mappings[order_field.field_name]}  ${order_field.order}`);
+                }
             });
             query += ` ORDER BY ` + order_properties.join(", ");
         }

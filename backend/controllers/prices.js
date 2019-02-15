@@ -68,7 +68,9 @@ module.exports = class PricesController extends BaseController {
         if (params.products) {
             conditions.productId = params.products.split(',')
         }
-        return super.list(conditions, [], 0, 20, having)
+
+        
+        return super.list(conditions, params, having)
     }
 
     async create(params) {
