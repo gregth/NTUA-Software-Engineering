@@ -61,6 +61,13 @@ module.exports = class PricesController extends BaseController {
                 radius: params.geoDist
             }
         }
+
+        if (params.shops) {
+            conditions.shopId = params.shops.split(',')
+        }
+        if (params.products) {
+            conditions.productId = params.products.split(',')
+        }
         return super.list(conditions, [], 0, 20, having)
     }
 
