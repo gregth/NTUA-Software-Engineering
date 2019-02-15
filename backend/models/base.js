@@ -77,7 +77,7 @@ module.exports = class BaseModel {
                 if (!this.rules.select.allowed_query_keys.includes(condition)) {
                     throw new Error(`Not allowed to query ${condition}`)
                 }
-                if (mappings[condition]) {
+                if (mappings && mappings[condition]) {
                     conditions[mappings[condition]] = conditions[condition]
                     delete conditions[condition]
                 }
