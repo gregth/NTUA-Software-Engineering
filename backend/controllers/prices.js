@@ -11,7 +11,7 @@ module.exports = class PricesController extends BaseController {
             return {
                 id: +item.id,
                 price: +item.price,
-                date: dateformat(item.dateFrom, 'yyyy-mm-dd'),
+                date: dateformat(item.date, 'yyyy-mm-dd'),
                 productName: item.productName,
                 productId: item.productId,
                 productTags: [],

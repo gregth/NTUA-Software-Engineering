@@ -61,14 +61,13 @@ CREATE TABLE `prices` (
   `price` float NOT NULL,
   `shopId` int(11) NOT NULL,
   `productId` int(11) NOT NULL,
-  `dateFrom` date NOT NULL,
-  `dateTo` date NOT NULL,
+  `date` date NOT NULL,
   PRIMARY KEY (`id`),
   KEY `price_shop_id_fk` (`shopId`),
   KEY `price_product_id_fk` (`productId`),
   CONSTRAINT `price_product_id_fk` FOREIGN KEY (`productId`) REFERENCES `products` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `price_shop_id_fk` FOREIGN KEY (`shopId`) REFERENCES `shops` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -172,4 +171,4 @@ CREATE TABLE `users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-02-15  1:28:12
+-- Dump completed on 2019-02-15  4:51:28

@@ -9,14 +9,12 @@ module.exports = class Price extends BaseModel {
                     'id',
                     'productId',
                     'shopId',
-                    'dateFrom',
-                    'dateTo'
+                    'date',
                 ],
                 selectable_fields: [
                     'prices.id',
                     'price',
-                    'dateFrom',
-                    'dateTo',
+                    'date',
                     'shopId',
                     'shops.name AS shopName',
                     'shops.address',
@@ -41,8 +39,7 @@ module.exports = class Price extends BaseModel {
                     'price',
                     'shopId',
                     'productId',
-                    'dateFrom',
-                    'dateTo'
+                    'date',
                 ],
                 optional_fields: []
             },
