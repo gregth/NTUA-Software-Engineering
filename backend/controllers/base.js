@@ -57,9 +57,32 @@ module.exports = class BaseController {
         return required_params
     }
 
-    async list(conditions={}, order=[], start=0, count=20, having) {
+    async list(conditions={}, params, having) {
+        let sort = 'id|DESC'
+        if (params.sort) {
+            sort = params.sort
+        }
+        let field_name = sort.split('|')[0]
+        let order = sort.split('|')[1]
+        let allowed_field_names = ['id', 'name']
+        let allowed_order= ['ASC', 'DESC']
+        if (!(allowed_field_names.includes(field_name) && 
+                allowed_order.includes(order))) {
+            field_name = 'id',
+            order = 'DESC'
+        }
+        const order_by = [{field_name, order}]
 
-        const list = await this.model.list(conditions, order, having)
+        let start = 0
+        let count = 20
+        if (start) {
+            start = parseInt(start, 10)
+        }
+        if (count) {
+            count = parseInt(count, 20)
+        }
+
+        const list = await this.model.list(conditions, order_by, having)
         const response = {
             start,
             count,

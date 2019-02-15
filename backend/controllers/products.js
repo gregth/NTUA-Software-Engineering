@@ -46,31 +46,6 @@ module.exports = class ProductsController extends BaseController {
             conditions.withdrawn = 0
         }
 
-        let sort = 'id|DESC'
-        if (params.sort) {
-            sort = params.sort
-        }
-        let field_name = sort.split('|')[0]
-        let order = sort.split('|')[1]
-        let allowed_field_names = ['id', 'name']
-        let allowed_order= ['ASC', 'DESC']
-        if (!(allowed_field_names.includes(field_name) && 
-                allowed_order.includes(order))) {
-            field_name = 'id',
-            order = 'DESC'
-        }
-        const order_by = [{field_name, order}]
-        console.log(order_by)
-
-        let start = 0
-        let count = 20
-        if (start) {
-            start = parseInt(start, 10)
-        }
-        if (count) {
-            count = parseInt(count, 20)
-        }
-
         return super.list(conditions, order_by, start, count)
     }
 
