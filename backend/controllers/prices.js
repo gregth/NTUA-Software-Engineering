@@ -7,12 +7,17 @@ module.exports = class PricesController extends BaseController {
 
         this.formatResponse = item => {
             return {
-                price: item.price,
+                id: +item.id,
+                price: +item.price,
+                date: item.dateFrom, // TODO: Is this right?
+                productName: "",
                 productId: item.productId,
+                productTags: [],
                 shopId: item.shopId,
-                lat: item.lat,
-                tags: [],
-                withdrawn: !!item.withdrawn
+                shopName: "",
+                shopTags: [],
+                shopAddres: "",
+                shopDist: 0
             }
         }
     }
@@ -29,15 +34,14 @@ module.exports = class PricesController extends BaseController {
     }
 
     async create(params) {
-        let price = this.validate_post_params(params)
-
-        const result = await this.model.insert(price)
-
-        return result.affectedRows > 0
+        const price = await super.create(params)
+        console.log(price)
+        return this.read(price.id)
     }
 
     async read(id) {
-        return {prices: (await this.model.list({id}))}
+        const price = await super.read(id)
+        return price
     }
 
     async put(params, id) {

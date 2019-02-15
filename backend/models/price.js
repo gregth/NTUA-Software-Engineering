@@ -15,10 +15,8 @@ module.exports = class Price extends BaseModel {
                 selectable_fields: [
                     'id',
                     'price',
-                    'productName',
-                    'productId',
                     'shopId',
-                    'shopName',
+                    'productId',
                     'dateFrom',
                     'dateTo'
                 ]
