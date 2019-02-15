@@ -57,20 +57,7 @@ module.exports = class BaseController {
         return required_params
     }
 
-    async list({start = 0, count = 20, status = 'ACTIVE', sort = 'id|DESC'}, conditions = {}) {
-        if (status === 'WITHDRAWN') {
-            conditions.withdrawn = 1
-        } else if (status === 'ACTIVE') {
-            conditions.withdrawn = 0
-        }
-
-        const order = [{
-            field_name: sort.split('|')[0],
-            order: sort.split('|')[1]
-        }]
-
-        start = parseInt(start, 10)
-        count = parseInt(count, 10)
+    async list(conditions={}, order=[], start=0, count=20) {
 
         const list = await this.model.list(conditions, order)
         const response = {

@@ -40,7 +40,31 @@ module.exports = class ProductsController extends BaseController {
             conditions.name = {type: 'LIKE', value: params.search}
         }
 
-        return super.list(params, conditions)
+        if (params.status === 'WITHDRAWN') {
+            conditions.withdrawn = 1
+        } else if (params.status === 'ACTIVE') {
+            conditions.withdrawn = 0
+        }
+
+        let sort = 'id|DESC'
+        if (params.sort) {
+            sort = params.sort
+        }
+        const order = [{
+            field_name: sort.split('|')[0],
+            order: sort.split('|')[1]
+        }]
+
+        let start = 0
+        let count = 20
+        if (start) {
+            start = parseInt(start, 10)
+        }
+        if (count) {
+            count = parseInt(count, 20)
+        }
+
+        return super.list(conditions, order, start, count)
     }
 
     async read(id) {
