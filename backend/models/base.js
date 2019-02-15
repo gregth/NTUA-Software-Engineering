@@ -61,19 +61,25 @@ module.exports = class BaseModel {
         return result
     }
 
-    async list(conditions, orderBy, limit, joins) {
+    async list(conditions, orderBy, limit) {
         let substitutions = [];
         let query = `SELECT ${this.rules.select.selectable_fields.join(', ')} FROM ${this.table}`;
 
+        let joins = this.rules.select.joins;
         if (joins) {
             joins.forEach(join => {
                 query += ` ${join.type} ${join.table} ON ${join.on} `;
             });
         }
         if (conditions && Object.keys(conditions).length != 0){
+            let mappings = this.rules.select.ambiguous_fields_mappings
             for (const condition in conditions) {
                 if (!this.rules.select.allowed_query_keys.includes(condition)) {
                     throw new Error(`Not allowed to query ${condition}`)
+                }
+                if (mappings[condition]) {
+                    conditions[mappings[condition]] = conditions[condition]
+                    delete conditions[condition]
                 }
             }
 
