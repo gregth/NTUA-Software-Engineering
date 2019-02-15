@@ -2,6 +2,7 @@ const BaseController = require('./base')
 const model = require('../models/price')
 const dateformat = require('dateformat');
 const {MalformedInput} = require('../errors')
+const moment = require('moment')
 
 module.exports = class PricesController extends BaseController {
     constructor(dbConnection) {
@@ -35,6 +36,11 @@ module.exports = class PricesController extends BaseController {
         } else if (!params.dateFrom || !params.dateTo) {
             // One only missing, unacceptable
             throw new MalformedInput('Only single date parameter provided!')
+        } else {
+            if (!moment(params.dateFrom, "YYYY-MM-DD", true).isValid() ||
+                    !moment(params.dateTo, "YYYY-MM-DD", true).isValid()) {
+                throw new MalformedInput('Date Format must be YYYY-MM-DD')
+            }
         }
 
         return super.list()
