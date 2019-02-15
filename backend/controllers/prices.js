@@ -20,7 +20,7 @@ module.exports = class PricesController extends BaseController {
                 shopName: item.shopName,
                 shopTags: [],
                 shopAddres: item.address,
-                shopDist: 0
+                shopDist: item.distance
             }
         }
     }
@@ -51,7 +51,17 @@ module.exports = class PricesController extends BaseController {
             lower: dateFrom,
             upper: dateTo
         } 
-        return super.list(conditions)
+
+        let having
+        if (params.geoDist && params.geoLng && params.geoLat) {
+            having = {
+                type: 'DISTANCE',
+                lat: params.geoLat,
+                lng: params.geoLng,
+                radius: params.geoDist
+            }
+        }
+        return super.list(conditions, [], 0, 20, having)
     }
 
     async create(params) {

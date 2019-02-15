@@ -57,9 +57,9 @@ module.exports = class BaseController {
         return required_params
     }
 
-    async list(conditions={}, order=[], start=0, count=20) {
+    async list(conditions={}, order=[], start=0, count=20, having) {
 
-        const list = await this.model.list(conditions, order)
+        const list = await this.model.list(conditions, order, having)
         const response = {
             start,
             count,
