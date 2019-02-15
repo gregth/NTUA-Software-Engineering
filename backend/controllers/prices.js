@@ -1,5 +1,7 @@
 const BaseController = require('./base')
 const model = require('../models/price')
+const dateformat = require('dateformat');
+
 
 module.exports = class PricesController extends BaseController {
     constructor(dbConnection) {
@@ -9,7 +11,7 @@ module.exports = class PricesController extends BaseController {
             return {
                 id: +item.id,
                 price: +item.price,
-                date: item.dateFrom, // TODO: Is this right?
+                date: dateformat(item.dateFrom, 'yyyy-mm-dd'),
                 productName: "",
                 productId: item.productId,
                 productTags: [],
