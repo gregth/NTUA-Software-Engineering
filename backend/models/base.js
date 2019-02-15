@@ -112,6 +112,8 @@ module.exports = class BaseModel {
             orderBy.forEach( order_field => {
                 if (mappings && mappings[order_field.field_name]) {
                     order_properties.push(`${mappings[order_field.field_name]}  ${order_field.order}`);
+                } else {
+                    order_properties.push(`${order_field.field_name}  ${order_field.order}`);
                 }
             });
             query += ` ORDER BY ` + order_properties.join(", ");
@@ -121,6 +123,7 @@ module.exports = class BaseModel {
             query += ` LIMIT ${parseInt(limit, 10)}`
         }
 
+        console.log(query)
         debug(query);
         let rows;
         if (substitutions.length == 0) {

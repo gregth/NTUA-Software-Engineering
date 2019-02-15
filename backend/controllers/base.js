@@ -57,7 +57,7 @@ module.exports = class BaseController {
         return required_params
     }
 
-    async list(conditions={}, params, having) {
+    async list(conditions={}, params={}, having) {
         let sort = 'id|DESC'
         if (params.sort) {
             sort = params.sort
@@ -75,11 +75,11 @@ module.exports = class BaseController {
 
         let start = 0
         let count = 20
-        if (start) {
-            start = parseInt(start, 10)
+        if (params.start) {
+            start = parseInt(params.start, 10)
         }
-        if (count) {
-            count = parseInt(count, 20)
+        if (params.count) {
+            count = parseInt(params.count, 20)
         }
 
         const list = await this.model.list(conditions, order_by, having)
