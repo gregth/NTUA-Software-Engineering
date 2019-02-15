@@ -12,13 +12,13 @@ module.exports = class PricesController extends BaseController {
                 id: +item.id,
                 price: +item.price,
                 date: dateformat(item.dateFrom, 'yyyy-mm-dd'),
-                productName: "",
+                productName: item.productName,
                 productId: item.productId,
                 productTags: [],
                 shopId: item.shopId,
-                shopName: "",
+                shopName: item.shopName,
                 shopTags: [],
-                shopAddres: "",
+                shopAddres: item.address,
                 shopDist: 0
             }
         }
@@ -30,6 +30,7 @@ module.exports = class PricesController extends BaseController {
             order: sort.split('|')[1]
         }]
 
+        console.log(this.model)
         const list = await this.model.list(null, order)
 
         return {prices: list}
