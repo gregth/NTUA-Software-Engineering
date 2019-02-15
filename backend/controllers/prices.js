@@ -29,10 +29,11 @@ module.exports = class PricesController extends BaseController {
         //{start = 0, count = 20, geoDist, geoLng, geoLat, dateFrom, dateTo, shops, products, tags, sort = 'price|ASC'}) {
         const conditions = {}
 
+        let dateFrom, dateTo
         if (!params.dateFrom && !params.dateTo) {
             // Case where bpth dates are missing, acceptable
-            conditions.dateFrom = params.date = (new Date()).toISOString().split('T')[0]
-            conditions.dateTo = conditions.dateFrom
+            dateFrom = params.date = (new Date()).toISOString().split('T')[0]
+            dateTo = dateFrom 
         } else if (!params.dateFrom || !params.dateTo) {
             // One only missing, unacceptable
             throw new MalformedInput('Only single date parameter provided!')
@@ -41,9 +42,16 @@ module.exports = class PricesController extends BaseController {
                     !moment(params.dateTo, "YYYY-MM-DD", true).isValid()) {
                 throw new MalformedInput('Date Format must be YYYY-MM-DD')
             }
+            dateFrom = params.dateFrom
+            dateTo = params.dateTo
         }
 
-        return super.list()
+        conditions.date = {
+            type: 'BETWEEN_DATE',
+            lower: dateFrom,
+            upper: dateTo
+        } 
+        return super.list(conditions)
     }
 
     async create(params) {
