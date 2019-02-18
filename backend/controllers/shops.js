@@ -47,4 +47,9 @@ module.exports = class ShopsController extends BaseController {
 
         return this.read(shop.id)
     }
+
+    async list(params) {
+        return super.list({}, params)
+    }
+
 }
