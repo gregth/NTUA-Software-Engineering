@@ -138,6 +138,7 @@ export default class ProductsResults extends React.PureComponent {
             this.setState({not_found: true, success: false});
             return;
         }
+        
         this.total = result.total;
         this.products = result.products;
         this.pagesCount = Math.ceil(this.total / this.pageSize);
@@ -195,7 +196,7 @@ export default class ProductsResults extends React.PureComponent {
                     </tbody>
                 </Table>
                 {!this.state.ready
-                ?<div> Loading... </div>
+                ?<div> Loading... {this.state.ready} {this.products} </div>
                 :<div>
                 {this.dataSet.length > 0
                 ? <React.Fragment>   
