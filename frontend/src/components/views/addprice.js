@@ -20,7 +20,11 @@ class Product extends React.Component {
     
     constructor(props) {
         super(props);
-        this.state = { flag: false, success: null, error: null, current: null, nearby_shops: false, error_address: null, not_found: null, message: null, fail: null};
+        this.state = { error_message: null, not_found2: null, message2: null, 
+                    flag: false, success: null, error: null, current: null, 
+                    nearby_shops: false, error_address: null, not_found: null, 
+                    message: null, fail: null };
+        this._isMounted = null;
         this.handleSubmit = this.handleSubmit.bind(this);
         this.homepage = this.homepage.bind(this);
         this.find_barcode = this.find_barcode.bind(this);
@@ -31,6 +35,12 @@ class Product extends React.Component {
         this.nearby_shops = this.nearby_shops.bind(this);
         this.add_price = this.add_price.bind(this);
         this.body = {productId: null, shopId: null, price: null, dateFrom: null, dateTo: null};
+    }
+    
+    componentWilldUnmount() {
+        if (this._isMounted) {
+            this._isMounted.cancel();
+        }
     }
     
     nearby_shops () {
@@ -57,16 +67,41 @@ class Product extends React.Component {
     async find_barcode () {
         const barcode = document.getElementById('addprice_barcode').value;
         var url = 'http://localhost:3002/products?barcode=' + barcode;
-        var answer = await receive_from_server(url);
-        if (answer === 'error') {
-            this.setState({error: true});
-            return false;
+        this._isMounted = await receive_from_server(url);
+        const answer = this._isMounted;
+        
+        try {
+            if (answer.status === 200) {
+                this.setState({success: true});
+            }
+            else if (answer.status === 404) {
+                this.setState({message: 'Error 404 - Το αίτημα δεν ήταν επιτυχές', not_found: true});
+                return;
+            }
+            else if (answer.status === 401) {
+                this.setState({message: 'Error 401 - Λάθος στοιχεία χρήστη', not_found: true});
+                return;
+            }
+            else if (answer.status === 403) {
+                this.setState({message: 'Error 403 - Απαιτείται σύνδεση', not_found: true});
+                return;
+            }
+            else if (answer.status === 400) {
+                this.setState({not_found2: true});
+                this.setState({message2: 'Το προϊόν με barcode ' +  barcode + ' δε βρέθηκε.'});
+                this.setState({message: 'Error 400 - Μη έγκυρες παράμετροι αιτήματος.', not_found: true});
+                return;
+            }
+            else {
+                this.setState({message: 'Error ' + answer.status.toString() + ' - Πρόβλημα με την ολοκλήρωση του αιτήματος.', not_found: true});
+                return;
+            }
         }
-        if (answer.status !== 200) {
-            this.setState({not_found: true});
-            this.setState({message: 'Το προϊόν με barcode ' +  barcode + ' δε βρέθηκε.'});
-            return false;
+        catch (error) {
+            this.setState({error: true, error_message: error});
+            return;
         }
+       
         var details = await answer.json().then((result) => {return result.id;});
         var id = details;
         return id;
@@ -101,17 +136,41 @@ class Product extends React.Component {
         }
         
         var url = 'http://localhost:3002/shops?geoDist=0.1&lat=' + lat + '&lng=' + lng;
-        var answer = await receive_from_server(url);
-        if (answer === 'error') {
-            this.setState({error: true});
-            return;
-        }
-        if (answer.status !== 200) {
-            this.setState({not_found: true});
-            this.setState({message: 'Δε βρέθηκαν καταστήματα σε αυτή την τοποθεσία'});
-            return;
-        }
+        this._isMounted = await receive_from_server(url);
+        const answer = this._isMounted;
         
+        try {
+            if (answer.status === 200) {
+                this.setState({success: true});
+            }
+            else if (answer.status === 404) {
+                this.setState({message: 'Error 404 - Το αίτημα δεν ήταν επιτυχές', not_found: true});
+                return;
+            }
+            else if (answer.status === 401) {
+                this.setState({message: 'Error 401 - Λάθος στοιχεία χρήστη', not_found: true});
+                return;
+            }
+            else if (answer.status === 403) {
+                this.setState({message: 'Error 403 - Απαιτείται σύνδεση', not_found: true});
+                return;
+            }
+            else if (answer.status === 400) {
+                this.setState({not_found2: true});
+                this.setState({message2: 'Δε βρέθηκαν καταστήματα σε αυτή την τοποθεσία.'});
+                this.setState({message: 'Error 400 - Μη έγκυρες παράμετροι αιτήματος.', not_found: true});
+                return;
+            }
+            else {
+                this.setState({message: 'Error ' + answer.status.toString() + ' - Πρόβλημα με την ολοκλήρωση του αιτήματος.', not_found: true});
+                return;
+            }
+        }
+        catch (error) {
+            this.setState({error: true, error_message: error});
+            return;
+        }
+                
         var details = await answer.json().then((result) => {return result;});
         console.log(details);
         this.refs.nearby_shops.toggle(details);
@@ -123,17 +182,41 @@ class Product extends React.Component {
         console.log(this.body);
        
         var url = 'http://localhost:3002/prices';
-        var answer = await send_to_server(url, this.body);
+        this._isMounted = await send_to_server(url, body);
+        const answer = this._isMounted;
         
-        if (answer === 'error') {
-            this.setState({error: true});
-            return;
+        try {
+            if (answer === 'error') {
+                this.setState({error: true});
+                return;
+            }
+
+            if (answer.status === 200) {
+                this.setState({success: true});
+            }
+            else if (answer.status === 404) {
+                this.setState({message: 'Error 404 - Το αίτημα δεν ήταν επιτυχές', not_found: true});
+                return;
+            }
+            else if (answer.status === 401) {
+                this.setState({message: 'Error 401 - Μη επιτρεπόμενη ενέργεια', not_found: true});
+                return;
+            }
+            else if (answer.status === 403) {
+                this.setState({message: 'Error 403 - Απαιτείται σύνδεση', not_found: true});
+                return;
+            }
+            else if (answer.status === 400) {
+                this.setState({message: 'Error 400 - Μη έγκυρες παράμετροι αιτήματος.', not_found: true});
+                return;
+            }
+            else {
+                this.setState({message: 'Error ' + answer.status.toString() + ' - Πρόβλημα με την ολοκλήρωση του αιτήματος.', not_found: true});
+                return;
+            }
         }
-        if (answer.status === 200 || answer.status === 204) {
-            this.setState({success: true});
-        }
-        else {
-            this.setState({fail: true});
+        catch (error) {
+            this.setState({error: true, error_message: error});
             return;
         }
         
@@ -146,8 +229,6 @@ class Product extends React.Component {
         
         var result = await this.find_barcode().then((result) => {return result;});
         if (!result) {
-            this.setState({not_found: true});
-            this.setState({message: 'Το προϊόν με barcode ' +  document.getElementById('addprice_barcode').value + ' δε βρέθηκε.'});
             return;
         }
         this.body.productId = result;
@@ -184,7 +265,8 @@ class Product extends React.Component {
         return(
             <div>
                 <NavBarClass/>
-                <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά.</Alert>
+                <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά. {this.state.error_message}</Alert>
+                <Alert color="danger" isOpen={this.state.not_found===true}>{this.state.message}</Alert>
                 
                 <Container className="Product">
                 <h2 align="center">Εισαγωγή Τιμής</h2>
@@ -264,8 +346,8 @@ class Product extends React.Component {
                         </div>
                 </Form>
                 </Container>
-                <Modal isOpen={this.state.not_found} toggle={this.toggleModal}>
-                    <ModalBody> {this.state.message}</ModalBody>
+                <Modal isOpen={this.state.not_found2} toggle={this.toggleModal}>
+                    <ModalBody> {this.state.message2}</ModalBody>
                     <ModalFooter>
                         <Button color="primary" onClick={this.toggleModal}>Διόρθωση</Button>{' '}
                         <Button color="secondary" onClick={this.homepage}>Ακύρωση</Button>

@@ -19,14 +19,20 @@ function onlyUnique (value, index, self) {
 class Shop extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {message: null, flag: false, success: null, error: null, current: null, checkPhone: null, error_address: null, not_found: null};
+        this.state = { error_message: null, message: null, flag: false, success: null, error: null, current: null, checkPhone: null, error_address: null, not_found: null};
         this.handleSubmit = this.handleSubmit.bind(this);
         this.search = this.search.bind(this);
         this.currentLocation = this.currentLocation.bind(this);
         this.toggleModal = this.toggleModal.bind(this);
         this.validatePhone = this.validatePhone.bind(this);
+        this._isMounted = null;
     }
     
+    componentWilldUnmount() {
+        if (this._isMounted) {
+            this._isMounted.cancel();
+        }
+    }
     
     validatePhone() {
         const phoneRex = /^69\d{8}|^210\d{7}$/;
@@ -65,7 +71,7 @@ class Shop extends React.Component {
     async handleSubmit (event) {
         event.preventDefault();
         event.nativeEvent.stopImmediatePropagation();
-        this.setState({success: null, error: null, need_login: null, not_found: null});
+        this.setState({success: null, error: null, not_found: null});
         const name = document.getElementById('new_shop_name').value;
         var tags_list = (document.getElementById('new_shop_tags').value).split(',');
         const telephone = document.getElementById('new_shop_phone').value;
@@ -125,44 +131,52 @@ class Shop extends React.Component {
         
         console.log(shop);
         const url = 'http://localhost:3002/shops';
-        const answer = await send_to_server(url, shop);
+        this._isMounted = await send_to_server(url, shop);
+        const answer = this._isMounted;
         
-        if (answer === 'error') {
-            this.setState({error: true});
+        try {
+            if (answer === 'error') {
+                this.setState({error: true});
+                return;
+            }
+
+            if (answer.status === 200) {
+                this.setState({success: true});
+            }
+            else if (answer.status === 404) {
+                this.setState({message: 'Error 404 - Το αίτημα δεν ήταν επιτυχές', not_found: true});
+                return;
+            }
+            else if (answer.status === 401) {
+                this.setState({message: 'Error 401 - Μη επιτρεπόμενη ενέργεια', not_found: true});
+                return;
+            }
+            else if (answer.status === 403) {
+                this.setState({message: 'Error 403 - Απαιτείται σύνδεση', not_found: true});
+                return;
+            }
+            else if (answer.status === 400) {
+                this.setState({message: 'Error 400 - Μη έγκυρες παράμετροι αιτήματος.', not_found: true});
+                return;
+            }
+            else {
+                this.setState({message: 'Error ' + answer.status.toString() + ' - Πρόβλημα με την ολοκλήρωση του αιτήματος.', not_found: true});
+                return;
+            }
+        }
+        catch (error) {
+            this.setState({error: true, error_message: error});
             return;
         }
-        
-        if (answer.status === 200) {
-            this.setState({success: true});
-        }
-        else if (answer.status === 404) {
-            this.setState({message: 'Error 404 - Το αίτημα δεν ήταν επιτυχές', not_found: true});
-            return;
-        }
-        else if (answer.status === 401) {
-            this.setState({message: 'Error 401 - Μη επιτρεπόμενη ενέργεια', not_found: true});
-            return;
-        }
-        else if (answer.status === 403) {
-            this.setState({message: 'Error 403 - Απαιτείται σύνδεση', not_found: true});
-            return;
-        }
-        else if (answer.status === 400) {
-            this.setState({message: 'Error 400 - Μη έγκυρες παράμετροι αιτήματος.', not_found: true});
-            return;
-        }
-        else {
-            this.setState({message: 'Error ' + answer.status.toString() + ' - Πρόβλημα με την ολοκλήρωση του αιτήματος.', not_found: true});
-            return;
-        }
-       
     }
     
     render() {
         return(
             <div>
                 <NavBarClass/>
-                <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά.</Alert>
+                
+                <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά. {this.state.error_message}</Alert>
+                <Alert color="danger" isOpen={this.state.not_found===true}>{this.state.message}</Alert>
                 
                 <Container className="Shop">
                 <h2 align="center">Εισαγωγή Καταστήματος</h2>
