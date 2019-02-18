@@ -27,7 +27,7 @@ export default class ProductsResults extends React.PureComponent {
         this.search = this.search.bind(this);
         this.search_product = this.search_product.bind(this);
         this.state = {
-            tooltipOpen: false, currentPage: 0, error: null, success: null, not_found: null, ready: null, message: null
+            noproducts: null, tooltipOpen: false, currentPage: 0, error: null, success: null, not_found: null, ready: null, message: null
         };
         this._asyncRequest = null;
         this._isMounted = null;
@@ -86,6 +86,7 @@ export default class ProductsResults extends React.PureComponent {
     }
     
     search () {
+        this.setState({error: null, not_found: null, message: null});
         if (this.selected_products.length === 0) {
             this.setState({noproducts: true});
             return;
@@ -119,6 +120,7 @@ export default class ProductsResults extends React.PureComponent {
     
     async request () {   
         this.selected_products = [];
+        this.setState({error: null, not_found: null, message: null});
         const url = 'http://localhost:3002/products?start=' + this.start + 
                     '&count=' +  this.pageSize + '&sort=' + this.sort +
                     '&status=' + this.status;
@@ -206,7 +208,7 @@ export default class ProductsResults extends React.PureComponent {
         const { currentPage } = this.state;
         return ( 
             <div>
-    
+                <Alert color="danger" isOpen={this.state.noproducts===true}>Δεν έχει επιλεχθεί κανένα προϊόν.</Alert> 
                 <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά. {this.state.error_message}</Alert>
                 <Alert color="danger" isOpen={this.state.not_found===true}>{this.state.message}</Alert>
                 

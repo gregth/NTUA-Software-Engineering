@@ -22,8 +22,9 @@ export default class PapigationShops extends React.PureComponent {
         this.search = this.search.bind(this);
         this.search_shop = this.search_shop.bind(this);
         this._asyncRequest = null;
+        this._isMounted = null;
         this.state = {
-            tooltipOpen: false, currentPage: 0, error: null, success: null, not_found: null, ready: null, selected_shops: [], noshops: false
+            tooltipOpen: false, currentPage: 0, error: null, success: null, not_found: null, ready: null, selected_shops: [], noshops: false, message: null
         };
         this.dataSet = null;    
         this.pagesCount = null;
@@ -40,6 +41,9 @@ export default class PapigationShops extends React.PureComponent {
     componentWilldUnmount() {
         if (this._asyncRequest) {
             this._asyncRequest.cancel();
+        }
+        if (this._isMounted) {
+            this._isMounted.cancel();
         }
     }
     
@@ -74,6 +78,7 @@ export default class PapigationShops extends React.PureComponent {
     }
     
     search () {
+        this.setState({error: null, not_found: null, message: null});
         if (this.selected_shops.length === 0) {
             this.setState({noshops: true});
             return;
@@ -99,7 +104,8 @@ export default class PapigationShops extends React.PureComponent {
         this.setState({ready: true});
     }
     
-    async request () {        
+    async request () {       
+        this.setState({error: null, not_found: null, message: null});
         this.selected_shops = [];
         const url = 'http://localhost:3002/shops?start=' + this.start + 
                     '&count=' +  this.pageSize + '&sort=' + this.sort +
@@ -107,23 +113,46 @@ export default class PapigationShops extends React.PureComponent {
         this._asyncRequest = await receive_from_server(url);
         const answer = this._asyncRequest;
         
-        if (answer === 'error') {
-            this.setState({error: true});
+        try {
+            if (answer === 'error') {
+                this.setState({error: true});
+                return;
+            }
+
+            if (answer.status === 200) {
+                this.setState({success: true});
+            }
+            else if (answer.status === 404) {
+                this.setState({message: 'Error 404 - Το αίτημα δεν ήταν επιτυχές', not_found: true});
+                return;
+            }
+            else if (answer.status === 401) {
+                this.setState({message: 'Error 401 - Μη επιτρεπόμενη ενέργεια', not_found: true});
+                return;
+            }
+            else if (answer.status === 403) {
+                this.setState({message: 'Error 403 - Απαιτείται σύνδεση', not_found: true});
+                return;
+            }
+            else if (answer.status === 400) {
+                this.setState({message: 'Error 400 - Μη έγκυρες παράμετροι αιτήματος.', not_found: true});
+                return;
+            }
+            else {
+                this.setState({message: 'Error ' + answer.status.toString() + ' - Πρόβλημα με την ολοκλήρωση του αιτήματος.', not_found: true});
+                return;
+            }
+        }
+        catch (error) {
+            this.setState({error: true, error_message: error});
             return;
-        }
-        
-        if (answer.status === 200) {
-            this.setState({success: true});
-        }
-        else {
-            this.setState({not_found: true});
         }
         
         this._asyncRequest = await answer.json().then((result) => {return result;});
         var result = this._asyncRequest;
         console.log(result);
         if (this.start !== result.start || parseInt(this.pageSize) !== result.count) {
-            this.setState({not_found: true, success: false});
+            this.setState({error: true, success: false});
             return;
         }
         this.total = result.total;
@@ -167,6 +196,9 @@ export default class PapigationShops extends React.PureComponent {
     return (    
         <div>
             <Alert color="danger" isOpen={this.state.noshops===true}>Δεν έχει επιλεχθεί κανένα κατάστημα.</Alert>
+            <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά. {this.state.error_message}</Alert>
+            <Alert color="danger" isOpen={this.state.not_found===true}>{this.state.message}</Alert>
+                
             <Table borderless>
                 <thead>
                     <tr>
