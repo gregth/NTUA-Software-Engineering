@@ -69,7 +69,6 @@ class Product extends React.Component {
         var url = 'http://localhost:3002/products?barcode=' + barcode;
         this._isMounted = await receive_from_server(url);
         const answer = this._isMounted;
-        console.log(answer)
         
         try {
             if (answer.status === 200) {
@@ -103,8 +102,8 @@ class Product extends React.Component {
             return;
         }
        
-        var details = await answer.json().then((result) => {return result.id;});
-        var id = details;
+        var details = await answer.json().then((result) => {return result;});
+        var id = details.products[0].id;
         return id;
     }
     
