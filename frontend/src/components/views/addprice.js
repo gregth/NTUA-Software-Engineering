@@ -75,7 +75,9 @@ class Product extends React.Component {
                 this.setState({success: true});
             }
             else if (answer.status === 404) {
-                this.setState({message: 'Error 404 - Το αίτημα δεν ήταν επιτυχές', not_found: true});
+                this.setState({not_found2: true});
+                this.setState({message2: 'Το προϊόν με barcode ' +  barcode + ' δε βρέθηκε.'});
+                this.setState({message: 'Error 404 - Not found', not_found: true});
                 return;
             }
             else if (answer.status === 401) {
@@ -87,8 +89,6 @@ class Product extends React.Component {
                 return;
             }
             else if (answer.status === 400) {
-                this.setState({not_found2: true});
-                this.setState({message2: 'Το προϊόν με barcode ' +  barcode + ' δε βρέθηκε.'});
                 this.setState({message: 'Error 400 - Μη έγκυρες παράμετροι αιτήματος.', not_found: true});
                 return;
             }
