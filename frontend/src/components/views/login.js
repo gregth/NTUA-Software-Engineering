@@ -98,7 +98,7 @@ class Login extends React.Component {
             <div>
                 <NavBarClass/>
                 
-                <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα. Δοκιμάστε ξανά. {this.state.error_message}</Alert>
+                <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά. {this.state.error_message}</Alert>
                 <Alert color="danger" isOpen={this.state.not_found===true}>{this.state.message}</Alert>
                 
                 <Container className="Login">

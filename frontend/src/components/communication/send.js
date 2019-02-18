@@ -40,6 +40,7 @@ function sendInfo(url, body) {
 }
 
 export function send_to_server(url, body) {
+    console.log(body);
     return sendPromise(url, body)
     .then ((answer) => {
         return answer;

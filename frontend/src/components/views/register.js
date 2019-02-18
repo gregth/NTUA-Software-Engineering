@@ -19,18 +19,12 @@ class Register extends React.Component {
         this.showPassword = this.showPassword.bind(this);
         this.validateEmail = this.validateEmail.bind(this);
         this.validatePhone = this.validatePhone.bind(this);
+        this._isMounted = null;
     }
     
-    componentDidMount() {
-         try {
-            cookie.remove('need_login', {path: '/'});
-            var loggedin = Boolean(cookie.load('loggedin'));
-            if (loggedin) {
-                browserHistory.push('/search');
-            }
-        }
-        catch(error) {
-            console.log(error);
+    componentWilldUnmount() {
+        if (this._isMounted) {
+            this._isMounted.cancel();
         }
     }
     
@@ -59,34 +53,36 @@ class Register extends React.Component {
         console.log(body);
        
         const url = 'http://localhost:3002/users';
-        const answer = await send_to_server(url, body);
+        this._isMounted = await send_to_server(url, body);
+        const answer = this._isMounted;
         
-        if (answer === 'error') {
-            this.setState({error: true});
-            return;
+        try {
+            if (answer.status === 200) {
+                this.setState({success: true});
+            }
+            else if (answer.status === 404) {
+                this.setState({message: 'Error 404 - Το αίτημα δεν ήταν επιτυχές', not_found: true});
+                return;
+            }
+            else if (answer.status === 401) {
+                this.setState({message: 'Error 401 - Λάθος στοιχεία χρήστη', not_found: true});
+                return;
+            }
+            else if (answer.status === 403) {
+                this.setState({message: 'Error 403 - Απαιτείται σύνδεση', not_found: true});
+                return;
+            }
+            else if (answer.status === 400) {
+                this.setState({message: 'Error 400 - Μη έγκυρες παράμετροι αιτήματος.', not_found: true});
+                return;
+            }
+            else {
+                this.setState({message: 'Error ' + answer.status.toString() + ' - Πρόβλημα με την ολοκλήρωση του αιτήματος.', not_found: true});
+                return;
+            }
         }
-        
-        if (answer.status === 200) {
-            this.setState({success: true});
-        }
-        else if (answer.status === 404) {
-            this.setState({message: 'Error 404 - Το αίτημα δεν ήταν επιτυχές', not_found: true});
-            return;
-        }
-        else if (answer.status === 401) {
-            this.setState({message: 'Error 401 - Μη επιτρεπόμενη ενέργεια', not_found: true});
-            return;
-        }
-        else if (answer.status === 403) {
-            this.setState({message: 'Error 403 - Απαιτείται σύνδεση', not_found: true});
-            return;
-        }
-        else if (answer.status === 400) {
-            this.setState({message: 'Error 400 - Μη έγκυρες παράμετροι αιτήματος.', not_found: true});
-            return;
-        }
-        else {
-            this.setState({message: 'Error ' + answer.status.toString() + ' - Πρόβλημα με την ολοκλήρωση του αιτήματος.', not_found: true});
+        catch (error) {
+            this.setState({error: true, error_message: error});
             return;
         }
        
@@ -158,7 +154,7 @@ class Register extends React.Component {
         return(
             <div>
                 <NavBarClass/>
-                <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά.</Alert>
+                <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά. {this.state.error_message}</Alert>
                 <Alert color="danger" isOpen={this.state.not_found===true}>{this.state.message}</Alert>
             
                 <Container className="Register">

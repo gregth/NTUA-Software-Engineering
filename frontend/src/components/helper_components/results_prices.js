@@ -137,10 +137,9 @@ export default class PricesTable extends React.PureComponent {
             this.setState({not_found: true, success: false});
             return;
         }
-        this.total = result.total;
+        //this.total = result.total;
         this.prices = result.prices;
-            /*this.total = result.prices.length;
-            this.prices = result.prices;*/
+            this.total = result.prices.length;
         console.log(this.prices);
         this.pagesCount = Math.ceil(this.total / this.pageSize);
             
