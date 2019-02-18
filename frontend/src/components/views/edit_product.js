@@ -56,12 +56,15 @@ export default class EditProduct extends Component {
     constructor(props) {
         super(props);
         this.request = this.request.bind(this);
-        this.state = {details: null, error: null, success: null, not_found: null, volume: '',
-                    description: '', tags: '', name: '', brand: '', success_edit: null, error_edit: null, not_found: null};
+        this.state = { message_edit: null, error_message: null, message: null, 
+                    details: null, error: null, success: null, not_found: null, 
+                    volume: '', description: '', tags: '', name: '', brand: '', 
+                    success_edit: null,  not_found: null};
         this.toggleModal = this.toggleModal.bind(this);
         this.homepage = this.homepage.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this._isMounted = null;
     }
     
      componentDidMount () {
@@ -78,22 +81,50 @@ export default class EditProduct extends Component {
         if (this._asyncRequest) {
             this._asyncRequest.cancel();
         }
+        if (this._isMounted) {
+            this._isMounted.cancel();
+        }
     }
 
     async request () {
+        this.setState({success: null, error: null, not_found: null});
         const url = 'http://localhost:3002/products/' + this.props.location.query.id;
-        const answer = await receive_from_server(url);
+        this._isMounted = await receive_from_server(url);
+        const answer = this._isMounted;
         
-        if (answer === 'error') {
-            this.setState({error: true});
+        try {
+            if (answer === 'error') {
+                this.setState({error: true});
+                return;
+            }
+
+            if (answer.status === 200) {
+                this.setState({success: true});
+            }
+            else if (answer.status === 404) {
+                this.setState({message: 'Error 404 - Το αίτημα δεν ήταν επιτυχές', not_found: true});
+                return;
+            }
+            else if (answer.status === 401) {
+                this.setState({message: 'Error 401 - Μη επιτρεπόμενη ενέργεια', not_found: true});
+                return;
+            }
+            else if (answer.status === 403) {
+                this.setState({message: 'Error 403 - Απαιτείται σύνδεση', not_found: true});
+                return;
+            }
+            else if (answer.status === 400) {
+                this.setState({message: 'Error 400 - Μη έγκυρες παράμετροι αιτήματος.', not_found: true});
+                return;
+            }
+            else {
+                this.setState({message: 'Error ' + answer.status.toString() + ' - Πρόβλημα με την ολοκλήρωση του αιτήματος.', not_found: true});
+                return;
+            }
+        }
+        catch (error) {
+            this.setState({error: true, error_message: error});
             return;
-        }
-        
-        if (answer.status === 200) {
-            this.setState({success: true});
-        }
-        else {
-            this.setState({not_found: true});
         }
         
         var details = await answer.json().then((result) => {return result;});
@@ -112,14 +143,14 @@ export default class EditProduct extends Component {
     }
     
     toggleModal() {
-        this.setState({ error: !this.state.error });
+        this.setState({ not_found_edit: !this.state.not_found_edit });
     }
     
     async handleSubmit(event) {
         event.preventDefault();
         event.nativeEvent.stopImmediatePropagation();
         
-        this.setState({success_edit: null, error_edit: null, not_found_edit: null});
+        this.setState({success_edit: null, message_edit: null, not_found_edit: null});
         
         const name = document.getElementById('edit_product_name').value;
         const barcode = document.getElementById('edit_product_barcode').value;
@@ -165,25 +196,44 @@ export default class EditProduct extends Component {
         
         if (changed.length === 1) {
             var key = changed[0];
-            answer = await patch(url, {key: this.state.details[key]});
+            this._isMounted = await patch(url, {key: this.state.details[key]});
         }
         else if (changed.length > 1) {
-            answer = await put(url, product); 
+            this._isMounted = await put(url, product); 
         }
         else {
             browserHistory.push('/products');
         }
         
-        if (answer === 'error') {
-            this.setState({error_edit: true});
-            return;
-        }
+        answer = this._isMounted;
         
-        if (answer.status === 200) {
-            this.setState({success_edit: true});
+        try {
+            if (answer.status === 200) {
+                this.setState({success_edit: true});
+            }
+            else if (answer.status === 404) {
+                this.setState({message_edit: 'Error 404 - Το αίτημα δεν ήταν επιτυχές', not_found_edit: true});
+                return;
+            }
+            else if (answer.status === 401) {
+                this.setState({message_edit: 'Error 401 - Μη επιτρεπόμενη ενέργεια', not_found_edit: true});
+                return;
+            }
+            else if (answer.status === 403) {
+                this.setState({message_edit: 'Error 403 - Απαιτείται σύνδεση', not_found_edit: true});
+                return;
+            }
+            else if (answer.status === 400) {
+                this.setState({message_edit: 'Error 400 - Μη έγκυρες παράμετροι αιτήματος.', not_found_edit: true});
+                return;
+            }
+            else {
+                this.setState({message_edit: 'Error ' + answer.status.toString() + ' - Πρόβλημα με την ολοκλήρωση του αιτήματος.', not_found_edit: true});
+                return;
+            }
         }
-        else {
-            this.setState({not_found_edit: true});
+        catch (error) {
+            this.setState({error: true, error_message: error});
             return;
         }
     }
@@ -193,7 +243,9 @@ export default class EditProduct extends Component {
         <div>
             <NavBarClass/>
             
-            <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά.</Alert>
+            <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά. {this.state.error_message}</Alert>
+            <Alert color="danger" isOpen={this.state.not_found===true}>{this.state.message}</Alert>
+            
             {this.state.details === null
             ?<div> Loading </div>
             : <div>
@@ -264,8 +316,8 @@ export default class EditProduct extends Component {
             </div>
             }
             
-            <Modal isOpen={this.state.error_edit} toggle={this.toggleModal}>
-                <ModalBody>Η επεξεργασία δεν ολοκληρώθηκε επιτυχώς.</ModalBody>
+            <Modal isOpen={this.state.not_found_edit} toggle={this.toggleModal}>
+                <ModalBody>Η επεξεργασία δεν ολοκληρώθηκε επιτυχώς. {this.state.message_edit}</ModalBody>
                 <ModalFooter>
                     <Button color="primary" onClick={this.toggleModal}>Προσπάθεια ξανά</Button>{' '}
                     <Button color="secondary" onClick={this.homepage}>Αρχική σελίδα</Button>
