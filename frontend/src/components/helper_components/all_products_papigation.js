@@ -122,6 +122,7 @@ export default class ProductsResults extends React.PureComponent {
     async request () {   
         this.selected_products = [];
         this.setState({error: null, not_found: null, message: null});
+
         const url = 'http://localhost:3002/products?start=' + this.start + 
                     '&count=' +  this.pageSize + '&sort=' + this.sort +
                     '&status=' + this.status;
