@@ -57,8 +57,8 @@ export default class ProductsResults extends React.PureComponent {
             <tr key={product.id} className="row_pointer">
                 <td>{product.name}</td>
                 <td>{product.category}</td>
-                <td>{product.brand}</td>
-                <td>{product.volume}ml</td>
+                <td>{product.extraData.brand}</td>
+                <td>{product.extraData.volume}ml</td>
                 <td></td>
                 <td>
                     {!product.withdrawn

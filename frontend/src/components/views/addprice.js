@@ -69,6 +69,7 @@ class Product extends React.Component {
         var url = 'http://localhost:3002/products?barcode=' + barcode;
         this._isMounted = await receive_from_server(url);
         const answer = this._isMounted;
+        console.log(answer)
         
         try {
             if (answer.status === 200) {
@@ -229,6 +230,7 @@ class Product extends React.Component {
         
         var result = await this.find_barcode().then((result) => {return result;});
         if (!result) {
+            this.setState({ success: null, not_found2: true, message2: 'Το προϊόν με barcode ' + document.getElementById('addprice_barcode').value + ' δε βρέθηκε.'});
             return;
         }
         this.body.productId = result;
@@ -247,7 +249,7 @@ class Product extends React.Component {
     
     toggleModal() {
         this.setState({
-            not_found: !this.state.not_found
+            not_found2: !this.state.not_found2
         });
     }
     
