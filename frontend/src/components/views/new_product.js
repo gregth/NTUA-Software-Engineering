@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { browserHistory } from 'react-router';
 import cookie from 'react-cookies';
-import { Modal, ModalHeader, ModalBody, ModalFooter, FormText, Input, Label, Button, Form, Container, FormGroup, Row, Col, InputGroupAddon, InputGroup } from 'reactstrap';
+import { Alert, Modal, ModalHeader, ModalBody, ModalFooter, FormText, Input, Label, Button, Form, Container, FormGroup, Row, Col, InputGroupAddon, InputGroup } from 'reactstrap';
 import {Categories} from '../helper_components/categories_menu';
 import {send_to_server} from '../communication/send';
 import NavBarClass from '../helper_components/navbar';
@@ -17,22 +17,16 @@ class newProduct extends React.Component {
     
     constructor(props) {
         super(props);
-        this.state = {success: null, error: null};
+        this.state = {success: null, error: null, not_found: null, message: null};
         this.handleSubmit = this.handleSubmit.bind(this);
         this.toggleModal = this.toggleModal.bind(this);
         this.homepage = this.homepage.bind(this);
+        this._isMounted = null;
     }
     
-    componentDidMount() {
-        try {
-            var loggedin = Boolean(cookie.load('loggedin'));
-            if (!loggedin) {
-                browserHistory.push('/login');
-            }
-            cookie.save('need_login', true, {path: '/'});
-        }
-        catch(error) {
-            console.log(error);
+    componentWilldUnmount() {
+        if (this._isMounted) {
+            this._isMounted.cancel();
         }
     }
     
@@ -47,6 +41,7 @@ class newProduct extends React.Component {
     async handleSubmit(event) {
         event.preventDefault();
         event.nativeEvent.stopImmediatePropagation();
+        this.setState({error: null, not_found: null, message: null, success: null});
         const name = document.getElementById('new_product_name').value;
         const barcode = document.getElementById('new_product_barcode').value;
         const brand = document.getElementById('new_product_brand').value;
@@ -78,12 +73,42 @@ class newProduct extends React.Component {
         
         console.log(product);
         const url = 'http://localhost:3002/products';
-        const answer = await send_to_server(url, product);
-        if (answer.status === 200) {
-            this.setState({success: true});
+        this._isMounted = await send_to_server(url, product);
+        const answer = this._isMounted;
+        
+        try {
+            if (answer === 'error') {
+                this.setState({error: true});
+                return;
+            }
+
+            if (answer.status === 200) {
+                this.setState({success: true});
+            }
+            else if (answer.status === 404) {
+                this.setState({message: 'Error 404 - Το αίτημα δεν ήταν επιτυχές', not_found: true});
+                return;
+            }
+            else if (answer.status === 401) {
+                this.setState({message: 'Error 401 - Μη επιτρεπόμενη ενέργεια', not_found: true});
+                return;
+            }
+            else if (answer.status === 403) {
+                this.setState({message: 'Error 403 - Απαιτείται σύνδεση', not_found: true});
+                return;
+            }
+            else if (answer.status === 400) {
+                this.setState({message: 'Error 400 - Μη έγκυρες παράμετροι αιτήματος.', not_found: true});
+                return;
+            }
+            else {
+                this.setState({message: 'Error ' + answer.status.toString() + ' - Πρόβλημα με την ολοκλήρωση του αιτήματος.', not_found: true});
+                return;
+            }
         }
-        else {
-            this.setState({error: true});
+        catch (error) {
+            this.setState({error: true, error_message: error});
+            return;
         }
     }
   
@@ -92,6 +117,9 @@ class newProduct extends React.Component {
             <div>
             <NavBarClass/>
             
+            <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά. {this.state.error_message}</Alert>
+            <Alert color="danger" isOpen={this.state.not_found===true}>{this.state.message}</Alert>
+                
             <Container className="newProduct">
                 <h2 align="center">Εισαγωγή Προϊόντος</h2>
                 <hr></hr>

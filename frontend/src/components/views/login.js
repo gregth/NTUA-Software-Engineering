@@ -27,7 +27,7 @@ class Login extends React.Component {
     async handleSubmit (event) {
         event.preventDefault();
         event.nativeEvent.stopImmediatePropagation();
-        this.setState({success: null, error: null,  not_found: null});
+        this.setState({success: null, error: null,  not_found: null, message: null});
         const username = document.getElementById('username').value;
         const password = document.getElementById('pwd').value;
 

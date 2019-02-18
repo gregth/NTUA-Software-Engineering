@@ -31,7 +31,7 @@ class Register extends React.Component {
     async handleSubmit (event) {
         event.preventDefault();
         event.nativeEvent.stopImmediatePropagation();
-        this.setState({success: null, error: null, not_found: null});
+        this.setState({success: null, error: null, not_found: null, message: null});
         const us = document.getElementById('register_username').value;
         const pass = document.getElementById('register_pwd').value;
         const fname = document.getElementById('register_first_name').value;
