@@ -71,7 +71,7 @@ class Shop extends React.Component {
     async handleSubmit (event) {
         event.preventDefault();
         event.nativeEvent.stopImmediatePropagation();
-        this.setState({success: null, error: null, need_login: null, not_found: null});
+        this.setState({success: null, error: null, not_found: null});
         const name = document.getElementById('new_shop_name').value;
         var tags_list = (document.getElementById('new_shop_tags').value).split(',');
         const telephone = document.getElementById('new_shop_phone').value;

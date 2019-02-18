@@ -57,13 +57,16 @@ export default class EditShop extends Component {
     constructor(props) {
         super(props);
         this.request = this.request.bind(this);
-        this.state = {flag: false, details: null, name: '', address: '', phone: '', error: null, success: null, not_found: null, tags: '', success_edit: null, error_edit: null, not_found: null};
+        this.state = { message_edit: null, error_message: null, message: null, flag: false, details: null, 
+                    name: '', address: '', phone: '', error: null, success: null, 
+                    not_found: null, tags: '', success_edit: null};
         this.toggleModal = this.toggleModal.bind(this);
         this.homepage = this.homepage.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.currentLocation = this.currentLocation.bind(this);
         this.validatePhone = this.validatePhone.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this._isMounted = null;
     }
     
     componentDidMount () {        
@@ -78,6 +81,9 @@ export default class EditShop extends Component {
     componentWilldUnmount() {
         if (this._asyncRequest) {
             this._asyncRequest.cancel();
+        }
+        if (this._isMounted) {
+            this._isMounted.cancel();
         }
     }
     
@@ -109,19 +115,44 @@ export default class EditShop extends Component {
     }
     
     async request() {
+        this.setState({success: null, error: null, not_found: null});
         const url = 'http://localhost:3002/shops/' + this.props.location.query.id;
-        const answer = await receive_from_server(url);
+        this._isMounted = await receive_from_server(url);
+        const answer = this._isMounted;
         
-        if (answer === 'error') {
-            this.setState({error: true});
+        try {
+            if (answer === 'error') {
+                this.setState({error: true});
+                return;
+            }
+
+            if (answer.status === 200) {
+                this.setState({success: true});
+            }
+            else if (answer.status === 404) {
+                this.setState({message: 'Error 404 - Το αίτημα δεν ήταν επιτυχές', not_found: true});
+                return;
+            }
+            else if (answer.status === 401) {
+                this.setState({message: 'Error 401 - Μη επιτρεπόμενη ενέργεια', not_found: true});
+                return;
+            }
+            else if (answer.status === 403) {
+                this.setState({message: 'Error 403 - Απαιτείται σύνδεση', not_found: true});
+                return;
+            }
+            else if (answer.status === 400) {
+                this.setState({message: 'Error 400 - Μη έγκυρες παράμετροι αιτήματος.', not_found: true});
+                return;
+            }
+            else {
+                this.setState({message: 'Error ' + answer.status.toString() + ' - Πρόβλημα με την ολοκλήρωση του αιτήματος.', not_found: true});
+                return;
+            }
+        }
+        catch (error) {
+            this.setState({error: true, error_message: error});
             return;
-        }
-        
-        if (answer.status === 200) {
-            this.setState({success: true});
-        }
-        else {
-            this.setState({not_found: true});
         }
         
         var details = await answer.json().then((result) => {return result;});
@@ -147,7 +178,7 @@ export default class EditShop extends Component {
         event.preventDefault();
         event.nativeEvent.stopImmediatePropagation();
         
-        this.setState({success_edit: null, error_edit: null, not_found_edit: null});
+        this.setState({success_edit: null, message_edit: null, not_found_edit: null});
         
         const name = document.getElementById('edit_shop_name').value;
         const telephone = document.getElementById('edit_shop_phone').value; 
@@ -198,6 +229,7 @@ export default class EditShop extends Component {
             address,
             lng,
             lat,
+            telephone,
             tags: tags.join(','),
             withdrawn: this.state.details.withdrawn
         };
@@ -212,25 +244,49 @@ export default class EditShop extends Component {
         
         if (changed.length === 1) {
             var key = changed[0];
-            answer = await patch(url, {key: shop[key]});
+            this._isMounted = await patch(url, {key: shop[key]});
         }
         else if (changed.length > 1) {
-            answer = await put(url, shop); 
+            this._isMounted = await put(url, shop); 
         }
         else {
             browserHistory.push('/shops');
         }
         
-        if (answer === 'error') {
-            this.setState({error_edit: true});
-            return;
-        }
+        answer = this._isMounted;
         
-        if (answer.status === 200) {
-            this.setState({success_edit: true});
+        try {
+            if (answer === 'error') {
+                this.setState({error: true});
+                return;
+            }
+
+            if (answer.status === 200) {
+                this.setState({success_edit: true});
+            }
+            else if (answer.status === 404) {
+                this.setState({message_edit: 'Error 404 - Το αίτημα δεν ήταν επιτυχές', not_found_edit: true});
+                return;
+            }
+            else if (answer.status === 401) {
+                this.setState({message_edit: 'Error 401 - Μη επιτρεπόμενη ενέργεια', not_found_edit: true});
+                return;
+            }
+            else if (answer.status === 403) {
+                this.setState({message_edit: 'Error 403 - Απαιτείται σύνδεση', not_found_edit: true});
+                return;
+            }
+            else if (answer.status === 400) {
+                this.setState({message_edit: 'Error 400 - Μη έγκυρες παράμετροι αιτήματος.', not_found_edit: true});
+                return;
+            }
+            else {
+                this.setState({message_edit: 'Error ' + answer.status.toString() + ' - Πρόβλημα με την ολοκλήρωση του αιτήματος.', not_found_edit: true});
+                return;
+            }
         }
-        else {
-            this.setState({not_found_edit: true});
+        catch (error) {
+            this.setState({error: true, error_message: error});
             return;
         }
     }
@@ -240,7 +296,10 @@ export default class EditShop extends Component {
         <div>
             <NavBarClass/>
             
-            <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά.</Alert>
+            <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά. {this.state.error_message}</Alert>
+            <Alert color="danger" isOpen={this.state.not_found===true}>{this.state.message}</Alert>
+                
+            
             {this.state.details === null
             ?<div> Loading </div>
             : <div>
@@ -300,7 +359,7 @@ export default class EditShop extends Component {
             }
             
             <Modal isOpen={this.state.not_found_edit} toggle={this.toggleModal}>
-                <ModalBody>Η επεξεργασία δεν ολοκληρώθηκε επιτυχώς.</ModalBody>
+                <ModalBody>Η επεξεργασία δεν ολοκληρώθηκε επιτυχώς. {this.state.message_edit}</ModalBody>
                 <ModalFooter>
                     <Button color="primary" onClick={this.toggleModal}>Προσπάθεια ξανά</Button>{' '}
                     <Button color="secondary" onClick={this.homepage}>Αρχική σελίδα</Button>

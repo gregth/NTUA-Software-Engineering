@@ -151,10 +151,12 @@ export default class PapigationShops extends React.PureComponent {
         this._asyncRequest = await answer.json().then((result) => {return result;});
         var result = this._asyncRequest;
         console.log(result);
+        
         if (this.start !== result.start || parseInt(this.pageSize) !== result.count) {
             this.setState({error: true, success: false});
             return;
         }
+        
         this.total = result.total;
         this.shops = result.shops;
         this.pagesCount = Math.ceil(this.total / this.pageSize);
