@@ -17,7 +17,7 @@ class newProduct extends React.Component {
     
     constructor(props) {
         super(props);
-        this.state = {success: null, error: null, not_found: null, message: null};
+        this.state = { error_message: null, success: null, error: null, not_found: null, message: null};
         this.handleSubmit = this.handleSubmit.bind(this);
         this.toggleModal = this.toggleModal.bind(this);
         this.homepage = this.homepage.bind(this);

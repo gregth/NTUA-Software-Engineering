@@ -24,7 +24,7 @@ export default class PapigationShops extends React.PureComponent {
         this._asyncRequest = null;
         this._isMounted = null;
         this.state = {
-            tooltipOpen: false, currentPage: 0, error: null, success: null, not_found: null, ready: null, selected_shops: [], noshops: false, message: null
+            error_message: null, tooltipOpen: false, currentPage: 0, error: null, success: null, not_found: null, ready: null, selected_shops: [], noshops: false, message: null
         };
         this.dataSet = null;    
         this.pagesCount = null;

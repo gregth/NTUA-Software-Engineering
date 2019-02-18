@@ -19,7 +19,7 @@ function onlyUnique (value, index, self) {
 class Shop extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {message: null, flag: false, success: null, error: null, current: null, checkPhone: null, error_address: null, not_found: null};
+        this.state = { error_message: null, message: null, flag: false, success: null, error: null, current: null, checkPhone: null, error_address: null, not_found: null};
         this.handleSubmit = this.handleSubmit.bind(this);
         this.search = this.search.bind(this);
         this.currentLocation = this.currentLocation.bind(this);
