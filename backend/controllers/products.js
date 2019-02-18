@@ -46,7 +46,7 @@ module.exports = class ProductsController extends BaseController {
             conditions.withdrawn = 0
         }
 
-        return super.list(conditions, order_by, start, count)
+        return super.list(conditions, params)
     }
 
     async read(id) {
