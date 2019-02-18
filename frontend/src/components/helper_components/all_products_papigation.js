@@ -58,6 +58,7 @@ export default class ProductsResults extends React.PureComponent {
                 <td>{product.name}</td>
                 <td>{product.category}</td>
                 <td>{product.brand}</td>
+                <td>{product.volume}ml</td>
                 <td></td>
                 <td>
                     {!product.withdrawn
@@ -240,6 +241,7 @@ export default class ProductsResults extends React.PureComponent {
                                 <th>Όνομα Προϊόντος</th>
                                 <th>Κατηγορία</th>
                                 <th>Μάρκα</th>
+                                <th>Όγκος</th>
                                 <th>Χαρακτηριστικά</th>
                                 <th>Κατάσταση</th>
                                 <th>Περιγραφή</th>
