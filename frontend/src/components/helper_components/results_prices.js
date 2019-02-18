@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-import { Table, Pagination, PaginationItem, PaginationLink, Tooltip, Button } from 'reactstrap';
+import { Alert, Table, Pagination, PaginationItem, PaginationLink, Tooltip, Button } from 'reactstrap';
 import React, { Component } from "react";
 import ReactDOM from 'react-dom';
 import { browserHistory } from 'react-router';
@@ -28,8 +28,10 @@ export default class PricesTable extends React.PureComponent {
         this.make_url = this.make_url.bind(this);
         this.refresh = this.refresh.bind(this);
         this.state = {
-            tooltipOpen: false, currentPage: 0, error: null, success: null, not_found: null, ready: null
+            tooltipOpen: false, currentPage: 0, error: null, success: null, 
+            not_found: null, ready: null, error_message: null, message: null
         };
+        this._isMounted = null;
         this.dataSet = null;    
         this.pagesCount = null;
         this.pageSize = 20;
@@ -39,7 +41,13 @@ export default class PricesTable extends React.PureComponent {
         this.prices = null;
         this.request();
     }
-  
+    
+    componentWilldUnmount() {
+        if (this._isMounted) {
+            this._isMounted.cancel();
+        }
+    }
+    
     createData () {
         this.dataSet = this.prices.map(price => (
             <tr key={price.id}>
@@ -117,24 +125,50 @@ export default class PricesTable extends React.PureComponent {
         var temp = await this.make_url().then(url => {return url;});
         console.log(temp)
         const url = temp;
-        const answer = await receive_from_server(url);
         
-        if (answer === 'error') {
-            this.setState({error: true});
+        this._isMounted = await receive_from_server(url);
+        const answer = this._isMounted;
+        
+        try {
+            if (answer === 'error') {
+                this.setState({error: true});
+                return;
+            }
+
+            if (answer.status === 200) {
+                this.setState({success: true});
+            }
+            else if (answer.status === 404) {
+                this.setState({message: 'Error 404 - Το αίτημα δεν ήταν επιτυχές', not_found: true});
+                return;
+            }
+            else if (answer.status === 401) {
+                this.setState({message: 'Error 401 - Μη επιτρεπόμενη ενέργεια', not_found: true});
+                return;
+            }
+            else if (answer.status === 403) {
+                this.setState({message: 'Error 403 - Απαιτείται σύνδεση', not_found: true});
+                return;
+            }
+            else if (answer.status === 400) {
+                this.setState({message: 'Error 400 - Μη έγκυρες παράμετροι αιτήματος.', not_found: true});
+                return;
+            }
+            else {
+                this.setState({message: 'Error ' + answer.status.toString() + ' - Πρόβλημα με την ολοκλήρωση του αιτήματος.', not_found: true});
+                return;
+            }
+        }
+        catch (error) {
+            this.setState({error: true, error_message: error});
             return;
         }
         
-        if (answer.status === 200) {
-            this.setState({success: true});
-        }
-        else {
-            this.setState({not_found: true});
-        }
         var result = await answer.json().then((result) => {return result;});
         console.log(result);
         if (this.start !== result.start || parseInt(this.pageSize) !== result.count, this.start) {
             console.log(result.start, result.count, parseInt(this.pageSize), )
-            this.setState({not_found: true, success: false});
+            this.setState({error: true, success: false});
             return;
         }
         this.total = result.total;
@@ -173,6 +207,9 @@ export default class PricesTable extends React.PureComponent {
         const { currentPage } = this.state;
         return ( 
             <div>
+                <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά. {this.state.error_message}</Alert>
+                <Alert color="danger" isOpen={this.state.not_found===true}>{this.state.message}</Alert>
+                
                 <Table borderless>
                     <thead>
                         <tr>

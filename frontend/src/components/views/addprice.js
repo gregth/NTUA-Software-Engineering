@@ -81,7 +81,7 @@ class Product extends React.Component {
                 return;
             }
             else if (answer.status === 401) {
-                this.setState({message: 'Error 401 - Λάθος στοιχεία χρήστη', not_found: true});
+                this.setState({message: 'Error 401 - Μη επιτρεπόμενη ενέργεια', not_found: true});
                 return;
             }
             else if (answer.status === 403) {
