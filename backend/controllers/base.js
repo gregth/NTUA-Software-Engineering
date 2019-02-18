@@ -79,7 +79,7 @@ module.exports = class BaseController {
             start = parseInt(params.start, 10)
         }
         if (params.count) {
-            count = parseInt(params.count, 20)
+            count = parseInt(params.count, 10)
         }
 
         const list = await this.model.list(conditions, order_by, having)
