@@ -72,7 +72,7 @@ export default class EditProduct extends Component {
             details => {
                 this._asyncRequest = null;
                 this.setState({details, description: details.description, tags: details.tags, 
-                    name: details.name, brand: details.brand, volume: details.volume});
+                    name: details.name, brand: details.extraData.brand, volume: details.extraData.volume});
             }
         );
     }

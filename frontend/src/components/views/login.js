@@ -36,7 +36,6 @@ class Login extends React.Component {
             password
         };
         
-        console.log(body);
         const url = 'http://localhost:3002/login';
         this._isMounted = await send_to_server(url, body);
         const answer = this._isMounted;

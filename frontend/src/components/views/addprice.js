@@ -180,11 +180,12 @@ class Product extends React.Component {
         this.refs.nearby_shops.close();
         this.body.shopId = id;
         console.log(this.body);
-       
+        this.setState({ success: null, not_found: null, error: null});
+            
         var url = 'http://localhost:3002/prices';
         this._isMounted = await send_to_server(url, body);
         const answer = this._isMounted;
-        
+        console.log(answer);
         try {
             if (answer === 'error') {
                 this.setState({error: true});
@@ -241,7 +242,6 @@ class Product extends React.Component {
         this.body.price = price;
         this.body.dateFrom = dateFrom;
         this.body.dateTo = dateTo;
-        console.log(this.body);
 
         var result = await this.find_shop();        
     }
