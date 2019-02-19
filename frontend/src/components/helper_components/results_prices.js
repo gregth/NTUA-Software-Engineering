@@ -102,6 +102,9 @@ export default class PricesTable extends React.PureComponent {
             if (this.props.params.price) {
                 params.push('price='+ this.props.params.price);
             }
+            if (this.props.params.category) {
+                params.push('category='+ this.props.params.category);
+            }
         }
         if (this.props.shops) {
             for (var i=0; i<this.props.shops.length; i++) {

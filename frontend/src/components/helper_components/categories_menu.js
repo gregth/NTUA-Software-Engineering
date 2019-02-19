@@ -48,7 +48,11 @@ export class Categories extends Component {
   
     changeValue(e) {
         const category = e.currentTarget.textContent;
-        this.setState({dropDownValue: category, category: category});
+        var value = null;
+        for (var i in options) {
+            if (options[i].name === category) value = options[i].value; 
+        }
+        this.setState({dropDownValue: category, category: value});
     }
 
     render() {
