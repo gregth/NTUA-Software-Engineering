@@ -69,15 +69,27 @@ class NavBarClass extends React.Component {
                     <NavItem>
                         <NavLink onClick={() => this.shops()}> Καταστήματα </NavLink>
                     </NavItem>
+                    {Boolean(cookie.load('loggedin'))
+                    ?
                     <NavItem>
                         <NavLink onClick={() => this.new_product()}> Προσθήκη Νέου Προϊόντος</NavLink>
                     </NavItem>
+                    : null
+                    }
+                    {Boolean(cookie.load('loggedin'))
+                    ?
                     <NavItem>
                         <NavLink onClick={() => this.new_shop()}> Προσθήκη Νέου Καταστήματος</NavLink>
                     </NavItem>
+                    : null
+                    }
+                    {Boolean(cookie.load('loggedin'))
+                    ?
                     <NavItem>
                         <NavLink onClick={() => this.newprice()}><FontAwesomeIcon icon={faCartPlus}></FontAwesomeIcon> Προσθήκη Νέας Τιμής</NavLink>
                     </NavItem>
+                    : null
+                    }
                     {Boolean(cookie.load('loggedin'))
                     ? <NavItem><Settings/></NavItem>
                     : null
