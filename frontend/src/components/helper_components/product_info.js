@@ -74,6 +74,8 @@ export default class ProductInfo extends React.Component {
                         {this.state.product.extraData.brand}<br/>
                         <strong>Όγκος: </strong>
                         {this.state.product.extraData.volume}<br/>
+                        <strong>Κατηγορία: </strong>
+                        {this.state.product.category}<br/>
                         <strong>Χαρακτηριστικά: </strong>
                         {this.state.product.tags.join(', ')}<br/>
                         <strong>Περιγραφή: </strong>
