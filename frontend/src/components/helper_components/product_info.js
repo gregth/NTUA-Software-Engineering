@@ -67,15 +67,15 @@ export default class ProductInfo extends React.Component {
                     {this.state.product
                     ? <PopoverBody>
                         <strong>Barcode: </strong>
-                        {this.state.product.barcode}<br/>
+                        {this.state.product.extraData.barcode}<br/>
                         <strong>Όνομα: </strong>
                         {this.state.product.name}<br/>
                         <strong>Μάρκα: </strong>
-                        {this.state.product.brand}<br/>
+                        {this.state.product.extraData.brand}<br/>
                         <strong>Όγκος: </strong>
-                        {this.state.product.volume}<br/>
+                        {this.state.product.extraData.volume}<br/>
                         <strong>Χαρακτηριστικά: </strong>
-                        {this.state.product.tags}<br/>
+                        {this.state.product.tags.join(', ')}<br/>
                         <strong>Περιγραφή: </strong>
                         {this.state.product.description}<br/>
                         

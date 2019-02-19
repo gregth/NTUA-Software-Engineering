@@ -52,9 +52,9 @@ export default class PricesTable extends React.PureComponent {
         this.dataSet = this.prices.map(price => (
             <tr key={price.id}>
                 <td>{price.productName}</td>
-                <td>{price.productTags}</td>
+                <td>{price.productTags.join(', ')}</td>
                 <td>{price.shopName}</td>
-                <td>{price.shopTags}</td>
+                <td>{price.shopTags.join(', ')}</td>
                 <td>{price.shopAddress}</td>
                 <td>{price.date}</td>
                 <td>{price.shopDist}</td>

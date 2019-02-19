@@ -79,7 +79,7 @@ export default class ShopInfo extends React.Component {
                         <strong>Τηλέφωνο: </strong>
                         {this.state.shop.telephone}<br/>
                         <strong>Χαρακτηριστικά: </strong>
-                        {this.state.shop.tags}
+                        {this.state.shop.tags.join(', ')}
                         
                     </PopoverBody>
                     : <div>Loading...</div>
