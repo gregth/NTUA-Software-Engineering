@@ -47,7 +47,8 @@ function check_changes (original, edited) {
         }
     }
     
-    if (!arraysEqual(original.tags, edited.tags)) {
+    if (original.tags.join(',') !== edited.tags) {
+        console.log(original.tags.join(','), edited.tags)
         changed.push('tags');
     }
     return changed;
@@ -163,6 +164,7 @@ export default class EditShop extends Component {
     
     handleChange(event) {
         var name = event.target.name;
+        if (name === 'telephone') this.validatePhone();
         this.setState({[name]: event.target.value});
     }
     
@@ -244,9 +246,11 @@ export default class EditShop extends Component {
         
         if (changed.length === 1) {
             var key = changed[0];
+            console.log('PATCH', key, shop[key]);
             this._isMounted = await patch(url, {key: shop[key]});
         }
         else if (changed.length > 1) {
+            console.log('PUT', shop, changed);
             this._isMounted = await put(url, shop); 
         }
         else {
@@ -336,14 +340,14 @@ export default class EditShop extends Component {
                         <Label sm={6} for="edit_shop_tags">Χαρακτηριστικά Καταστήματος:
                         <FormText>Διαχωρισμός χαρακτηριστικών με κόμμα (,)</FormText></Label>
                         <Col sm={8}>
-                            <Input type="textarea" name="text" id="edit_shop_tags" onChange={this.handleChange} value={this.state.tags}/>
+                            <Input type="textarea" name="tags" id="edit_shop_tags" onChange={this.handleChange} value={this.state.tags}/>
                         </Col>
                     </FormGroup>
                     <div className="row mt-3"></div>
                     <FormGroup check row>
                         <Label sm={6} for="phone">Τηλέφωνο Καταστήματος:</Label>
                         <Col sm={3}>
-                            <Input type="tel" id="edit_shop_phone" name="phone" value={this.state.telephone} onChange={this.handleChange} invalid={this.state.checkPhone===false} valid={this.state.checkPhone} onChange={() => this.validatePhone()}/>
+                            <Input type="tel" id="edit_shop_phone" name="telephone" value={this.state.telephone} onChange={this.handleChange} invalid={this.state.checkPhone===false} valid={this.state.checkPhone}/>
                         </Col>
                     </FormGroup>
                     <hr></hr>
