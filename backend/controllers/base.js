@@ -57,21 +57,29 @@ module.exports = class BaseController {
         return required_params
     }
 
+    validate_sort_params(sort_params, sortable_rules) {
+        let default_key = sortable_rules.default_key
+        let default_order = sortable_rules.default_order
+        let allowed_sort_keys = sortable_rules.allowed_sort_keys
+        let allowed_order = sortable_rules.allowed_order
+
+        let field_name, order
+        if (sort_params) {
+            let sort = sort_params+ ''
+            field_name = sort.split('|')[0]
+            order = sort.split('|')[1]
+        }
+        if (!sort_params || 
+            (!(allowed_sort_keys.includes(field_name) && 
+            allowed_order.includes(order)))) {
+            field_name = default_key
+            order = default_order 
+        }
+        return [{field_name, order}]   
+    }
+
     async list(conditions={}, params={}, having) {
-        let sort = 'id|DESC'
-        if (params.sort) {
-            sort = params.sort + ''
-        }
-        let field_name = sort.split('|')[0]
-        let order = sort.split('|')[1]
-        let allowed_field_names = ['id', 'name']
-        let allowed_order= ['ASC', 'DESC']
-        if (!(allowed_field_names.includes(field_name) && 
-                allowed_order.includes(order))) {
-            field_name = 'id',
-            order = 'DESC'
-        }
-        const order_by = [{field_name, order}]
+        const order_by = this.validate_sort_params(params.sort, this.sortable_rules)
 
         let start = 0
         let count = 20

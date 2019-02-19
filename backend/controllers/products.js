@@ -23,6 +23,13 @@ module.exports = class ProductsController extends BaseController {
                 }
             }
         }
+
+        this.sortable_rules = {
+            default_key: 'id',
+            default_order: 'DESC',
+            allowed_sort_keys: ['id', 'name'],
+            allowed_order: ['ASC', 'DESC']
+        }
     }
 
     async list(params) {
