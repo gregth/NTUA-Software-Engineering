@@ -234,7 +234,9 @@ export default class EditShop extends Component {
         
         if (changed.length === 1) {
             var key = changed[0];
-            this._isMounted = await patch(url, {key: shop[key]});
+            var body = {};
+            body[key] = shop[key];
+            this._isMounted = await patch(url, body);
         }
         else if (changed.length > 1) {
             this._isMounted = await put(url, shop); 

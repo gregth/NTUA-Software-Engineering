@@ -187,11 +187,11 @@ export default class EditProduct extends Component {
         
         if (changed.length === 1) {
             var key = changed[0];
-            console.log('patch', key)
-            this._isMounted = await patch(url, {key: this.state.details[key]});
+            var body = {};
+            body[key] = product[key];
+            this._isMounted = await patch(url, body);
         }
         else if (changed.length > 1) {
-            console.log('put', this.state.details, product, changed)
             this._isMounted = await put(url, product); 
         }
         else {
