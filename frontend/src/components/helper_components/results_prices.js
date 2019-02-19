@@ -57,8 +57,8 @@ export default class PricesTable extends React.PureComponent {
                 <td>{price.shopTags.join(', ')}</td>
                 <td>{price.shopAddress}</td>
                 <td>{price.date}</td>
-                <td>{price.shopDist}</td>
-                <td>{price.price}</td>
+                <td>{price.shopDist ? price.shopDist.toFixed(2) + 'km' : '-'}</td>
+                <td>{price.price + '€'}</td>
                 <td>
                     <ProductInfo id={price.productId}/>
                     <ShopInfo id={price.shopId}/>
