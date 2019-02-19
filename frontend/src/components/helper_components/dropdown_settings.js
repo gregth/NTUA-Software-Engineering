@@ -67,9 +67,6 @@ export class Settings extends Component {
                         <FontAwesomeIcon icon={faBars}></FontAwesomeIcon> {cookie.load('username')}
                     </DropdownToggle>
                     <DropdownMenu right>
-                        <DropdownItem onClick={() => this.delete()}>
-                            Απενεργοποίηση Λογαριασμού
-                        </DropdownItem>
                         <DropdownItem onClick={() => this.logoff()}>
                             Αποσύνδεση
                         </DropdownItem>
