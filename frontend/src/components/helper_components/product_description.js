@@ -13,7 +13,6 @@ export default class Description extends React.Component {
     constructor(props) {
         super(props);
         this.toggle = this.toggle.bind(this);
-        this._asyncRequest = null;
         this.state = {
             popoverOpen: false
         };

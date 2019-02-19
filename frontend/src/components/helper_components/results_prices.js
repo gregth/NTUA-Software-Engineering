@@ -125,7 +125,7 @@ export default class PricesTable extends React.PureComponent {
         }
     }
     async request () {
-        this.setState({success: null, error: null, not_found: null, message: null});
+        this.setState({success: null, error: null, not_found: null, message: null, error_message: null});
         var temp = await this.make_url().then(url => {return url;});
         console.log(temp)
         const url = temp;
@@ -143,19 +143,19 @@ export default class PricesTable extends React.PureComponent {
                 this.setState({success: true});
             }
             else if (answer.status === 404) {
-                this.setState({message: 'Error 404 - Το αίτημα δεν ήταν επιτυχές', not_found: true});
+                this.setState({message: 'Error 404 - Not Found', not_found: true});
                 return;
             }
             else if (answer.status === 401) {
-                this.setState({message: 'Error 401 - Μη επιτρεπόμενη ενέργεια', not_found: true});
+                this.setState({message: 'Error 401 - Not Authorized', not_found: true});
                 return;
             }
             else if (answer.status === 403) {
-                this.setState({message: 'Error 403 - Απαιτείται σύνδεση', not_found: true});
+                this.setState({message: 'Error 403 - Forbidden', not_found: true});
                 return;
             }
             else if (answer.status === 400) {
-                this.setState({message: 'Error 400 - Μη έγκυρες παράμετροι αιτήματος.', not_found: true});
+                this.setState({message: 'Error 400 - Bad Request', not_found: true});
                 return;
             }
             else {

@@ -65,7 +65,7 @@ class Product extends React.Component {
     }
     
     async find_barcode () {
-        this.setState({ success: null, not_found: null, error: null});
+        this.setState({ success: null, not_found: null, error: null, message: null, error_message: null });
         const barcode = document.getElementById('addprice_barcode').value;
         var url = 'http://localhost:3002/products?barcode=' + barcode;
         this._isMounted = await receive_from_server(url);
@@ -78,19 +78,19 @@ class Product extends React.Component {
             else if (answer.status === 404) {
                 this.setState({not_found2: true});
                 this.setState({message2: 'Το προϊόν με barcode ' +  barcode + ' δε βρέθηκε.'});
-                this.setState({message: 'Error 404 - Not found', not_found: true});
+                this.setState({message: 'Error 404 - Not Found', not_found: true});
                 return;
             }
             else if (answer.status === 401) {
-                this.setState({message: 'Error 401 - Μη επιτρεπόμενη ενέργεια', not_found: true});
+                this.setState({message: 'Error 401 - Not Authorized', not_found: true});
                 return;
             }
             else if (answer.status === 403) {
-                this.setState({message: 'Error 403 - Απαιτείται σύνδεση', not_found: true});
+                this.setState({message: 'Error 403 - Forbidden', not_found: true});
                 return;
             }
             else if (answer.status === 400) {
-                this.setState({message: 'Error 400 - Μη έγκυρες παράμετροι αιτήματος.', not_found: true});
+                this.setState({message: 'Error 400 - Bad Request', not_found: true});
                 return;
             }
             else {
@@ -151,15 +151,21 @@ class Product extends React.Component {
                 this.setState({success: true});
             }
             else if (answer.status === 404) {
-                this.setState({message: 'Error 404 - Το αίτημα δεν ήταν επιτυχές', not_found: true});
+                this.setState({not_found2: true});
+                this.setState({message2: 'Δε βρέθηκαν καταστήματα σε αυτή την τοποθεσία.'});
+                this.setState({message: 'Error 404 - Not Found', not_found: true});
                 return;
             }
             else if (answer.status === 401) {
-                this.setState({message: 'Error 401 - Λάθος στοιχεία χρήστη', not_found: true});
+                this.setState({message: 'Error 401 - Not Authorized', not_found: true});
                 return;
             }
             else if (answer.status === 403) {
-                this.setState({message: 'Error 403 - Απαιτείται σύνδεση', not_found: true});
+                this.setState({message: 'Error 403 - Forbidden', not_found: true});
+                return;
+            }
+            else if (answer.status === 400) {
+                this.setState({message: 'Error 400 - Bad Request', not_found: true});
                 return;
             }
             else if (answer.status === 400) {
@@ -203,19 +209,19 @@ class Product extends React.Component {
                 this.setState({success: true});
             }
             else if (answer.status === 404) {
-                this.setState({message: 'Error 404 - Το αίτημα δεν ήταν επιτυχές', not_found: true});
+                this.setState({message: 'Error 404 - Not Found', not_found: true});
                 return;
             }
             else if (answer.status === 401) {
-                this.setState({message: 'Error 401 - Μη επιτρεπόμενη ενέργεια', not_found: true});
+                this.setState({message: 'Error 401 - Not Authorized', not_found: true});
                 return;
             }
             else if (answer.status === 403) {
-                this.setState({message: 'Error 403 - Απαιτείται σύνδεση', not_found: true});
+                this.setState({message: 'Error 403 - Forbidden', not_found: true});
                 return;
             }
             else if (answer.status === 400) {
-                this.setState({message: 'Error 400 - Μη έγκυρες παράμετροι αιτήματος.', not_found: true});
+                this.setState({message: 'Error 400 - Bad Request', not_found: true});
                 return;
             }
             else {

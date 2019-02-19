@@ -14,14 +14,15 @@ export class MapClass extends Component {
     constructor(props) {
         super(props);
         this.currentLocation = this.currentLocation.bind(this);
-        this.state = {current: [], details: null, show_current: false, product: null,
-            markers : [], activeMarker: null,  showingInfoWindow: false, modal: false};
+        this.state = {current: [], details: null, show_current: false, product: null, message: null, error_message: null, error: null, not_found: null, 
+            success: null, markers : [], activeMarker: null,  showingInfoWindow: false, modal: false};
         this.onMarkerClick = this.onMarkerClick.bind(this);
         this.toggle = this.toggle.bind(this);
         this.toggle_map = this.toggle_map.bind(this);
         this.request_shop = this.request_shop.bind(this);
         this.request_product = this.request_product.bind(this);
         this._asyncRequest = null;
+        this._isMounted = null;
     }
     
     componentDidMount () {        
@@ -43,6 +44,9 @@ export class MapClass extends Component {
         if (this._asyncRequest) {
             this._asyncRequest.cancel();
         }
+        if (this._isMounted) {
+            this._isMounted.cancel();
+        }
     }
     
     toggle () {
@@ -61,19 +65,44 @@ export class MapClass extends Component {
     }
     
     async request_product() {
+        this.setState({ success: null, not_found: null, error: null, message: null, error_message: null });
         const url = 'http://localhost:3002/products/' + this.props.product_id;
-        const answer = await receive_from_server(url);
+        this._isMounted = await receive_from_server(url);
+        const answer = this._isMounted;
         
-        if (answer === 'error') {
-            this.setState({error: true});
+        try {
+            if (answer === 'error') {
+                this.setState({error: true});
+                return;
+            }
+
+            if (answer.status === 200) {
+                this.setState({success: true});
+            }
+            else if (answer.status === 404) {
+                this.setState({message: 'Error 404 - Not Found', not_found: true});
+                return;
+            }
+            else if (answer.status === 401) {
+                this.setState({message: 'Error 401 - Not Authorized', not_found: true});
+                return;
+            }
+            else if (answer.status === 403) {
+                this.setState({message: 'Error 403 - Forbidden', not_found: true});
+                return;
+            }
+            else if (answer.status === 400) {
+                this.setState({message: 'Error 400 - Bad Request', not_found: true});
+                return;
+            }
+            else {
+                this.setState({message: 'Error ' + answer.status.toString() + ' - Πρόβλημα με την ολοκλήρωση του αιτήματος.', not_found: true});
+                return;
+            }
+        }
+        catch (error) {
+            this.setState({error: true, error_message: error});
             return;
-        }
-        
-        if (answer.status === 200) {
-            this.setState({success: true});
-        }
-        else {
-            this.setState({not_found: true});
         }
         
         var details = await answer.json().then((result) => {return result;});
@@ -83,19 +112,43 @@ export class MapClass extends Component {
     }
     
     async request_shop() {
+        this.setState({ success: null, not_found: null, error: null, message: null, error_message: null });
         const url = 'http://localhost:3002/shops/' + this.props.shop_id;
-        const answer = await receive_from_server(url);
-        
-        if (answer === 'error') {
-            this.setState({error: true});
+        this._isMounted = await receive_from_server(url);
+        const answer = this._isMounted;
+        try {
+            if (answer === 'error') {
+                this.setState({error: true});
+                return;
+            }
+
+            if (answer.status === 200) {
+                this.setState({success: true});
+            }
+            else if (answer.status === 404) {
+                this.setState({message: 'Error 404 - Not Found', not_found: true});
+                return;
+            }
+            else if (answer.status === 401) {
+                this.setState({message: 'Error 401 - Not Authorized', not_found: true});
+                return;
+            }
+            else if (answer.status === 403) {
+                this.setState({message: 'Error 403 - Forbidden', not_found: true});
+                return;
+            }
+            else if (answer.status === 400) {
+                this.setState({message: 'Error 400 - Bad Request', not_found: true});
+                return;
+            }
+            else {
+                this.setState({message: 'Error ' + answer.status.toString() + ' - Πρόβλημα με την ολοκλήρωση του αιτήματος.', not_found: true});
+                return;
+            }
+        }
+        catch (error) {
+            this.setState({error: true, error_message: error});
             return;
-        }
-        
-        if (answer.status === 200) {
-            this.setState({success: true});
-        }
-        else {
-            this.setState({not_found: true});
         }
         
         var details = await answer.json().then((result) => {return result;});
