@@ -65,7 +65,7 @@ class Product extends React.Component {
     }
     
     async find_barcode () {
-        this.setState({ success: null, not_found: null, error: null, message: null, error_message: null });
+        this.setState({ success: null, not_found: null, error: null, message: null, error_message: null, not_found2: null, message2: null });
         const barcode = document.getElementById('addprice_barcode').value;
         var url = 'http://localhost:3002/products?barcode=' + barcode;
         this._isMounted = await receive_from_server(url);
@@ -114,7 +114,7 @@ class Product extends React.Component {
     }
     
     async find_shop () {
-        this.setState({ success: null, not_found: null, error: null});
+        this.setState({success: null, error: null, not_found: null, message: null, error_message: null, not_found2: null, message2: null });
         const barcode = document.getElementById('addprice_barcode').value;
         var lng = null;
         var lat = null;
@@ -193,7 +193,7 @@ class Product extends React.Component {
         this.refs.nearby_shops.close();
         this.body.shopId = id;
         console.log(this.body);
-        this.setState({ success: null, not_found: null, error: null});
+        this.setState({ success: null, not_found: null, error: null, message: null, error_message: null});
             
         var url = 'http://localhost:3002/prices';
         this._isMounted = await send_to_server(url, this.body);

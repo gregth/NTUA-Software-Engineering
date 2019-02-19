@@ -78,7 +78,7 @@ export default class EditProduct extends Component {
     }
 
     async request () {
-        this.setState({success: null, error: null, not_found: null});
+        this.setState({success: null, error: null, not_found: null, message: null, error_message: null });
         const url = 'http://localhost:3002/products/' + this.props.location.query.id;
         this._isMounted = await receive_from_server(url);
         const answer = this._isMounted;

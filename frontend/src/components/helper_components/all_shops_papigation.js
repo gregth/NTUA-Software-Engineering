@@ -85,7 +85,7 @@ export default class PapigationShops extends React.PureComponent {
     }
     
     search () {
-        this.setState({error: null, not_found: null, message: null});
+        this.setState({ success: null, not_found: null, error: null, message: null, error_message: null, not_found2: null, message2: null });
         if (this.selected_shops.length === 0) {
             this.setState({noshops: true});
             return;
@@ -112,7 +112,7 @@ export default class PapigationShops extends React.PureComponent {
     }
     
     async request () {       
-        this.setState({error: null, not_found: null, message: null});
+        this.setState({ success: null, not_found: null, error: null, message: null, error_message: null, not_found2: null, message2: null });
         this.selected_shops = [];
         const url = 'http://localhost:3002/shops?start=' + this.start + 
                     '&count=' +  this.pageSize + '&sort=' + this.sort +

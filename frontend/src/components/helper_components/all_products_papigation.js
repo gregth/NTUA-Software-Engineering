@@ -120,7 +120,7 @@ export default class ProductsResults extends React.PureComponent {
     }
     
     search () {
-        this.setState({error: null, not_found: null, message: null});
+        this.setState({ success: null, not_found: null, error: null, message: null, error_message: null, not_found2: null, message2: null });
         if (this.selected_products.length === 0) {
             this.setState({noproducts: true});
             return;
@@ -154,7 +154,7 @@ export default class ProductsResults extends React.PureComponent {
     
     async request () {   
         this.selected_products = [];
-        this.setState({error: null, not_found: null, message: null});
+        this.setState({ success: null, not_found: null, error: null, message: null, error_message: null, not_found2: null, message2: null });
 
         const url = 'http://localhost:3002/products?start=' + this.start + 
                     '&count=' +  this.pageSize + '&sort=' + this.sort +

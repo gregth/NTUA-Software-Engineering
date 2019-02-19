@@ -117,17 +117,3 @@ export class MapClass extends Component {
 export default GoogleApiWrapper({
     apiKey: 'AIzaSyAsLsF3d7bdPcNMcSwPfb8aUfcadkjOMH0'
 })(MapClass);
-
-/*
- * <Marker
-                                className='marker'
-                                position={{ lat: marker.lat, lng: marker.lng }}
-                                key={marker.id}
-                                label={marker.price.toString() + '€'}
-                                labelStyle={{color: '#fff'}}
-                                icon ={'https://img.icons8.com/color/48/000000/speech-bubble.png'}
-                                onClick={this.onMarkerClick}
-                                id={marker.id}
-                            >
-                            </Marker>
- */

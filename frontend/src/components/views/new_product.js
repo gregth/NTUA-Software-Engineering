@@ -41,7 +41,7 @@ class newProduct extends React.Component {
     async handleSubmit(event) {
         event.preventDefault();
         event.nativeEvent.stopImmediatePropagation();
-        this.setState({error: null, not_found: null, message: null, success: null});
+        this.setState({success: null, error: null, not_found: null, message: null, error_message: null });
         const name = document.getElementById('new_product_name').value;
         const barcode = document.getElementById('new_product_barcode').value;
         const brand = document.getElementById('new_product_brand').value;
