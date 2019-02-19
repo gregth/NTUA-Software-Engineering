@@ -52,7 +52,7 @@ export default class PapigationShops extends React.PureComponent {
         <tr key={shop.id} className="row_pointer">
             <td>{shop.name}</td>
             <td>{shop.address}</td>
-            <td>{shop.phone}</td>
+            <td>{shop.telephone}</td>
             <td>{shop.tags.join(', ')}</td>
             <td>
                 {!shop.withdrawn

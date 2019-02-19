@@ -152,8 +152,8 @@ export class Search extends Component {
                     </thead>
                     <tbody>
                         <tr>
-                            <td><Input type="date" id="search_datefrom" name="datefrom" defaultValue={this.props.params.datefrom ? datefrom : date} /></td>
-                            <td><Input type="date" id="search_dateto" name="dateto" defaultValue={this.props.params.dateto ? dateto : date} /></td>
+                            <td><Input type="date" id="search_datefrom" name="datefrom" defaultValue={this.props.params && datefrom ? datefrom : date} /></td>
+                            <td><Input type="date" id="search_dateto" name="dateto" defaultValue={this.props.params && dateto ? dateto : date} /></td>
                             <td>
                                 <Col sm={7}>
                                     <InputGroup>
