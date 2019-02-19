@@ -103,8 +103,13 @@ class Product extends React.Component {
         }
        
         var details = await answer.json().then((result) => {return result;});
-        var id = details.products[0].id;
-        return id;
+        try {
+            var id = details.products[0].id;
+            return id;
+        }
+        catch (error) {
+            return;
+        }
     }
     
     async find_shop () {
@@ -183,7 +188,7 @@ class Product extends React.Component {
         this.setState({ success: null, not_found: null, error: null});
             
         var url = 'http://localhost:3002/prices';
-        this._isMounted = await send_to_server(url, body);
+        this._isMounted = await send_to_server(url, this.body);
         const answer = this._isMounted;
         console.log(answer);
         try {
