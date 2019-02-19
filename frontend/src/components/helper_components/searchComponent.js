@@ -117,6 +117,9 @@ export class Search extends Component {
                 var dateto = to.toISOString().substr(0,10);
             }
         }
+        var curr = new Date();
+        curr.setUTCDate(curr.getDate());
+        var date = curr.toISOString().substr(0,10);
         return ( 
             <div>
                 <Table borderless>
@@ -149,8 +152,8 @@ export class Search extends Component {
                     </thead>
                     <tbody>
                         <tr>
-                            <td><Input type="date" id="search_datefrom" name="datefrom" defaultValue={this.props.params ? datefrom : null} /></td>
-                            <td><Input type="date" id="search_dateto" name="dateto" defaultValue={this.props.params ? dateto : null} /></td>
+                            <td><Input type="date" id="search_datefrom" name="datefrom" defaultValue={this.props.params.datefrom ? datefrom : date} /></td>
+                            <td><Input type="date" id="search_dateto" name="dateto" defaultValue={this.props.params.dateto ? dateto : date} /></td>
                             <td>
                                 <Col sm={7}>
                                     <InputGroup>
