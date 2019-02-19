@@ -59,7 +59,7 @@ export default class ProductsResults extends React.PureComponent {
                 <td>{product.category}</td>
                 <td>{product.extraData.brand}</td>
                 <td>{product.extraData.volume}ml</td>
-                <td></td>
+                <td>{product.tags.join(', ')}</td>
                 <td>
                     {!product.withdrawn
                     ? <div>Ενεργό</div>
@@ -232,7 +232,7 @@ export default class ProductsResults extends React.PureComponent {
                     </tbody>
                 </Table>
                 {!this.state.ready
-                ?<div> Loading... {this.state.ready} {this.products} </div>
+                ?<div> Loading... {this.state.ready} </div>
                 :<div>
                 {this.dataSet.length > 0
                 ? <React.Fragment>   
