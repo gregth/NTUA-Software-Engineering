@@ -65,7 +65,7 @@ module.exports = class BaseController {
 
         let field_name, order
         if (sort_params) {
-            let sort = sort_params+ ''
+            let sort = sort_params + ''
             field_name = sort.split('|')[0]
             order = sort.split('|')[1]
         }
@@ -75,6 +75,12 @@ module.exports = class BaseController {
             field_name = default_key
             order = default_order 
         }
+        
+        // Check if there is a mapping for the passed sort parameter
+        if (sortable_rules.key_mappings && sortable_rules.key_mappings[field_name]) {
+            field_name = sortable_rules.key_mappings[field_name]
+        }
+
         return [{field_name, order}]   
     }
 
