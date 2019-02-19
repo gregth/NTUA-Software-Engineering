@@ -15,6 +15,23 @@ import SortDropdown from '../helper_components/sort_products_shops';
 import StatusDropdown from '../helper_components/status_products_shops';
 import CountDropdown from '../helper_components/count_products_shops';
 
+const options = [
+            {name: 'Αναψυκτικά', value: 'beverages'},
+            {name: 'Χωρίς Αλκοόλ', value: 'nonalchool'},
+            {name: 'Βότκα', value: 'vodka'},
+            {name: 'Κονιάκ', value: 'koniak'},
+            {name: 'Τζιν', value: 'gin'},
+            {name: 'Κρασί', value: 'wine'},
+            {name: 'Λικέρ', value: 'liquer'},
+            {name: 'Μπύρες', value: 'beer'},
+            {name: 'Ούζο', value: 'ouzo'},
+            {name: 'Ουίσκι', value: 'whiskey'},
+            {name: 'Ρούμι', value: 'rum'},
+            {name: 'Τεκίλα', value: 'tequila'},
+            {name: 'Τσίπουρο', value: 'tsipouro'},
+            {name: 'Σνακς', value: 'snacks'}           
+        ];
+        
 export default class ProductsResults extends React.PureComponent {
     constructor(props) {
         super(props);
@@ -26,6 +43,7 @@ export default class ProductsResults extends React.PureComponent {
         this.countChoose = this.countChoose.bind(this);
         this.search = this.search.bind(this);
         this.search_product = this.search_product.bind(this);
+        this.category_to_greek = this.category_to_greek.bind(this);
         this.state = {
             error_message: null, noproducts: null, tooltipOpen: false, currentPage: 0, error: null, success: null, not_found: null, ready: null, message: null
         };
@@ -52,11 +70,19 @@ export default class ProductsResults extends React.PureComponent {
         }
     }
     
+    category_to_greek (category) {
+        var name = null;
+        for (var i in options) {
+            if (options[i].value === category) var name = options[i].name; 
+        }
+        return name;
+    }
+    
     createData () {
         this.dataSet = this.products.map(product => (
             <tr key={product.id} className="row_pointer">
                 <td>{product.name}</td>
-                <td>{product.category}</td>
+                <td>{this.category_to_greek(product.category)}</td>
                 <td>{product.extraData.brand}</td>
                 <td>{product.extraData.volume}ml</td>
                 <td>{product.tags.join(', ')}</td>

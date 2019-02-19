@@ -10,6 +10,23 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWineBottle } from '@fortawesome/free-solid-svg-icons';
 import {receive_from_server} from '../communication/receive';
 
+const options = [
+            {name: 'Αναψυκτικά', value: 'beverages'},
+            {name: 'Χωρίς Αλκοόλ', value: 'nonalchool'},
+            {name: 'Βότκα', value: 'vodka'},
+            {name: 'Κονιάκ', value: 'koniak'},
+            {name: 'Τζιν', value: 'gin'},
+            {name: 'Κρασί', value: 'wine'},
+            {name: 'Λικέρ', value: 'liquer'},
+            {name: 'Μπύρες', value: 'beer'},
+            {name: 'Ούζο', value: 'ouzo'},
+            {name: 'Ουίσκι', value: 'whiskey'},
+            {name: 'Ρούμι', value: 'rum'},
+            {name: 'Τεκίλα', value: 'tequila'},
+            {name: 'Τσίπουρο', value: 'tsipouro'},
+            {name: 'Σνακς', value: 'snacks'}           
+        ];
+        
 export default class ProductInfo extends React.Component {
     constructor(props) {
         super(props);
@@ -17,7 +34,7 @@ export default class ProductInfo extends React.Component {
         this.request_product = this.request_product.bind(this);
         this._asyncRequest = null;
         this.state = {
-            popoverOpen: false, product: null
+            popoverOpen: false, product: null, category: null
         };
     }
     
@@ -44,8 +61,12 @@ export default class ProductInfo extends React.Component {
         }
         
         var details = await answer.json().then((result) => {return result;});
-        console.log(details);
-        this.setState({product: details});
+        
+        var name = null;
+        for (var i in options) {
+            if (options[i].value === details.category) var name = options[i].name; 
+        }
+        this.setState({product: details, category: name});
         return details;
     }
     
@@ -75,7 +96,7 @@ export default class ProductInfo extends React.Component {
                         <strong>Όγκος: </strong>
                         {this.state.product.extraData.volume}<br/>
                         <strong>Κατηγορία: </strong>
-                        {this.state.product.category}<br/>
+                        {this.state.category}<br/>
                         <strong>Χαρακτηριστικά: </strong>
                         {this.state.product.tags.join(', ')}<br/>
                         <strong>Περιγραφή: </strong>
