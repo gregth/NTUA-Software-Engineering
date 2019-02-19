@@ -25,7 +25,7 @@ function receiveInfo(url) {
         headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
-            token: token
+            'X-OBSERVATORY-AUTH': token
         }
     })
     .then((response) => {

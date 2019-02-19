@@ -26,7 +26,7 @@ function sendInfo(url, body) {
         headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
-            token: token
+            'X-OBSERVATORY-AUTH': token
         },
         body: JSON.stringify(body)
     })
