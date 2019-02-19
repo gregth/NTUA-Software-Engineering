@@ -122,6 +122,7 @@ export default class PricesTable extends React.PureComponent {
         }
     }
     async request () {
+        this.setState({success: null, error: null, not_found: null, message: null});
         var temp = await this.make_url().then(url => {return url;});
         console.log(temp)
         const url = temp;

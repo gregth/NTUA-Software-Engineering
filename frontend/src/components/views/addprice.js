@@ -65,6 +65,7 @@ class Product extends React.Component {
     }
     
     async find_barcode () {
+        this.setState({ success: null, not_found: null, error: null});
         const barcode = document.getElementById('addprice_barcode').value;
         var url = 'http://localhost:3002/products?barcode=' + barcode;
         this._isMounted = await receive_from_server(url);
@@ -113,6 +114,7 @@ class Product extends React.Component {
     }
     
     async find_shop () {
+        this.setState({ success: null, not_found: null, error: null});
         const barcode = document.getElementById('addprice_barcode').value;
         var lng = null;
         var lat = null;
