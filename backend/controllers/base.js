@@ -60,7 +60,7 @@ module.exports = class BaseController {
     async list(conditions={}, params={}, having) {
         let sort = 'id|DESC'
         if (params.sort) {
-            sort = params.sort
+            sort = params.sort + ''
         }
         let field_name = sort.split('|')[0]
         let order = sort.split('|')[1]
