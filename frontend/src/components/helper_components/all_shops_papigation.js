@@ -9,6 +9,7 @@ import SortDropdown from '../helper_components/sort_products_shops';
 import StatusDropdown from '../helper_components/status_products_shops';
 import CountDropdown from '../helper_components/count_products_shops';
 import MapClass from '../helper_components/map';
+import cookie from 'react-cookies';
 
 export default class PapigationShops extends React.PureComponent {
     constructor(props) {
@@ -61,8 +62,14 @@ export default class PapigationShops extends React.PureComponent {
                 }
             </td>
             <td>
-                <button className="search_btn" id="edit_btn" onClick={() => this.props.edit(shop.id)}><FontAwesomeIcon icon={faEdit}></FontAwesomeIcon></button>
-                <button className="search_btn" id="delete_btn" onClick={() => this.props.delete(shop.id, shop.name)}><FontAwesomeIcon icon={faTrashAlt}></FontAwesomeIcon></button>     
+                {Boolean(cookie.load('loggedin'))
+                ? <button className="search_btn" id="edit_btn" onClick={() => this.props.edit(shop.id)}><FontAwesomeIcon icon={faEdit}></FontAwesomeIcon></button>
+                : null
+                }
+                {Boolean(cookie.load('loggedin'))
+                ? <button className="search_btn" id="delete_btn" onClick={() => this.props.delete(shop.id, shop.name)}><FontAwesomeIcon icon={faTrashAlt}></FontAwesomeIcon></button>     
+                : null
+                }
                 <button className="search_btn" id="search_shop_btn" onClick={() => this.search_shop(shop.id)}><FontAwesomeIcon icon={faSearch}></FontAwesomeIcon></button>
             </td>
             <td><Input type="checkbox" id={'shop'+shop.id} onChange={() => this.handleChange(shop.id)}></Input></td>
