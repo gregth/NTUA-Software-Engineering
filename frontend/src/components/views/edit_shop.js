@@ -73,7 +73,7 @@ export default class EditShop extends Component {
         this._asyncRequest = this.request().then(
             details => {
                 this._asyncRequest = null;
-                this.setState({details, tags: details.tags, name: details.name, address: details.address, phone: details.telephone});
+                this.setState({details, tags: details.tags, name: details.name, address: details.address, telephone: details.telephone});
             }
         );
     }
