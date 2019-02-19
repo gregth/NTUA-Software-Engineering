@@ -23,6 +23,14 @@ module.exports = class PricesController extends BaseController {
                 shopDist: item.distance
             }
         }
+
+        this.sortable_rules = {
+            default_key: 'price',
+            default_order: 'ASC',
+            allowed_sort_keys: ['price', 'geo.dist', 'date'],
+            allowed_order: ['ASC', 'DESC'],
+            key_mappings: {'geo.dist': 'distance'}
+        }
     }
 
     async list(params) {
@@ -69,7 +77,6 @@ module.exports = class PricesController extends BaseController {
             conditions.productId = params.products.split(',')
         }
 
-        
         return super.list(conditions, params, having)
     }
 
