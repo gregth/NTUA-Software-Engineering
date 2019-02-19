@@ -12,7 +12,7 @@ import { Alert, Button, Modal, ModalHeader, ModalBody, ModalFooter, Table } from
 class Delete extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {modal: false, error: null, success: null, not_found: null};
+        this.state = {modal: false, error: null, success: null, not_found: null, error_message: null, message: null};
         this.toggle = this.toggle.bind(this);
         this.toggle_delete = this.toggle_delete.bind(this);
         this.delete_request = this.delete_request.bind(this);
@@ -20,6 +20,7 @@ class Delete extends React.Component {
         this.id = this.props.id;
         this.message = null;
         this.closeall = this.closeall.bind(this);
+        this._isMounted = null;
     }
     
     toggle() {
@@ -33,7 +34,9 @@ class Delete extends React.Component {
             modal: false,
             error: null,
             success: null,
-            not_found: null
+            not_found: null,
+            error_message: null,
+            message: null
         });
     }
     
@@ -56,26 +59,53 @@ class Delete extends React.Component {
     }
     
     async delete_request() {
-        const answer = await delete_method(this.url);
+        this.setState({ error: null, success: null, not_found: null, error_message: null, message: null });
+        
+        this._isMounted = await delete_method(this.url);
+        const answer = this._isMounted;
+        
+        try {
+            if (answer === 'error') {
+                this.setState({error: true});
+                return;
+            }
 
-         if (answer === 'error') {
-            this.setState({error: true});
+            if (answer.status === 200) {
+                this.setState({success: true});
+            }
+            else if (answer.status === 404) {
+                this.setState({message: 'Error 404 - Το αίτημα δεν ήταν επιτυχές', not_found: true});
+                return;
+            }
+            else if (answer.status === 401) {
+                this.setState({message: 'Error 401 - Μη επιτρεπόμενη ενέργεια', not_found: true});
+                return;
+            }
+            else if (answer.status === 403) {
+                this.setState({message: 'Error 403 - Απαιτείται σύνδεση', not_found: true});
+                return;
+            }
+            else if (answer.status === 400) {
+                this.setState({message: 'Error 400 - Μη έγκυρες παράμετροι αιτήματος.', not_found: true});
+                return;
+            }
+            else {
+                this.setState({message: 'Error ' + answer.status.toString() + ' - Πρόβλημα με την ολοκλήρωση του αιτήματος.', not_found: true});
+                return;
+            }
+        }
+        catch (error) {
+            this.setState({error: true, error_message: error});
             return;
         }
-        
-        if (answer.status === 200) {
-            this.setState({success: true});
-        }
-        else {
-            this.setState({not_found: true});
-        }
+
         this.toggle();
     }
 
     render() {
         return (
             <div>
-                <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά.</Alert>
+                <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά. {this.state.error_message}</Alert>
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
                     <ModalBody> {this.message} </ModalBody>
                         <ModalFooter>
@@ -91,7 +121,7 @@ class Delete extends React.Component {
                         </ModalFooter>
                 </Modal>
                 <Modal isOpen={this.state.not_found} className={this.props.className}>
-                    <ModalBody> Το αίτημα διαγραφής δεν καταχωρήθηκε επιτυχώς. </ModalBody>
+                    <ModalBody> Το αίτημα διαγραφής δεν καταχωρήθηκε επιτυχώς. {this.state.message} </ModalBody>
                         <ModalFooter>
                             <Button color="primary" onClick={this.delete_request}>Προσπάθεια ξανά</Button>
                             <Button color="primary" onClick={this.homepage}>Αρχική σελίδα</Button>
