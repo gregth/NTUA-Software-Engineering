@@ -13,17 +13,6 @@ import {put} from '../communication/put';
 import {patch} from '../communication/patch';
 import NavBarClass from '../helper_components/navbar';
 
-function arraysEqual(arr1, arr2) {
-    if(arr1.length !== arr2.length)
-        return false;
-    for(var i = arr1.length; i--;) {
-        if(arr1[i] !== arr2[i])
-            return false;
-    }
-
-    return true;
-}
-
 function onlyUnique (value, index, self) { 
     return self.indexOf(value) === index;
 }
@@ -41,12 +30,14 @@ function check_changes (original, edited) {
     }
     
     for (var i=0; i<keys.length; i++) {
-        if (original[keys[i]] !== edited[keys[i]]) {
+        var orig = original[keys[i]];
+        if (keys[i] === 'volume' || keys[i] === 'brand') orig = original.extraData[keys[i]];
+        if (orig !== edited[keys[i]]) {
             changed.push(keys[i]);
         }
     }
     
-    if (!arraysEqual(original.tags, edited.tags)) {
+    if (original.tags.join(',') !== edited.tags) {
         changed.push('tags');
     }
     return changed;
@@ -180,7 +171,7 @@ export default class EditProduct extends Component {
             name,
             barcode,
             brand,
-            volume,
+            volume: parseInt(volume),
             category,
             tags: tags.join(','),
             withdrawn: this.state.details.withdrawn
@@ -196,9 +187,11 @@ export default class EditProduct extends Component {
         
         if (changed.length === 1) {
             var key = changed[0];
+            console.log('patch', key)
             this._isMounted = await patch(url, {key: this.state.details[key]});
         }
         else if (changed.length > 1) {
+            console.log('put', this.state.details, product, changed)
             this._isMounted = await put(url, product); 
         }
         else {

@@ -223,7 +223,7 @@ export default class PricesTable extends React.PureComponent {
                         </tr>
                     </tbody>
                 </Table>
-                {!this.state.ready
+                {!this.state.ready || !this.dataSet
                 ?<div> Loading... </div>
                 :<div>
                 {this.dataSet.length > 0

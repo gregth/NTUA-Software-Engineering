@@ -14,17 +14,6 @@ import {patch} from '../communication/patch';
 import { address_to_coords } from '../functions/address_to_coordinates';
 import NavBarClass from '../helper_components/navbar';
 
-function arraysEqual(arr1, arr2) {
-    if(arr1.length !== arr2.length)
-        return false;
-    for(var i = arr1.length; i--;) {
-        if(arr1[i] !== arr2[i])
-            return false;
-    }
-
-    return true;
-}
-
 function onlyUnique (value, index, self) { 
     return self.indexOf(value) === index;
 }
@@ -48,7 +37,6 @@ function check_changes (original, edited) {
     }
     
     if (original.tags.join(',') !== edited.tags) {
-        console.log(original.tags.join(','), edited.tags)
         changed.push('tags');
     }
     return changed;
@@ -246,11 +234,9 @@ export default class EditShop extends Component {
         
         if (changed.length === 1) {
             var key = changed[0];
-            console.log('PATCH', key, shop[key]);
             this._isMounted = await patch(url, {key: shop[key]});
         }
         else if (changed.length > 1) {
-            console.log('PUT', shop, changed);
             this._isMounted = await put(url, shop); 
         }
         else {
