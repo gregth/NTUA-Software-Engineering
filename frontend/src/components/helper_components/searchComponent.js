@@ -147,17 +147,17 @@ export class Search extends Component {
                             <td><Input type="date" id="search_datefrom" name="datefrom" defaultValue={this.props.params && datefrom ? datefrom : date} /></td>
                             <td><Input type="date" id="search_dateto" name="dateto" defaultValue={this.props.params && dateto ? dateto : date} /></td>
                             <td>
-                                <Col sm={7}>
+                              
                                     <InputGroup>
                                         <Input type="text" id="search_geodist" pattern="[0-9]+" name="geodist" onChange={this.handleChange} value={this.state.geodist ? this.state.geodist : ''}/>
                                         <InputGroupAddon addonType="append">km</InputGroupAddon>
                                     </InputGroup>
-                                </Col>
+                                
                             </td>
                             <td>
-                            <Row>
+                            <Col sm={3}>
                                 <Range range={this.state.price} updateRange={this.updateRange}/>
-                                </Row>
+                                </Col>
                             </td>
                             <td><Button onClick={this.filters}>Εφαρμογή φίλτρων</Button></td>
                         </tr>
