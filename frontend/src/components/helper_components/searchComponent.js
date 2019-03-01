@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import {Categories} from './categories_menu';
-import { FormText, Table, Input, InputGroupAddon, Button, Form, InputGroup, FormGroup, Container, Row,  Col } from 'reactstrap';
+import { FormText, Table, Input, InputGroupAddon, Button, Form, InputGroup, FormGroup, Container, Col } from 'reactstrap';
 import Range from './range';
 import SortPrice from '../helper_components/sort_price';
 import SortDistance from '../helper_components/sort_distance';
