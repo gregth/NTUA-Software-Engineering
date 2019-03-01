@@ -1,18 +1,13 @@
 import React, { Component } from "react";
 import { browserHistory } from 'react-router';
-import MapClass from '../helper_components/map';
-import {Categories} from '../helper_components/categories_menu';
-import { Input, InputGroupAddon, Button, Form, InputGroup, FormFeedback,
-        Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Label, FormText, Container, Row,  Col, Table, Alert } from 'reactstrap';
-import {send_to_server} from '../communication/send';
-import {Settings} from '../helper_components/dropdown_settings';
+import { Input, Button, Form, FormFeedback,
+        Modal, ModalBody, ModalFooter, FormGroup, Label, FormText, Container, Col, Alert } from 'reactstrap';
 import {receive_from_server} from '../communication/receive';
-import Search from '../helper_components/searchComponent';
-import cookie from 'react-cookies';
 import {put} from '../communication/put';
 import {patch} from '../communication/patch';
 import { address_to_coords } from '../functions/address_to_coordinates';
 import NavBarClass from '../helper_components/navbar';
+import { getLocation } from '../functions/current_location';
 
 function onlyUnique (value, index, self) { 
     return self.indexOf(value) === index;
@@ -30,7 +25,7 @@ function check_changes (original, edited) {
         }
     }
     
-    for (var i=0; i<keys.length; i++) {
+    for (i=0; i<keys.length; i++) {
         if (original[keys[i]] !== edited[keys[i]]) {
             changed.push(keys[i]);
         }

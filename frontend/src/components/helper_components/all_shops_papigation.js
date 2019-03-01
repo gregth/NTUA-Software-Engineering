@@ -1,7 +1,6 @@
 import { browserHistory } from 'react-router';
-import { Alert, Input, Table, Pagination, PaginationItem, PaginationLink, Tooltip, Button } from 'reactstrap';
-import React, { Component } from "react";
-import ReactDOM from 'react-dom';
+import { Alert, Input, Table, Pagination, PaginationItem, PaginationLink, Button } from 'reactstrap';
+import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import {receive_from_server} from '../communication/receive';

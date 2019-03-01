@@ -4,9 +4,8 @@
  * and open the template in the editor.
  */
 import Description from './product_description';
-import { Input, Table, Pagination, PaginationItem, PaginationLink, Tooltip, Button, Alert } from 'reactstrap';
-import React, { Component } from "react";
-import ReactDOM from 'react-dom';
+import { Input, Table, Pagination, PaginationItem, PaginationLink, Button, Alert } from 'reactstrap';
+import React from "react";
 import { browserHistory } from 'react-router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
@@ -74,7 +73,7 @@ export default class ProductsResults extends React.PureComponent {
     category_to_greek (category) {
         var name = null;
         for (var i in options) {
-            if (options[i].value === category) var name = options[i].name; 
+            if (options[i].value === category) name = options[i].name; 
         }
         return name;
     }

@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { Map, GoogleApiWrapper, Marker, InfoWindow } from 'google-maps-react';
-import Geocode from 'react-geocode';
 import { Input, Label } from 'reactstrap';
 import {getLocation} from '../functions/current_location';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Table, Container } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, Container } from 'reactstrap';
 
 /* eslint react/no-multi-comp: 0, react/prop-types: 0 */
 
@@ -25,16 +24,16 @@ export class MapClass extends Component {
     
     async currentLocation ()  {
         var checkBox = document.getElementById("location_map");
-        
+        var temp;
         if (!checkBox.checked) {
-            var temp = this.state.show_current;
+            temp = this.state.show_current;
             this.setState({ show_current: !temp});
             return;
         }
         
         let result = await getLocation();
         console.log(result);
-        var temp = this.state.show_current;
+        temp = this.state.show_current;
         this.setState({ current: [{lat: result[0], lng: result[1]}], show_current: !temp});
     }
  

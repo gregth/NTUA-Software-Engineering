@@ -2,7 +2,6 @@ import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 import App from './components/app';
 import Login from './components/views/login';
-import Admin from './components/views/admin';
 import Register from './components/views/register';
 import Search from './components/views/home';
 import Shop from './components/views/addshop';
@@ -19,7 +18,6 @@ export default (
     <IndexRoute component={Search}/>
     <Route path='login' component={Login} />
     <Route path='register' component={Register} />
-    <Route path='admin' component={Admin} />
     <Route path='addshop' component={Shop} />
     <Route path='addprice' component={Product} />
     <Route path='newproduct' component={newProduct} />

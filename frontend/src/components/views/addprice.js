@@ -1,14 +1,7 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft, faBars } from '@fortawesome/free-solid-svg-icons';
+import React from 'react';
 import { browserHistory } from 'react-router';
-import Geocode from 'react-geocode';
-import cookie from 'react-cookies';
-import {Settings} from '../helper_components/dropdown_settings';
-import { Navbar, Nav, NavItem, NavLink, Modal, ModalHeader, ModalBody, 
-        ModalFooter, Input, Label, Button, Form, FormGroup, Container, Row, Col, 
-        InputGroupAddon, InputGroup, FormFeedback, NavbarBrand, Image, Alert } from 'reactstrap';
+import { Modal, ModalBody, ModalFooter, Input, Label, Button, Form, FormGroup, Container, Col, 
+        InputGroupAddon, InputGroup, FormFeedback, Alert } from 'reactstrap';
 import Shops from '../helper_components/nearby_shops';
 import { address_to_coords } from '../functions/address_to_coordinates';
 import { getLocation } from '../functions/current_location';
@@ -115,7 +108,6 @@ class Product extends React.Component {
     
     async find_shop () {
         this.setState({success: null, error: null, not_found: null, message: null, error_message: null, not_found2: null, message2: null });
-        const barcode = document.getElementById('addprice_barcode').value;
         var lng = null;
         var lat = null;
         
@@ -256,7 +248,7 @@ class Product extends React.Component {
         this.body.dateFrom = dateFrom;
         this.body.dateTo = dateTo;
 
-        var result = await this.find_shop();        
+        result = await this.find_shop();        
     }
     
     toggleModal() {

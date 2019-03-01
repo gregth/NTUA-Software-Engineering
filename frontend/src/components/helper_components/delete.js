@@ -7,7 +7,7 @@
 import {delete_method} from '../communication/delete';
 import React from 'react';
 import { browserHistory } from 'react-router';
-import { Alert, Button, Modal, ModalHeader, ModalBody, ModalFooter, Table } from 'reactstrap';
+import { Alert, Button, Modal, ModalBody, ModalFooter } from 'reactstrap';
 
 class Delete extends React.Component {
     constructor(props) {

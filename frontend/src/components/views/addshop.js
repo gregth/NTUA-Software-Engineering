@@ -1,15 +1,10 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEyeSlash, faCheck, faTimes, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import React from 'react';
 import { browserHistory } from 'react-router';
 import { getLocation } from '../functions/current_location';
 import { send_to_server } from '../communication/send';
-import cookie from 'react-cookies';
-import { Modal, ModalHeader, ModalBody, ModalFooter, Input, Label, 
-        Button, Form, FormGroup, Row, FormText, Container, Col, InputGroupAddon, InputGroup, FormFeedback, Alert } from 'reactstrap';
+import { Modal, ModalBody, ModalFooter, Input, Label, 
+        Button, Form, FormGroup, FormText, Container, Col, FormFeedback, Alert } from 'reactstrap';
 import { address_to_coords } from '../functions/address_to_coordinates';
-import {Settings} from '../helper_components/dropdown_settings';
 import NavBarClass from '../helper_components/navbar';
 
 function onlyUnique (value, index, self) { 

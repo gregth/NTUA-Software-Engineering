@@ -1,11 +1,6 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
+import React, {Component} from 'react';
 import { browserHistory } from 'react-router';
-import MapClass from '../helper_components/map';
-import cookie from 'react-cookies';
-import { Input, InputGroupAddon, Button, Form, InputGroup, FormGroup, Label, Alert } from 'reactstrap';
+import { Button, Alert } from 'reactstrap';
 import PricesTable from '../helper_components/results_prices';
 import Search from '../helper_components/searchComponent';
 import NavBarClass from '../helper_components/navbar';

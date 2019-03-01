@@ -4,13 +4,10 @@
  * and open the template in the editor.
  */
 
-import { Map, GoogleApiWrapper, Marker, InfoWindow } from 'google-maps-react';
-import Geocode from 'react-geocode';
-
 function coords_to_address (lat, long) {
   return fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' +
               JSON.stringify(lat) + ',' + JSON.stringify(long) +
-              '&key=' + 'AIzaSyAsLsF3d7bdPcNMcSwPfb8aUfcadkjOMH0')
+              '&key=AIzaSyAsLsF3d7bdPcNMcSwPfb8aUfcadkjOMH0')
     .then((response) => response.json())
     .then((responseJson) => {
         if (responseJson.status === 'OK') {

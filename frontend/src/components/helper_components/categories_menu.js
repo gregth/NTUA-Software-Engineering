@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import SelectSearch from 'react-select-search';
 import {DropdownMenu, DropdownToggle, Dropdown, DropdownItem  } from 'reactstrap';
 
 const options = [

@@ -5,7 +5,7 @@
  */
 
 import React from 'react';
-import { Button, Popover, PopoverHeader, PopoverBody } from 'reactstrap';
+import { Popover, PopoverHeader, PopoverBody } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWineBottle } from '@fortawesome/free-solid-svg-icons';
 import {receive_from_server} from '../communication/receive';
@@ -89,7 +89,7 @@ export default class ProductInfo extends React.Component {
         
         var name = null;
         for (var i in options) {
-            if (options[i].value === details.category) var name = options[i].name; 
+            if (options[i].value === details.category) name = options[i].name; 
         }
         this.setState({product: details, category: name});
         return details;

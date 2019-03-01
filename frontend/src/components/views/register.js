@@ -1,11 +1,9 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEyeSlash, faCheck, faTimes, faHome, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { browserHistory } from 'react-router';
-import cookie from 'react-cookies';
-import { Navbar, Nav, NavItem, NavbarBrand, NavLink, Alert, Input, InputGroupAddon, Button, Form, InputGroup, 
-        FormGroup, Label, Col, Container, InputGroupButton, FormFeedback, FormText } from 'reactstrap';
+import {  Alert, Input, InputGroupAddon, Button, Form, InputGroup, 
+        FormGroup, Label, Col, Container } from 'reactstrap';
 import {send_to_server} from '../communication/send';
 import NavBarClass from '../helper_components/navbar';
 
