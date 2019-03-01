@@ -12,6 +12,7 @@ import EditProduct from './components/views/edit_product';
 import AllShops from './components/views/all_shops';
 import EditShop from './components/views/edit_shop';
 import Results from './components/views/searchresults';
+import About from './components/views/aboutus';
 
 export default (
   <Route path='/' component={App}>
@@ -26,6 +27,7 @@ export default (
     <Route path='edit_product' component={EditProduct} />
     <Route path='edit_shop' component={EditShop} />
     <Route path='results' component={Results} />
+    <Route path='aboutus' component={About} />
     <Route path='*' component={Search} />
   </Route>
 );

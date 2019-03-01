@@ -23,6 +23,7 @@ class NavBarClass extends React.Component {
         this.homepage = this.homepage.bind(this);
         this.login = this.login.bind(this);
         this.register = this.register.bind(this);
+        this.about = this.about.bind(this);
     }
     
     homepage () {
@@ -55,6 +56,10 @@ class NavBarClass extends React.Component {
     
     new_shop () {
         browserHistory.push('/addshop');
+    }
+    
+    about () {
+        browserHistory.push('/aboutus');
     }
   
     render() {
@@ -89,10 +94,9 @@ class NavBarClass extends React.Component {
                     </NavItem>
                     : null
                     }
-                    {Boolean(cookie.load('loggedin'))
-                    ? <NavItem><Settings/></NavItem>
-                    : null
-                    }
+                    <NavItem>
+                        <NavLink onClick={() => this.about()}>Σχετικά με μας</NavLink>
+                    </NavItem>
                     {!Boolean(cookie.load('loggedin'))
                     ? <NavItem>
                         <NavLink onClick={() => this.login()}> Σύνδεση </NavLink>
@@ -103,6 +107,10 @@ class NavBarClass extends React.Component {
                     ?<NavItem>
                         <NavLink onClick={() => this.register()}> Εγγραφή </NavLink>
                     </NavItem>
+                    : null
+                    }
+                    {Boolean(cookie.load('loggedin'))
+                    ? <NavItem><Settings/></NavItem>
                     : null
                     }
                 </Nav>
