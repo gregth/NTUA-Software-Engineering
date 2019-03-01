@@ -69,10 +69,10 @@
 
 .range {
   -webkit-appearance: none;
-  background: black;
+  background: rgb(167, 4, 4);
   outline: none;
   height: 6px;
-  width: 200px;
+  width: 100px;
   border-radius: 5px;
   &::-webkit-slider-thumb {
     -webkit-appearance: none;
@@ -84,29 +84,26 @@
 }
 
 .price {
-  background: rgb(178, 0, 0);
-  color: white;
+    color: rgb(31, 2, 2);
   border-radius: 2px;
   padding: 3px 7px;
   margin: 0px 10px;
-  text-align: center;
   position: relative;
-  &::before {
-    content: '';
-    position: absolute;
-    left: -12px;
-    top: 50%;
-    transform: translateY(-50%);
-    height: 0;
-    width: 0;
-    border: solid 6px rgb(178, 0, 0);
-    z-index: -1;
-    border-top-color: Transparent;
-    border-bottom-color: Transparent;
-    border-left-color: Transparent;
-  }
 }
 
 .addform {
     position:static;
+}
+
+.Search {
+    text-align: left;
+    padding: 1em;
+    margin: 1em;
+    border: 2px solid #d3d3d3;
+    border-radius: .5em;
+    vertical-align: middle;
+    margin-left: auto;
+    margin-right: auto;
+    width: 1000px;
+    margin-top: 20px;
 }

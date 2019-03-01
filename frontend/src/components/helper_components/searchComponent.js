@@ -122,6 +122,10 @@ export class Search extends Component {
         var date = curr.toISOString().substr(0,10);
         return ( 
             <div>
+                  <hr></hr>
+                  <hr></hr>
+                <Container className="Search">
+              
                 <Table borderless>
                     <thead>
                         <tr>
@@ -147,7 +151,8 @@ export class Search extends Component {
                             <th>Ημερομηνία από:</th>
                             <th>Ημερομηνία έως:</th>
                             <th>Απόσταση:</th>
-                            <th>Μέγιστη τιμή</th>
+                            <th>Μέγιστη τιμή:</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -162,16 +167,20 @@ export class Search extends Component {
                                     </InputGroup>
                                 </Col>
                             </td>
-                            <td><Range range={this.state.price} updateRange={this.updateRange}/></td>
-                        </tr>
-                        <tr>
+                            <td>
+                            <Row>
+                                <Range range={this.state.price} updateRange={this.updateRange}/>
+                                </Row>
+                            </td>
                             <td><Button onClick={this.filters}>Εφαρμογή φίλτρων</Button></td>
                         </tr>
                     </tbody>
                 </Table>
-                
+                </Container>
                 <Form>
                     <FormGroup>
+                    <Col sm="12" md={{ size: 6, offset: 3 }}>
+
                         <InputGroup>
                             <Input id="search_tags" placeholder="Αναζήτηση με όνομα ή χαρακτηριστικά.." name="tags" onChange={this.handleChange} value={this.state.tags ? this.state.tags : ''}></Input>
                             <InputGroupAddon addonType="append">
@@ -179,6 +188,8 @@ export class Search extends Component {
                             </InputGroupAddon>
                         </InputGroup>
                         <FormText>Διαχωρισμός χαρακτηριστικών με κόμμα (,)</FormText>
+                        </Col>
+
                     </FormGroup>
                 </Form> 
             </div>

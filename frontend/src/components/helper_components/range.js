@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import ReactDOM from 'react-dom';
-
+import {Col,Row } from 'reactstrap';
 class Range extends React.Component {
   constructor(props) {
     super(props);
@@ -16,15 +16,21 @@ class Range extends React.Component {
     const { range } = this.props;
     return (
       <div>
+        <Row>
+        <Col>
         <input className="range" type="range"
           value={range}
           min="0"
           max="150"
-          step="0.01"
+          step="0.1"
           onChange={this.updateRange}
         />
+        </Col>
+        <Col>
         <span className="price" id="price">{range}€</span>
-      </div>
+        </Col>
+        </Row>
+       </div>
     );
   }
 }

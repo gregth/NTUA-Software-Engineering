@@ -5,7 +5,7 @@ import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
 import { browserHistory } from 'react-router';
 import MapClass from '../helper_components/map';
 import cookie from 'react-cookies';
-import { Input, InputGroupAddon, Button, Form, InputGroup, FormGroup, Label, Alert } from 'reactstrap';
+import { Input, InputGroupAddon, Button, Form, InputGroup, FormGroup, Label, Alert, Col, Row } from 'reactstrap';
 import Search from '../helper_components/searchComponent';
 import NavBarClass from '../helper_components/navbar';
 import ReactPlayer from 'react-player';
@@ -51,7 +51,9 @@ class SearchPage extends Component {
                 <div className="header"><img src={"/public/logo_transparent.png"} alt="logo" /></div>
 
                 <Search ref="search" handle={this.handleSubmit} params={[]}/>
-                <ReactPlayer url={this.url} playing/>
+                <Row className="justify-content-center">
+                    <ReactPlayer url={this.url} playing/>
+                </Row>
             </div>
         );
     }
