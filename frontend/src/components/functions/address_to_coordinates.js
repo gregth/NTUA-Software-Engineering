@@ -12,7 +12,8 @@ export function address_to_coords (address) {
     return Geocode.fromAddress(address).then(
         response => {
             const { lat, lng } = response.results[0].geometry.location;
-            return [lat, lng];
+            const address = response.results[0].formatted_address;
+            return [lat, lng, address];
         },
         error => {
             console.error(error);

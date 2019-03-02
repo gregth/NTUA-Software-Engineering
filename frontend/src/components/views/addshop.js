@@ -105,7 +105,7 @@ class Shop extends React.Component {
             if (result) {
                 lat = result[0];
                 lng = result[1];
-                address = total;
+                address = result[2];
                 this.setState({error_address: false});
             }
             else {
@@ -209,9 +209,9 @@ class Shop extends React.Component {
                     </FormGroup>
 
                     <FormGroup check row>
-                        <Label sm={3} for="postal">ΤΚ:</Label>
-                        <Col sm={1}>
-                            <Input invalid={this.state.error_address} id="new_shop_postal" name="postal" pattern="[0-9]+" type="text" disabled={this.state.flag} required/>
+                        <Label sm={3} for="postal">ΤΚ/Περιοχή:</Label>
+                        <Col sm={2}>
+                            <Input invalid={this.state.error_address} id="new_shop_postal" name="postal" type="text" disabled={this.state.flag} required/>
                         </Col>
                     </FormGroup>
 
@@ -219,7 +219,7 @@ class Shop extends React.Component {
                         <Label sm={6} for="new_shop_tags">Χαρακτηριστικά Καταστήματος:
                         <FormText>Διαχωρισμός χαρακτηριστικών με κόμμα (,)</FormText></Label>
                         <Col sm={8}>
-                            <Input type="textarea" name="text" id="new_shop_tags" required/>
+                            <Input type="textarea" name="text" id="new_shop_tags"/>
                         </Col>
                     </FormGroup>
                     

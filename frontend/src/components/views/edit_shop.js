@@ -201,6 +201,7 @@ export default class EditShop extends Component {
             if (result) {
                 lat = result[0];
                 lng = result[1];
+                address = result[2];
                 this.setState({error_address: false});
             }
             else {
