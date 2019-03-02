@@ -33,10 +33,18 @@ class Unauthorized extends Error {
     }
 }
 
+class DuplicateEntry extends Error {
+    constructor(message) {
+        super(message)
+        this.name = 'DuplicateEntry'
+    }
+}
+
 module.exports = {
     MalformedInput,
     NotImplemented,
     NotFound,
     NotAllowed,
-    Unauthorized
+    Unauthorized,
+    DuplicateEntry
 }

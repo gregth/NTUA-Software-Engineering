@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEyeSlash, faUser, faKey, faHome, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faEyeSlash, faUser, faKey } from '@fortawesome/free-solid-svg-icons';
 import { browserHistory } from 'react-router';
 import cookie from 'react-cookies';
 import { Alert, Input, InputGroupAddon, Button, Form, InputGroup, FormGroup, Label, Container, Col } from 'reactstrap';
@@ -36,7 +35,7 @@ class Login extends React.Component {
             password
         };
         
-        const url = 'http://localhost:3002/login';
+        const url = '/login';
         this._isMounted = await send_to_server(url, body);
         const answer = this._isMounted;
         

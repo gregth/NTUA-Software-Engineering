@@ -20,6 +20,13 @@ module.exports = class ShopsController extends BaseController {
                 telephone: item.telephone
             }
         }
+
+        this.sortable_rules = {
+            default_key: 'id',
+            default_order: 'DESC',
+            allowed_sort_keys: ['id', 'name'],
+            allowed_order: ['ASC', 'DESC']
+        }
     }
 
     async read(id) {
@@ -48,8 +55,15 @@ module.exports = class ShopsController extends BaseController {
         return this.read(shop.id)
     }
 
-    async list(params) {
-        return super.list({}, params)
-    }
+    async list(params={start: 0, count: 20, status: 'ACTIVE', sort: 'id|DESC'}) {
+        const conditions = {}
 
+        if (params.status === 'WITHDRAWN') {
+            conditions.withdrawn = 1
+        } else if (params.status === 'ACTIVE') {
+            conditions.withdrawn = 0
+        }
+
+        return super.list(conditions, params)
+    }
 }

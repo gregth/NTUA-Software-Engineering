@@ -1,7 +1,6 @@
 import { browserHistory } from 'react-router';
-import { Alert, Input, Table, Pagination, PaginationItem, PaginationLink, Tooltip, Button } from 'reactstrap';
-import React, { Component } from "react";
-import ReactDOM from 'react-dom';
+import { Alert, Input, Table, Pagination, PaginationItem, PaginationLink, Button } from 'reactstrap';
+import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import {receive_from_server} from '../communication/receive';
@@ -114,7 +113,7 @@ export default class PapigationShops extends React.PureComponent {
     async request () {       
         this.setState({ success: null, not_found: null, error: null, message: null, error_message: null, not_found2: null, message2: null });
         this.selected_shops = [];
-        const url = 'http://localhost:3002/shops?start=' + this.start + 
+        const url = '/shops?start=' + this.start + 
                     '&count=' +  this.pageSize + '&sort=' + this.sort +
                     '&status=' + this.status;
         this._asyncRequest = await receive_from_server(url);

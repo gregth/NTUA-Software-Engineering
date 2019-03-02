@@ -10,7 +10,7 @@ module.exports = {
     publicPath: '/public/'
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js|.jsx?$/,
         exclude: /(node_modules)/,
@@ -34,9 +34,6 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx']
   },
-  plugins: [
-    new webpack.HotModuleReplacementPlugin()
-  ],
   devServer: {
     historyApiFallback: true,
     contentBase: './'

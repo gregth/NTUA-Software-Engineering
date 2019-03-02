@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import ReactDOM from 'react-dom';
-import {Col,Row } from 'reactstrap';
+import React from "react";
+import {Col} from 'reactstrap';
+
 class Range extends React.Component {
   constructor(props) {
     super(props);
@@ -22,7 +22,7 @@ class Range extends React.Component {
             value={range} 
             min="0"
             max="150"
-            step="0.1"
+            step="1"
             onChange={this.updateRange}
           />
      

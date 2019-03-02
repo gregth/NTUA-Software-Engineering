@@ -4,15 +4,9 @@
  * and open the template in the editor.
  */
 
-import { Alert, Table, Pagination, PaginationItem, PaginationLink, Tooltip, Button } from 'reactstrap';
-import React, { Component } from "react";
-import ReactDOM from 'react-dom';
-import { browserHistory } from 'react-router';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faWineBottle, faBuilding } from '@fortawesome/free-solid-svg-icons';
+import { Alert, Table, Pagination, PaginationItem, PaginationLink } from 'reactstrap';
+import React from "react";
 import {receive_from_server} from '../communication/receive';
-import SortDropdown from '../helper_components/sort_products_shops';
-import StatusDropdown from '../helper_components/status_products_shops';
 import CountDropdown from '../helper_components/count_products_shops';
 import { getLocation } from '../functions/current_location';
 import MapClass from '../helper_components/map_price';
@@ -69,10 +63,11 @@ export default class PricesTable extends React.PureComponent {
     } 
     
     async make_url () {
-        var url = 'http://localhost:3002/prices?start=' + this.start + 
+        var url = '/prices?start=' + this.start + 
                     '&count=' +  this.pageSize;
         var params = [];
         if (this.props.params) {
+            var i;
             if (this.props.params.datefrom) {
                 params.push('dateFrom='+ this.props.params.datefrom);
             }
@@ -89,7 +84,7 @@ export default class PricesTable extends React.PureComponent {
                 params.push('sort='+ this.props.params.sort_date);
             }
             if (this.props.params.tags) {
-                for (var i=0; i<this.props.params.tags.length; i++) {
+                for (i=0; i<this.props.params.tags.length; i++) {
                     params.push('tags='+ this.props.params.tags[i]);
                 }
             }
@@ -107,12 +102,12 @@ export default class PricesTable extends React.PureComponent {
             }
         }
         if (this.props.shops) {
-            for (var i=0; i<this.props.shops.length; i++) {
+            for (i=0; i<this.props.shops.length; i++) {
                 params.push('shops='+ this.props.shops[i]);
             }
         }
         if (this.props.products) {
-            for (var i=0; i<this.props.products.length; i++) {
+            for (i=0; i<this.props.products.length; i++) {
                 params.push('products='+ this.props.products[i]);
             }
         }
@@ -170,7 +165,7 @@ export default class PricesTable extends React.PureComponent {
         
         var result = await answer.json().then((result) => {return result;});
         console.log(result);
-        if (this.start !== result.start || parseInt(this.pageSize) !== result.count, this.start) {
+        if (this.start !== result.start || parseInt(this.pageSize) !== result.count) {
             console.log(result.start, result.count, parseInt(this.pageSize), )
             this.setState({error: true, success: false});
             return;

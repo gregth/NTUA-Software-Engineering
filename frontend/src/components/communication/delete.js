@@ -39,7 +39,8 @@ function sendInfo(url) {
 }
 
 export function delete_method (url) {
-    return sendPromise(url)
+    var url_final = window.http + url;
+    return sendPromise(url_final)
     .then ((answer) => {
         return answer;
     })

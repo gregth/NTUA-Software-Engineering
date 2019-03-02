@@ -1,4 +1,4 @@
-const { MalformedInput, NotImplemented, NotFound } = require('../errors')
+const { MalformedInput, NotImplemented, NotFound, DuplicateEntry } = require('../errors')
 
 function filter_keys(params, allowed_keys) {
     let filtered_params = {};
@@ -84,7 +84,7 @@ module.exports = class BaseController {
         return [{field_name, order}]   
     }
 
-    async list(conditions={}, params={}, having) {
+    async list(conditions={}, params={start: 0, count: 20}, having) {
         const order_by = this.validate_sort_params(params.sort, this.sortable_rules)
 
         let start = 0
@@ -119,10 +119,16 @@ module.exports = class BaseController {
     async create(params) {
         let item = this.validate_post_params(params)
 
-        const result = await this.model.insert(item)
-        if (result.insertId) {
-            // TODO: possible race condition
-            return this.read(result.insertId)
+        try {
+            const result = await this.model.insert(item)
+            if (result.insertId) {
+                // TODO: possible race condition
+                return this.read(result.insertId)
+            }
+        } catch (err) {
+            if (err.code === 'ER_DUP_ENTRY') {
+                throw new DuplicateEntry(`Duplicate entry for ${this.resource}`)
+            }
         }
 
         throw new Error(`Did not create ${this.resource}: ${JSON.stringify(params)}`)
@@ -151,7 +157,7 @@ module.exports = class BaseController {
     }
 
     async delete(id) {
-        let role = 'admin', result
+        let role = 'user', result
         if (role == 'admin') {
             result = await this.model.delete({id})
         } else {

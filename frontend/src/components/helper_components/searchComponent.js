@@ -1,23 +1,10 @@
 import React, { Component } from "react";
 import {Categories} from './categories_menu';
-import { FormText, Table, Input, InputGroupAddon, Button, Form, InputGroup, FormGroup, Label, Container, Row,  Col } from 'reactstrap';
+import { FormText, Table, Input, InputGroupAddon, Button, Form, InputGroup, FormGroup, Container, Col } from 'reactstrap';
 import Range from './range';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faHome } from '@fortawesome/free-solid-svg-icons';
 import SortPrice from '../helper_components/sort_price';
 import SortDistance from '../helper_components/sort_distance';
 import SortDate from '../helper_components/sort_date';
-
-function arraysEqual(arr1, arr2) {
-    if(arr1.length !== arr2.length)
-        return false;
-    for(var i = arr1.length; i--;) {
-        if(arr1[i] !== arr2[i])
-            return false;
-    }
-
-    return true;
-}
 
 function onlyUnique (value, index, self) { 
     return self.indexOf(value) === index;

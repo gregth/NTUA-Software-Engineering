@@ -5,7 +5,7 @@
  */
 
 import React from 'react';
-import { Button, Popover, PopoverHeader, PopoverBody } from 'reactstrap';
+import { Popover, PopoverHeader, PopoverBody } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWineBottle } from '@fortawesome/free-solid-svg-icons';
 import {receive_from_server} from '../communication/receive';
@@ -46,7 +46,7 @@ export default class ProductInfo extends React.Component {
     
     async request_product() {
         this.setState({ success: null, not_found: null, error: null, message: null, error_message: null });
-        const url = 'http://localhost:3002/products/' + this.props.id;
+        const url = '/products/' + this.props.id;
         this._asyncRequest = await receive_from_server(url);
         const answer = this._asyncRequest;
         
@@ -89,7 +89,7 @@ export default class ProductInfo extends React.Component {
         
         var name = null;
         for (var i in options) {
-            if (options[i].value === details.category) var name = options[i].name; 
+            if (options[i].value === details.category) name = options[i].name; 
         }
         this.setState({product: details, category: name});
         return details;

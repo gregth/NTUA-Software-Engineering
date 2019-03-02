@@ -5,7 +5,7 @@
  */
 
 import React from 'react';
-import { Button, Popover, PopoverHeader, PopoverBody } from 'reactstrap';
+import { Popover, PopoverHeader, PopoverBody } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfo } from '@fortawesome/free-solid-svg-icons';
 

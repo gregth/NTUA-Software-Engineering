@@ -32,7 +32,7 @@ module.exports = class ProductsController extends BaseController {
         }
     }
 
-    async list(params) {
+    async list(params={start: 0, count: 20, status: 'ACTIVE', sort: 'id|DESC'}) {
         const conditions = {}
 
         if (params.barcode) {
@@ -53,7 +53,14 @@ module.exports = class ProductsController extends BaseController {
             conditions.withdrawn = 0
         }
 
-        return super.list(conditions, params)
+        const response = await super.list(conditions, params)
+        const products = response.products
+        for (const product of products) {
+            const tags = await this.tagModel.list({productId: product.id})
+            product.tags = tags.map(tag => tag.tag)
+        }
+
+        return response
     }
 
     async read(id) {

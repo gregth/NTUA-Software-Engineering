@@ -1,10 +1,6 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import React from 'react';
 import { browserHistory } from 'react-router';
-import cookie from 'react-cookies';
-import { Alert, Modal, ModalHeader, ModalBody, ModalFooter, FormText, Input, Label, Button, Form, Container, FormGroup, Row, Col, InputGroupAddon, InputGroup } from 'reactstrap';
+import { Alert, Modal, ModalBody, ModalFooter, FormText, Input, Label, Button, Form, Container, FormGroup, Col, InputGroupAddon, InputGroup } from 'reactstrap';
 import {Categories} from '../helper_components/categories_menu';
 import {send_to_server} from '../communication/send';
 import NavBarClass from '../helper_components/navbar';
@@ -72,7 +68,7 @@ class newProduct extends React.Component {
         };
         
         console.log(product);
-        const url = 'http://localhost:3002/products';
+        const url = '/products';
         this._isMounted = await send_to_server(url, product);
         const answer = this._isMounted;
         

@@ -1,5 +1,5 @@
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 var webpack = require('webpack');
+var path = require('path');
 
 module.exports = {
   context: __dirname,
@@ -10,18 +10,18 @@ module.exports = {
     publicPath: '/public/'
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js|.jsx?$/,
         exclude: /(node_modules)/,
         loader: 'babel-loader',
         query: {
-          presets: ['react', 'es2015', 'stage-1']
+          presets: ['react', 'es2015', 'stage-3']
         }
       },
       {
         test: /\.scss$/,
-        loader: ExtractTextPlugin.extract('css-loader!sass-loader')
+	use: ["style-loader", "css-loader", "sass-loader"]
       },
       {
             test: /\.(jpe|jpg|woff|woff2|eot|ttf|svg|png)(\?.*$|$)/,
@@ -32,9 +32,6 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx', '.css', '.scss']
   },
-  plugins: [
-    new ExtractTextPlugin({ filename: 'app.css', allChunks: true })
-  ],
   devServer: {
     historyApiFallback: true,
     contentBase: './'

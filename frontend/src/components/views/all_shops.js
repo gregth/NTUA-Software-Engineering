@@ -12,12 +12,9 @@
  */
 
 import React, { Component } from "react";
-import {receive_from_server} from '../communication/receive';
 import { browserHistory } from 'react-router';
-import cookie from 'react-cookies';
-import {Settings} from '../helper_components/dropdown_settings';
 import PapigationShops from '../helper_components/all_shops_papigation';
-import { Button, Image, Alert } from 'reactstrap';
+import { Alert } from 'reactstrap';
 import Delete from '../helper_components/delete';
 import NavBarClass from '../helper_components/navbar';
 

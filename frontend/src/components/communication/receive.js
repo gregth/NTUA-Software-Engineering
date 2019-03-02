@@ -39,7 +39,8 @@ function receiveInfo(url) {
 }
 
 export function receive_from_server(url) {
-    return receivePromise(url)
+    var url_final = window.http + url;
+    return receivePromise(url_final)
     .then ((answer) => {
         return answer;
     })

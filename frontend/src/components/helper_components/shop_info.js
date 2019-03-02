@@ -11,7 +11,7 @@
  */
 
 import React from 'react';
-import { Button, Popover, PopoverHeader, PopoverBody } from 'reactstrap';
+import { Popover, PopoverHeader, PopoverBody } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBuilding } from '@fortawesome/free-solid-svg-icons';
 import {receive_from_server} from '../communication/receive';
@@ -35,7 +35,7 @@ export default class ShopInfo extends React.Component {
     
     async request_shop() {
         this.setState({success: null, error: null, not_found: null, message: null, error_message: null });
-        const url = 'http://localhost:3002/shops/' + this.props.id;
+        const url = '/shops/' + this.props.id;
         this._asyncRequest = await receive_from_server(url);
         const answer = this._asyncRequest;
         

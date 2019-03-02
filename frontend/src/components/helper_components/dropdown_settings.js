@@ -35,7 +35,7 @@ export class Settings extends Component {
     async logoff () {
         this.setState({ error: null, success: null, not_found: null, error_message: null, message: null });
         
-        const url = 'http://localhost:3002/logout';
+        const url = '/logout';
         const answer = await send_to_server(url);
         
         try {

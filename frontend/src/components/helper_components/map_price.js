@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import { Map, GoogleApiWrapper, Marker, InfoWindow } from 'google-maps-react';
-import Geocode from 'react-geocode';
 import { Input, Label } from 'reactstrap';
 import {getLocation} from '../functions/current_location';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Table, Container } from 'reactstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMapMarkedAlt, faWineBottle, faBuilding } from '@fortawesome/free-solid-svg-icons';
+import { Modal, ModalHeader, ModalBody, Container } from 'reactstrap';
 import {receive_from_server} from '../communication/receive';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMapMarkedAlt } from '@fortawesome/free-solid-svg-icons';
 /* eslint react/no-multi-comp: 0, react/prop-types: 0 */
 
 export class MapClass extends Component {
@@ -66,7 +64,7 @@ export class MapClass extends Component {
     
     async request_product() {
         this.setState({ success: null, not_found: null, error: null, message: null, error_message: null });
-        const url = 'http://localhost:3002/products/' + this.props.product_id;
+        const url = '/products/' + this.props.product_id;
         this._isMounted = await receive_from_server(url);
         const answer = this._isMounted;
         
@@ -113,7 +111,7 @@ export class MapClass extends Component {
     
     async request_shop() {
         this.setState({ success: null, not_found: null, error: null, message: null, error_message: null });
-        const url = 'http://localhost:3002/shops/' + this.props.shop_id;
+        const url = '/shops/' + this.props.shop_id;
         this._isMounted = await receive_from_server(url);
         const answer = this._isMounted;
         try {
@@ -159,16 +157,16 @@ export class MapClass extends Component {
     
     async currentLocation ()  {
         var checkBox = document.getElementById("location_map");
-        
+        var temp;
         if (!checkBox.checked) {
-            var temp = this.state.show_current;
+            temp = this.state.show_current;
             this.setState({ show_current: !temp});
             return;
         }
         
         let result = await getLocation();
         console.log(result);
-        var temp = this.state.show_current;
+        temp = this.state.show_current;
         this.setState({ current: [{lat: result[0], lng: result[1]}], show_current: !temp});
     }
  

@@ -15,6 +15,9 @@ function objectToQueryFields(fields) {
                     ' AND CAST(\'' + fields[key].upper + '\' AS DATE) '
                 return str
             }
+            if (fields[key].operator) {
+                return `${key} ${fields[key].operator} ?`
+            }
 
             throw new Error(`Invalid condition: ${JSON.stringify(fields[key])}`)
         }
@@ -28,6 +31,8 @@ function objectToQueryFields(fields) {
         } else if (fields[key] instanceof Object) {
             if (fields[key].type === 'LIKE') {
                 fieldValues.push(`%${fields[key].value}%`)
+            } else if (fields[key].operator) {
+                fieldValues.push(fields[key].value)
             }
         } else {
             fieldValues.push(fields[key])

@@ -6,10 +6,8 @@
 
 import React, { Component } from "react";
 import { browserHistory } from 'react-router';
-import cookie from 'react-cookies';
-import {Settings} from '../helper_components/dropdown_settings';
 import ProductsResults from '../helper_components/all_products_papigation';
-import { Button, NavbarBrand, Image, Alert } from 'reactstrap';
+import { Alert } from 'reactstrap';
 import Delete from '../helper_components/delete';
 import NavBarClass from '../helper_components/navbar';
 

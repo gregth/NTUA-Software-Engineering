@@ -1,14 +1,7 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft, faBars } from '@fortawesome/free-solid-svg-icons';
+import React from 'react';
 import { browserHistory } from 'react-router';
-import Geocode from 'react-geocode';
-import cookie from 'react-cookies';
-import {Settings} from '../helper_components/dropdown_settings';
-import { Navbar, Nav, NavItem, NavLink, Modal, ModalHeader, ModalBody, 
-        ModalFooter, Input, Label, Button, Form, FormGroup, Container, Row, Col, 
-        InputGroupAddon, InputGroup, FormFeedback, NavbarBrand, Image, Alert } from 'reactstrap';
+import { Modal, ModalBody, ModalFooter, Input, Label, Button, Form, FormGroup, Container, Col, 
+        InputGroupAddon, InputGroup, FormFeedback, Alert } from 'reactstrap';
 import Shops from '../helper_components/nearby_shops';
 import { address_to_coords } from '../functions/address_to_coordinates';
 import { getLocation } from '../functions/current_location';
@@ -67,7 +60,7 @@ class Product extends React.Component {
     async find_barcode () {
         this.setState({ success: null, not_found: null, error: null, message: null, error_message: null, not_found2: null, message2: null });
         const barcode = document.getElementById('addprice_barcode').value;
-        var url = 'http://localhost:3002/products?barcode=' + barcode;
+        var url = '/products?barcode=' + barcode;
         this._isMounted = await receive_from_server(url);
         const answer = this._isMounted;
         
@@ -115,7 +108,6 @@ class Product extends React.Component {
     
     async find_shop () {
         this.setState({success: null, error: null, not_found: null, message: null, error_message: null, not_found2: null, message2: null });
-        const barcode = document.getElementById('addprice_barcode').value;
         var lng = null;
         var lat = null;
         
@@ -142,7 +134,7 @@ class Product extends React.Component {
             }
         }
         
-        var url = 'http://localhost:3002/shops?geoDist=0.1&lat=' + lat + '&lng=' + lng;
+        var url = '/shops?geoDist=0.1&lat=' + lat + '&lng=' + lng;
         this._isMounted = await receive_from_server(url);
         const answer = this._isMounted;
         
@@ -195,7 +187,7 @@ class Product extends React.Component {
         console.log(this.body);
         this.setState({ success: null, not_found: null, error: null, message: null, error_message: null});
             
-        var url = 'http://localhost:3002/prices';
+        var url = '/prices';
         this._isMounted = await send_to_server(url, this.body);
         const answer = this._isMounted;
         console.log(answer);
@@ -256,7 +248,7 @@ class Product extends React.Component {
         this.body.dateFrom = dateFrom;
         this.body.dateTo = dateTo;
 
-        var result = await this.find_shop();        
+        result = await this.find_shop();        
     }
     
     toggleModal() {

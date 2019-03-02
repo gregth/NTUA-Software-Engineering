@@ -1,14 +1,9 @@
 import React, { Component } from "react";
 import { browserHistory } from 'react-router';
-import MapClass from '../helper_components/map';
 import {Categories} from '../helper_components/categories_menu';
 import { Input, InputGroupAddon, Button, Form, InputGroup, 
-        Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Label, Container, FormText, Row,  Col, Table, Alert } from 'reactstrap';
-import {send_to_server} from '../communication/send';
-import {Settings} from '../helper_components/dropdown_settings';
+        Modal, ModalBody, ModalFooter, FormGroup, Label, Container, FormText, Col, Alert } from 'reactstrap';
 import {receive_from_server} from '../communication/receive';
-import Search from '../helper_components/searchComponent';
-import cookie from 'react-cookies';
 import {put} from '../communication/put';
 import {patch} from '../communication/patch';
 import NavBarClass from '../helper_components/navbar';
@@ -29,7 +24,7 @@ function check_changes (original, edited) {
         }
     }
     
-    for (var i=0; i<keys.length; i++) {
+    for (i=0; i<keys.length; i++) {
         var orig = original[keys[i]];
         if (keys[i] === 'volume' || keys[i] === 'brand') orig = original.extraData[keys[i]];
         if (orig !== edited[keys[i]]) {
@@ -50,7 +45,7 @@ export default class EditProduct extends Component {
         this.state = { message_edit: null, error_message: null, message: null, 
                     details: null, error: null, success: null, not_found: null, 
                     volume: '', description: '', tags: '', name: '', brand: '', 
-                    success_edit: null,  not_found: null};
+                    success_edit: null};
         this.toggleModal = this.toggleModal.bind(this);
         this.homepage = this.homepage.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -79,7 +74,7 @@ export default class EditProduct extends Component {
 
     async request () {
         this.setState({success: null, error: null, not_found: null, message: null, error_message: null });
-        const url = 'http://localhost:3002/products/' + this.props.location.query.id;
+        const url = '/products/' + this.props.location.query.id;
         this._isMounted = await receive_from_server(url);
         const answer = this._isMounted;
         
@@ -181,7 +176,7 @@ export default class EditProduct extends Component {
         
         var changed = check_changes(this.state.details, product);
         
-        const url = 'http://localhost:3002/products/' + this.props.location.query.id;
+        const url = '/products/' + this.props.location.query.id;
         
         var answer;
         

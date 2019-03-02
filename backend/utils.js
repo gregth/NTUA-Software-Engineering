@@ -1,5 +1,5 @@
 const express = require('express')
-const { MalformedInput, NotImplemented, NotFound, Unauthorized } = require('./errors')
+const { MalformedInput, NotImplemented, NotFound, Unauthorized, DuplicateEntry } = require('./errors')
 
 const createControllerRoutes = controller => {
     const router = express.Router()
@@ -16,7 +16,7 @@ const createControllerRoutes = controller => {
                 res.json(results)
             } else if (typeof results === 'boolean') {
                 if (results) {
-                    res.status(204).send()
+                    res.status(200).json({message: 'OK'})
                 } else {
                     res.status(400).send()
                 }
@@ -24,7 +24,7 @@ const createControllerRoutes = controller => {
         } catch(err) {
             console.log(err)
 
-            if (err instanceof MalformedInput) {
+            if (err instanceof MalformedInput || err instanceof DuplicateEntry) {
                 res.status(400).json({error: err.message})
             } else if (err instanceof NotFound) {
                 res.status(404).send({error: 'Not Found'})

@@ -4,14 +4,13 @@
  * and open the template in the editor.
  */
 
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react';
 import { browserHistory } from 'react-router';
 import cookie from 'react-cookies';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
 import {Settings} from '../helper_components/dropdown_settings';
-import { NavbarBrand, Navbar, Nav, NavItem, NavLink, Input, InputGroupAddon, Button, Form, InputGroup, FormGroup, Label, NavbarToggler, Alert } from 'reactstrap';
+import { NavbarBrand, Navbar, Nav, NavItem, NavLink } from 'reactstrap';
 
 class NavBarClass extends React.Component {
     constructor(props) {
@@ -24,6 +23,7 @@ class NavBarClass extends React.Component {
         this.homepage = this.homepage.bind(this);
         this.login = this.login.bind(this);
         this.register = this.register.bind(this);
+        this.about = this.about.bind(this);
     }
     
     homepage () {
@@ -57,11 +57,15 @@ class NavBarClass extends React.Component {
     new_shop () {
         browserHistory.push('/addshop');
     }
+    
+    about () {
+        browserHistory.push('/aboutus');
+    }
   
     render() {
         return (
             <Navbar color="faded" light expand="md">
-                <NavbarBrand><img src={"/public/logo_transparent.png"} width="150px" onClick={() => this.homepage()}/></NavbarBrand>
+                <NavbarBrand><img alt="" src={"/public/logo_transparent.png"} width="150px" onClick={() => this.homepage()}/></NavbarBrand>
                 <Nav className="ml-auto" navbar >
                     <NavItem>
                         <NavLink onClick={() => this.products()}> Προϊόντα </NavLink>
@@ -90,10 +94,9 @@ class NavBarClass extends React.Component {
                     </NavItem>
                     : null
                     }
-                    {Boolean(cookie.load('loggedin'))
-                    ? <NavItem><Settings/></NavItem>
-                    : null
-                    }
+                    <NavItem>
+                        <NavLink onClick={() => this.about()}>Σχετικά με μας</NavLink>
+                    </NavItem>
                     {!Boolean(cookie.load('loggedin'))
                     ? <NavItem>
                         <NavLink onClick={() => this.login()}> Σύνδεση </NavLink>
@@ -104,6 +107,10 @@ class NavBarClass extends React.Component {
                     ?<NavItem>
                         <NavLink onClick={() => this.register()}> Εγγραφή </NavLink>
                     </NavItem>
+                    : null
+                    }
+                    {Boolean(cookie.load('loggedin'))
+                    ? <NavItem><Settings/></NavItem>
                     : null
                     }
                 </Nav>

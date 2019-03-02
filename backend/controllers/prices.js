@@ -3,10 +3,15 @@ const model = require('../models/price')
 const dateformat = require('dateformat');
 const {MalformedInput} = require('../errors')
 const moment = require('moment')
+const productTagModel = require('../models/product_tag')
+const shopTagModel = require('../models/shop_tag')
 
 module.exports = class PricesController extends BaseController {
     constructor(dbConnection) {
         super('prices', new model(dbConnection))
+
+        this.productTagModel = new productTagModel(dbConnection)
+        this.shopTagModel = new shopTagModel(dbConnection)
 
         this.formatResponse = item => {
             return {
@@ -77,12 +82,46 @@ module.exports = class PricesController extends BaseController {
             conditions.productId = params.products.split(',')
         }
 
-        return super.list(conditions, params, having)
+        if (params.price) {
+            conditions.price = {
+                operator: '<=',
+                value: +params.price
+            }
+        }
+
+        if (params.category) {
+            conditions['products.category'] = params.category
+        }
+
+        const response = await super.list(conditions, params, having)
+        const prices = response.prices
+        const productTags = new Map()
+        const shopTags = new Map()
+        for (const price of prices) {
+            if (!productTags.has(price.productId)) {
+                const tags = (await this.productTagModel.list({productId: price.productId})).map(tag => tag.tag)
+                productTags.set(price.productId, tags)
+            }
+            price.productTags = productTags.get(price.productId)
+
+            if (!shopTags.has(price.shopId)) {
+                const tags = (await this.shopTagModel.list({shopId: price.shopId})).map(tag => tag.tag)
+                shopTags.set(price.shopId, tags)
+            }
+            price.shopTags = shopTags.get(price.shopId)
+        }
+
+        return response
     }
 
     async create(params) {
+        params.date = params.dateFrom
+        delete params.dateFrom
+        if (params.dateTo === '') {
+            delete params.dateTo
+        }
+
         const price = await super.create(params)
-        console.log(price)
         return this.read(price.id)
     }
 
