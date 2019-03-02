@@ -34,7 +34,8 @@ module.exports = class PricesController extends BaseController {
                 barcode: item.barcode,
                 lng: item.lng,
                 lat: item.lat,
-                shopWithdrawn: item.shopWithdrawn
+                shopWithdrawn: item.shopWithdrawn,
+                productWithdrawn: item.productWithdrawn
             }
         }
 
