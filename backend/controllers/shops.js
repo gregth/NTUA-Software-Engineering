@@ -64,6 +64,16 @@ module.exports = class ShopsController extends BaseController {
             conditions.withdrawn = 0
         }
 
-        return super.list(conditions, params)
+        let having
+        if (params.geoDist && params.geoLng && params.geoLat) {
+            having = {
+                type: 'DISTANCE',
+                lat: params.geoLat,
+                lng: params.geoLng,
+                radius: params.geoDist
+            }
+        }
+
+        return super.list(conditions, params, having)
     }
 }
