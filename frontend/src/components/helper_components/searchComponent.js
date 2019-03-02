@@ -159,7 +159,6 @@ export class Search extends Component {
                                 <Range range={this.state.price} updateRange={this.updateRange}/>
                                 
                             </td>
-                            <div className="col mt-3"></div>
                             <td><Button onClick={this.filters}>Εφαρμογή φίλτρων</Button></td>
                         </tr>
                     </tbody>
