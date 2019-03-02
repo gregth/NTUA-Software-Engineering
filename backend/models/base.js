@@ -107,7 +107,7 @@ module.exports = class BaseModel {
         }
 
         if (having && having.type == 'DISTANCE') {
-            query += 'HAVING distance < ? '
+            query += ' HAVING distance < ? '
             substitutions.push(`${having.radius}`);
         }
 
