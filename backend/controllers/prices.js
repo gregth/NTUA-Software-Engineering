@@ -25,7 +25,12 @@ module.exports = class PricesController extends BaseController {
                 shopName: item.shopName,
                 shopTags: [],
                 shopAddress: item.address,
-                shopDist: item.distance
+                shopDist: item.distance,
+                brand: item.brand,
+                volume: item.volume,
+                category: item.category,
+                description: item.description,
+                telephone: item.telephone
             }
         }
 
