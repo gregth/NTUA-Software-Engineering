@@ -120,7 +120,12 @@ export default class PricesTable extends React.PureComponent {
         }
     }
     async request () {
-        this.setState({success: null, error: null, not_found: null, message: null, error_message: null});
+        try {
+            this._isMounted = this.setState({success: null, error: null, not_found: null, message: null, error_message: null});
+        }
+        catch (e) {
+            console.log(e);
+        }
         var temp = await this.make_url().then(url => {return url;});
         console.log(temp)
         const url = temp;
@@ -130,36 +135,36 @@ export default class PricesTable extends React.PureComponent {
         
         try {
             if (answer === 'error') {
-                this.setState({error: true});
+                this._isMounted = this.setState({error: true});
                 return;
             }
 
             if (answer.status === 200) {
-                this.setState({success: true});
+                this._isMounted = this.setState({success: true});
             }
             else if (answer.status === 404) {
-                this.setState({message: 'Error 404 - Not Found', not_found: true});
+                this._isMounted = this.setState({message: 'Error 404 - Not Found', not_found: true});
                 return;
             }
             else if (answer.status === 401) {
-                this.setState({message: 'Error 401 - Not Authorized', not_found: true});
+                this._isMounted = this.setState({message: 'Error 401 - Not Authorized', not_found: true});
                 return;
             }
             else if (answer.status === 403) {
-                this.setState({message: 'Error 403 - Forbidden', not_found: true});
+                this._isMounted = this.setState({message: 'Error 403 - Forbidden', not_found: true});
                 return;
             }
             else if (answer.status === 400) {
-                this.setState({message: 'Error 400 - Bad Request', not_found: true});
+                this._isMounted = this.setState({message: 'Error 400 - Bad Request', not_found: true});
                 return;
             }
             else {
-                this.setState({message: 'Error ' + answer.status.toString() + ' - Πρόβλημα με την ολοκλήρωση του αιτήματος.', not_found: true});
+                this._isMounted = this.setState({message: 'Error ' + answer.status.toString() + ' - Πρόβλημα με την ολοκλήρωση του αιτήματος.', not_found: true});
                 return;
             }
         }
         catch (error) {
-            this.setState({error: true, error_message: error});
+            this._isMounted = this.setState({error: true, error_message: error});
             return;
         }
         

@@ -110,8 +110,13 @@ export default class PapigationShops extends React.PureComponent {
         this.setState({ready: true});
     }
     
-    async request () {       
-        this.setState({ success: null, not_found: null, error: null, message: null, error_message: null, not_found2: null, message2: null });
+    async request () {      
+        try {
+            this.setState({ success: null, not_found: null, error: null, message: null, error_message: null, not_found2: null, message2: null });
+        }
+        catch (e) {
+            console.log(e);
+        }
         this.selected_shops = [];
         const url = '/shops?start=' + this.start + 
                     '&count=' +  this.pageSize + '&sort=' + this.sort +

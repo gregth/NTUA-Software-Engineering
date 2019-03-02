@@ -153,8 +153,12 @@ export default class ProductsResults extends React.PureComponent {
     
     async request () {   
         this.selected_products = [];
-        this.setState({ success: null, not_found: null, error: null, message: null, error_message: null, not_found2: null, message2: null });
-
+        try {
+            this.setState({ success: null, not_found: null, error: null, message: null, error_message: null, not_found2: null, message2: null });
+        }
+        catch(e) {
+            console.log(e);
+        }
         const url = '/products?start=' + this.start + 
                     '&count=' +  this.pageSize + '&sort=' + this.sort +
                     '&status=' + this.status;
