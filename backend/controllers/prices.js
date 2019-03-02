@@ -30,7 +30,8 @@ module.exports = class PricesController extends BaseController {
                 volume: item.volume,
                 category: item.category,
                 description: item.description,
-                telephone: item.telephone
+                telephone: item.telephone,
+                barcode: item.barcode
             }
         }
 
