@@ -134,7 +134,7 @@ class Product extends React.Component {
             }
         }
         
-        var url = '/shops?geoDist=0.1&lat=' + lat + '&lng=' + lng;
+        var url = '/shops?geoDist=0.1&geoLat=' + lat + '&geoLng=' + lng;
         this._isMounted = await receive_from_server(url);
         const answer = this._isMounted;
         
