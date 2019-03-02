@@ -77,6 +77,13 @@ module.exports = class PricesController extends BaseController {
             conditions.productId = params.products.split(',')
         }
 
+        if (params.price) {
+            conditions.price = {
+                operator: '<=',
+                value: +params.price
+            }
+        }
+
         return super.list(conditions, params, having)
     }
 
