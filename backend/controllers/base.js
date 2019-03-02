@@ -84,7 +84,7 @@ module.exports = class BaseController {
         return [{field_name, order}]   
     }
 
-    async list(conditions={}, params={}, having) {
+    async list(conditions={}, params={start: 0, count: 20}, having) {
         const order_by = this.validate_sort_params(params.sort, this.sortable_rules)
 
         let start = 0
