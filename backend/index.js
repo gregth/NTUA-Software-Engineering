@@ -14,7 +14,7 @@ async function main() {
     const dbConnection = await mysql.createConnection(config.db);
 
     console.log('Connected to MySQL. Moving on...')
-    const resources = ['products', 'shops', 'prices', 'users', 'login']
+    const resources = ['products', 'shops', 'prices', 'users', 'login', 'logout']
     for (const resource of resources) {
         app.use(`/${resource}`, createSimpleRouter(resource, dbConnection))
     }
