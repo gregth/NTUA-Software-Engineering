@@ -32,7 +32,7 @@ module.exports = class ProductsController extends BaseController {
         }
     }
 
-    async list(params) {
+    async list(params={start: 0, count: 20, status: 'ACTIVE', sort: 'id|DESC'}) {
         const conditions = {}
 
         if (params.barcode) {
