@@ -251,14 +251,14 @@ export default class EditProduct extends Component {
                     <FormGroup check row>
                         <Label sm={3} for="edit_product_name" className="mr-sm-2">Όνομα Προϊόντος:</Label>
                         <Col sm={3}>
-                            <Input id="edit_product_name" name="name" value={this.state.name} onChange={this.handleChange} type="text"/>
+                            <Input id="edit_product_name" name="name" value={this.state.name} onChange={this.handleChange} type="text" required/>
                         </Col>
                     </FormGroup>
 
                     <FormGroup check row>
                         <Label sm={3} for="edit_product_brand" className="mr-sm-2">Μάρκα Προϊόντος:</Label>
                         <Col sm={3}>
-                            <Input id="edit_product_brand" name="brand" value={this.state.brand} onChange={this.handleChange} type="text"/>
+                            <Input id="edit_product_brand" name="brand" value={this.state.brand} onChange={this.handleChange} type="text" required/>
                         </Col>
                     </FormGroup>
 
@@ -281,7 +281,7 @@ export default class EditProduct extends Component {
                     <FormGroup check row>
                         <Label sm={6} for="edit_product_description">Περιγραφή προϊόντος:</Label>
                         <Col sm={8}>
-                            <Input type="textarea" name="description" id="edit_product_description" onChange={this.handleChange} value={this.state.description}/>
+                            <Input type="textarea" name="description" id="edit_product_description" onChange={this.handleChange} value={this.state.description} required/>
                         </Col>
                     </FormGroup>
                     <FormGroup check row>

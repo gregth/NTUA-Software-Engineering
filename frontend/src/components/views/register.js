@@ -221,7 +221,7 @@ class Register extends React.Component {
                     <FormGroup check row>
                         <Label for="register_phone" sm={8}>Κινητό/Σταθερό Τηλέφωνο:</Label>
                         <Col sm={3}>
-                            <Input type="tel" id="register_phone" name="register_phone" invalid={this.state.checkPhone===false} valid={this.state.checkPhone} onChange={() => this.validatePhone()} required/>
+                            <Input type="tel" id="register_phone" name="register_phone" invalid={this.state.checkPhone===false} valid={this.state.checkPhone} onChange={() => this.validatePhone()}/>
                         </Col>
                     </FormGroup>
                     <hr></hr>
