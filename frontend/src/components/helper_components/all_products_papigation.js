@@ -44,7 +44,6 @@ export default class ProductsResults extends React.PureComponent {
         this.search = this.search.bind(this);
         this.search_product = this.search_product.bind(this);
         this.category_to_greek = this.category_to_greek.bind(this);
-        this.state = {};
         this.state = {
             error_message: null, noproducts: null, tooltipOpen: false, currentPage: 0, error: null, success: null, not_found: null, ready: null, message: null
         };
