@@ -7,8 +7,6 @@
 import React from 'react';
 import { browserHistory } from 'react-router';
 import cookie from 'react-cookies';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
 import {Settings} from '../helper_components/dropdown_settings';
 import { NavbarBrand, Navbar, Nav, NavItem, NavLink } from 'reactstrap';
 
@@ -90,7 +88,7 @@ class NavBarClass extends React.Component {
                     {Boolean(cookie.load('loggedin'))
                     ?
                     <NavItem>
-                        <NavLink onClick={() => this.newprice()}><FontAwesomeIcon icon={faCartPlus}></FontAwesomeIcon> Προσθήκη Νέας Τιμής</NavLink>
+                        <NavLink onClick={() => this.newprice()}>Προσθήκη Νέας Τιμής</NavLink>
                     </NavItem>
                     : null
                     }
