@@ -83,6 +83,7 @@ export class MapClass extends Component {
                     </ModalHeader>
                     <ModalBody>
                     <Container className="modal_big">
+                    <div className='map_container'>
                         <Map       
                             google={this.props.google}
                             zoom={11}
@@ -134,6 +135,7 @@ export class MapClass extends Component {
                                     }
                                 </InfoWindow>
                         </Map>
+                        </div>
                         </Container>
                     </ModalBody>
                 </Modal>
