@@ -113,7 +113,8 @@ export class Search extends Component {
                   <hr></hr>
                 <Container className="Search">
                 <Form>
-                <Row form>
+
+                <Row >
                     <Col>
                         <FormGroup>
                             <Label for="categ_ex">Επιλογή Κατηγορίας</Label>
@@ -140,7 +141,7 @@ export class Search extends Component {
                     </Col>
                 </Row> 
 
-                <Row form>
+                <Row>
                     <Col>
                         <FormGroup>
                             <Label for="search_datefrom">Ημερομηνία από:</Label>

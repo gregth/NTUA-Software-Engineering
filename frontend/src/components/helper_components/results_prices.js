@@ -48,6 +48,13 @@ export default class PricesTable extends React.PureComponent {
                 <td>{price.shopDist ? price.shopDist.toFixed(2) + 'km' : '-'}</td>
                 <td>{price.price + '€'}</td>
                 <td>
+                    <ProductInfo id={price.productId}/>
+                </td>
+                <td>
+                    <ShopInfo id={price.shopId}/>
+                </td>
+                <td>
+                    <MapClass product_id={price.productId} shop_id={price.shopId} price={price.price}/>
                     <ProductInfo price={price}/>
                 </td>
                 <td>
