@@ -17,7 +17,7 @@ class Range extends React.Component {
     return (
       <div>
        
-      <Col>
+      <Row>
           <input className="range" type="range"
             value={range} 
             min="0"
@@ -25,9 +25,10 @@ class Range extends React.Component {
             step="1"
             onChange={this.updateRange}
           />
-     
+
           <span htmlFor="range" className="price" id="price">{range}€</span>
-          </Col>
+
+          </Row>
        </div>
     );
   }
