@@ -1,5 +1,5 @@
 import { browserHistory } from 'react-router';
-import { Alert, Input, Table, Pagination, PaginationItem, PaginationLink, Button } from 'reactstrap';
+import { Alert, Input,Label, Row, Form, FormGroup, Col, Table, Pagination, PaginationItem, PaginationLink, Button } from 'reactstrap';
 import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
@@ -208,27 +208,41 @@ export default class PapigationShops extends React.PureComponent {
     const { currentPage } = this.state;
     return (    
         <div>
+            <br></br>
+                <br></br>
+                <br></br>
             <Alert color="danger" isOpen={this.state.noshops===true}>Δεν έχει επιλεχθεί κανένα κατάστημα.</Alert>
             <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά. {this.state.error_message}</Alert>
             <Alert color="danger" isOpen={this.state.not_found===true}>{this.state.message}</Alert>
-                
-            <Table borderless>
-                <thead>
-                    <tr>
-                        <th>Ταξινόμηση κατά:</th>
-                        <th>Προϊόντα προς εμφάνιση:</th>
-                        <th>Προϊόντα ανά σελίδα:</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><SortDropdown ref="sort" click={this.sortChoose}/></td>
-                        <td><StatusDropdown ref="status" click={this.statusChoose}/></td>
-                        <td><CountDropdown ref="count" click={this.countChoose}/></td>
-                        <td><Button onClick={this.search}> Αναζήτηση τιμών επιλεγμένων καταστημάτων </Button></td>
-                    </tr>
-                </tbody>
-            </Table>
+            <Form>
+                    <Row >
+                        <Col>
+                            <FormGroup>
+                            <Label for="sort">Ταξινόμηση κατά:</Label>
+                            <SortDropdown ref="sort" click={this.sortChoose}/>
+                            </FormGroup>
+                    </Col>
+                    <Col >
+                    <FormGroup>
+                        <Label for="status">Καταστήματα προς εμφάνιση:</Label>
+                        <StatusDropdown ref="status" click={this.statusChoose}/>
+                        </FormGroup>
+                    </Col>
+                    <Col>
+                        <FormGroup>
+                            <Label for="count">Καταστήματα ανά σελίδα:</Label>
+                            <CountDropdown ref="count" click={this.countChoose}/>
+                        </FormGroup>
+                    </Col>
+                    <Col>
+                        <FormGroup>
+                            <br></br>
+                            <Button onClick={this.search}> Αναζήτηση τιμών επιλεγμένων καταστημάτων </Button>
+                        </FormGroup>
+                    </Col>
+                    </Row>
+                    </Form>
+                    <br></br>
             {!this.state.ready
             ?<div> Loading... </div>
             : <div>

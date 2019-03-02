@@ -1,10 +1,5 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 import Description from './product_description';
-import { Input, Table, Pagination, PaginationItem, PaginationLink, Button, Alert } from 'reactstrap';
+import { Input, Table, Label, Row, Form, FormGroup, Col, Pagination, PaginationItem, PaginationLink, Button, Alert } from 'reactstrap';
 import React from "react";
 import { browserHistory } from 'react-router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -244,27 +239,42 @@ export default class ProductsResults extends React.PureComponent {
         const { currentPage } = this.state;
         return ( 
             <div>
+                <br></br>
+                <br></br>
+                <br></br>
                 <Alert color="danger" isOpen={this.state.noproducts===true}>Δεν έχει επιλεχθεί κανένα προϊόν.</Alert> 
                 <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά. {this.state.error_message}</Alert>
                 <Alert color="danger" isOpen={this.state.not_found===true}>{this.state.message}</Alert>
                 
-                <Table borderless>
-                    <thead>
-                        <tr>
-                            <th>Ταξινόμηση κατά:</th>
-                            <th>Προϊόντα προς εμφάνιση:</th>
-                            <th>Προϊόντα ανά σελίδα:</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><SortDropdown ref="sort" click={this.sortChoose}/></td>
-                            <td><StatusDropdown ref="status" click={this.statusChoose}/></td>
-                            <td><CountDropdown ref="count" click={this.countChoose}/></td>
-                            <td><Button onClick={this.search}> Αναζήτηση τιμών επιλεγμένων προϊόντων</Button></td>
-                        </tr>
-                    </tbody>
-                </Table>
+                <Form>
+                    <Row >
+                        <Col>
+                            <FormGroup>
+                            <Label for="sort">Ταξινόμηση κατά:</Label>
+                            <SortDropdown ref="sort" click={this.sortChoose}/>
+                            </FormGroup>
+                    </Col>
+                    <Col >
+                    <FormGroup>
+                        <Label for="status">Προϊόντα προς εμφάνιση:</Label>
+                        <StatusDropdown ref="status" click={this.statusChoose}/>
+                        </FormGroup>
+                    </Col>
+                    <Col>
+                        <FormGroup>
+                            <Label for="count">Προϊόντα ανά σελίδα:</Label>
+                            <CountDropdown ref="count" click={this.countChoose}/>
+                        </FormGroup>
+                    </Col>
+                    <Col>
+                        <FormGroup>
+                            <br></br>
+                            <Button onClick={this.search}> Αναζήτηση τιμών επιλεγμένων προϊόντων</Button>
+                        </FormGroup>
+                    </Col>
+                    </Row>
+                    </Form>
+                    <br></br>
                 {!this.state.ready
                 ?<div> Loading... {this.state.ready} </div>
                 :<div>
@@ -319,6 +329,7 @@ export default class ProductsResults extends React.PureComponent {
                 }
             </div>
             }
+          
         </div>
     );
   }  

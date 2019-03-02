@@ -3,7 +3,6 @@ import { Map, GoogleApiWrapper, Marker, InfoWindow } from 'google-maps-react';
 import { Button, Modal, ModalHeader, ModalBody, Input, Label, Container } from 'reactstrap';
 import {getLocation} from '../functions/current_location';
 
-/* eslint react/no-multi-comp: 0, react/prop-types: 0 */
 
 export class MapClass extends Component {
     constructor(props) {

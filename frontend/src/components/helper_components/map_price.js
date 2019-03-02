@@ -5,7 +5,6 @@ import {getLocation} from '../functions/current_location';
 import { Modal, ModalHeader, ModalBody, Container } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarkedAlt } from '@fortawesome/free-solid-svg-icons';
-/* eslint react/no-multi-comp: 0, react/prop-types: 0 */
 
 export class MapClass extends Component {
     constructor(props) {
