@@ -1,5 +1,6 @@
 import React from "react";
 import {Col} from 'reactstrap';
+import { Row } from 'reactstrap';
 
 class Range extends React.Component {
   constructor(props) {
