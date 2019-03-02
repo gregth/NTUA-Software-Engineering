@@ -50,7 +50,7 @@ class Register extends React.Component {
        
         console.log(body);
        
-        const url = 'http://localhost:3002/users';
+        const url = '/users';
         this._isMounted = await send_to_server(url, body);
         const answer = this._isMounted;
         

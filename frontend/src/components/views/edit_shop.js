@@ -100,7 +100,7 @@ export default class EditShop extends Component {
     
     async request() {
         this.setState({success: null, error: null, not_found: null, message: null, error_message: null });
-        const url = 'http://localhost:3002/shops/' + this.props.location.query.id;
+        const url = '/shops/' + this.props.location.query.id;
         this._isMounted = await receive_from_server(url);
         const answer = this._isMounted;
         
@@ -223,7 +223,7 @@ export default class EditShop extends Component {
         
         var changed = check_changes(this.state.details, shop);
         
-        const url = 'http://localhost:3002/shops/' + this.props.location.query.id;
+        const url = '/shops/' + this.props.location.query.id;
         
         var answer;
         

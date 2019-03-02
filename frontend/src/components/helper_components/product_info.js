@@ -46,7 +46,7 @@ export default class ProductInfo extends React.Component {
     
     async request_product() {
         this.setState({ success: null, not_found: null, error: null, message: null, error_message: null });
-        const url = 'http://localhost:3002/products/' + this.props.id;
+        const url = '/products/' + this.props.id;
         this._asyncRequest = await receive_from_server(url);
         const answer = this._asyncRequest;
         

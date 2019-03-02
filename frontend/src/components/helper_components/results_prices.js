@@ -63,7 +63,7 @@ export default class PricesTable extends React.PureComponent {
     } 
     
     async make_url () {
-        var url = 'http://localhost:3002/prices?start=' + this.start + 
+        var url = '/prices?start=' + this.start + 
                     '&count=' +  this.pageSize;
         var params = [];
         if (this.props.params) {

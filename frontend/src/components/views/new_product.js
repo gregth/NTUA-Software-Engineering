@@ -68,7 +68,7 @@ class newProduct extends React.Component {
         };
         
         console.log(product);
-        const url = 'http://localhost:3002/products';
+        const url = '/products';
         this._isMounted = await send_to_server(url, product);
         const answer = this._isMounted;
         

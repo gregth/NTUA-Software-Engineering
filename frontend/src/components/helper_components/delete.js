@@ -49,11 +49,11 @@ class Delete extends React.Component {
     toggle_delete(id, name) {
         if (this.props.category === 'shop') {
             this.message = 'Είστε σίγουρος/-η ότι θέλετε να διαγράψετε το κατάστημα ' + name + ';'; 
-            this.url = 'http://localhost:3002/shops/' + id;
+            this.url = '/shops/' + id;
         } 
         else {
             this.message = 'Είστε σίγουρος/-η ότι θέλετε να διαγράψετε το προϊόν ' + name + ';'; 
-            this.url = 'http://localhost:3002/products/' + id;
+            this.url = '/products/' + id;
         }
         this.setState({
             modal: !this.state.modal

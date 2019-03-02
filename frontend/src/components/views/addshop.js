@@ -125,7 +125,7 @@ class Shop extends React.Component {
         };
         
         console.log(shop);
-        const url = 'http://localhost:3002/shops';
+        const url = '/shops';
         this._isMounted = await send_to_server(url, shop);
         const answer = this._isMounted;
         

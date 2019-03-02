@@ -60,7 +60,7 @@ class Product extends React.Component {
     async find_barcode () {
         this.setState({ success: null, not_found: null, error: null, message: null, error_message: null, not_found2: null, message2: null });
         const barcode = document.getElementById('addprice_barcode').value;
-        var url = 'http://localhost:3002/products?barcode=' + barcode;
+        var url = '/products?barcode=' + barcode;
         this._isMounted = await receive_from_server(url);
         const answer = this._isMounted;
         
@@ -134,7 +134,7 @@ class Product extends React.Component {
             }
         }
         
-        var url = 'http://localhost:3002/shops?geoDist=0.1&lat=' + lat + '&lng=' + lng;
+        var url = '/shops?geoDist=0.1&lat=' + lat + '&lng=' + lng;
         this._isMounted = await receive_from_server(url);
         const answer = this._isMounted;
         
@@ -187,7 +187,7 @@ class Product extends React.Component {
         console.log(this.body);
         this.setState({ success: null, not_found: null, error: null, message: null, error_message: null});
             
-        var url = 'http://localhost:3002/prices';
+        var url = '/prices';
         this._isMounted = await send_to_server(url, this.body);
         const answer = this._isMounted;
         console.log(answer);

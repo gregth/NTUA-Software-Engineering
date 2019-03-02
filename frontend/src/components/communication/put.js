@@ -41,7 +41,8 @@ function sendInfo(url, body) {
 }
 
 export function put(url, body) {
-    return sendPromise(url, body)
+    var url_final = window.http + url;
+    return sendPromise(url_final, body)
     .then ((answer) => {
         return answer;
     })

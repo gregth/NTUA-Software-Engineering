@@ -64,7 +64,7 @@ export class MapClass extends Component {
     
     async request_product() {
         this.setState({ success: null, not_found: null, error: null, message: null, error_message: null });
-        const url = 'http://localhost:3002/products/' + this.props.product_id;
+        const url = '/products/' + this.props.product_id;
         this._isMounted = await receive_from_server(url);
         const answer = this._isMounted;
         
@@ -111,7 +111,7 @@ export class MapClass extends Component {
     
     async request_shop() {
         this.setState({ success: null, not_found: null, error: null, message: null, error_message: null });
-        const url = 'http://localhost:3002/shops/' + this.props.shop_id;
+        const url = '/shops/' + this.props.shop_id;
         this._isMounted = await receive_from_server(url);
         const answer = this._isMounted;
         try {
