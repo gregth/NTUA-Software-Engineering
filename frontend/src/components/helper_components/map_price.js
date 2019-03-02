@@ -76,10 +76,12 @@ export class MapClass extends Component {
                 </button>
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className="modal-lg">
                     <ModalHeader toggle={this.toggle}>
+                    <Container className="Map1">
                         <Label check>
                             Εμφάνιση Τωρινής Τοποθεσίας
                             <Input type="checkbox" id="location_map" onChange={() => this.currentLocation()}/>{' '}
                         </Label>
+                        </Container>
                     </ModalHeader>
                     <ModalBody>
                     <Container className="modal_big">
