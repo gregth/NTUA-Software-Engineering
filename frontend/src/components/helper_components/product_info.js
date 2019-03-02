@@ -33,6 +33,10 @@ export default class ProductInfo extends React.Component {
         this.state = {
             popoverOpen: false
         };
+        this.category = null;
+        for (var i in options) {
+            if (options[i].value === this.props.price.category) this.category = options[i].name; 
+        }
     }
     
     toggle() {
@@ -44,10 +48,10 @@ export default class ProductInfo extends React.Component {
     render() {
         return (
             <div>
-                <button className="search_btn" id={"product_btn" + this.props.price.productId} title='Πληροφορίες προϊόντος'>
+                <button className="search_btn" id={"product_btn" + this.props.price.id} title='Πληροφορίες προϊόντος'>
                     <FontAwesomeIcon icon={faWineBottle}></FontAwesomeIcon>
                 </button>
-                <Popover placement="bottom" isOpen={this.state.popoverOpen} target={"product_btn" + this.props.price.productId} toggle={this.toggle}>
+                <Popover placement="bottom" isOpen={this.state.popoverOpen} target={"product_btn" + this.props.price.id} toggle={this.toggle}>
                     <PopoverHeader>Πληροφορίες Προϊόντος</PopoverHeader>
                     <PopoverBody>
                         <strong>Barcode: </strong>
@@ -57,13 +61,17 @@ export default class ProductInfo extends React.Component {
                         <strong>Μάρκα: </strong>
                         {this.props.price.brand}<br/>
                         <strong>Όγκος: </strong>
-                        {this.props.price.volume}<br/>
+                        {this.props.price.volume}ml<br/>
                         <strong>Κατηγορία: </strong>
-                        {this.props.price.category}<br/>
+                        {this.category}<br/>
                         <strong>Χαρακτηριστικά: </strong>
                         {this.props.price.productTags.join(', ')}<br/>
                         <strong>Περιγραφή: </strong>
                         {this.props.price.description}<br/>
+                        {this.props.price.productWithdrawn 
+                        ? <p className='withdrawnShop'> Αποσυρθέν </p>
+                        : <p className='activeShop'> Ενεργό </p>
+                        }
                     </PopoverBody>
                 </Popover>
             </div>

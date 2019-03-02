@@ -47,6 +47,10 @@ export default class ShopInfo extends React.Component {
                         {this.props.price.telephone}<br/>
                         <strong>Χαρακτηριστικά: </strong>
                         {this.props.price.shopTags.join(', ')}
+                        {this.props.price.shopWithdrawn 
+                        ? <p className='withdrawnShop'> Αποσυρθέν </p>
+                        : <p className='activeShop'> Ενεργό </p>
+                        }
                     </PopoverBody>
                 </Popover>
             </div>
