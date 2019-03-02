@@ -14,30 +14,50 @@ function sendPromise(url, body) {
 }
 
 function sendInfo(url, body) {
-    try {
-        var token = cookie.load('token');
+    if (cookie.load('loggedin')) {
+        try {
+            var token = cookie.load('token');
+        }
+        catch(error) {
+            console.log(error);
+        }
+
+        return fetch(url, {
+            method: 'PUT',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                'X-OBSERVATORY-AUTH': token
+            },
+            body: JSON.stringify(body)
+        })
+        .then((response) => {
+            console.log(response);
+            return response;
+        })
+        .catch((error) => {
+            console.error(error);
+            return("error");
+        });
     }
-    catch(error) {
-        console.log(error);
+    else {
+        return fetch(url, {
+            method: 'PUT',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
+        })
+        .then((response) => {
+            console.log(response);
+            return response;
+        })
+        .catch((error) => {
+            console.error(error);
+            return("error");
+        });
     }
-    
-    return fetch(url, {
-        method: 'PUT',
-        headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            'X-OBSERVATORY-AUTH': token
-        },
-        body: JSON.stringify(body)
-    })
-    .then((response) => {
-        console.log(response);
-        return response;
-    })
-    .catch((error) => {
-        console.error(error);
-        return("error");
-    });
 }
 
 export function put(url, body) {

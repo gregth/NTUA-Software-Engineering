@@ -76,7 +76,6 @@ export class Settings extends Component {
         cookie.remove('token', {path: '/'});
         cookie.remove('username', { path: '/' });
         cookie.remove('loggedin', { path: '/' });
-        cookie.remove('need_login', { path: '/' });
         browserHistory.push('/');
     }
     

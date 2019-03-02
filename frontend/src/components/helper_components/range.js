@@ -26,7 +26,7 @@ class Range extends React.Component {
             onChange={this.updateRange}
           />
      
-          <span for="range" className="price" id="price">{range}€</span>
+          <span htmlFor="range" className="price" id="price">{range}€</span>
           </Col>
        </div>
     );
