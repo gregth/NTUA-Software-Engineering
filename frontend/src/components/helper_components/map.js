@@ -3,7 +3,7 @@ import { Map, GoogleApiWrapper, Marker, InfoWindow } from 'google-maps-react';
 import Geocode from 'react-geocode';
 import { Input, Label } from 'reactstrap';
 import {getLocation} from '../functions/current_location';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Table, Container } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, FormGroup, ModalFooter, Table, Container, Row, Col} from 'reactstrap';
 
 /* eslint react/no-multi-comp: 0, react/prop-types: 0 */
 
@@ -50,16 +50,25 @@ export class MapClass extends Component {
         return (
             <div>
                 <Button color="primary" onClick={this.toggle}>Εμφάνιση αποτελεσμάτων στον χάρτη</Button>
-                <Modal isOpen={this.state.modal} toggle={this.toggle} className="modal-lg">
+                <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className} size="lg">
+                
                     <ModalHeader toggle={this.toggle}>
+                    <FormGroup check>
                         <Label check>
-                            Εμφάνιση Τωρινής Τοποθεσίας
+                        
+                        <Col sm={13}> 
                             <Input type="checkbox" id="location_map" onChange={() => this.currentLocation()}/>{' '}
+                        </Col>
+                            Εμφάνιση Τωρινής Τοποθεσίας
                         </Label>
+                        </FormGroup>
                     </ModalHeader>
+                   
                     <ModalBody>
-                    <Container className="modal_big">
-                        <Map       
+                    <Container className="MapClass">
+                        <Row className="show-grid">
+                        <Col xs={12} md={8}>
+                        <Map      
                             google={this.props.google}
                             zoom={11}
                             coordinates={true}
@@ -105,9 +114,13 @@ export class MapClass extends Component {
                                     }
                                 </InfoWindow>
                         </Map>
+                        </Col>
+                        </Row>
                         </Container>
                     </ModalBody>
+          
                 </Modal>
+              
             </div>
             
         );

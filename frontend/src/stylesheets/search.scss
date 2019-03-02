@@ -72,7 +72,7 @@
   background: rgb(167, 4, 4);
   outline: none;
   height: 6px;
-  width: 100px;
+  width: 150px;
   border-radius: 5px;
   &::-webkit-slider-thumb {
     -webkit-appearance: none;
@@ -83,7 +83,7 @@
   }
 }
 
-.tick {
+.price {
     color: rgb(31, 2, 2);
   border-radius: 2px;
   padding: 3px 7px;

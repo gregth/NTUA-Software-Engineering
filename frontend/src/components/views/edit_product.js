@@ -269,7 +269,7 @@ export default class EditProduct extends Component {
 
                     <FormGroup check row>
                         <Label sm={3} for="edit_product_category">Κατηγορία:</Label>
-                        <Col sm={8}>
+                        <Col sm={10}>
                             <Categories ref='edit_product_category' default={this.state.details.category}/>
                         </Col>
                     </FormGroup>
