@@ -73,12 +73,13 @@ module.exports = class BaseModel {
 
     async list(conditions, orderBy, having, limit) {
         let substitutions = [];
+
+
         let query = 'SELECT '
         if (having && having.type == 'DISTANCE') {
-            query += '(6371 * acos (' + 
-                `cos(radians(?)) * cos(radians(lat)) * cos(radians(lng)` +
-                '- radians(?)) + sin ( radians(?)) * sin(radians( lat )))' +
-                ') AS distance, '
+            query += `111.111 * DEGREES(ACOS(LEAST(COS(RADIANS(lat))` 
+            + `* COS(RADIANS(?)) * COS(RADIANS(lng - ?))`
+            +` + SIN(RADIANS(lat)) * SIN(RADIANS(?)), 1.0))) AS distance, `
             substitutions.push(...[`${having.lat}`, `${having.lng}`, `${having.lat}`])
         }
         query += `${this.rules.select.selectable_fields.join(', ')} FROM ${this.table}`;
@@ -106,8 +107,9 @@ module.exports = class BaseModel {
             substitutions.push(...conditionValues);
         }
 
-        if (having && having.type == 'DISTANCE') {
+        if (false && having && having.type == 'DISTANCE') {
             query += ' HAVING distance < ? '
+            console.log(having.radius)
             substitutions.push(`${having.radius}`);
         }
 

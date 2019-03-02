@@ -87,8 +87,14 @@ class Product extends React.Component {
                 return;
             }
             else {
-                this.setState({message: 'Error ' + answer.status.toString() + ' - Πρόβλημα με την ολοκλήρωση του αιτήματος.', not_found: true});
-                return;
+                try {
+                    this.setState({message: 'Error ' + answer.status.toString() + ' - Πρόβλημα με την ολοκλήρωση του αιτήματος.', not_found: true});
+                    return;
+                }
+                catch (error) {
+                    this.setState({error: true, error_message: error});
+                    return;
+                }
             }
         }
         catch (error) {
@@ -305,7 +311,7 @@ class Product extends React.Component {
                         <FormGroup check row>
                             <Label sm={3} for="addprice_address">Διεύθυνση:</Label>
                             <Col sm={3}>
-                                <Input id="addprice_address" invalid={this.state.error_address} name="address" pattern="[^\u0000-\u007F]+([/\w\.]?[\s]*[^\u0000-\u007F]*)*" type="text" disabled={this.state.flag} required/>
+                                <Input id="addprice_address" invalid={this.state.error_address} name="address" type="text" disabled={this.state.flag} required/>
                                 <FormFeedback valid={!this.state.error_address}>Η διεύθυνση δεν είναι έγκυρη.</FormFeedback>
                             </Col>
                         </FormGroup>

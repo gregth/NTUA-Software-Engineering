@@ -23,6 +23,16 @@ module.exports = class Price extends BaseModel {
                     'shops.address',
                     'products.name AS productName',
                     'productId',
+                    'products.brand AS brand',
+                    'products.volume AS volume',
+                    'products.category AS category',
+                    'products.description AS description',
+                    'shops.telephone AS telephone',
+                    'products.barcode AS barcode',
+                    'shops.lng AS lng',
+                    'shops.lat AS lat',
+                    'shops.withdrawn AS shopWithdrawn',
+                    'products.withdrawn AS productWithdrawn'
                 ],
                 joins: [{
                     type: 'INNER JOIN',

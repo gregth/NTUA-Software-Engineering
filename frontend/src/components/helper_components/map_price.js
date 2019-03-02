@@ -3,7 +3,6 @@ import { Map, GoogleApiWrapper, Marker, InfoWindow } from 'google-maps-react';
 import { Input, Label } from 'reactstrap';
 import {getLocation} from '../functions/current_location';
 import { Modal, ModalHeader, ModalBody, Container } from 'reactstrap';
-import {receive_from_server} from '../communication/receive';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarkedAlt } from '@fortawesome/free-solid-svg-icons';
 /* eslint react/no-multi-comp: 0, react/prop-types: 0 */
@@ -12,30 +11,14 @@ export class MapClass extends Component {
     constructor(props) {
         super(props);
         this.currentLocation = this.currentLocation.bind(this);
-        this.state = {current: [], details: null, show_current: false, product: null, message: null, error_message: null, error: null, not_found: null, 
-            success: null, markers : [], activeMarker: null,  showingInfoWindow: false, modal: false};
+        this.state = {current: [], show_current: false, 
+            markers : [{id: this.props.price.id, price: this.props.price.price, lng: this.props.price.lng, 
+                    lat: this.props.price.lat, name: this.props.price.shopName, phone: this.props.price.telephone,
+                    address: this.props.price.shopAddress, withdrawn: this.props.price.shopWithdrawn}], 
+            activeMarker: null,  showingInfoWindow: false, modal: false};
         this.onMarkerClick = this.onMarkerClick.bind(this);
         this.toggle = this.toggle.bind(this);
         this.toggle_map = this.toggle_map.bind(this);
-        this.request_shop = this.request_shop.bind(this);
-        this.request_product = this.request_product.bind(this);
-        this._asyncRequest = null;
-        this._isMounted = null;
-    }
-    
-    componentDidMount () {        
-        this._asyncRequest = this.request_shop().then(
-            details => {
-                this._asyncRequest = null;
-                this.setState({details});
-            }
-        );
-        this._asyncRequest = this.request_product().then(
-            details => {
-                this._asyncRequest = null;
-                this.setState({details});
-            }
-        );
     }
     
     componentWilldUnmount() {
@@ -60,99 +43,6 @@ export class MapClass extends Component {
             product_id: product_id,
             price: price
         });
-    }
-    
-    async request_product() {
-        this.setState({ success: null, not_found: null, error: null, message: null, error_message: null });
-        const url = '/products/' + this.props.product_id;
-        this._isMounted = await receive_from_server(url);
-        const answer = this._isMounted;
-        
-        try {
-            if (answer === 'error') {
-                this.setState({error: true});
-                return;
-            }
-
-            if (answer.status === 200) {
-                this.setState({success: true});
-            }
-            else if (answer.status === 404) {
-                this.setState({message: 'Error 404 - Not Found', not_found: true});
-                return;
-            }
-            else if (answer.status === 401) {
-                this.setState({message: 'Error 401 - Not Authorized', not_found: true});
-                return;
-            }
-            else if (answer.status === 403) {
-                this.setState({message: 'Error 403 - Forbidden', not_found: true});
-                return;
-            }
-            else if (answer.status === 400) {
-                this.setState({message: 'Error 400 - Bad Request', not_found: true});
-                return;
-            }
-            else {
-                this.setState({message: 'Error ' + answer.status.toString() + ' - Πρόβλημα με την ολοκλήρωση του αιτήματος.', not_found: true});
-                return;
-            }
-        }
-        catch (error) {
-            this.setState({error: true, error_message: error});
-            return;
-        }
-        
-        var details = await answer.json().then((result) => {return result;});
-        console.log(details);
-        this.setState({product: details});
-        return details;
-    }
-    
-    async request_shop() {
-        this.setState({ success: null, not_found: null, error: null, message: null, error_message: null });
-        const url = '/shops/' + this.props.shop_id;
-        this._isMounted = await receive_from_server(url);
-        const answer = this._isMounted;
-        try {
-            if (answer === 'error') {
-                this.setState({error: true});
-                return;
-            }
-
-            if (answer.status === 200) {
-                this.setState({success: true});
-            }
-            else if (answer.status === 404) {
-                this.setState({message: 'Error 404 - Not Found', not_found: true});
-                return;
-            }
-            else if (answer.status === 401) {
-                this.setState({message: 'Error 401 - Not Authorized', not_found: true});
-                return;
-            }
-            else if (answer.status === 403) {
-                this.setState({message: 'Error 403 - Forbidden', not_found: true});
-                return;
-            }
-            else if (answer.status === 400) {
-                this.setState({message: 'Error 400 - Bad Request', not_found: true});
-                return;
-            }
-            else {
-                this.setState({message: 'Error ' + answer.status.toString() + ' - Πρόβλημα με την ολοκλήρωση του αιτήματος.', not_found: true});
-                return;
-            }
-        }
-        catch (error) {
-            this.setState({error: true, error_message: error});
-            return;
-        }
-        
-        var details = await answer.json().then((result) => {return result;});
-        console.log(details);
-        this.setState({markers: [details]});
-        return details;
     }
     
     async currentLocation ()  {
@@ -206,7 +96,7 @@ export class MapClass extends Component {
                                 className='marker'
                                 position={{ lat: marker.lat, lng: marker.lng }}
                                 key={marker.id}
-                                label={this.props.price.toString() + '€'}
+                                label={this.props.price.price.toString() + '€'}
                                 info={marker}
                                 labelStyle={{color: '#fff'}}
                                 icon ={'https://img.icons8.com/color/48/000000/speech-bubble.png'}
@@ -230,7 +120,7 @@ export class MapClass extends Component {
                                     {this.state.activeMarker
                                     ? <div>
                                         <strong>Προϊόν: </strong>
-                                        <strong>{this.state.product.name}</strong><br/><br/>
+                                        <strong>{this.props.price.productName}</strong><br/><br/>
                                         <strong>Κατάστημα:</strong><br/>
                                         <strong>{this.state.activeMarker.info.name} </strong><br/>
                                         {this.state.activeMarker.info.address} <br/>
