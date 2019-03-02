@@ -354,7 +354,8 @@ class Product extends React.Component {
                         </FormGroup>
                         <hr></hr>
                         <div className="text-center">
-                        <Button className="btn" type="submit" id="button1">Προσθήκη</Button>
+                            <Button className="btn" type="submit">Προσθήκη</Button>{'  '}
+                            <Button type="button" onClick={browserHistory.goBack}>Ακύρωση</Button>
                         </div>
                 </Form>
                 </Container>

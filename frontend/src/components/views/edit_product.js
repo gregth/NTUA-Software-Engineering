@@ -300,8 +300,8 @@ export default class EditProduct extends Component {
                     </FormGroup>
                     <hr></hr>
                     <div className="text-center">
-                    <Button type="submit" id="button1">Αποθήκευση</Button>{'  '}
-                    <Button type="button" onClick={browserHistory.goBack}>Ακύρωση</Button>
+                        <Button type="submit" id="button1">Αποθήκευση</Button>{'  '}
+                        <Button type="button" onClick={browserHistory.goBack}>Ακύρωση</Button>
                     </div>
                 </Form>
                 </Container>
