@@ -88,6 +88,12 @@ module.exports = class PricesController extends BaseController {
     }
 
     async create(params) {
+        params.date = params.dateFrom
+        delete params.dateFrom
+        if (params.dateTo === '') {
+            delete params.dateTo
+        }
+
         const price = await super.create(params)
         console.log(price)
         return this.read(price.id)
