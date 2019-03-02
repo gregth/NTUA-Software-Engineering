@@ -44,6 +44,7 @@ export default class ProductsResults extends React.PureComponent {
         this.search = this.search.bind(this);
         this.search_product = this.search_product.bind(this);
         this.category_to_greek = this.category_to_greek.bind(this);
+        this.state = {};
         this.state = {
             error_message: null, noproducts: null, tooltipOpen: false, currentPage: 0, error: null, success: null, not_found: null, ready: null, message: null
         };
@@ -153,11 +154,9 @@ export default class ProductsResults extends React.PureComponent {
     
     async request () {   
         this.selected_products = [];
-        try {
+        console.log(this.state)
+        if (this.state) {
             this.setState({ success: null, not_found: null, error: null, message: null, error_message: null, not_found2: null, message2: null });
-        }
-        catch(e) {
-            console.log(e);
         }
         const url = '/products?start=' + this.start + 
                     '&count=' +  this.pageSize + '&sort=' + this.sort +

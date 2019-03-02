@@ -43,7 +43,7 @@ class SearchPage extends Component {
             <div>
                 <NavBarClass/>
                 <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά.</Alert>
-                <div className="header"><img src={"/public/logo_transparent.png"} alt="logo" /></div>
+                <div className="header"><img src={"/logo_transparent.png"} alt="logo" /></div>
 
                 <Search ref="search" handle={this.handleSubmit} params={[]}/>
                 <Row className="justify-content-center">

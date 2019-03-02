@@ -24,7 +24,7 @@ class About extends Component {
                     <Container className="About">
                     <CardDeck>
                         <Card>
-                            <CardImg  width="200" height="260" src={"/public/athina.jpg"} alt="Card image cap" />
+                            <CardImg  width="200" height="260" src={"/athina.jpg"} alt="Card image cap" />
                             <CardBody>
                                 <CardTitle>Αθηνά Σταματίου</CardTitle>
                                 <CardSubtitle>Frontend/UI Desinger</CardSubtitle>
@@ -34,7 +34,7 @@ class About extends Component {
                  
                         <Card>
                        
-                            <CardImg  width="200" height="260" src={"/public/nikol.jpg"} alt="Card image cap" />
+                            <CardImg  width="200" height="260" src={"/nikol.jpg"} alt="Card image cap" />
                             <CardBody>
                                 <CardTitle>Νικολέττα Κατσούλη</CardTitle>
                                 <CardSubtitle>Frontend Engineer</CardSubtitle>
@@ -46,7 +46,7 @@ class About extends Component {
                         <CardDeck>
                     
                         <Card>
-                            <CardImg width="200" height="260" src={"/public/grigoris.jpg"} alt="Card image cap" />
+                            <CardImg width="200" height="260" src={"/grigoris.jpg"} alt="Card image cap" />
                             <CardBody>
                                 <CardTitle>Γρηγόρης Θανάσουλας</CardTitle>
                                 <CardSubtitle>Backend Engineer</CardSubtitle>
@@ -55,7 +55,7 @@ class About extends Component {
                         </Card>
                         
                         <Card>
-                            <CardImg width="200" height="260" src={"/public/themis.png"} alt="Card image cap" />
+                            <CardImg width="200" height="260" src={"/themis.png"} alt="Card image cap" />
                             <CardBody>
                                 <CardTitle>Θέμης Παπαμελετίου</CardTitle>
                                 <CardSubtitle>Backend Engineer</CardSubtitle>

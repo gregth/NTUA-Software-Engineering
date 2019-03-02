@@ -63,7 +63,7 @@ class NavBarClass extends React.Component {
     render() {
         return (
             <Navbar color="faded" light expand="md">
-                <NavbarBrand><img alt="" src={"/public/logo_transparent.png"} width="150px" onClick={() => this.homepage()}/></NavbarBrand>
+                <NavbarBrand><img alt="" src={"/logo_transparent.png"} width="150px" onClick={() => this.homepage()}/></NavbarBrand>
                 <Nav className="ml-auto" navbar >
                     <NavItem>
                         <NavLink onClick={() => this.products()}> Προϊόντα </NavLink>
