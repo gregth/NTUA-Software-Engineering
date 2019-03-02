@@ -55,8 +55,15 @@ module.exports = class ShopsController extends BaseController {
         return this.read(shop.id)
     }
 
-    async list(params) {
-        return super.list({}, params)
-    }
+    async list(params={start: 0, count: 20, status: 'ACTIVE', sort: 'id|DESC'}) {
+        const conditions = {}
 
+        if (params.status === 'WITHDRAWN') {
+            conditions.withdrawn = 1
+        } else if (params.status === 'ACTIVE') {
+            conditions.withdrawn = 0
+        }
+
+        return super.list(conditions, params)
+    }
 }

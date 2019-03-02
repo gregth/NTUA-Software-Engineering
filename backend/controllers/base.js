@@ -151,7 +151,7 @@ module.exports = class BaseController {
     }
 
     async delete(id) {
-        let role = 'admin', result
+        let role = 'user', result
         if (role == 'admin') {
             result = await this.model.delete({id})
         } else {
