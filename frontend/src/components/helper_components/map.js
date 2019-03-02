@@ -2,11 +2,8 @@ import React, { Component } from 'react';
 import { Map, GoogleApiWrapper, Marker, InfoWindow } from 'google-maps-react';
 import { Input, Label } from 'reactstrap';
 import {getLocation} from '../functions/current_location';
-<<<<<<< HEAD
-import { Button, Modal, ModalHeader, ModalBody, FormGroup, ModalFooter, Table, Container, Row, Col} from 'reactstrap';
-=======
+
 import { Button, Modal, ModalHeader, ModalBody, Container } from 'reactstrap';
->>>>>>> 5d983c3e47166ae9f7fdfe7f497c638a9f84c8a2
 
 /* eslint react/no-multi-comp: 0, react/prop-types: 0 */
 
