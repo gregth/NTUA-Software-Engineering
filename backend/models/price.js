@@ -10,7 +10,8 @@ module.exports = class Price extends BaseModel {
                     'productId',
                     'shopId',
                     'date',
-                    'price'
+                    'price',
+                    'products.category' // ugly af
                 ],
                 selectable_fields: [
                     'prices.id',

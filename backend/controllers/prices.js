@@ -84,6 +84,10 @@ module.exports = class PricesController extends BaseController {
             }
         }
 
+        if (params.category) {
+            conditions['products.category'] = params.category
+        }
+
         return super.list(conditions, params, having)
     }
 
