@@ -312,7 +312,7 @@ export default class EditProduct extends Component {
             <Modal isOpen={this.state.not_found_edit} toggle={this.toggleModal}>
                 <ModalBody>Η επεξεργασία δεν ολοκληρώθηκε επιτυχώς. {this.state.message_edit}</ModalBody>
                 <ModalFooter>
-                    <Button color="primary" onClick={this.toggleModal}>Προσπάθεια ξανά</Button>{' '}
+                    <Button color="secondary" onClick={this.toggleModal}>Προσπάθεια ξανά</Button>{' '}
                     <Button color="secondary" onClick={this.homepage}>Αρχική σελίδα</Button>
                 </ModalFooter>
             </Modal>

@@ -114,7 +114,6 @@ class newProduct extends React.Component {
             <NavBarClass/>
             
             <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά. {this.state.error_message}</Alert>
-            <Alert color="danger" isOpen={this.state.not_found===true}>{this.state.message}</Alert>
                 
             <Container className="newProduct">
                 <h2 align="center">Εισαγωγή Προϊόντος</h2>
@@ -182,16 +181,16 @@ class newProduct extends React.Component {
             </Container>
             
             
-            <Modal isOpen={this.state.error} toggle={this.toggleModal}>
-                <ModalBody>Το αίτημα προσθήκης δεν ήταν επιτυχές.</ModalBody>
+            <Modal isOpen={this.state.not_found} toggle={this.toggleModal}>
+                <ModalBody>Η προσθήκη δεν ήταν επιτυχής. {this.state.message}</ModalBody>
                 <ModalFooter>
-                    <Button color="primary" onClick={this.toggleModal}>Προσπάθεια ξανά</Button>{' '}
+                    <Button color="secondary" onClick={this.toggleModal}>Προσπάθεια ξανά</Button>{' '}
                     <Button color="secondary" onClick={this.homepage}>Αρχική σελίδα</Button>
                 </ModalFooter>
             </Modal>
             
             <Modal isOpen={this.state.success}>
-                <ModalBody>Το αίτημα προσθήκης ήταν επιτυχές.</ModalBody>
+                <ModalBody>Η προσθήκη ολοκληρώθηκε επιτυχώς.</ModalBody>
                 <ModalFooter>
                     <Button color="secondary" onClick={this.homepage}>Αρχική σελίδα</Button>
                 </ModalFooter>

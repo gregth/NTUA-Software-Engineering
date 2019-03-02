@@ -60,7 +60,7 @@ class Shop extends React.Component {
     }
     
     toggleModal() {
-        this.setState({ error: !this.state.error });
+        this.setState({ not_found: !this.state.not_found });
     }
     
     async handleSubmit (event) {
@@ -171,7 +171,6 @@ class Shop extends React.Component {
                 <NavBarClass/>
                 
                 <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά. {this.state.error_message}</Alert>
-                <Alert color="danger" isOpen={this.state.not_found===true}>{this.state.message}</Alert>
                 
                 <Container className="Shop">
                 <h2 align="center">Εισαγωγή Καταστήματος</h2>
@@ -238,9 +237,9 @@ class Shop extends React.Component {
                 
                 </Container>
                 <Modal isOpen={this.state.not_found} toggle={this.toggleModal}>
-                    <ModalBody>{this.state.message} </ModalBody>
+                    <ModalBody> Η προσθήκη δεν ήταν επιτυχής. {this.state.message} </ModalBody>
                     <ModalFooter>
-                        <Button color="primary" onClick={this.toggleModal}>Προσπάθεια ξανά</Button>{' '}
+                        <Button color="secondary" onClick={this.toggleModal}>Προσπάθεια ξανά</Button>{' '}
                         <Button color="secondary" onClick={this.search}>Αρχική σελίδα</Button>
                     </ModalFooter>
                 </Modal>

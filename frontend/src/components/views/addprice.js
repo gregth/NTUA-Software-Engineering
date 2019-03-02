@@ -349,7 +349,7 @@ class Product extends React.Component {
                         <FormGroup check row>
                             <Label sm={8} for="dateTo">Ημερομηνία λήξης τιμής:</Label>
                             <Col sm={2}>
-                                <Input id="dateTo" type="date" name="dateTo" min={date}/>
+                                <Input id="dateTo" type="date" name="dateTo" min={date} defaultValue={date} required/>
                             </Col>
                         </FormGroup>
                         <hr></hr>
@@ -362,7 +362,7 @@ class Product extends React.Component {
                 <Modal isOpen={this.state.not_found2} toggle={this.toggleModal}>
                     <ModalBody> {this.state.message2}</ModalBody>
                     <ModalFooter>
-                        <Button color="primary" onClick={this.toggleModal}>Διόρθωση</Button>{' '}
+                        <Button color="secondary" onClick={this.toggleModal}>Διόρθωση</Button>{' '}
                         <Button color="secondary" onClick={this.homepage}>Ακύρωση</Button>
                     </ModalFooter>
                 </Modal>
@@ -370,14 +370,14 @@ class Product extends React.Component {
                 <Modal isOpen={this.state.success}>
                     <ModalBody> Η τιμή καταχωρήθηκε επιτυχώς.</ModalBody>
                     <ModalFooter>
-                        <Button color="primary" onClick={this.homepage}>Αρχική Σελίδα</Button>
+                        <Button color="secondary" onClick={this.homepage}>Αρχική Σελίδα</Button>
                     </ModalFooter>
                 </Modal>
 
                 <Modal isOpen={this.state.fail} toggle={() => this.setState({fail: null})}>
                     <ModalBody> Η καταχώρηση τιμής απέτυχε. </ModalBody>
                     <ModalFooter>
-                        <Button color="primary" onClick={() => this.setState({fail: null})}>Προσπάθεια ξανά</Button>{' '}
+                        <Button color="secondary" onClick={() => this.setState({fail: null})}>Προσπάθεια ξανά</Button>{' '}
                         <Button color="secondary" onClick={this.homepage}>Ακύρωση</Button>
                     </ModalFooter>
                 </Modal>
