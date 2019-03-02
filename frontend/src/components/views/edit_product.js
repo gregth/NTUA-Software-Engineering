@@ -48,6 +48,7 @@ export default class EditProduct extends Component {
                     success_edit: null};
         this.toggleModal = this.toggleModal.bind(this);
         this.homepage = this.homepage.bind(this);
+        this.products = this.products.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this._isMounted = null;
@@ -126,6 +127,10 @@ export default class EditProduct extends Component {
     
     homepage() {
         browserHistory.push('/');
+    }
+    
+    products() {
+        browserHistory.push('/products');
     }
     
     toggleModal() {
@@ -316,6 +321,7 @@ export default class EditProduct extends Component {
                 <ModalBody>Η επεξεργασία ολοκληρώθηκε επιτυχώς.</ModalBody>
                 <ModalFooter>
                     <Button color="secondary" onClick={this.homepage}>Αρχική σελίδα</Button>
+                    <Button color="secondary" onClick={this.products}>Προϊόντα</Button>
                 </ModalFooter>
             </Modal>
         </div>

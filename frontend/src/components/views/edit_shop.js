@@ -50,6 +50,7 @@ export default class EditShop extends Component {
         this.currentLocation = this.currentLocation.bind(this);
         this.validatePhone = this.validatePhone.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.shops = this.shops.bind(this);
         this._isMounted = null;
     }
     
@@ -57,7 +58,7 @@ export default class EditShop extends Component {
         this._asyncRequest = this.request().then(
             details => {
                 this._asyncRequest = null;
-                this.setState({details, tags: details.tags, name: details.name, address: details.address, telephone: details.telephone});
+                this.setState({details, tags: details.tags, name: details.name, address: details.address, phone: details.telephone});
             }
         );
     }
@@ -147,12 +148,16 @@ export default class EditShop extends Component {
     
     handleChange(event) {
         var name = event.target.name;
-        if (name === 'telephone') this.validatePhone();
+        if (name === 'phone') this.validatePhone();
         this.setState({[name]: event.target.value});
     }
     
     homepage() {
         browserHistory.push('/search');
+    }
+    
+    shops() {
+        browserHistory.push('/shops');
     }
     
     toggleModal() {
@@ -331,7 +336,7 @@ export default class EditShop extends Component {
                     <FormGroup check row>
                         <Label sm={6} for="phone">Τηλέφωνο Καταστήματος:</Label>
                         <Col sm={3}>
-                            <Input type="tel" id="edit_shop_phone" name="telephone" value={this.state.telephone} onChange={this.handleChange} invalid={this.state.checkPhone===false} valid={this.state.checkPhone}/>
+                            <Input type="tel" id="edit_shop_phone" name="phone" value={this.state.phone} onChange={this.handleChange} invalid={this.state.checkPhone===false} valid={this.state.checkPhone}/>
                         </Col>
                     </FormGroup>
                     <hr></hr>
@@ -357,6 +362,7 @@ export default class EditShop extends Component {
                 <ModalBody>Η επεξεργασία ολοκληρώθηκε επιτυχώς.</ModalBody>
                 <ModalFooter>
                     <Button color="secondary" onClick={this.homepage}>Αρχική σελίδα</Button>
+                    <Button color="secondary" onClick={this.shops}>Καταστήματα</Button>
                 </ModalFooter>
             </Modal>
         </div>
