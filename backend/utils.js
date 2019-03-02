@@ -16,7 +16,7 @@ const createControllerRoutes = controller => {
                 res.json(results)
             } else if (typeof results === 'boolean') {
                 if (results) {
-                    res.status(204).send()
+                    res.status(200).json({message: 'OK'})
                 } else {
                     res.status(400).send()
                 }
