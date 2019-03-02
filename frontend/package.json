@@ -44,18 +44,14 @@
     "bootstrap": "^4.2.1",
     "css-loader": "^0.26.1",
     "express": "^4.14.1",
-    "google-map-react": "^1.1.2",
     "google-maps-react": "^2.0.2",
     "jquery": "^3.3.1",
     "node-sass": "^4.5.0",
     "npm": "^6.5.0",
     "react": "^16.8.3",
-    "react-autosuggest": "^9.4.2",
     "react-cookies": "^0.1.0",
     "react-dom": "^16.7.0",
     "react-geocode": "^0.1.2",
-    "react-geolocated": "^2.4.0",
-    "react-google-maps": "^9.4.5",
     "react-image": "^1.5.1",
     "react-player": "^1.9.3",
     "react-router": "^3.0.2",
@@ -64,7 +60,8 @@
     "react-select": "^2.2.0",
     "react-select-search": "^0.9.3",
     "reactstrap": "^7.0.2",
-    "style-loader": "^0.13.1"
+    "style-loader": "^0.13.1",
+    "typescript": "^3.3.3333"
   },
   "devDependencies": {
     "html-loader": "^0.5.5"
