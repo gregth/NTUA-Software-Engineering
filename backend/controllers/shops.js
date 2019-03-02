@@ -20,6 +20,13 @@ module.exports = class ShopsController extends BaseController {
                 telephone: item.telephone
             }
         }
+
+        this.sortable_rules = {
+            default_key: 'id',
+            default_order: 'DESC',
+            allowed_sort_keys: ['id', 'name'],
+            allowed_order: ['ASC', 'DESC']
+        }
     }
 
     async read(id) {
