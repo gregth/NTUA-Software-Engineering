@@ -31,7 +31,9 @@ module.exports = class PricesController extends BaseController {
                 category: item.category,
                 description: item.description,
                 telephone: item.telephone,
-                barcode: item.barcode
+                barcode: item.barcode,
+                lng: item.lng,
+                lat: item.lat
             }
         }
 
