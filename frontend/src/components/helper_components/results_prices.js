@@ -1,9 +1,3 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 import { Alert, Table, Pagination, PaginationItem, PaginationLink } from 'reactstrap';
 import React from "react";
 import {receive_from_server} from '../communication/receive';
@@ -55,7 +49,11 @@ export default class PricesTable extends React.PureComponent {
                 <td>{price.price + '€'}</td>
                 <td>
                     <ProductInfo price={price}/>
+                </td>
+                <td>
                     <ShopInfo price={price}/>
+                </td>
+                <td>
                     <MapClass price={price}/>
                 </td>
             </tr>
