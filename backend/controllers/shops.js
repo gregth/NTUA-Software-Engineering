@@ -74,6 +74,12 @@ module.exports = class ShopsController extends BaseController {
             }
         }
 
-        return super.list(conditions, params, having)
+        const result = await super.list(conditions, params, having)
+        for (const shop of result.shops) {
+            const tags = await this.tagModel.list({shopId: shop.id})
+            shop.tags = tags.map(tag => tag.tag)
+        }
+
+        return result
     }
 }
