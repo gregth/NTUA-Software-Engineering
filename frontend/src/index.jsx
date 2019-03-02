@@ -17,7 +17,7 @@ require('./stylesheets/new_product.scss');
 require('./stylesheets/editshop.scss');
 require('./stylesheets/editproduct.scss');
 
-window.http = "http://192.168.43.180:3000";
+window.http = "http://localhost:3002";
 
 ReactDom.render(
   <Router history={browserHistory} routes={routes} />,

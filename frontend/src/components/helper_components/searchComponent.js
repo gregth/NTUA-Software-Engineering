@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import {Categories} from './categories_menu';
-import { FormText, Table, Input, InputGroupAddon, Button, Form, InputGroup, FormGroup, Container, Col } from 'reactstrap';
+import { Col, InputGroupAddon, InputGroup ,Row, Button, Form, FormGroup, Label, Input, FormText, Container } from 'reactstrap';
 import Range from './range';
 import SortPrice from '../helper_components/sort_price';
 import SortDistance from '../helper_components/sort_distance';
@@ -112,58 +112,71 @@ export class Search extends Component {
                   <hr></hr>
                   <hr></hr>
                 <Container className="Search">
-              
-                <Table borderless>
-                    <thead>
-                        <tr>
-                            <th>Επιλογή Κατηγορίας</th>
-                            <th>Ταξινόμηση απόστασης:</th>
-                            <th>Ταξινόμηση ημερομηνίας:</th>
-                            <th>Ταξινόμηση τιμής:</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><Categories ref='search_category' default={this.props.params ? this.props.params.category : null}/></td>
-                            <td><SortDistance ref="sort_distance" default={this.props.params ? this.props.params.sort_distance : null}/></td>
-                            <td><SortDate ref="sort_date" default={this.props.params ? this.props.params.sort_date : null}/></td>
-                            <td><SortPrice ref="sort_price" default={this.props.params ? this.props.params.sort_price : null}/></td>
-                        </tr>
-                    </tbody>
-                </Table>
-                
-                <Table borderless>
-                    <thead>
-                        <tr>
-                            <th>Ημερομηνία από:</th>
-                            <th>Ημερομηνία έως:</th>
-                            <th>Απόσταση:</th>
-                            <th>Μέγιστη τιμή:</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><Input type="date" id="search_datefrom" name="datefrom" defaultValue={this.props.params && datefrom ? datefrom : date} /></td>
-                            <td><Input type="date" id="search_dateto" name="dateto" defaultValue={this.props.params && dateto ? dateto : date} /></td>
-                            <td>
-                              
-                                    <InputGroup>
+                <Form>
+                <Row form>
+                    <Col>
+                        <FormGroup>
+                            <Label for="categ_ex">Επιλογή Κατηγορίας</Label>
+                            <Categories id="categ_ex" ref='search_category' default={this.props.params ? this.props.params.category : null}/>
+                        </FormGroup>
+                    </Col>
+                    <Col >
+                        <FormGroup>
+                            <Label for="sort_dist">Ταξινόμηση απόστασης:</Label>
+                            <SortDistance ref="sort_distance" id="sort_dist" default={this.props.params ? this.props.params.sort_distance : null}/>
+                        </FormGroup>
+                    </Col>
+                    <Col >
+                        <FormGroup>
+                            <Label for="sort_date">Ταξινόμηση ημερομηνίας:</Label>
+                            <SortDate ref="sort_date" id="sort_date" default={this.props.params ? this.props.params.sort_date : null}/>
+                        </FormGroup>
+                    </Col>
+                    <Col >
+                        <FormGroup>
+                            <Label for="sort_p">Ταξινόμηση τιμής:</Label>
+                            <SortPrice ref="sort_price" id="sort_p" default={this.props.params ? this.props.params.sort_price : null}/>
+                        </FormGroup>
+                    </Col>
+                </Row> 
+
+                <Row form>
+                    <Col>
+                        <FormGroup>
+                            <Label for="search_datefrom">Ημερομηνία από:</Label>
+                            <Input type="date" id="search_datefrom" name="datefrom" defaultValue={this.props.params && datefrom ? datefrom : date} />
+                        </FormGroup>
+                    </Col>
+                    <Col >
+                        <FormGroup>
+                            <Label for="search_dateto">Ημερομηνία έως:</Label>
+                            <Input type="date" id="search_dateto" name="dateto" defaultValue={this.props.params && dateto ? dateto : date} />
+
+                        </FormGroup>
+                    </Col>
+                    <Col>
+                        <FormGroup>
+                            <Label for="dist">Απόσταση:</Label>
+                            <InputGroup  id="dist">
                                         <Input type="text" id="search_geodist" pattern="[0-9]+" name="geodist" onChange={this.handleChange} value={this.state.geodist ? this.state.geodist : ''}/>
                                         <InputGroupAddon addonType="append">km</InputGroupAddon>
-                                    </InputGroup>
-                                
-                            </td>
-                            <td>
-                            
-                                <Range range={this.state.price} updateRange={this.updateRange}/>
-                                
-                            </td>
-                            <td><Button onClick={this.filters}>Εφαρμογή φίλτρων</Button></td>
-                        </tr>
-                    </tbody>
-                </Table>
+                            </InputGroup>
+                        </FormGroup>
+                    </Col>
+                    <Col sm={{ size: 'auto', offset: 1 }}>
+                        <FormGroup>
+                            <Label for="maxp">Μέγιστη τιμή:</Label>
+                            <Range range={this.state.price} id="maxp" updateRange={this.updateRange}/>
+                        </FormGroup>
+                    </Col>
+                </Row>     
+                <Col sm="12" md={{ size: 6, offset: 4 }}>
+
+                <Button color="secondary" size="sm" block onClick={this.filters}>Εφαρμογή φίλτρων</Button>
+                </Col>
+                </Form>
                 </Container>
+
                 <Form>
                     <FormGroup>
                     <Col sm="12" md={{ size: 6, offset: 3 }}>
