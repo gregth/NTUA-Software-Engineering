@@ -46,7 +46,7 @@ export class MapClass extends Component {
     render() {
         return (
             <div>
-                <Button color="primary" onClick={this.toggle}>Εμφάνιση αποτελεσμάτων στον χάρτη</Button>
+                <Button color="secondary" onClick={this.toggle}>Εμφάνιση αποτελεσμάτων στον χάρτη</Button>
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className="modal-lg">
                     <ModalHeader toggle={this.toggle}>
                     <Container className="Map1">
