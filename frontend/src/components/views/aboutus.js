@@ -5,9 +5,8 @@
  */
 
 import React, {Component} from 'react';
-import { browserHistory } from 'react-router';
-import { Alert, Row, Card, CardImg, CardText, CardBody,
-  CardTitle, CardSubtitle, Container, Col, CardDeck} from 'reactstrap';
+import { Alert, Card, CardImg, CardBody,
+  CardTitle, CardSubtitle, Container, CardDeck} from 'reactstrap';
 import NavBarClass from '../helper_components/navbar';
 
 class About extends Component {
