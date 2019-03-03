@@ -136,7 +136,7 @@ class Register extends React.Component {
     }
     
     validatePhone() {
-        const phoneRex = /^69\d{8}|^210\d{7}$/;
+        const phoneRex = /^69\d{8}|^2\d{9}$|^90\d{8}|^80\d{9}$$/g;
         var result = null;
         const phone = document.getElementById('register_phone').value;
         if (phoneRex.test(phone)) {
