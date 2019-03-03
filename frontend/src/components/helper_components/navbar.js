@@ -80,7 +80,7 @@ class NavBarClass extends React.Component {
                     ?
                     <NavItem>
                         <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-                            <DropdownToggle>Προσθήκη</DropdownToggle>
+                            <DropdownToggle caret style={{backgroundColor: '#f1f1f1'}} color="transparent" outline>Προσθήκη</DropdownToggle>
                             <DropdownMenu>
                                 <DropdownItem onClick={() => this.new_product()}>
                                     Προσθήκη Νέου Προϊόντος

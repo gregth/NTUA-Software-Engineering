@@ -79,18 +79,20 @@
     width: 18px;
     height: 18px;
     border-radius: 50%;
-    background: rgb(156, 137, 137);
+    background: rgb(73, 67, 67);
 }
 }
 
 .price {
-    color: rgb(31, 2, 2);
-  border-radius: 2px;
-  padding: 3px 7px;
-  margin: 0px 10px;
-  position: relative;
+    color: rgb(73, 67, 67);
+    border-radius: 2px;
+    padding: 3px 7px;
+    margin: 0px 10px;
+    position: relative;
 }
-
+.ButtonDropdown-DropdwonToggle{
+    color: rgb(73, 67, 67);
+}
 .addform {
     position:static;
 }
@@ -106,4 +108,9 @@
     margin-right: auto;
     width: 1000px;
     margin-top: 20px;
+}
+
+.ButtonDropdown-DropdwonToggle{
+    font-family: verdana;
+   
 }
