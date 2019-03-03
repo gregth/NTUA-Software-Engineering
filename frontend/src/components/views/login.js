@@ -17,6 +17,18 @@ class Login extends React.Component {
         this._isMounted = null;
     }
     
+    componentDidMount() {
+        try {
+            var loggedin = Boolean(cookie.load('loggedin'));
+            if (loggedin) {
+                browserHistory.push('/');
+            }
+        }
+        catch(error) {
+            console.log(error);
+        }
+    }
+
     componentWilldUnmount() {
         if (this._isMounted) {
             this._isMounted.cancel();

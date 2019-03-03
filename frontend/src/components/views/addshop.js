@@ -6,6 +6,7 @@ import { Modal, ModalBody, ModalFooter, Input, Label,
         Button, Form, FormGroup, FormText, Container, Col, FormFeedback, Alert } from 'reactstrap';
 import { address_to_coords } from '../functions/address_to_coordinates';
 import NavBarClass from '../helper_components/navbar';
+import cookie from 'react-cookies';
 
 function onlyUnique (value, index, self) { 
     return self.indexOf(value) === index;
@@ -23,6 +24,18 @@ class Shop extends React.Component {
         this._isMounted = null;
     }
     
+    componentDidMount() {
+        try {
+            var loggedin = Boolean(cookie.load('loggedin'));
+            if (!loggedin) {
+                browserHistory.push('/login');
+            }
+        }
+        catch(error) {
+            console.log(error);
+        }
+    }
+
     componentWilldUnmount() {
         if (this._isMounted) {
             this._isMounted.cancel();
@@ -30,7 +43,7 @@ class Shop extends React.Component {
     }
     
     validatePhone() {
-        const phoneRex = /^69\d{8}|^210\d{7}$/;
+        const phoneRex = /^69\d{8}|^2\d{9}$|^90\d{8}|^80\d{9}$$/g;
         var result = null;
         const phone = document.getElementById('new_shop_phone').value;
         if (phoneRex.test(phone)) {

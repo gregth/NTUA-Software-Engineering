@@ -1,10 +1,11 @@
 const BaseController = require('./base')
 const model = require('../models/user')
 const { NotFound } = require('../errors')
+const md5 = require('md5')
 
 module.exports = class UserController extends BaseController {
-    constructor(dbConnection) {
-        super('users', new model(dbConnection))
+    constructor(dbConnection, sessions) {
+        super('users', new model(dbConnection), sessions)
 
         this.formatResponse = item => {
             return {
@@ -14,7 +15,8 @@ module.exports = class UserController extends BaseController {
                 lastName: item.lastName,
                 email: item.email,
                 telephone: item.telephone,
-                birthdate: item.birthdate
+                birthdate: item.birthdate,
+                admin: item.admin
             }
         }
     }
@@ -25,7 +27,7 @@ module.exports = class UserController extends BaseController {
 
     async create(params) {
         // TODO: throw error if password is missing
-        params.passwordHash = params.password + 'hashed'
+        params.passwordHash = md5(params.password)
 
         return super.create(params)
     }

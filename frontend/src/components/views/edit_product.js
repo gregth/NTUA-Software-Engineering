@@ -7,6 +7,7 @@ import {receive_from_server} from '../communication/receive';
 import {put} from '../communication/put';
 import {patch} from '../communication/patch';
 import NavBarClass from '../helper_components/navbar';
+import cookie from 'react-cookies';
 
 function onlyUnique (value, index, self) { 
     return self.indexOf(value) === index;
@@ -55,6 +56,15 @@ export default class EditProduct extends Component {
     }
     
      componentDidMount () {
+        try {
+            var loggedin = Boolean(cookie.load('loggedin'));
+            if (!loggedin) {
+                browserHistory.push('/login');
+            }
+        }
+        catch(error) {
+            console.log(error);
+        }
         this._asyncRequest = this.request().then(
             details => {
                 this._asyncRequest = null;
