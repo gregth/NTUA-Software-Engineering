@@ -42,14 +42,13 @@ module.exports = class PricesController extends BaseController {
         this.sortable_rules = {
             default_key: 'price',
             default_order: 'ASC',
-            allowed_sort_keys: ['price', 'geo.dist', 'date'],
+            allowed_sort_keys: ['price', 'dist', 'date'],
             allowed_order: ['ASC', 'DESC'],
-            key_mappings: {'geo.dist': 'distance'}
+            key_mappings: {'dist': 'distance'}
         }
     }
 
     async list(params) {
-        //{start = 0, count = 20, geoDist, geoLng, geoLat, dateFrom, dateTo, shops, products, tags, sort = 'price|ASC'}) {
         const conditions = {}
 
         let dateFrom, dateTo
@@ -61,12 +60,19 @@ module.exports = class PricesController extends BaseController {
             // One only missing, unacceptable
             throw new MalformedInput('Only single date parameter provided!')
         } else {
-            if (!moment(params.dateFrom, "YYYY-MM-DD", true).isValid() ||
-                    !moment(params.dateTo, "YYYY-MM-DD", true).isValid()) {
+            let momentFrom = moment(params.dateFrom, "YYYY-MM-DD", true)
+            let momentTo = moment(params.dateTo, "YYYY-MM-DD", true)
+            if (!momentFrom.isValid() || !momentTo.isValid()) {
                 throw new MalformedInput('Date Format must be YYYY-MM-DD')
             }
+
+            let diff =  momentTo.diff(momentFrom, 'days') + 1
+            if (diff <= 0) {
+                throw new MalformedInput('dateTo must be >= dateFrom')
+            }
+            
             dateFrom = params.dateFrom
-            dateTo = params.dateTo
+            dateTo = params.dateTo  
         }
 
         conditions.date = {
@@ -78,9 +84,8 @@ module.exports = class PricesController extends BaseController {
         if (params.tags) {
             conditions.tags = {
                 type: 'TAGS',
-                tags: params.tags.split(',')
+                tags: this.arrayify(params.tags)
             }
-            console.log(conditions.tags)
         }
 
         let having
@@ -93,11 +98,22 @@ module.exports = class PricesController extends BaseController {
             }
         }
 
+        if (params.sort) {
+            let sort_strings = this.arrayify(params.sort)
+            console.log('dist|ASC' in sort_strings)
+            if (sort_strings.includes('dist|ASC') 
+                    || sort_strings.includes('dist|DESC')) {
+                if (!(params.geoDist && params.geoLng && params.geoLat)) {
+                    throw new MalformedInput('You must provide your location in order to sort by distance')
+                }
+            }
+        }
+
         if (params.shops) {
-            conditions.shopId = params.shops.split(',')
+            conditions.shopId = this.arrayify(params.shops)
         }
         if (params.products) {
-            conditions.productId = params.products.split(',')
+            conditions.productId = this.arrayify(params.products)
         }
 
         if (params.price) {
@@ -111,6 +127,7 @@ module.exports = class PricesController extends BaseController {
             conditions['products.category'] = params.category
         }
 
+        conditions.distinct = true
         const response = await super.list(conditions, params, having)
         const prices = response.prices
         const productTags = new Map()
@@ -133,14 +150,34 @@ module.exports = class PricesController extends BaseController {
     }
 
     async create(params) {
-        params.date = params.dateFrom
-        delete params.dateFrom
-        if (params.dateTo === '') {
-            delete params.dateTo
+        let momentFrom = moment(params.dateFrom, "YYYY-MM-DD", true)
+        let momentTo = moment(params.dateTo, "YYYY-MM-DD", true)
+        if (!momentFrom.isValid() || !momentTo.isValid()) {
+            throw new MalformedInput('Date Format must be YYYY-MM-DD')
         }
 
-        const price = await super.create(params)
-        return this.read(price.id)
+        let diff =  momentTo.diff(momentFrom, 'days')
+        if (diff < 0) {
+            throw new MalformedInput('dateTo must be >= dateFrom')
+        }
+
+        delete params.dateFrom
+        delete params.dateTo
+
+        let prices = []
+        params.date = momentFrom.format('YYYY-MM-DD')
+        let price = await super.create(params)
+        let price_encoded = await super.read(price.id)
+        prices.push(price_encoded)
+
+        // Add for rest of the days
+        for (let i = 0; i < diff; i++) {
+            params.date = momentFrom.add(1, 'days').format('YYYY-MM-DD')
+            price = await super.create(params)
+            price_encoded = await super.read(price.id)
+            prices.push(price_encoded)
+        }
+        return prices
     }
 
     async read(id) {

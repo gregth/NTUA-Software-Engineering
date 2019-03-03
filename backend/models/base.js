@@ -84,7 +84,12 @@ module.exports = class BaseModel {
         let substitutions = [];
 
 
-        let query = 'SELECT '
+        let query = 'SELECT ' 
+        if (conditions.distinct) {
+            query += ' DISTINCT '
+            delete conditions.distinct
+            // Ungly shit
+        }
         if (having && having.type == 'DISTANCE') {
             query += `111.111 * DEGREES(ACOS(LEAST(COS(RADIANS(lat))` 
             + `* COS(RADIANS(?)) * COS(RADIANS(lng - ?))`

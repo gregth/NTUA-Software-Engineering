@@ -4,7 +4,12 @@ function filter_keys(params, allowed_keys) {
     let filtered_params = {};
     allowed_keys.forEach(key => {
         if (typeof params[key] != 'undefined') {
-            filtered_params[key] = params[key];
+            if (['true', 'false'].includes(params[key])) {
+                // convert "false" / "true" to 0 / 1
+                filtered_params[key] = (params[key] === 'true') ? 1 : 0
+            } else {
+                filtered_params[key] = params[key]
+            }
         }
     });
     return filtered_params;
@@ -14,6 +19,14 @@ module.exports = class BaseController {
     constructor(resource, model) {
         this.resource = resource
         this.model = model
+    }
+
+    arrayify(param) {
+        if (param instanceof Array) {
+            return param
+        } else {
+            return [param]
+        }
     }
     
     validate_post_params(params) {
@@ -58,30 +71,39 @@ module.exports = class BaseController {
     }
 
     validate_sort_params(sort_params, sortable_rules) {
-        let default_key = sortable_rules.default_key
-        let default_order = sortable_rules.default_order
+        let default_object =  [{
+            field_name: sortable_rules.default_key,
+            order: sortable_rules.default_order
+        }]
+
         let allowed_sort_keys = sortable_rules.allowed_sort_keys
         let allowed_order = sortable_rules.allowed_order
 
-        let field_name, order
         if (sort_params) {
-            let sort = sort_params + ''
-            field_name = sort.split('|')[0]
-            order = sort.split('|')[1]
-        }
-        if (!sort_params || 
-            (!(allowed_sort_keys.includes(field_name) && 
-            allowed_order.includes(order)))) {
-            field_name = default_key
-            order = default_order 
-        }
-        
-        // Check if there is a mapping for the passed sort parameter
-        if (sortable_rules.key_mappings && sortable_rules.key_mappings[field_name]) {
-            field_name = sortable_rules.key_mappings[field_name]
+            sort_params = this.arrayify(sort_params)
+            let sort_object = []
+
+            for (let sort_param of sort_params) {
+                let sort = sort_param + ''
+                let field_name = sort.split('|')[0]
+                let order = sort.split('|')[1]
+                console.log(field_name)
+                console.log(order)
+                if (!(allowed_sort_keys.includes(field_name) && 
+                    allowed_order.includes(order))) {
+                        throw new MalformedInput('Wrong Sort Parameters')
+                }
+
+                // Check if there is a mapping for the passed sort parameter
+                if (sortable_rules.key_mappings && sortable_rules.key_mappings[field_name]) {
+                    field_name = sortable_rules.key_mappings[field_name]
+                }
+                sort_object.push({field_name, order})
+            }
+            return sort_object
         }
 
-        return [{field_name, order}]   
+        return default_object
     }
 
     async list(conditions={}, params={start: 0, count: 20}, having) {
@@ -129,6 +151,7 @@ module.exports = class BaseController {
             if (err.code === 'ER_DUP_ENTRY') {
                 throw new DuplicateEntry(`Duplicate entry for ${this.resource}`)
             }
+            console.log(err)
         }
 
         throw new Error(`Did not create ${this.resource}: ${JSON.stringify(params)}`)

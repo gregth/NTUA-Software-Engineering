@@ -117,6 +117,7 @@ export default class PricesTable extends React.PureComponent {
             return url;
         }
     }
+
     async request () {
         try {
             this._isMounted = this.setState({success: null, error: null, not_found: null, message: null, error_message: null});
@@ -195,14 +196,12 @@ export default class PricesTable extends React.PureComponent {
     async refresh () {
         this.setState({ready: false});
         this._isMounted = await this.request();
-        this.setState({ready: true});
     }
     
     async countChoose () {
         this.setState({ready: false});
         this.pageSize = this.refs.count.count;
         this._isMounted = await this.request();
-        this.setState({ready: true});
     }
     
     render() {

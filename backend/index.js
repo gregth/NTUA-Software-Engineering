@@ -16,7 +16,7 @@ async function main() {
     console.log('Connected to MySQL. Moving on...')
     const resources = ['products', 'shops', 'prices', 'users', 'login', 'logout']
     for (const resource of resources) {
-        app.use(`/${resource}`, createSimpleRouter(resource, dbConnection))
+        app.use(`/observatory/api/${resource}`, createSimpleRouter(resource, dbConnection))
     }
 
     app.listen(config.port, () => console.log(`Server listening on port ${config.port}`))
