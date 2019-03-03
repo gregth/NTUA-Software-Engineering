@@ -101,7 +101,7 @@ export class MapClass extends Component {
                                 label={this.props.price.price.toString() + '€'}
                                 info={marker}
                                 labelStyle={{color: '#fff'}}
-                                icon ={'https://img.icons8.com/color/48/000000/speech-bubble.png'}
+                                icon ={'https://img.icons8.com/color/55/000000/speech-bubble.png'}
                                 onClick={this.onMarkerClick}
                                 id={marker.id}
                             >

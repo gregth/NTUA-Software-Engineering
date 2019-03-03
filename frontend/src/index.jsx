@@ -17,7 +17,7 @@ require('./stylesheets/new_product.scss');
 require('./stylesheets/editshop.scss');
 require('./stylesheets/editproduct.scss');
 
-window.http = "http://192.168.0.108:3002/observatory/api";
+window.http = "https://localhost:8765/observatory/api";
 
 ReactDom.render(
   <Router history={browserHistory} routes={routes} />,

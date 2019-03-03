@@ -6,6 +6,7 @@ import {  Alert, Input, InputGroupAddon, Button, Form, InputGroup,
         FormGroup, Label, Col, Container } from 'reactstrap';
 import {send_to_server} from '../communication/send';
 import NavBarClass from '../helper_components/navbar';
+import cookie from 'react-cookies';
 
 class Register extends React.Component {
     
@@ -20,6 +21,18 @@ class Register extends React.Component {
         this._isMounted = null;
     }
     
+    componentDidMount() {
+        try {
+            var loggedin = Boolean(cookie.load('loggedin'));
+            if (loggedin) {
+                browserHistory.push('/');
+            }
+        }
+        catch(error) {
+            console.log(error);
+        }
+    }
+
     componentWilldUnmount() {
         if (this._isMounted) {
             this._isMounted.cancel();

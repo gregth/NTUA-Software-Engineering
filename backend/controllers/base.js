@@ -88,8 +88,6 @@ module.exports = class BaseController {
                 let sort = sort_param + ''
                 let field_name = sort.split('|')[0]
                 let order = sort.split('|')[1]
-                console.log(field_name)
-                console.log(order)
                 if (!(allowed_sort_keys.includes(field_name) && 
                     allowed_order.includes(order))) {
                         throw new MalformedInput('Wrong Sort Parameters')
@@ -182,9 +180,9 @@ module.exports = class BaseController {
         throw new NotFound(`Did not update ${this.resource} ${id}: ${params}`)
     }
 
-    async delete(id) {
-        let role = 'user', result
-        if (role == 'admin') {
+    async delete(id, token) {
+        let result
+        if (this.sessions.get(token)) {
             result = await this.model.delete({id})
         } else {
             result = await this.model.update({'withdrawn': true}, {id})

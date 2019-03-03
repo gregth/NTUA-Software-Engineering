@@ -4,8 +4,8 @@ const { NotFound } = require('../errors')
 const md5 = require('md5')
 
 module.exports = class UserController extends BaseController {
-    constructor(dbConnection) {
-        super('users', new model(dbConnection))
+    constructor(dbConnection, sessions) {
+        super('users', new model(dbConnection), sessions)
 
         this.formatResponse = item => {
             return {
@@ -15,7 +15,8 @@ module.exports = class UserController extends BaseController {
                 lastName: item.lastName,
                 email: item.email,
                 telephone: item.telephone,
-                birthdate: item.birthdate
+                birthdate: item.birthdate,
+                admin: item.admin
             }
         }
     }

@@ -3,8 +3,8 @@ const model = require('../models/product')
 const tagModel = require('../models/product_tag')
 
 module.exports = class ProductsController extends BaseController {
-    constructor(dbConnection) {
-        super('products', new model(dbConnection))
+    constructor(dbConnection, sessions) {
+        super('products', new model(dbConnection), sessions)
 
         this.tagModel = new tagModel(dbConnection)
 
@@ -76,6 +76,8 @@ module.exports = class ProductsController extends BaseController {
 
         if (typeof tags !== 'undefined') {
             await this.patch({tags: params.tags}, id)
+        } else {
+            return false
         }
 
         return super.put(params, id)

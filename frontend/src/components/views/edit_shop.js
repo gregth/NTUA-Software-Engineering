@@ -8,6 +8,7 @@ import {patch} from '../communication/patch';
 import { address_to_coords } from '../functions/address_to_coordinates';
 import NavBarClass from '../helper_components/navbar';
 import { getLocation } from '../functions/current_location';
+import cookie from 'react-cookies';
 
 function onlyUnique (value, index, self) { 
     return self.indexOf(value) === index;
@@ -54,7 +55,16 @@ export default class EditShop extends Component {
         this._isMounted = null;
     }
     
-    componentDidMount () {        
+    componentDidMount () {  
+        try {
+            var loggedin = Boolean(cookie.load('loggedin'));
+            if (!loggedin) {
+                browserHistory.push('/login');
+            }
+        }
+        catch(error) {
+            console.log(error);
+        }
         this._asyncRequest = this.request().then(
             details => {
                 this._asyncRequest = null;

@@ -7,8 +7,8 @@ const productTagModel = require('../models/product_tag')
 const shopTagModel = require('../models/shop_tag')
 
 module.exports = class PricesController extends BaseController {
-    constructor(dbConnection) {
-        super('prices', new model(dbConnection))
+    constructor(dbConnection, sessions) {
+        super('prices', new model(dbConnection), sessions)
 
         this.productTagModel = new productTagModel(dbConnection)
         this.shopTagModel = new shopTagModel(dbConnection)

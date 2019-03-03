@@ -24,7 +24,7 @@ DROP TABLE IF EXISTS `prices`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `prices` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `price` float NOT NULL,
+  `price` double NOT NULL,
   `shopId` int(11) NOT NULL,
   `productId` int(11) NOT NULL,
   `date` date NOT NULL,
@@ -122,6 +122,7 @@ CREATE TABLE `users` (
   `email` varchar(50) NOT NULL,
   `telephone` varchar(14) DEFAULT NULL,
   `passwordHash` varchar(300) NOT NULL,
+  `admin` tinyint(1) NOT NULL DEFAULT '0',
   `birthdate` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`),

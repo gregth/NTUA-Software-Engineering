@@ -5,7 +5,7 @@ const { Unauthorized, NotFound } = require('../errors')
 
 module.exports = class UserController extends BaseController {
     constructor(dbConnection, sessions) {
-        super('users', new model(dbConnection), sessions)
+        super('login', new model(dbConnection), sessions)
     }
 
     async list() {
@@ -20,7 +20,7 @@ module.exports = class UserController extends BaseController {
         if (typeof user !== 'undefined') {
             const random = Math.round(Math.random() * 100000000)
             const token = md5(`${user.id}${user.username}${user.firstName}${user.lastName}${user.email}${random}`)
-            this.sessions.add(token)
+            this.sessions.set(token, user.admin === 1)
             return {token}
         }
 

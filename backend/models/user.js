@@ -17,7 +17,8 @@ module.exports = class User extends BaseModel {
                     'lastName',
                     'email',
                     'telephone',
-                    'birthdate'
+                    'birthdate',
+                    'admin'
                 ]
             },
             insert: {
