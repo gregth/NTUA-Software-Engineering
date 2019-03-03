@@ -16,7 +16,7 @@ export default class Description extends React.Component {
                 <button className="search_btn" id={"description" + this.props.id} title='Περιγραφή προϊόντος'>
                     <FontAwesomeIcon icon={faInfo}></FontAwesomeIcon>
                 </button>
-                <UncontrolledPopover placement="bottom" target={"description" + this.props.id}>
+                <UncontrolledPopover trigger="focus" placement="bottom" target={"description" + this.props.id}>
                     <PopoverHeader>Πληροφορίες Προϊόντος</PopoverHeader>
                     <PopoverBody>{this.props.text}</PopoverBody>
                 </UncontrolledPopover>

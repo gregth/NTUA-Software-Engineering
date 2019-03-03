@@ -19,10 +19,10 @@ export default class ShopInfo extends React.Component {
     render() {
         return (
             <div>
-                <button className="search_btn" id={"shop_btn" + this.props.price.shopId} title='Πληροφορίες καταστήματος'>
+                <button className="search_btn" id={"shop_btn" + this.props.price.id} title='Πληροφορίες καταστήματος'>
                     <FontAwesomeIcon icon={faBuilding}></FontAwesomeIcon>
                 </button>
-                <UncontrolledPopover trigger="focus" placement="bottom" target={"shop_btn" + this.props.price.shopId}>
+                <UncontrolledPopover trigger="focus" placement="bottom" target={"shop_btn" + this.props.price.id}>
                     <PopoverHeader>Πληροφορίες Καταστήματος</PopoverHeader>
                     <PopoverBody>
                         <strong>Όνομα: </strong>
