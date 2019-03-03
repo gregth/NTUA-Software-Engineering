@@ -5,6 +5,8 @@ const config = require('./config.json')
 const { createSimpleRouter } = require('./utils')
 const mysql = require('mysql2/promise')
 const bodyParser = require('body-parser')
+const https = require("https")
+const fs = require("fs")
 
 app.use(cors())
 app.use(bodyParser.urlencoded({extended: true}))
@@ -20,7 +22,14 @@ async function main() {
         app.use(`/observatory/api/${resource}`, createSimpleRouter(resource, sessions, dbConnection))
     }
 
+    const options = {
+        key: fs.readFileSync('./certs/key.pem'),
+        cert: fs.readFileSync('./certs/cert.pem')
+    }
     app.listen(config.port, () => console.log(`Server listening on port ${config.port}`))
+    https.createServer(options, app).listen(config.https_port, () => {
+        console.log(`HTTPS Server listening on port ${config.https_port}`)
+    });
 }
 
 main().then().catch(err => {
