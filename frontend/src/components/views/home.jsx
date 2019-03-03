@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { browserHistory } from 'react-router';
-import { Alert, Row } from 'reactstrap';
+import { Container, Alert, Row } from 'reactstrap';
 import Search from '../helper_components/searchComponent';
 import NavBarClass from '../helper_components/navbar';
 import ReactPlayer from 'react-player';
@@ -41,9 +41,11 @@ class SearchPage extends Component {
         return (
             <div>
                 <NavBarClass/>
-                <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά.</Alert>
-                <div className="header"><img src={"/logo_transparent.png"} alt="logo" /></div>
-                <Search ref="search" handle={this.handleSubmit} params={[]}/>
+                <Container>
+                    <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά.</Alert>
+                    <div className="header"><img src={"/logo_transparent.png"} alt="logo" /></div>
+                    <Search ref="search" handle={this.handleSubmit} params={[]}/>
+                </Container>
             </div>
         );
     }
