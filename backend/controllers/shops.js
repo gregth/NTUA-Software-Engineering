@@ -43,7 +43,7 @@ module.exports = class ShopsController extends BaseController {
         const shop = await super.create(params)
 
         if (typeof tags !== 'undefined') {
-            const tagList = tags.split(',')
+            const tagList = typeof tags === 'string' ? [tags] : tags
             for (const tag of tagList) {
                 this.tagModel.insert({
                     shopId: shop.id,
