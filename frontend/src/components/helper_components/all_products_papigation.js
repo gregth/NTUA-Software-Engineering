@@ -11,6 +11,7 @@ import CountDropdown from '../helper_components/count_products_shops';
 import cookie from 'react-cookies';
 
 const options = [
+            {name: 'Άλλο', value: 'all'},
             {name: 'Αναψυκτικά', value: 'beverages'},
             {name: 'Χωρίς Αλκοόλ', value: 'nonalchool'},
             {name: 'Βότκα', value: 'vodka'},

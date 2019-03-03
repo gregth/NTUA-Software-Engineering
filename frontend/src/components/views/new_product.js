@@ -13,7 +13,7 @@ class newProduct extends React.Component {
     
     constructor(props) {
         super(props);
-        this.state = { error_message: null, success: null, error: null, not_found: null, message: null};
+        this.state = { error_message: null, success: null, error: null, not_found: null, message: null, error_category: null};
         this.handleSubmit = this.handleSubmit.bind(this);
         this.toggleModal = this.toggleModal.bind(this);
         this.homepage = this.homepage.bind(this);
@@ -31,19 +31,23 @@ class newProduct extends React.Component {
     }
     
     toggleModal() {
-        this.setState({ error: !this.state.error });
+        this.setState({ not_found: !this.state.not_found });
     }
     
     async handleSubmit(event) {
         event.preventDefault();
         event.nativeEvent.stopImmediatePropagation();
-        this.setState({success: null, error: null, not_found: null, message: null, error_message: null });
+        this.setState({success: null, error: null, not_found: null, message: null, error_message: null, error_category: null });
+        const category = this.refs.new_product_category.state.category;
+        if (category === null) {
+            this.setState({error_category: true});
+            return;
+        }
         const name = document.getElementById('new_product_name').value;
         const barcode = document.getElementById('new_product_barcode').value;
         const brand = document.getElementById('new_product_brand').value;
         const volume = document.getElementById('new_product_volume').value;
-        const description = document.getElementById('new_product_description').value; 
-        const category = this.refs.new_product_category.state.category;
+        const description = document.getElementById('new_product_description').value;
         var tags_list = (document.getElementById('new_product_tags').value).split(',');
         
         tags_list = tags_list.filter(onlyUnique);
@@ -145,6 +149,10 @@ class newProduct extends React.Component {
                     <Label sm={3} for="new_product_category">Κατηγορία:</Label>
                     <Col sm={6}>
                         <Categories ref='new_product_category'/>
+                        {this.state.error_category
+                        ? <p className='withdrawnShop'>Επιλέξτε κατηγορία.</p>
+                        : null
+                        }
                     </Col>
                 </FormGroup>
                 <div className="row mt-3"></div>
@@ -152,7 +160,6 @@ class newProduct extends React.Component {
                     <Label sm={6} for="new_product_tags">Χαρακτηριστικά Προϊόντος:
                     <FormText>Διαχωρισμός χαρακτηριστικών με κόμμα (,)</FormText></Label>
                     <Col sm={6}>
-                  
                         <Input type="textarea" name="text" id="new_product_tags" onChange={this.handleChangeTags} value={this.state.tags}/>
                     </Col>
                 </FormGroup>

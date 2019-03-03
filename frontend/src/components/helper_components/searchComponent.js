@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {Categories} from './categories_menu';
+import {Categories} from './categories_search';
 import { Col, InputGroupAddon, InputGroup ,Row, Button, Form, FormGroup, Label, Input, FormText, Container } from 'reactstrap';
 import Range from './range';
 import SortPrice from '../helper_components/sort_price';
@@ -183,7 +183,7 @@ export class Search extends Component {
                     <Col sm="12" md={{ size: 6, offset: 3 }}>
 
                         <InputGroup>
-                            <Input id="search_tags" placeholder="Αναζήτηση με όνομα ή χαρακτηριστικά.." name="tags" onChange={this.handleChange} value={this.state.tags ? this.state.tags : ''}></Input>
+                            <Input id="search_tags" placeholder="Αναζήτηση με χαρακτηριστικά..." name="tags" onChange={this.handleChange} value={this.state.tags ? this.state.tags : ''}></Input>
                             <InputGroupAddon addonType="append">
                                 <Button className="btn btn-default" id="search_btn" onClick={this.handleSubmit}>search</Button>
                             </InputGroupAddon>

@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWineBottle } from '@fortawesome/free-solid-svg-icons';
 
 const options = [
+            {name: 'Άλλο', value: 'all'},
             {name: 'Αναψυκτικά', value: 'beverages'},
             {name: 'Χωρίς Αλκοόλ', value: 'nonalchool'},
             {name: 'Βότκα', value: 'vodka'},
