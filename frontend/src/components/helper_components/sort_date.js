@@ -11,7 +11,7 @@ export default class SortDate extends React.Component {
     constructor(props) {
         super(props);
         this.options = [
-            {name: 'Καμία επιλογή', value: null},
+            {name: 'Χωρίς Ταξινόμηση Ημερομηνίας', value: null},
             {name: 'Ημερομηνία - Αύξουσα', value: 'date|ASC'},
             {name: 'Ημερομηνία - Φθίνουσα', value: 'date|DESC'}   
         ];
@@ -25,7 +25,7 @@ export default class SortDate extends React.Component {
             this.state = { dropdownOpen: false, dropDownValue: name, sort: this.props.default };
         }
         else {
-            this.state = { dropdownOpen: false, dropDownValue: 'Καμία επιλογή', sort: null };
+            this.state = { dropdownOpen: false, dropDownValue: this.options[0].name, sort: null };
         }
         this.changeValue = this.changeValue.bind(this);
         this.sort = null;
