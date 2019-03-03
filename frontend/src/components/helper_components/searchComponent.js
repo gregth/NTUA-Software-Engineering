@@ -110,7 +110,6 @@ export class Search extends Component {
         return ( 
             <div>
                   <hr></hr>
-                  <hr></hr>
                 <Container className="Search">
                 <Form>
 
@@ -177,6 +176,7 @@ export class Search extends Component {
                 </Col>
                 </Form>
                 </Container>
+                <hr></hr>
 
                 <Form>
                     <FormGroup>
