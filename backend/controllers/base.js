@@ -4,7 +4,12 @@ function filter_keys(params, allowed_keys) {
     let filtered_params = {};
     allowed_keys.forEach(key => {
         if (typeof params[key] != 'undefined') {
-            filtered_params[key] = params[key];
+            if (['true', 'false'].includes(params[key])) {
+                // convert "false" / "true" to 0 / 1
+                filtered_params[key] = (params[key] === 'true') ? 1 : 0
+            } else {
+                filtered_params[key] = params[key]
+            }
         }
     });
     return filtered_params;
