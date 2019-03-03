@@ -3,17 +3,21 @@ const model = require('../models/user')
 const { Unauthorized, NotFound } = require('../errors')
 
 module.exports = class LogoutController extends BaseController {
-    constructor(dbConnection) {
-        super('users', new model(dbConnection))
+    constructor(dbConnection, sessions) {
+        super('users', new model(dbConnection), sessions)
     }
 
     async list() {
         throw new NotFound()
     }
 
-    async create(params) {
-        // TODO: IMPLEMENT ME
-        return true
+    async create(params, token) {
+        if (token && this.sessions.has(token)) {
+            this.sessions.delete(token)
+            return true
+        }
+
+        return false
     }
 
     async read() {

@@ -16,9 +16,10 @@ function filter_keys(params, allowed_keys) {
 }
 
 module.exports = class BaseController {
-    constructor(resource, model) {
+    constructor(resource, model, sessions) {
         this.resource = resource
         this.model = model
+        this.sessions = sessions
     }
 
     arrayify(param) {

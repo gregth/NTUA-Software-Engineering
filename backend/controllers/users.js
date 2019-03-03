@@ -1,6 +1,7 @@
 const BaseController = require('./base')
 const model = require('../models/user')
 const { NotFound } = require('../errors')
+const md5 = require('md5')
 
 module.exports = class UserController extends BaseController {
     constructor(dbConnection) {
@@ -25,7 +26,7 @@ module.exports = class UserController extends BaseController {
 
     async create(params) {
         // TODO: throw error if password is missing
-        params.passwordHash = params.password + 'hashed'
+        params.passwordHash = md5(params.password)
 
         return super.create(params)
     }
