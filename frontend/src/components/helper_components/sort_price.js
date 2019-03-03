@@ -52,7 +52,7 @@ export default class SortPrice extends React.Component {
                     <DropdownToggle className="btn-block" caret>
                         {this.state.dropDownValue}
                     </DropdownToggle>
-                    <DropdownMenu right>
+                    <DropdownMenu>
                         {this.options.map(option => (
                             <DropdownItem onClick={this.changeValue} value={option.value} key={option.value}>
                                 {option.name}

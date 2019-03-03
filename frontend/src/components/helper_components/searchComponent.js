@@ -118,36 +118,28 @@ export class Search extends Component {
                             </InputGroupAddon>
                         </InputGroup>
                         <FormText>Διαχωρισμός χαρακτηριστικών με κόμμα (,)</FormText>
+                        <Categories id="categ_ex" ref='search_category' default={this.props.params ? this.props.params.category : null}/>
                         </Col>
                 </Form> 
-                <Container className="Search">
+                <Container className="Search filters_section">
                 <Form>
 
                 <Row >
                     <Col>
-                        <Categories id="categ_ex" ref='search_category' default={this.props.params ? this.props.params.category : null}/>
-                    </Col>
-                    <Col >
+                        <span class="text-justify">Ταξινόμηση</span>
                         <SortDistance ref="sort_distance" id="sort_dist" default={this.props.params ? this.props.params.sort_distance : null}/>
-                    </Col>
-                    <Col >
                         <SortDate ref="sort_date" id="sort_date" default={this.props.params ? this.props.params.sort_date : null}/>
-                    </Col>
-                    <Col >
                         <SortPrice ref="sort_price" id="sort_p" default={this.props.params ? this.props.params.sort_price : null}/>
                     </Col>
-                </Row> 
-
-                <Row>
+                    
                     <Col>
+                        <span class="text-justify">Εύρος Ημερομηνιών</span>
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Από:</span>
                             </div>
                             <Input class="form-control" type="date" id="search_datefrom" name="datefrom" defaultValue={this.props.params && datefrom ? datefrom : date} />
                         </div>
-                    </Col>
-                    <Col >
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Έως:</span>
@@ -156,18 +148,18 @@ export class Search extends Component {
                         </div>
                     </Col>
                     <Col>
+                        <span class="text-justify">Άλλα Φίλτρa</span>
                         <div class="input-group">
                             <InputGroup class="form-control" id="dist">
                                 <Input placeholder="Απόσταση" type="text" id="search_geodist" pattern="[0-9]+" name="geodist" onChange={this.handleChange} value={this.state.geodist ? this.state.geodist : ''}/>
                                 <InputGroupAddon addonType="append">km</InputGroupAddon>
                             </InputGroup>
                         </div>
-                    </Col>
-                    <Col>
                         <Label for="maxp">Μέγιστη τιμή:</Label>
                         <Range range={this.state.price} id="maxp" updateRange={this.updateRange}/>
                     </Col>
-                </Row>     
+                </Row> 
+
                 <Button color="secondary" size="sm" block onClick={this.handleSubmit}>Εφαρμογή φίλτρων</Button>
                 </Form>
                 </Container>
