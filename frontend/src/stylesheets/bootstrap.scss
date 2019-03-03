@@ -34,6 +34,7 @@
 .dropdown-item {
     color: rgb(73, 67, 67);
     background-color: white;
+    position: relative;
 }
 
 .dropdown-item:focus {
@@ -49,6 +50,7 @@
 .dropdown-menu {
     color: rgb(73, 67, 67);
     background-color: white;
+    position: relative;
 }
 
 .front-img {
@@ -59,3 +61,7 @@
         min-height: 700px;
     }
 }
+
+
+
+  

@@ -124,6 +124,7 @@ class NavBarClass extends React.Component {
                     </NavItem>
                 </Nav>
             </Navbar>
+     
             </div>
         );
     

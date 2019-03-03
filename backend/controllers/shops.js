@@ -55,6 +55,35 @@ module.exports = class ShopsController extends BaseController {
         return this.read(shop.id)
     }
 
+    async put(params, id) {
+        const { tags } = params
+
+        if (typeof tags !== 'undefined') {
+            await this.patch({tags: params.tags}, id)
+        }
+
+        return super.put(params, id)
+    }
+
+    async patch(params, id) {
+        if (typeof params.tags !== 'undefined') {
+            await this.tagModel.delete({shopId: id}, false)
+
+            const { tags } = params
+            const tagList = typeof tags === 'string' ? [tags] : tags
+            for (const tag of tagList) {
+                this.tagModel.insert({
+                    shopId: id,
+                    tag
+                })
+            }
+
+            return this.read(id)
+        }
+
+        return super.patch(params, id)
+    }
+
     async list(params={start: 0, count: 20, status: 'ACTIVE', sort: 'id|DESC'}) {
         const conditions = {}
 

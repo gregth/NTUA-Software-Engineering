@@ -39,7 +39,7 @@ module.exports = class Shop extends BaseModel {
                     'lng',
                     'lat',
                     'withdrawn',
-                    'telephone'
+                    'telephone',
                 ],
                 allowed_query_keys: ['id']
             },
