@@ -122,6 +122,7 @@ CREATE TABLE `users` (
   `email` varchar(50) NOT NULL,
   `telephone` varchar(14) DEFAULT NULL,
   `passwordHash` varchar(300) NOT NULL,
+  `admin` tinyint(1) NOT NULL DEFAULT '0',
   `birthdate` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`),
