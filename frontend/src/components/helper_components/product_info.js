@@ -51,9 +51,14 @@ export default class ProductInfo extends React.Component {
                         {this.props.price.productName}<br/>
                         <strong>Μάρκα: </strong>
                         {this.props.price.brand}<br/>
+                        {this.props.price.volume
+                        ? <div>
                         <strong>Όγκος: </strong>
                         {this.props.price.volume}ml<br/>
                         <strong>Κατηγορία: </strong>
+                        </div>
+                        : null
+                        }
                         {this.category}<br/>
                         <strong>Χαρακτηριστικά: </strong>
                         {this.props.price.productTags.join(', ')}<br/>

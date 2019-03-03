@@ -65,12 +65,11 @@ class newProduct extends React.Component {
             name,
             barcode,
             brand,
-            volume,
             category,
             tags: tags.join(','),
             withdrawn: 0
         };
-        
+        if (volume !== null && volume !== '') product['volume'] = volume;
         console.log(product);
         const url = '/products';
         this._isMounted = await send_to_server(url, product);

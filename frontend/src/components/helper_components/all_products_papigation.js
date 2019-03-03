@@ -80,7 +80,12 @@ export default class ProductsResults extends React.PureComponent {
                 <td>{product.name}</td>
                 <td>{this.category_to_greek(product.category)}</td>
                 <td>{product.extraData.brand}</td>
-                <td>{product.extraData.volume}ml</td>
+                <td>
+                    {product.extraData.volume
+                    ?<div>{product.extraData.volume}ml</div>
+                    : <div>-</div>
+                    }
+                </td>
                 <td>{product.tags.join(', ')}</td>
                 <td>
                     {!product.withdrawn
