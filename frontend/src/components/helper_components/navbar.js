@@ -66,6 +66,7 @@ class NavBarClass extends React.Component {
 
     render() {
         return (
+            <div>
             <Navbar color="faded" light expand="md">
                 <NavbarBrand><img alt="" src={"/logo_transparent.png"} width="150px" onClick={() => this.homepage()}/></NavbarBrand>
                 <Nav className="ml-auto" navbar >
@@ -97,9 +98,7 @@ class NavBarClass extends React.Component {
                     : null
                     }
                     
-                    <NavItem>
-                        <NavLink onClick={() => this.about()}>Σχετικά με μας</NavLink>
-                    </NavItem>
+                   
                     {!Boolean(cookie.load('loggedin'))
                     ? <NavItem>
                         <NavLink onClick={() => this.login()}> Σύνδεση </NavLink>
@@ -118,7 +117,16 @@ class NavBarClass extends React.Component {
                     }
                 </Nav>
             </Navbar>
+            <Navbar color="faded" light expand="md" fixed="bottom">
+                <Nav className="ml-auto" navbar >
+                    <NavItem>
+                        <NavLink onClick={() => this.about()}>Σχετικά με μας</NavLink>
+                    </NavItem>
+                </Nav>
+            </Navbar>
+            </div>
         );
+    
     }
 }
 
