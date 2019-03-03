@@ -34,7 +34,7 @@ CREATE TABLE `prices` (
   KEY `price_product_id_fk` (`productId`),
   CONSTRAINT `price_product_id_fk` FOREIGN KEY (`productId`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `price_shop_id_fk` FOREIGN KEY (`shopId`) REFERENCES `shops` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -65,12 +65,12 @@ CREATE TABLE `products` (
   `description` text NOT NULL,
   `category` varchar(100) NOT NULL,
   `withdrawn` tinyint(1) NOT NULL DEFAULT '0',
-  `barcode` varchar(15) NOT NULL,
-  `brand` varchar(200) NOT NULL,
-  `volume` int(10) NOT NULL,
+  `barcode` varchar(15) DEFAULT NULL,
+  `brand` varchar(200) DEFAULT NULL,
+  `volume` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `barcode` (`barcode`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -105,7 +105,7 @@ CREATE TABLE `shops` (
   `telephone` varchar(14) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `unique_shop_location` (`lng`,`lat`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -127,7 +127,7 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -139,4 +139,4 @@ CREATE TABLE `users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-02-24 20:12:32
+-- Dump completed on 2019-03-03 16:01:41
