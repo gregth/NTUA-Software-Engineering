@@ -27,7 +27,6 @@ export default class SortDistance extends React.Component {
         else {
             this.state = { dropdownOpen: false, dropDownValue: 'Καμία επιλογή', sort: null };
         }
-        
         this.changeValue = this.changeValue.bind(this);
         this.sort = null;
     }

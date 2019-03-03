@@ -41,9 +41,9 @@ export class Search extends Component {
     }
     
     filters () {
-        this.sort_distance = this.refs.sort_distance.sort;
-        this.sort_date = this.refs.sort_date.sort;
-        this.sort_price = this.refs.sort_price.sort;
+        this.sort_distance = this.refs.sort_distance.state.sort;
+        this.sort_date = this.refs.sort_date.state.sort;
+        this.sort_price = this.refs.sort_price.state.sort;
         if ( this.refs.search_category.state.category === 'Όλες οι κατηγορίες'){
             this.category = null;
         }
