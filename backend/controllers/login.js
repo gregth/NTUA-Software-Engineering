@@ -1,6 +1,6 @@
 const BaseController = require('./base')
 const model = require('../models/user')
-const { Unauthorized } = require('../errors')
+const { Unauthorized, NotFound } = require('../errors')
 
 let connectedUsers = 0
 
