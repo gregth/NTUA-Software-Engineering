@@ -103,8 +103,7 @@ CREATE TABLE `shops` (
   `lat` double NOT NULL,
   `withdrawn` tinyint(1) NOT NULL DEFAULT '0',
   `telephone` varchar(14) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `unique_shop_location` (`lng`,`lat`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -139,4 +138,4 @@ CREATE TABLE `users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-03-03 16:01:41
+-- Dump completed on 2019-03-03 16:10:08
