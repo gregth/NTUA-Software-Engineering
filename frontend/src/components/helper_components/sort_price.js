@@ -48,8 +48,8 @@ export default class SortPrice extends React.Component {
     render() {
         return ( 
             <div>
-                <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-                    <DropdownToggle caret>
+                <Dropdown    isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+                    <DropdownToggle className="btn-block" caret>
                         {this.state.dropDownValue}
                     </DropdownToggle>
                     <DropdownMenu right>
