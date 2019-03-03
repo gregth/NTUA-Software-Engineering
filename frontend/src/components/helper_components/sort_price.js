@@ -11,7 +11,7 @@ export default class SortPrice extends React.Component {
     constructor(props) {
         super(props);
         this.options = [
-            {name: 'Καμία επιλογή', value: null},
+            {name: 'Χωρίς Ταξινόμηση Τιμής', value: null},
             {name: 'Τιμή - Αύξουσα', value: 'price|ASC'},
             {name: 'Τιμή - Φθίνουσα', value: 'price|DESC'}   
         ];
@@ -25,7 +25,7 @@ export default class SortPrice extends React.Component {
             this.state = { dropdownOpen: false, dropDownValue: name, sort: this.props.default };
         }
         else {
-            this.state = { dropdownOpen: false, dropDownValue: 'Τιμή - Αύξουσα', sort: 'price|ASC' };
+            this.state = { dropdownOpen: false, dropDownValue: this.options[1].name, sort: this.options[1].value };
         }
         
         this.changeValue = this.changeValue.bind(this);
