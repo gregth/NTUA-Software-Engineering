@@ -16,19 +16,14 @@ class Range extends React.Component {
     const { range } = this.props;
     return (
       <div>
-       
-      <Row>
-          <input className="range" type="range"
-            value={range} 
-            min="0"
-            max="150"
-            step="1"
-            onChange={this.updateRange}
-          />
-
-          <span htmlFor="range" className="price" id="price">{range}€</span>
-
-          </Row>
+        <input className="range" type="range"
+          value={range} 
+          min="0"
+          max="150"
+          step="1"
+          onChange={this.updateRange}
+        />
+        <span htmlFor="range" className="price" id="price">{range}€</span>
        </div>
     );
   }
