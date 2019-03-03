@@ -151,7 +151,9 @@ module.exports = class BaseController {
             if (err.code === 'ER_DUP_ENTRY') {
                 throw new DuplicateEntry(`Duplicate entry for ${this.resource}`)
             }
-            console.log(err)
+            if (err.code === 'ER_NO_REFERENCED_ROW_2') {
+                 throw new DuplicateEntry(`Referenced entities do not exist ${this.resource}`)
+            }
         }
 
         throw new Error(`Did not create ${this.resource}: ${JSON.stringify(params)}`)
