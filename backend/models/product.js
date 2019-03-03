@@ -27,13 +27,13 @@ module.exports = class Product extends BaseModel {
                 required_fields: [
                     'name',
                     'description',
-                    'category',
+                    'category'
+                ],
+                optional_fields: [
+                    'withdrawn',
                     'barcode',
                     'brand',
                     'volume'
-                ],
-                optional_fields: [
-                    'withdrawn'
                 ]
             },
             update: {
