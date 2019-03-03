@@ -108,80 +108,9 @@ export class Search extends Component {
         curr.setUTCDate(curr.getDate());
         var date = curr.toISOString().substr(0,10);
         return ( 
-            <div>
-                  <hr></hr>
-                <Container className="Search">
+            <Container>
                 <Form>
-
-                <Row >
-                    <Col>
-                        <FormGroup>
-                            <Label for="categ_ex">Επιλογή Κατηγορίας</Label>
-                            <Categories id="categ_ex" ref='search_category' default={this.props.params ? this.props.params.category : null}/>
-                        </FormGroup>
-                    </Col>
-                    <Col >
-                        <FormGroup>
-                            <Label for="sort_dist">Ταξινόμηση απόστασης:</Label>
-                            <SortDistance ref="sort_distance" id="sort_dist" default={this.props.params ? this.props.params.sort_distance : null}/>
-                        </FormGroup>
-                    </Col>
-                    <Col >
-                        <FormGroup>
-                            <Label for="sort_date">Ταξινόμηση ημερομηνίας:</Label>
-                            <SortDate ref="sort_date" id="sort_date" default={this.props.params ? this.props.params.sort_date : null}/>
-                        </FormGroup>
-                    </Col>
-                    <Col >
-                        <FormGroup>
-                            <Label for="sort_p">Ταξινόμηση τιμής:</Label>
-                            <SortPrice ref="sort_price" id="sort_p" default={this.props.params ? this.props.params.sort_price : null}/>
-                        </FormGroup>
-                    </Col>
-                </Row> 
-
-                <Row>
-                    <Col>
-                        <FormGroup>
-                            <Label for="search_datefrom">Ημερομηνία από:</Label>
-                            <Input type="date" id="search_datefrom" name="datefrom" defaultValue={this.props.params && datefrom ? datefrom : date} />
-                        </FormGroup>
-                    </Col>
-                    <Col >
-                        <FormGroup>
-                            <Label for="search_dateto">Ημερομηνία έως:</Label>
-                            <Input type="date" id="search_dateto" name="dateto" defaultValue={this.props.params && dateto ? dateto : date} />
-
-                        </FormGroup>
-                    </Col>
-                    <Col>
-                        <FormGroup>
-                            <Label for="dist">Απόσταση:</Label>
-                            <InputGroup  id="dist">
-                                        <Input type="text" id="search_geodist" pattern="[0-9]+" name="geodist" onChange={this.handleChange} value={this.state.geodist ? this.state.geodist : ''}/>
-                                        <InputGroupAddon addonType="append">km</InputGroupAddon>
-                            </InputGroup>
-                        </FormGroup>
-                    </Col>
-                    <Col sm={{ size: 'auto', offset: 1 }}>
-                        <FormGroup>
-                            <Label for="maxp">Μέγιστη τιμή:</Label>
-                            <Range range={this.state.price} id="maxp" updateRange={this.updateRange}/>
-                        </FormGroup>
-                    </Col>
-                </Row>     
-                <Col sm="12" md={{ size: 6, offset: 4 }}>
-
-                <Button color="secondary" size="sm" block onClick={this.handleSubmit}>Εφαρμογή φίλτρων</Button>
-                </Col>
-                </Form>
-                </Container>
-                <hr></hr>
-
-                <Form>
-                    <FormGroup>
                     <Col sm="12" md={{ size: 6, offset: 3 }}>
-
                         <InputGroup>
                             <Input id="search_tags" placeholder="Αναζήτηση με χαρακτηριστικά..." name="tags" onChange={this.handleChange} value={this.state.tags ? this.state.tags : ''}></Input>
                             <InputGroupAddon addonType="append">
@@ -190,10 +119,59 @@ export class Search extends Component {
                         </InputGroup>
                         <FormText>Διαχωρισμός χαρακτηριστικών με κόμμα (,)</FormText>
                         </Col>
-
-                    </FormGroup>
                 </Form> 
-            </div>
+                <Container className="Search">
+                <Form>
+
+                <Row >
+                    <Col>
+                        <Categories id="categ_ex" ref='search_category' default={this.props.params ? this.props.params.category : null}/>
+                    </Col>
+                    <Col >
+                        <SortDistance ref="sort_distance" id="sort_dist" default={this.props.params ? this.props.params.sort_distance : null}/>
+                    </Col>
+                    <Col >
+                        <SortDate ref="sort_date" id="sort_date" default={this.props.params ? this.props.params.sort_date : null}/>
+                    </Col>
+                    <Col >
+                        <SortPrice ref="sort_price" id="sort_p" default={this.props.params ? this.props.params.sort_price : null}/>
+                    </Col>
+                </Row> 
+
+                <Row>
+                    <Col>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Από:</span>
+                            </div>
+                            <Input class="form-control" type="date" id="search_datefrom" name="datefrom" defaultValue={this.props.params && datefrom ? datefrom : date} />
+                        </div>
+                    </Col>
+                    <Col >
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Έως:</span>
+                            </div>
+                            <Input class="form-control" type="date" id="search_dateto" name="dateto" defaultValue={this.props.params && dateto ? dateto : date} />
+                        </div>
+                    </Col>
+                    <Col>
+                        <div class="input-group">
+                            <InputGroup class="form-control" id="dist">
+                                <Input placeholder="Απόσταση" type="text" id="search_geodist" pattern="[0-9]+" name="geodist" onChange={this.handleChange} value={this.state.geodist ? this.state.geodist : ''}/>
+                                <InputGroupAddon addonType="append">km</InputGroupAddon>
+                            </InputGroup>
+                        </div>
+                    </Col>
+                    <Col>
+                        <Label for="maxp">Μέγιστη τιμή:</Label>
+                        <Range range={this.state.price} id="maxp" updateRange={this.updateRange}/>
+                    </Col>
+                </Row>     
+                <Button color="secondary" size="sm" block onClick={this.handleSubmit}>Εφαρμογή φίλτρων</Button>
+                </Form>
+                </Container>
+            </Container>
         );
     }
 };
