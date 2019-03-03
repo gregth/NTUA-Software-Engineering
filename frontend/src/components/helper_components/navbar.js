@@ -2,7 +2,7 @@ import React from 'react';
 import { browserHistory } from 'react-router';
 import cookie from 'react-cookies';
 import {Settings} from '../helper_components/dropdown_settings';
-import { NavbarBrand, Navbar, Nav, NavItem, NavLink } from 'reactstrap';
+import { NavbarBrand, Navbar, Nav, NavItem, NavLink, DropdownMenu, DropdownToggle, ButtonDropdown, DropdownItem } from 'reactstrap';
 
 class NavBarClass extends React.Component {
     constructor(props) {
@@ -16,6 +16,10 @@ class NavBarClass extends React.Component {
         this.login = this.login.bind(this);
         this.register = this.register.bind(this);
         this.about = this.about.bind(this);
+        this.toggle = this.toggle.bind(this);
+        this.state = {
+            dropdownOpen: false
+        };
     }
     
     homepage () {
@@ -53,7 +57,13 @@ class NavBarClass extends React.Component {
     about () {
         browserHistory.push('/aboutus');
     }
-  
+    
+    toggle() {
+        this.setState({
+            dropdownOpen: !this.state.dropdownOpen
+        });
+    }
+
     render() {
         return (
             <Navbar color="faded" light expand="md">
@@ -65,27 +75,28 @@ class NavBarClass extends React.Component {
                     <NavItem>
                         <NavLink onClick={() => this.shops()}> Καταστήματα </NavLink>
                     </NavItem>
+
                     {Boolean(cookie.load('loggedin'))
                     ?
                     <NavItem>
-                        <NavLink onClick={() => this.new_product()}> Προσθήκη Νέου Προϊόντος</NavLink>
+                        <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+                            <DropdownToggle>Προσθήκη</DropdownToggle>
+                            <DropdownMenu>
+                                <DropdownItem onClick={() => this.new_product()}>
+                                    Προσθήκη Νέου Προϊόντος
+                                </DropdownItem>
+                                <DropdownItem onClick={() => this.new_shop()}>
+                                    Προσθήκη Νέου Καταστήματος
+                                </DropdownItem>
+                                <DropdownItem onClick={() => this.newprice()}>
+                                    Προσθήκη Νέας Τιμής
+                                </DropdownItem>
+                            </DropdownMenu>
+                        </ButtonDropdown>
                     </NavItem>
                     : null
                     }
-                    {Boolean(cookie.load('loggedin'))
-                    ?
-                    <NavItem>
-                        <NavLink onClick={() => this.new_shop()}> Προσθήκη Νέου Καταστήματος</NavLink>
-                    </NavItem>
-                    : null
-                    }
-                    {Boolean(cookie.load('loggedin'))
-                    ?
-                    <NavItem>
-                        <NavLink onClick={() => this.newprice()}>Προσθήκη Νέας Τιμής</NavLink>
-                    </NavItem>
-                    : null
-                    }
+                    
                     <NavItem>
                         <NavLink onClick={() => this.about()}>Σχετικά με μας</NavLink>
                     </NavItem>
