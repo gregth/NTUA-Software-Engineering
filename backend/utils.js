@@ -38,19 +38,19 @@ const createControllerRoutes = controller => {
         }
     }
 
-    router.get('/', (req, res) => endpointHandler(controller.list(req.query), req, res))
-    router.get('/:id', (req, res) => endpointHandler(controller.read(req.params.id), req, res))
-    router.post('/', (req, res) => endpointHandler(controller.create(req.body), req, res))
-    router.put('/:id', (req, res) => endpointHandler(controller.put(req.body, req.params.id), req, res))
-    router.patch('/:id', (req, res) => endpointHandler(controller.patch(req.body, req.params.id), req, res))
-    router.delete('/:id', (req, res) => endpointHandler(controller.delete(req.params.id), req, res))
+    router.get('/', (req, res) => endpointHandler(controller.list(req.query, req.headers['x-observatory-auth']), req, res))
+    router.get('/:id', (req, res) => endpointHandler(controller.read(req.params.id, req.headers['x-observatory-auth']), req, res))
+    router.post('/', (req, res) => endpointHandler(controller.create(req.body, req.headers['x-observatory-auth']), req, res))
+    router.put('/:id', (req, res) => endpointHandler(controller.put(req.body, req.params.id, req.headers['x-observatory-auth']), req, res))
+    router.patch('/:id', (req, res) => endpointHandler(controller.patch(req.body, req.params.id, req.headers['x-observatory-auth']), req, res))
+    router.delete('/:id', (req, res) => endpointHandler(controller.delete(req.params.id, req.headers['x-observatory-auth']), req, res))
 
     return router
 }
 
-const createSimpleRouter = (key, dbConnection) => {
+const createSimpleRouter = (key, sessions, dbConnection) => {
     const ControllerClass = require(`./controllers/${key}`)
-    const controller = new ControllerClass(dbConnection)
+    const controller = new ControllerClass(dbConnection, sessions)
 
     return createControllerRoutes(controller)
 }
