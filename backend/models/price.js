@@ -11,18 +11,19 @@ module.exports = class Price extends BaseModel {
                     'shopId',
                     'date',
                     'price',
-                    'products.category' // ugly af
+                    'products.category', // ugly af
+                    'tags'
                 ],
                 selectable_fields: [
                     'prices.id',
                     'price',
                     'date',
                     'dateTo',
-                    'shopId',
+                    'prices.shopId AS shopId',
                     'shops.name AS shopName',
                     'shops.address',
                     'products.name AS productName',
-                    'productId',
+                    'prices.productId AS productId',
                     'products.brand AS brand',
                     'products.volume AS volume',
                     'products.category AS category',
@@ -42,6 +43,14 @@ module.exports = class Price extends BaseModel {
                     type: 'INNER JOIN',
                     table: 'products',
                     on:'prices.productId = products.id'
+                }, {
+                    type: 'INNER JOIN',
+                    table: 'product_tags',
+                    on:'prices.productId = product_tags.productId'
+                }, {
+                    type: 'INNER JOIN',
+                    table: 'shop_tags',
+                    on:'prices.shopId = shop_tags.shopId'
                 }],
                 ambiguous_fields_mappings: {
                     'id': 'prices.id',

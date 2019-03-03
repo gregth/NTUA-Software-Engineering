@@ -10,6 +10,11 @@ function objectToQueryFields(fields) {
             if (fields[key].type === 'LIKE') {
                 return key + ' LIKE ?'
             }
+            // This is ugly, shit!
+            if (fields[key].type === 'TAGS') {
+                return '(product_tags.tag ' + ' IN (' + fields[key].tags.map(_ => '?').join(',') + ')' +
+                    ' OR shop_tags.tag ' + ' IN (' + fields[key].tags.map(_ => '?').join(',') + ')) '
+            }
             if (fields[key].type === 'BETWEEN_DATE') {
                 str = key + ' BETWEEN CAST(\'' + fields[key].lower + '\' AS DATE)' +
                     ' AND CAST(\'' + fields[key].upper + '\' AS DATE) '
@@ -33,12 +38,16 @@ function objectToQueryFields(fields) {
                 fieldValues.push(`%${fields[key].value}%`)
             } else if (fields[key].operator) {
                 fieldValues.push(fields[key].value)
+            } else if (fields[key].type === 'TAGS') {
+                fieldValues.push(...fields[key].tags)
+                fieldValues.push(...fields[key].tags)
             }
         } else {
             fieldValues.push(fields[key])
         }
     }
 
+    debug(fieldValues)
     return [placeholders, fieldValues]
 }
 

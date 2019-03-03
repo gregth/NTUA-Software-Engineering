@@ -75,6 +75,14 @@ module.exports = class PricesController extends BaseController {
             upper: dateTo
         } 
 
+        if (params.tags) {
+            conditions.tags = {
+                type: 'TAGS',
+                tags: params.tags.split(',')
+            }
+            console.log(conditions.tags)
+        }
+
         let having
         if (params.geoDist && params.geoLng && params.geoLat) {
             having = {
