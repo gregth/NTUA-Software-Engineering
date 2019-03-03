@@ -179,8 +179,9 @@ module.exports = class PricesController extends BaseController {
         }
         return {
             start: 0,
+            count: 20,
             total: prices.length,
-            prices: prices
+            prices: prices.slice(0, 20)
         }
     }
 
