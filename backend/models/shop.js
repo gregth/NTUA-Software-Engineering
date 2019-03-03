@@ -27,7 +27,10 @@ module.exports = class Shop extends BaseModel {
                     'lng',
                     'lat'
                 ],
-		optional_fields: ['telephone']
+                optional_fields: [
+                    'telephone',
+                    'withdrawn'
+                ]
             },
             update: {
                 updatable_fields: [
