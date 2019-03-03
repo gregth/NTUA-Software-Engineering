@@ -117,13 +117,6 @@ class NavBarClass extends React.Component {
                     }
                 </Nav>
             </Navbar>
-            <Navbar color="faded" light expand="md" fixed="bottom">
-                <Nav className="ml-auto" navbar >
-                    <NavItem>
-                        <NavLink onClick={() => this.about()}>Σχετικά με μας</NavLink>
-                    </NavItem>
-                </Nav>
-            </Navbar>
      
             </div>
         );
