@@ -54,7 +54,9 @@ module.exports = class Price extends BaseModel {
                 }],
                 ambiguous_fields_mappings: {
                     'id': 'prices.id',
-                    'name': 'products.name'
+                    'name': 'products.name',
+                    'shopId': 'prices.shopId',
+                    'productId': 'prices.productId'
                 }
             },
             insert: {
