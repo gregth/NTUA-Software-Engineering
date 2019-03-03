@@ -5,7 +5,7 @@
  */
 
 import React from 'react';
-import { Popover, PopoverHeader, PopoverBody } from 'reactstrap';
+import { UncontrolledPopover, PopoverHeader, PopoverBody } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWineBottle } from '@fortawesome/free-solid-svg-icons';
 
@@ -30,20 +30,10 @@ const options = [
 export default class ProductInfo extends React.Component {
     constructor(props) {
         super(props);
-        this.toggle = this.toggle.bind(this);
-        this.state = {
-            popoverOpen: false
-        };
         this.category = null;
         for (var i in options) {
             if (options[i].value === this.props.price.category) this.category = options[i].name; 
         }
-    }
-    
-    toggle() {
-        this.setState({
-            popoverOpen: !this.state.popoverOpen
-        });
     }
 
     render() {
@@ -52,7 +42,7 @@ export default class ProductInfo extends React.Component {
                 <button className="search_btn" id={"product_btn" + this.props.price.id} title='Πληροφορίες προϊόντος'>
                     <FontAwesomeIcon icon={faWineBottle}></FontAwesomeIcon>
                 </button>
-                <Popover placement="bottom" isOpen={this.state.popoverOpen} target={"product_btn" + this.props.price.id} toggle={this.toggle}>
+                <UncontrolledPopover placement="bottom" target={"product_btn" + this.props.price.id}>
                     <PopoverHeader>Πληροφορίες Προϊόντος</PopoverHeader>
                     <PopoverBody>
                         <strong>Barcode: </strong>
@@ -74,7 +64,7 @@ export default class ProductInfo extends React.Component {
                         : <p className='activeShop'> Ενεργό </p>
                         }
                     </PopoverBody>
-                </Popover>
+                </UncontrolledPopover>
             </div>
         );
     }

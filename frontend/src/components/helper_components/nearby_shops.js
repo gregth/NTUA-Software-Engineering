@@ -68,14 +68,14 @@ class Shops extends React.Component {
                               </Table>
                         </ModalBody>
                         <ModalFooter>
-                            <Button color="primary" onClick={this.addshop}>Προσθήκη Νέου Καταστήματος</Button>
+                            <Button color="secondary" onClick={this.addshop}>Προσθήκη Νέου Καταστήματος</Button>
                             <Button color="secondary" onClick={this.homepage}>Αρχική Σελίδα</Button>
                         </ModalFooter>
                         </div>
                     : <div>
                         <ModalBody> Δε βρέθηκαν καταστήματα σε αυτή την τοποθεσία. </ModalBody>
                         <ModalFooter>
-                            <Button color="primary" onClick={this.addshop}>Προσθήκη Νέου Καταστήματος</Button>
+                            <Button color="secondary" onClick={this.addshop}>Προσθήκη Νέου Καταστήματος</Button>
                             <Button color="secondary" onClick={this.homepage}>Αρχική Σελίδα</Button>
                         </ModalFooter>
                     </div>

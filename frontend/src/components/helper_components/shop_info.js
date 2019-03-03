@@ -11,23 +11,13 @@
  */
 
 import React from 'react';
-import { Popover, PopoverHeader, PopoverBody } from 'reactstrap';
+import { PopoverHeader, PopoverBody, UncontrolledPopover } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBuilding } from '@fortawesome/free-solid-svg-icons';
 
 export default class ShopInfo extends React.Component {
     constructor(props) {
         super(props);
-        this.toggle = this.toggle.bind(this);
-        this.state = {
-            popoverOpen: false
-        };
-    }
-    
-    toggle() {
-        this.setState({
-            popoverOpen: !this.state.popoverOpen
-        });
     }
 
     render() {
@@ -36,7 +26,7 @@ export default class ShopInfo extends React.Component {
                 <button className="search_btn" id={"shop_btn" + this.props.price.shopId} title='Πληροφορίες καταστήματος'>
                     <FontAwesomeIcon icon={faBuilding}></FontAwesomeIcon>
                 </button>
-                <Popover placement="bottom" isOpen={this.state.popoverOpen} target={"shop_btn" + this.props.price.shopId} toggle={this.toggle}>
+                <UncontrolledPopover trigger="focus" placement="bottom" target={"shop_btn" + this.props.price.shopId}>
                     <PopoverHeader>Πληροφορίες Καταστήματος</PopoverHeader>
                     <PopoverBody>
                         <strong>Όνομα: </strong>
@@ -52,7 +42,7 @@ export default class ShopInfo extends React.Component {
                         : <p className='activeShop'> Ενεργό </p>
                         }
                     </PopoverBody>
-                </Popover>
+                </UncontrolledPopover>
             </div>
         );
     }

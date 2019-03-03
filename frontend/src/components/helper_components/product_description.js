@@ -5,24 +5,13 @@
  */
 
 import React from 'react';
-import { Popover, PopoverHeader, PopoverBody } from 'reactstrap';
+import { UncontrolledPopover, PopoverHeader, PopoverBody } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfo } from '@fortawesome/free-solid-svg-icons';
 
 export default class Description extends React.Component {
     constructor(props) {
         super(props);
-        this.toggle = this.toggle.bind(this);
-        this.state = {
-            popoverOpen: false
-        };
-    }
-    
-   
-    toggle() {
-        this.setState({
-            popoverOpen: !this.state.popoverOpen
-        });
     }
 
     render() {
@@ -31,10 +20,10 @@ export default class Description extends React.Component {
                 <button className="search_btn" id={"description" + this.props.id} title='Περιγραφή προϊόντος'>
                     <FontAwesomeIcon icon={faInfo}></FontAwesomeIcon>
                 </button>
-                <Popover placement="bottom" isOpen={this.state.popoverOpen} target={"description" + this.props.id} toggle={this.toggle}>
+                <UncontrolledPopover placement="bottom" target={"description" + this.props.id}>
                     <PopoverHeader>Πληροφορίες Προϊόντος</PopoverHeader>
                     <PopoverBody>{this.props.text}</PopoverBody>
-                </Popover>
+                </UncontrolledPopover>
             </div>
         );
     }
