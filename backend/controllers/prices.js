@@ -42,9 +42,9 @@ module.exports = class PricesController extends BaseController {
         this.sortable_rules = {
             default_key: 'price',
             default_order: 'ASC',
-            allowed_sort_keys: ['price', 'geo.dist', 'date'],
+            allowed_sort_keys: ['price', 'dist', 'date'],
             allowed_order: ['ASC', 'DESC'],
-            key_mappings: {'geo.dist': 'distance'}
+            key_mappings: {'dist': 'distance'}
         }
     }
 
