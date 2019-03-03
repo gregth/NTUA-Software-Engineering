@@ -110,16 +110,14 @@ export class Search extends Component {
         return ( 
             <Container>
                 <Form>
-                    <Col sm="12" md={{ size: 6, offset: 3 }}>
                         <InputGroup>
                             <Input id="search_tags" placeholder="Αναζήτηση με χαρακτηριστικά..." name="tags" onChange={this.handleChange} value={this.state.tags ? this.state.tags : ''}></Input>
+                            <Categories id="categ_ex" ref='search_category' default={this.props.params ? this.props.params.category : null}/>
                             <InputGroupAddon addonType="append">
                                 <Button className="btn btn-default" id="search_btn" onClick={this.handleSubmit}>search</Button>
                             </InputGroupAddon>
                         </InputGroup>
                         <FormText>Διαχωρισμός χαρακτηριστικών με κόμμα (,)</FormText>
-                        <Categories id="categ_ex" ref='search_category' default={this.props.params ? this.props.params.category : null}/>
-                        </Col>
                 </Form> 
                 <Container className="Search filters_section">
                 <Form>
