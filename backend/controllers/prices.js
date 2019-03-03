@@ -60,10 +60,17 @@ module.exports = class PricesController extends BaseController {
             // One only missing, unacceptable
             throw new MalformedInput('Only single date parameter provided!')
         } else {
-            if (!moment(params.dateFrom, "YYYY-MM-DD", true).isValid() ||
-                    !moment(params.dateTo, "YYYY-MM-DD", true).isValid()) {
+            let momentFrom = moment(params.dateFrom, "YYYY-MM-DD", true)
+            let momentTo = moment(params.dateTo, "YYYY-MM-DD", true)
+            if (!momentFrom.isValid() || !momentTo.isValid()) {
                 throw new MalformedInput('Date Format must be YYYY-MM-DD')
             }
+
+            let diff =  momentTo.diff(momentFrom, 'days') + 1
+            if (diff <= 0) {
+                throw new MalformedInput('dateTo must be >= dateFrom')
+            }
+            
             dateFrom = params.dateFrom
             dateTo = params.dateTo  
         }
@@ -143,14 +150,34 @@ module.exports = class PricesController extends BaseController {
     }
 
     async create(params) {
-        params.date = params.dateFrom
-        delete params.dateFrom
-        if (params.dateTo === '') {
-            delete params.dateTo
+        let momentFrom = moment(params.dateFrom, "YYYY-MM-DD", true)
+        let momentTo = moment(params.dateTo, "YYYY-MM-DD", true)
+        if (!momentFrom.isValid() || !momentTo.isValid()) {
+            throw new MalformedInput('Date Format must be YYYY-MM-DD')
         }
 
-        const price = await super.create(params)
-        return this.read(price.id)
+        let diff =  momentTo.diff(momentFrom, 'days')
+        if (diff < 0) {
+            throw new MalformedInput('dateTo must be >= dateFrom')
+        }
+
+        delete params.dateFrom
+        delete params.dateTo
+
+        let prices = []
+        params.date = momentFrom.format('YYYY-MM-DD')
+        let price = await super.create(params)
+        let price_encoded = await super.read(price.id)
+        prices.push(price_encoded)
+
+        // Add for rest of the days
+        for (let i = 0; i < diff; i++) {
+            params.date = momentFrom.add(1, 'days').format('YYYY-MM-DD')
+            price = await super.create(params)
+            price_encoded = await super.read(price.id)
+            prices.push(price_encoded)
+        }
+        return prices
     }
 
     async read(id) {
