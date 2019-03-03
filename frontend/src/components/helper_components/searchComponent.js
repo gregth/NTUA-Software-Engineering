@@ -155,8 +155,10 @@ export class Search extends Component {
                                 <InputGroupAddon addonType="append">km</InputGroupAddon>
                             </InputGroup>
                         </div>
-                        <Label for="maxp">Μέγιστη τιμή:</Label>
-                        <Range range={this.state.price} id="maxp" updateRange={this.updateRange}/>
+                        <div class="input-group">
+                            <span>Τιμή:</span>
+                            <Range range={this.state.price} id="maxp" updateRange={this.updateRange}/>
+                        </div>
                     </Col>
                 </Row> 
 
