@@ -11,7 +11,6 @@ class SearchPage extends Component {
         this.state = {search: null, success: null, error: null, not_found: null};
         this.handleSubmit = this.handleSubmit.bind(this);
         this._isMounted = null;
-        this.url = "https://www.youtube.com/watch?v=1hvzLV274Rg";
     }
     
     componentWilldUnmount() {
@@ -43,13 +42,8 @@ class SearchPage extends Component {
             <div>
                 <NavBarClass/>
                 <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά.</Alert>
-               <br></br>
                 <div className="header"><img src={"/logo_transparent.png"} alt="logo" /></div>
-<br></br>
                 <Search ref="search" handle={this.handleSubmit} params={[]}/>
-                <Row className="justify-content-center">
-                    <ReactPlayer url={this.url} playing/>
-                </Row>
             </div>
         );
     }
