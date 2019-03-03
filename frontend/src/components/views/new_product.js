@@ -4,6 +4,7 @@ import { Alert, Modal, ModalBody, ModalFooter, FormText, Input, Label, Button, F
 import {Categories} from '../helper_components/categories_menu';
 import {send_to_server} from '../communication/send';
 import NavBarClass from '../helper_components/navbar';
+import cookie from 'react-cookies';
 
 function onlyUnique(value, index, self) { 
     return self.indexOf(value) === index;
@@ -20,6 +21,18 @@ class newProduct extends React.Component {
         this._isMounted = null;
     }
     
+    componentDidMount() {
+        try {
+            var loggedin = Boolean(cookie.load('loggedin'));
+            if (!loggedin) {
+                browserHistory.push('/login');
+            }
+        }
+        catch(error) {
+            console.log(error);
+        }
+    }
+
     componentWilldUnmount() {
         if (this._isMounted) {
             this._isMounted.cancel();

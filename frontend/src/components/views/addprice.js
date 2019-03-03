@@ -8,6 +8,7 @@ import { getLocation } from '../functions/current_location';
 import {send_to_server} from '../communication/send';
 import NavBarClass from '../helper_components/navbar';
 import {receive_from_server} from '../communication/receive';
+import cookie from 'react-cookies';
 
 class Product extends React.Component {
     
@@ -30,6 +31,18 @@ class Product extends React.Component {
         this.body = {productId: null, shopId: null, price: null, dateFrom: null, dateTo: null};
     }
     
+    componentDidMount() {
+        try {
+            var loggedin = Boolean(cookie.load('loggedin'));
+            if (!loggedin) {
+                browserHistory.push('/login');
+            }
+        }
+        catch(error) {
+            console.log(error);
+        }
+    }
+
     componentWilldUnmount() {
         if (this._isMounted) {
             this._isMounted.cancel();
