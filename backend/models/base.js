@@ -157,12 +157,15 @@ module.exports = class BaseModel {
         return rows;
     }
 
-    async delete(conditions) {
+    async delete(conditions, limitone = true) {
         let query = `DELETE FROM  ${this.table}`;
         let substitutions = [];
         if (conditions && Object.keys(conditions).length != 0){
             let [conditionPlaceholders, conditionValues] = objectToQueryFields(conditions);
-            query += ` WHERE ` + conditionPlaceholders.join(" AND ") + ` LIMIT 1`;
+            query += ` WHERE ` + conditionPlaceholders.join(" AND ");
+            if (limitone) {
+                query += ' LIMIT 1'
+            }
             substitutions.push(...conditionValues);
         }
 
