@@ -71,6 +71,35 @@ module.exports = class ProductsController extends BaseController {
         return product
     }
 
+    async put(params, id) {
+        const { tags } = params
+
+        if (typeof tags !== 'undefined') {
+            await this.patch({tags: params.tags}, id)
+        }
+
+        return super.put(params, id)
+    }
+
+    async patch(params, id) {
+        if (typeof params.tags !== 'undefined') {
+            await this.tagModel.delete({productId: id}, false)
+
+            const { tags } = params
+            const tagList = typeof tags === 'string' ? [tags] : tags
+            for (const tag of tagList) {
+                this.tagModel.insert({
+                    productId: id,
+                    tag
+                })
+            }
+
+            return this.read(id)
+        }
+
+        return super.patch(params, id)
+    }
+
     async create(params) {
         const { tags } = params
 
