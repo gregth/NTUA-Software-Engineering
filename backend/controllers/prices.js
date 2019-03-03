@@ -110,6 +110,7 @@ module.exports = class PricesController extends BaseController {
             conditions['products.category'] = params.category
         }
 
+        conditions.distinct = true
         const response = await super.list(conditions, params, having)
         const prices = response.prices
         const productTags = new Map()
