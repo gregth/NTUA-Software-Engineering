@@ -13,19 +13,19 @@ class Results extends Component {
         this.searches = this.props.location.query;
         Object.entries(this.searches).forEach(([key, value]) => {
             if (key === 'products') {
-                try {
-                    value.forEach((val) => {this.products.push(val);});
-                }
-                catch (e) {
+                if (typeof(value) === "string") {
                     this.products.push(value);
+                }
+                else {
+                    value.forEach((val) => {this.products.push(val);});
                 }
             }
             if (key === 'shops') {
-                try {
-                    value.forEach((val) => {this.shops.push(val);});
-                }
-                catch (e) {
+                if (typeof(value) === "string") {
                     this.shops.push(value);
+                }
+                else {
+                    value.forEach((val) => {this.shops.push(val);});
                 }
             }
         });
