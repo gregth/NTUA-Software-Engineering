@@ -177,7 +177,11 @@ module.exports = class PricesController extends BaseController {
             price_encoded = await super.read(price.id)
             prices.push(price_encoded)
         }
-        return prices
+        return {
+            start: 0,
+            total: prices.length,
+            prices: prices
+        }
     }
 
     async read(id) {
