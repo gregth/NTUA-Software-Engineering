@@ -151,6 +151,7 @@ module.exports = class BaseController {
             if (err.code === 'ER_DUP_ENTRY') {
                 throw new DuplicateEntry(`Duplicate entry for ${this.resource}`)
             }
+            console.log(err)
         }
 
         throw new Error(`Did not create ${this.resource}: ${JSON.stringify(params)}`)
