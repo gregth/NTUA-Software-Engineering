@@ -1,15 +1,23 @@
 const express = require('express')
 const { MalformedInput, NotImplemented, NotFound, Unauthorized, DuplicateEntry } = require('./errors')
 
-const createControllerRoutes = controller => {
+const createControllerRoutes = (controller, sessions) => {
     const router = express.Router()
     async function endpointHandler(method, req, res) {
+        if (['post', 'put', 'patch', 'delete'].includes(req.method.toLowerCase()) && !['users', 'login'].includes(controller.resource)) {
+            const token = req.headers['x-observatory-auth']
+            if (!token || !sessions.has(token)) {
+                res.status(401).json({error: 'Unauthorized request'})
+                return
+            }
+        }
+
         if (req.query.format && req.query.format !== 'json') {
             return res.status(400).send()
         }
 
         try {
-            const results = await method
+            const results = await method()
 
             if (typeof results === 'object') {
                 res.setHeader('Content-Type', 'application/json');
@@ -38,12 +46,12 @@ const createControllerRoutes = controller => {
         }
     }
 
-    router.get('/', (req, res) => endpointHandler(controller.list(req.query, req.headers['x-observatory-auth']), req, res))
-    router.get('/:id', (req, res) => endpointHandler(controller.read(req.params.id, req.headers['x-observatory-auth']), req, res))
-    router.post('/', (req, res) => endpointHandler(controller.create(req.body, req.headers['x-observatory-auth']), req, res))
-    router.put('/:id', (req, res) => endpointHandler(controller.put(req.body, req.params.id, req.headers['x-observatory-auth']), req, res))
-    router.patch('/:id', (req, res) => endpointHandler(controller.patch(req.body, req.params.id, req.headers['x-observatory-auth']), req, res))
-    router.delete('/:id', (req, res) => endpointHandler(controller.delete(req.params.id, req.headers['x-observatory-auth']), req, res))
+    router.get('/', (req, res) => endpointHandler(controller.list.bind(controller, req.query, req.headers['x-observatory-auth']), req, res))
+    router.get('/:id', (req, res) => endpointHandler(controller.read.bind(controller, req.params.id, req.headers['x-observatory-auth']), req, res))
+    router.post('/', (req, res) => endpointHandler(controller.create.bind(controller, req.body, req.headers['x-observatory-auth']), req, res))
+    router.put('/:id', (req, res) => endpointHandler(controller.put.bind(controller, req.body, req.params.id, req.headers['x-observatory-auth']), req, res))
+    router.patch('/:id', (req, res) => endpointHandler(controller.patch.bind(controller, req.body, req.params.id, req.headers['x-observatory-auth']), req, res))
+    router.delete('/:id', (req, res) => endpointHandler(controller.delete.bind(controller, req.params.id, req.headers['x-observatory-auth']), req, res))
 
     return router
 }
@@ -52,7 +60,7 @@ const createSimpleRouter = (key, sessions, dbConnection) => {
     const ControllerClass = require(`./controllers/${key}`)
     const controller = new ControllerClass(dbConnection, sessions)
 
-    return createControllerRoutes(controller)
+    return createControllerRoutes(controller, sessions)
 }
 
 module.exports = {
