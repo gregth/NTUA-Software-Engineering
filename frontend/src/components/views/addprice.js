@@ -196,6 +196,8 @@ class Product extends React.Component {
         var url = '/prices';
         this._isMounted = await send_to_server(url, this.body);
         const answer = this._isMounted;
+        var result = await answer.json().then((result) => {return result;});
+        console.log(result)
         console.log(answer);
         try {
             if (answer === 'error') {
