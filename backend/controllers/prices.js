@@ -49,7 +49,6 @@ module.exports = class PricesController extends BaseController {
     }
 
     async list(params) {
-        //{start = 0, count = 20, geoDist, geoLng, geoLat, dateFrom, dateTo, shops, products, tags, sort = 'price|ASC'}) {
         const conditions = {}
 
         let dateFrom, dateTo
@@ -66,7 +65,7 @@ module.exports = class PricesController extends BaseController {
                 throw new MalformedInput('Date Format must be YYYY-MM-DD')
             }
             dateFrom = params.dateFrom
-            dateTo = params.dateTo
+            dateTo = params.dateTo  
         }
 
         conditions.date = {
@@ -89,6 +88,17 @@ module.exports = class PricesController extends BaseController {
                 lat: params.geoLat,
                 lng: params.geoLng,
                 radius: params.geoDist
+            }
+        }
+
+        if (params.sort) {
+            let sort_strings = this.arrayify(params.sort)
+            console.log('dist|ASC' in sort_strings)
+            if (sort_strings.includes('dist|ASC') 
+                    || sort_strings.includes('dist|DESC')) {
+                if (!(params.geoDist && params.geoLng && params.geoLat)) {
+                    throw new MalformedInput('You must provide your location in order to sort by distance')
+                }
             }
         }
 
