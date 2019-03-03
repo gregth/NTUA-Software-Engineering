@@ -24,7 +24,7 @@ DROP TABLE IF EXISTS `prices`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `prices` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `price` float NOT NULL,
+  `price` double NOT NULL,
   `shopId` int(11) NOT NULL,
   `productId` int(11) NOT NULL,
   `date` date NOT NULL,
