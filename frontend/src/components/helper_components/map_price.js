@@ -90,8 +90,8 @@ export class MapClass extends Component {
                             zoom={11}
                             coordinates={true}
                             initialCenter={{
-                                lat: 37.9838,
-                                lng: 23.7275
+                                lat: this.state.markers[0].lat,
+                                lng: this.state.markers[0].lng
                             }}>
                             {this.state.markers.map(marker => (
                             <Marker
