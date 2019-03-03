@@ -15,6 +15,14 @@ module.exports = class BaseController {
         this.resource = resource
         this.model = model
     }
+
+    arrayify(param) {
+        if (param instanceof Array) {
+            return param
+        } else {
+            return [param]
+        }
+    }
     
     validate_post_params(params) {
         let rules = this.model.rules.insert

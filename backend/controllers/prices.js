@@ -78,9 +78,8 @@ module.exports = class PricesController extends BaseController {
         if (params.tags) {
             conditions.tags = {
                 type: 'TAGS',
-                tags: params.tags.split(',')
+                tags: this.arrayify(params.tags)
             }
-            console.log(conditions.tags)
         }
 
         let having
@@ -94,10 +93,10 @@ module.exports = class PricesController extends BaseController {
         }
 
         if (params.shops) {
-            conditions.shopId = params.shops.split(',')
+            conditions.shopId = this.arrayify(params.shops)
         }
         if (params.products) {
-            conditions.productId = params.products.split(',')
+            conditions.productId = this.arrayify(params.products)
         }
 
         if (params.price) {
