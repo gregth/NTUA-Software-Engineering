@@ -12,8 +12,22 @@ class Results extends Component {
         this.products = [];
         this.searches = this.props.location.query;
         Object.entries(this.searches).forEach(([key, value]) => {
-           if (key === 'products') this.products.push([value]);
-           if (key === 'shops') this.shops.push([value]);
+            if (key === 'products') {
+                try {
+                    value.forEach((val) => {this.products.push(val);});
+                }
+                catch (e) {
+                    this.products.push(value);
+                }
+            }
+            if (key === 'shops') {
+                try {
+                    value.forEach((val) => {this.shops.push(val);});
+                }
+                catch (e) {
+                    this.shops.push(value);
+                }
+            }
         });
         if (this.props.location.state) {
             this.state = {shops: this.shops, products: this.products, search: this.props.location.state, show_map: false,
