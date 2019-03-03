@@ -42,7 +42,7 @@ export default class ProductInfo extends React.Component {
                 <button className="search_btn" id={"product_btn" + this.props.price.id} title='Πληροφορίες προϊόντος'>
                     <FontAwesomeIcon icon={faWineBottle}></FontAwesomeIcon>
                 </button>
-                <UncontrolledPopover placement="bottom" target={"product_btn" + this.props.price.id}>
+                <UncontrolledPopover trigger="focus" placement="bottom" target={"product_btn" + this.props.price.id}>
                     <PopoverHeader>Πληροφορίες Προϊόντος</PopoverHeader>
                     <PopoverBody>
                         <strong>Barcode: </strong>

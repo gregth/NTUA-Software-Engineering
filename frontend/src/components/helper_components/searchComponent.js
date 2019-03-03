@@ -172,7 +172,7 @@ export class Search extends Component {
                 </Row>     
                 <Col sm="12" md={{ size: 6, offset: 4 }}>
 
-                <Button color="secondary" size="sm" block onClick={this.filters}>Εφαρμογή φίλτρων</Button>
+                <Button color="secondary" size="sm" block onClick={this.handleSubmit}>Εφαρμογή φίλτρων</Button>
                 </Col>
                 </Form>
                 </Container>

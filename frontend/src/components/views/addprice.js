@@ -326,9 +326,9 @@ class Product extends React.Component {
                         </FormGroup>
                       
                         <FormGroup check row>
-                            <Label sm={3} for="addprice_postal">ΤΚ:</Label>
-                                <Col sm={1}>
-                                <Input id="addprice_postal" invalid={this.state.error_address} name="postal" pattern="[0-9]+" type="text" disabled={this.state.flag} required/>
+                            <Label sm={3} for="addprice_postal">ΤΚ/Περιοχή:</Label>
+                                <Col sm={2}>
+                                <Input id="addprice_postal" invalid={this.state.error_address} name="postal" type="text" disabled={this.state.flag} required/>
                                 </Col>
                                 </FormGroup>
   
