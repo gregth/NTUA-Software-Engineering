@@ -1,12 +1,11 @@
 const BaseController = require('./base')
 const model = require('../models/user')
+const md5 = require('md5')
 const { Unauthorized, NotFound } = require('../errors')
 
-let connectedUsers = 0
-
 module.exports = class UserController extends BaseController {
-    constructor(dbConnection) {
-        super('users', new model(dbConnection))
+    constructor(dbConnection, sessions) {
+        super('users', new model(dbConnection), sessions)
     }
 
     async list() {
@@ -15,11 +14,14 @@ module.exports = class UserController extends BaseController {
 
     async create(params) {
         const { username, password } = params
-        const passwordHash = password + 'hashed'
+        const passwordHash = md5(password)
 
         const [user] = await this.model.list({username, passwordHash})
         if (typeof user !== 'undefined') {
-            return {token: connectedUsers++}
+            const random = Math.round(Math.random() * 100000000)
+            const token = md5(`${user.id}${user.username}${user.firstName}${user.lastName}${user.email}${random}`)
+            this.sessions.add(token)
+            return {token}
         }
 
         throw new Unauthorized()

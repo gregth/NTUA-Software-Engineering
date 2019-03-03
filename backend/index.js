@@ -14,9 +14,10 @@ async function main() {
     const dbConnection = await mysql.createConnection(config.db);
 
     console.log('Connected to MySQL. Moving on...')
+    const sessions = new Set()
     const resources = ['products', 'shops', 'prices', 'users', 'login', 'logout']
     for (const resource of resources) {
-        app.use(`/observatory/api/${resource}`, createSimpleRouter(resource, dbConnection))
+        app.use(`/observatory/api/${resource}`, createSimpleRouter(resource, sessions, dbConnection))
     }
 
     app.listen(config.port, () => console.log(`Server listening on port ${config.port}`))
