@@ -5,6 +5,7 @@ import Search from '../helper_components/searchComponent';
 import NavBarClass from '../helper_components/navbar';
 import ReactPlayer from 'react-player';
 
+
 class SearchPage extends Component {
     constructor(props) {
         super(props);
@@ -45,11 +46,14 @@ class SearchPage extends Component {
                 <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά.</Alert>
                <br></br>
                 <div className="header"><img src={"/logo_transparent.png"} alt="logo" /></div>
-<br></br>
+                <br></br>
                 <Search ref="search" handle={this.handleSubmit} params={[]}/>
                 <Row className="justify-content-center">
                     <ReactPlayer url={this.url} playing/>
                 </Row>
+
+            
+
             </div>
         );
     }

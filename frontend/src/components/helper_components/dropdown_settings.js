@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Alert, DropdownMenu, DropdownToggle, Dropdown, DropdownItem } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars,} from '@fortawesome/free-solid-svg-icons';
+import {  faUser,} from '@fortawesome/free-solid-svg-icons';
 import { browserHistory } from 'react-router';
 import cookie from 'react-cookies';
 import {send_to_server} from '../communication/send';
@@ -14,6 +14,8 @@ export class Settings extends Component {
         this.toggle = this.toggle.bind(this);
         this.close = this.close.bind(this);
         this._isMounted = null;
+
+        this.about = this.about.bind(this);
     }
     
     componentWilldUnmount() {
@@ -79,17 +81,21 @@ export class Settings extends Component {
         browserHistory.push('/');
     }
     
+    about () {
+        browserHistory.push('/aboutus');
+    }
     render() {
         return ( 
             <div>
                 <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-                    <DropdownToggle>
-                        <FontAwesomeIcon icon={faBars}></FontAwesomeIcon> {cookie.load('username')}
+                <DropdownToggle caret style={{backgroundColor: '#f1f1f1'}} color="transparent" outline>
+                        <FontAwesomeIcon icon={faUser}></FontAwesomeIcon> {cookie.load('username')}
                     </DropdownToggle>
                     <DropdownMenu right>
                         <DropdownItem onClick={() => this.logoff()}>
                             Αποσύνδεση
                         </DropdownItem>
+                        <DropdownItem  onClick={() => this.about()}>Σχετικά με μας</DropdownItem>
                     </DropdownMenu>
                 </Dropdown>
                 <Modal isOpen={this.state.error || this.state.not_found} toggle={this.close} className={this.props.className}>
