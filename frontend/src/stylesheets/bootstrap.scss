@@ -107,3 +107,8 @@ body {
 .home.container {
     top: -30px;
 }
+
+nav button.dropdown-toggle {
+    background: transparent!important;
+    color: rgba(0,0,0,.5);
+}
