@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { browserHistory } from 'react-router';
-import { Container, Alert, Row } from 'reactstrap';
+import { Container, Alert} from 'reactstrap';
 import Search from '../helper_components/searchComponent';
 import NavBarClass from '../helper_components/navbar';
 

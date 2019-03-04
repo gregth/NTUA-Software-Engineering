@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import {Categories} from './categories_search';
-import { Col, InputGroupAddon, InputGroup ,Row, Button, Form, FormGroup, Label, Input, FormText, Container } from 'reactstrap';
+import { Col, InputGroupAddon, InputGroup, Row, Button, Form, Input, FormText} from 'reactstrap';
 import Range from './range';
 import SortPrice from '../helper_components/sort_price';
 import SortDistance from '../helper_components/sort_distance';
@@ -108,7 +108,7 @@ export class Search extends Component {
         curr.setUTCDate(curr.getDate());
         var date = curr.toISOString().substr(0,10);
         return ( 
-            <div class="group_search" >
+            <div className="group_search" >
                 <Form>
                         <InputGroup id="home-search">
                             <Input id="search_tags" placeholder="Αναζήτηση με χαρακτηριστικά..." name="tags" onChange={this.handleChange} value={this.state.tags ? this.state.tags : ''}></Input>
@@ -121,39 +121,39 @@ export class Search extends Component {
                         </InputGroup>
                         <FormText>Διαχωρισμός χαρακτηριστικών με κόμμα (,)</FormText>
                 </Form> 
-                <div class="Search filters_section">
+                <div className="Search filters_section">
                 <Form>
 
                 <Row >
                     <Col>
-                        <span class="text-justify">Ταξινόμηση</span>
+                        <span>Ταξινόμηση</span>
                         <SortPrice ref="sort_price" id="sort_p" default={this.props.params ? this.props.params.sort_price : null}/>
                         <SortDistance ref="sort_distance" id="sort_dist" default={this.props.params ? this.props.params.sort_distance : null}/>
                         <SortDate ref="sort_date" id="sort_date" default={this.props.params ? this.props.params.sort_date : null}/>
                     </Col>
                     
                     <Col>
-                        <span class="text-justify">Εύρος Ημερομηνιών</span>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">Από:</span>
+                        <span>Εύρος Ημερομηνιών</span>
+                        <div className="input-group">
+                            <div className="input-group-prepend">
+                                <span className="input-group-text">Από:</span>
                             </div>
-                            <Input class="form-control" type="date" id="search_datefrom" name="datefrom" defaultValue={this.props.params && datefrom ? datefrom : date} />
+                            <Input className="form-control" type="date" id="search_datefrom" name="datefrom" defaultValue={this.props.params && datefrom ? datefrom : date} />
                         </div>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">Έως:</span>
+                        <div className="input-group">
+                            <div className="input-group-prepend">
+                                <span className="input-group-text">Έως:</span>
                             </div>
-                            <Input class="form-control" type="date" id="search_dateto" name="dateto" defaultValue={this.props.params && dateto ? dateto : date} />
+                            <Input className="form-control" type="date" id="search_dateto" name="dateto" defaultValue={this.props.params && dateto ? dateto : date} />
                         </div>
                     </Col>
                     <Col>
-                        <span class="text-justify">Άλλα Φίλτρα</span>
-                            <InputGroup class="form-control" id="dist">
+                        <span>Άλλα Φίλτρα</span>
+                            <InputGroup id="dist">
                                 <Input placeholder="Απόσταση" type="text" id="search_geodist" pattern="[0-9]+" name="geodist" onChange={this.handleChange} value={this.state.geodist ? this.state.geodist : ''}/>
                                 <InputGroupAddon addonType="append">km</InputGroupAddon>
                             </InputGroup>
-                        <div class="input-group">
+                        <div className="input-group">
                             <span>Τιμή:</span>
                             <Range range={this.state.price} id="maxp" updateRange={this.updateRange}/>
                         </div>

@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import { browserHistory } from 'react-router';
-import { Button, Alert } from 'reactstrap';
+import {Alert } from 'reactstrap';
 import PricesTable from '../helper_components/results_prices';
 import Search from '../helper_components/searchComponent';
 import NavBarClass from '../helper_components/navbar';
-import { Container, Row } from 'reactstrap';
+import {Container} from 'reactstrap';
 
 class Results extends Component {
     constructor(props) {
