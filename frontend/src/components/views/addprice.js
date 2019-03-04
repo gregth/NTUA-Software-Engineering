@@ -310,11 +310,11 @@ class Product extends React.Component {
                             <Label sm={3} for="addprice_barcode" className="mr-sm-2">Barcode Προϊόντος:</Label>
                             {this.flag
                             ? 
-                            <Col sm={8}>
+                            <Col sm={5}>
                                 <Input id="addprice_barcode" name="barcode" pattern="[0-9]{1,128}" type="text" defaultValue={this.barcode} disabled required/>
                             </Col>
                             :
-                            <Col sm={8}>
+                            <Col sm={5}>
                                 <Input id="addprice_barcode" name="barcode" pattern="[0-9]{1,128}" type="text" required/>
                             </Col>
                             }
@@ -329,14 +329,14 @@ class Product extends React.Component {
                         </FormGroup>    
                         <FormGroup check row>
                             <Label sm={8} for="addprice_name">Όνομα Καταστήματος:</Label>
-                            <Col sm={8}>
+                            <Col sm={6}>
                                 <Input id="addprice_name" name="name" type="text" disabled={this.state.flag}/>
                             </Col>
                         </FormGroup>
                         
                         <FormGroup check row>
                             <Label sm={3} for="addprice_address">Διεύθυνση:</Label>
-                            <Col sm={8}>
+                            <Col sm={6}>
                                 <Input id="addprice_address" invalid={this.state.error_address} name="address" type="text" disabled={this.state.flag} required/>
                                 <FormFeedback valid={!this.state.error_address}>Η διεύθυνση δεν είναι έγκυρη.</FormFeedback>
                             </Col>

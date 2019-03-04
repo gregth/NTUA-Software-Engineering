@@ -313,23 +313,21 @@ export default class EditShop extends Component {
                     
                     <FormGroup check row>
                         <Label sm={6} for="name">Όνομα Καταστήματος:</Label>
-                        <Col sm={3}>
+                        <Col sm={6}>
                             <Input id="edit_shop_name" name="name" value={this.state.name} onChange={this.handleChange} type="text" required/>
                         </Col>
                     </FormGroup>
                     <div className="row mt-3"></div>
-                    <FormGroup check>
-                        <Label check>
-                            <Col sm={9}>
+                    <FormGroup check row>
+                        <Container className="Map1">
+                            <Label check > Tωρινή Τοποθεσία
                                 <Input type="checkbox" name="location" id="edit_shop_location" onChange={this.handleChange}></Input>
-                            </Col>
-                            Tωρινή Τοποθεσία
-                        </Label>
+                            </Label>
+                        </Container>
                     </FormGroup>
-                    
                     <FormGroup check row>
                         <Label sm={3} for="address">Διεύθυνση:</Label>
-                        <Col sm={3}>
+                        <Col sm={6}>
                             <Input invalid={this.state.error_address} value={this.state.address} onChange={this.handleChange} valid={false} id="edit_shop_address" name="address" type="text" disabled={this.state.flag} required/>
                             <FormFeedback valid={!this.state.error_address}>Η διεύθυνση δεν είναι έγκυρη.</FormFeedback>
                         </Col>
@@ -338,14 +336,14 @@ export default class EditShop extends Component {
                     <FormGroup check row>
                         <Label sm={6} for="edit_shop_tags">Χαρακτηριστικά Καταστήματος:
                         <FormText>Διαχωρισμός χαρακτηριστικών με κόμμα (,)</FormText></Label>
-                        <Col sm={8}>
+                        <Col sm={6}>
                             <Input type="textarea" name="tags" id="edit_shop_tags" onChange={this.handleChange} value={this.state.tags}/>
                         </Col>
                     </FormGroup>
                     <div className="row mt-3"></div>
                     <FormGroup check row>
                         <Label sm={6} for="phone">Τηλέφωνο Καταστήματος:</Label>
-                        <Col sm={3}>
+                        <Col sm={4}>
                             <Input type="tel" id="edit_shop_phone" name="phone" value={this.state.phone} onChange={this.handleChange} invalid={this.state.checkPhone===false} valid={this.state.checkPhone}/>
                         </Col>
                     </FormGroup>

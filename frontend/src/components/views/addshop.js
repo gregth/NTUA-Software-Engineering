@@ -191,7 +191,7 @@ class Shop extends React.Component {
                 <Form id="new_shop" onSubmit={this.handleSubmit}>                     
                     <FormGroup check row>
                         <Label sm={6} for="name">Όνομα Καταστήματος:</Label>
-                        <Col sm={8}>
+                        <Col sm={6}>
                             <Input id="new_shop_name" name="name" type="text" required/>
                         </Col>
                     </FormGroup>
@@ -205,7 +205,7 @@ class Shop extends React.Component {
                     </FormGroup>
                     <FormGroup check row>
                         <Label sm={3} for="address">Διεύθυνση:</Label>
-                        <Col sm={8}>
+                        <Col sm={6}>
                             <Input invalid={this.state.error_address} valid={false} id="new_shop_address" name="address" type="text" disabled={this.state.flag} required/>
                             <FormFeedback valid={!this.state.error_address}>Η διεύθυνση δεν είναι έγκυρη.</FormFeedback>
                         </Col>
@@ -228,7 +228,7 @@ class Shop extends React.Component {
                     <FormGroup check row>
                         <Label sm={6} for="new_shop_tags">Χαρακτηριστικά Καταστήματος:
                         <FormText>Διαχωρισμός χαρακτηριστικών με κόμμα (,)</FormText></Label>
-                        <Col sm={8}>
+                        <Col sm={6}>
                             <Input type="textarea" name="text" id="new_shop_tags"/>
                         </Col>
                     </FormGroup>
