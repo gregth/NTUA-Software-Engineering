@@ -79,7 +79,7 @@ class newProduct extends React.Component {
             barcode,
             brand,
             category,
-            tags: tags.join(','),
+            tags,
             withdrawn: 0
         };
         if (volume !== null && volume !== '') product['volume'] = volume;

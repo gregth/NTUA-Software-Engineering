@@ -183,7 +183,7 @@ export default class EditProduct extends Component {
             brand,
             volume: parseInt(volume),
             category,
-            tags: tags.join(','),
+            tags,
             withdrawn: this.state.details.withdrawn
         };
         

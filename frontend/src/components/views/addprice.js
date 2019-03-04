@@ -133,8 +133,14 @@ class Product extends React.Component {
         var checkBox = document.getElementById("addprice_location");
         
         if (checkBox.checked) {
-            lng = this.state.current.longitude;
-            lat = this.state.current.latitude;
+            try {
+                lng = this.state.current.longitude;
+                lat = this.state.current.latitude;
+            }
+            catch {
+                this.setState({error_address: true});
+                return;
+            }
         }
         else {
             const postal = document.getElementById('addprice_postal').value;
@@ -142,12 +148,12 @@ class Product extends React.Component {
             const number = document.getElementById('addprice_number').value;
             const total = address_name + ' ' + number + ' ' + postal;
             var result = await address_to_coords(total);
-            if (result) {
+            try {
                 lat = result[0];
                 lng = result[1];
                 this.setState({error_address: false});
             }
-            else {
+            catch {
                 this.setState({error_address: true});
                 return;
             }
