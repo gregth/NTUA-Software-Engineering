@@ -207,106 +207,94 @@ export default class PapigationShops extends React.PureComponent {
   render() {
     const { currentPage } = this.state;
     return (    
-        <div>
-            <br></br>
-                <br></br>
-                <br></br>
-            <Alert color="danger" isOpen={this.state.noshops===true}>Δεν έχει επιλεχθεί κανένα κατάστημα.</Alert>
-            <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά. {this.state.error_message}</Alert>
-            <Alert color="danger" isOpen={this.state.not_found===true}>{this.state.message}</Alert>
-            <Form>
-                <Row className="filters_section">
-                    <Col>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">Ταξινόμηση κατά:</span>
-                            </div>
-                            <SortDropdown class="form-control" ref="sort" click={this.sortChoose}/>
-                        </div>
-                    </Col>
-                    <Col >
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">Καταστήματα προς εμφάνιση:</span>
-                            </div>
-                            <StatusDropdown ref="status" click={this.statusChoose}/>
-                        </div>
-                    </Col>
-                    </Row>
-                    </Form>
-                    <br></br>
-            {!this.state.ready
-            ?<div> Loading... </div>
-            : <div>
-                {this.dataSet.length >0
-                ?<React.Fragment> 
-                    <Row className="shops_page_buttons">
-                        <Col>
-                            <FormGroup>
-                                <Button className="btn-block" onClick={this.search}> Αναζήτηση τιμών επιλεγμένων καταστημάτων </Button>
-                            </FormGroup>
-                        </Col>
-                        <Col>
-                            <MapClass className="btn-block" shops={this.shops}/>
-                        </Col>
-                    </Row>
-                    <Table hover>
-                        <thead>
-                            <tr>
-                                <th>Όνομα Καταστήματος</th>
-                                <th>Διεύθυνση</th>
-                                <th>Τηλέφωνο</th>
-                                <th>Χαρακτηριστικά</th>
-                                <th>Κατάσταση</th>
-                                <th/>
-                            </tr>
-                        </thead>
-                        {this.dataSet.map((data, i) => 
-                        <tbody className="data-slice" key={i}>
-                            {data}
-                        </tbody>
+        <Row>
+            <Col md="3">
+                <Form>
+                    <FormGroup>
+                        <Label for="sort">Ταξινόμηση κατά:</Label>
+                        <SortDropdown ref="sort" click={this.sortChoose}/>
+                    </FormGroup>
 
-                        )}
-                    </Table>
-                    <div className="pagination-wrapper">          
-                        <Pagination aria-label="Page navigation example">            
-                            <PaginationItem disabled={currentPage <= 0}>              
-                                <PaginationLink
-                                    onClick={e => this.handleClick(e, currentPage - 1)}
-                                    previous
-                                    href="#"
-                                />              
-                            </PaginationItem>
-                            {[...Array(this.pagesCount)].map((page, i) => 
-                                <PaginationItem active={i === currentPage} key={i}>
-                                    <PaginationLink onClick={e => this.handleClick(e, i)} href="#">
-                                        {i + 1}
-                                    </PaginationLink>
-                                </PaginationItem>
+                    <FormGroup>
+                        <Label for="status">Καταστήματα προς εμφάνιση:</Label>
+                        <StatusDropdown ref="status" click={this.statusChoose}/>
+                    </FormGroup>
+
+                    <FormGroup>
+                        <Label for="count">Καταστήματα ανά σελίδα:</Label>
+                        <CountDropdown ref="count" click={this.countChoose}/>
+                    </FormGroup>
+                </Form>
+            </Col>
+            <Col md="9">
+                <Alert color="danger" isOpen={this.state.noshops===true}>Δεν έχει επιλεχθεί κανένα κατάστημα.</Alert>
+                <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά. {this.state.error_message}</Alert>
+                <Alert color="danger" isOpen={this.state.not_found===true}>{this.state.message}</Alert>
+                {!this.state.ready
+                ?<div> Loading... </div>
+                : <div>
+                    {this.dataSet.length >0
+                    ?<React.Fragment> 
+                        <Row className="shops_page_buttons">
+                            <Col>
+                                <FormGroup>
+                                    <Button className="btn-block" onClick={this.search}> Αναζήτηση τιμών επιλεγμένων καταστημάτων </Button>
+                                </FormGroup>
+                            </Col>
+                            <Col>
+                                <MapClass className="btn-block" shops={this.shops}/>
+                            </Col>
+                        </Row>
+                        <Table hover>
+                            <thead>
+                                <tr>
+                                    <th>Όνομα Καταστήματος</th>
+                                    <th>Διεύθυνση</th>
+                                    <th>Τηλέφωνο</th>
+                                    <th>Χαρακτηριστικά</th>
+                                    <th>Κατάσταση</th>
+                                    <th/>
+                                </tr>
+                            </thead>
+                            {this.dataSet.map((data, i) => 
+                            <tbody className="data-slice" key={i}>
+                                {data}
+                            </tbody>
+
                             )}
-                            <PaginationItem disabled={currentPage >= this.pagesCount - 1}>
-                                <PaginationLink
-                                    onClick={e => this.handleClick(e, currentPage + 1)}
-                                    next
-                                    href="#"
-                                />
-                            </PaginationItem>
-                        </Pagination>
-                        <div class="pager">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Καταστήματα ανά σελίδα:</span>
-                                </div>
-                                <CountDropdown className="form-control" ref="count" click={this.countChoose}/>
+                        </Table>
+                        <div className="pagination-wrapper">          
+                            <Pagination aria-label="Page navigation example">            
+                                <PaginationItem disabled={currentPage <= 0}>              
+                                    <PaginationLink
+                                        onClick={e => this.handleClick(e, currentPage - 1)}
+                                        previous
+                                        href="#"
+                                    />              
+                                </PaginationItem>
+                                {[...Array(this.pagesCount)].map((page, i) => 
+                                    <PaginationItem active={i === currentPage} key={i}>
+                                        <PaginationLink onClick={e => this.handleClick(e, i)} href="#">
+                                            {i + 1}
+                                        </PaginationLink>
+                                    </PaginationItem>
+                                )}
+                                <PaginationItem disabled={currentPage >= this.pagesCount - 1}>
+                                    <PaginationLink
+                                        onClick={e => this.handleClick(e, currentPage + 1)}
+                                        next
+                                        href="#"
+                                    />
+                                </PaginationItem>
+                            </Pagination>
                             </div>
-                        </div>
-                        </div>
-                </React.Fragment>
-                : <div> Δε βρέθηκαν αποτελέσματα. </div>
+                    </React.Fragment>
+                    : <div> Δε βρέθηκαν αποτελέσματα. </div>
+                    }
+                </div>
                 }
-            </div>
-            }
-        </div>
+        </Col>
+        </Row>
     );
   }
 }
