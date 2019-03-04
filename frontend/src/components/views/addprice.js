@@ -28,6 +28,14 @@ class Product extends React.Component {
         this.new_product = this.new_product.bind(this);
         this.nearby_shops = this.nearby_shops.bind(this);
         this.add_price = this.add_price.bind(this);
+        this.searches = this.props.location.query;
+        this.flag = false;
+        Object.entries(this.searches).forEach(([key, value]) => {
+            if (key === 'barcode') {
+                this.barcode = value;
+                this.flag = true;
+            }
+        });
         this.body = {productId: null, shopId: null, price: null, dateFrom: null, dateTo: null};
     }
     
@@ -215,8 +223,6 @@ class Product extends React.Component {
         var url = '/prices';
         this._isMounted = await send_to_server(url, this.body);
         const answer = this._isMounted;
-        var result = await answer.json().then((result) => {return result;});
-        console.log(result)
         console.log(answer);
         try {
             if (answer === 'error') {
@@ -307,9 +313,16 @@ class Product extends React.Component {
                 <Form id="addproduct" onSubmit={this.handleSubmit}>
                         <FormGroup check row>
                             <Label sm={3} for="addprice_barcode" className="mr-sm-2">Barcode Προϊόντος:</Label>
+                            {this.flag
+                            ? 
+                            <Col sm={3}>
+                                <Input id="addprice_barcode" name="barcode" pattern="[0-9]{1,128}" type="text" defaultValue={this.barcode} disabled required/>
+                            </Col>
+                            :
                             <Col sm={3}>
                                 <Input id="addprice_barcode" name="barcode" pattern="[0-9]{1,128}" type="text" required/>
                             </Col>
+                            }
                         </FormGroup>
                         <div className="row mt-3"></div>
                         <FormGroup check>

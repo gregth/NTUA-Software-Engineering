@@ -3,7 +3,7 @@ import { Input, Table, Label, Row, Form, FormGroup, Col, Pagination, PaginationI
 import React from "react";
 import { browserHistory } from 'react-router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faEdit, faTrashAlt, faDollarSign } from '@fortawesome/free-solid-svg-icons';
 import {receive_from_server} from '../communication/receive';
 import SortDropdown from '../helper_components/sort_products_shops';
 import StatusDropdown from '../helper_components/status_products_shops';
@@ -40,6 +40,7 @@ export default class ProductsResults extends React.PureComponent {
         this.search = this.search.bind(this);
         this.search_product = this.search_product.bind(this);
         this.category_to_greek = this.category_to_greek.bind(this);
+        this.add_price = this.add_price.bind(this);
         this.state = {
             error_message: null, noproducts: null, tooltipOpen: false, currentPage: 0, error: null, success: null, not_found: null, ready: null, message: null
         };
@@ -77,6 +78,7 @@ export default class ProductsResults extends React.PureComponent {
     createData () {
         this.dataSet = this.products.map(product => (
             <tr key={product.id} className="row_pointer">
+                <td>{product.extraData.barcode}</td>
                 <td>{product.name}</td>
                 <td>{this.category_to_greek(product.category)}</td>
                 <td>{product.extraData.brand}</td>
@@ -105,6 +107,10 @@ export default class ProductsResults extends React.PureComponent {
                     ? <button className="search_btn" id="delete_btn" onClick={() => this.props.delete(product.id, product.name)}><FontAwesomeIcon icon={faTrashAlt}></FontAwesomeIcon></button>     
                     : null
                     }
+                    {Boolean(cookie.load('loggedin'))
+                    ? <button className="search_btn" id="add_price_btn" onClick={() => this.add_price(product.extraData.barcode)}><FontAwesomeIcon icon={faDollarSign}></FontAwesomeIcon></button>     
+                    : null
+                    }
                     <button className="search_btn" id="search_product_btn" onClick={() => this.search_product(product.id)}><FontAwesomeIcon icon={faSearch}></FontAwesomeIcon></button>
                 </td>
                 <td><Input type="checkbox" id={'product'+product.id} onChange={() => this.handleChange(product.id)}></Input></td>
@@ -112,6 +118,13 @@ export default class ProductsResults extends React.PureComponent {
         ));
     } 
     
+    add_price (barcode) {
+        browserHistory.push({
+            pathname: '/addprice',
+            search: '?barcode=' + barcode
+        });
+    }
+
     search_product (id) {
         browserHistory.push({
             pathname: '/results',
@@ -289,6 +302,7 @@ export default class ProductsResults extends React.PureComponent {
                     <Table hover>
                         <thead>
                             <tr>
+                                <th>Barcode</th>
                                 <th>Όνομα Προϊόντος</th>
                                 <th>Κατηγορία</th>
                                 <th>Μάρκα</th>
