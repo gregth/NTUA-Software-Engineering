@@ -25,7 +25,6 @@ class Product extends React.Component {
         this.find_shop = this.find_shop.bind(this);
         this.currentLocation = this.currentLocation.bind(this);
         this.toggleModal = this.toggleModal.bind(this);
-        this.new_product = this.new_product.bind(this);
         this.nearby_shops = this.nearby_shops.bind(this);
         this.add_price = this.add_price.bind(this);
         this.searches = this.props.location.query;
@@ -288,10 +287,6 @@ class Product extends React.Component {
         this.setState({
             not_found2: !this.state.not_found2
         });
-    }
-    
-    new_product () {
-        browserHistory.push('/newproduct');
     }
     
     render() {

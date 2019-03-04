@@ -21,7 +21,7 @@ export default (
     <Route path='register' component={Register} />
     <Route path='addshop' component={Shop} />
     <Route path='addprice' component={Product} />
-    <Route path='newproduct' component={newProduct} />
+    <Route path='addproduct' component={newProduct} />
     <Route path='products' component={AllProducts} />
     <Route path='shops' component={AllShops} />
     <Route path='edit_product' component={EditProduct} />
