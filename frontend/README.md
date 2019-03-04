@@ -11,7 +11,12 @@
    
 ## Start the app
 
-1. From within the **frontend** directory, run:
+1. In order not to have any problem with HTTPS security, **brefore running the frontend** run the following command in the browser's search bar and continue ignoring the warnings brefore running the frontend.
+   ```
+   brefore running the frontend
+   ```
+   
+2. From within the **frontend** directory, run:
 
    ```
    npm install
