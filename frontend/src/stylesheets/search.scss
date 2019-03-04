@@ -2,27 +2,14 @@
     color: white;
 }
 
-.search {
-    position: absolute;
-    top: 35%;
-    display: block;
-    margin: auto;
-    font-family: verdana;
-}
 
 .search_input {
     width: 100%;
     padding: 5px 10px;
     margin-bottom: auto;
-    position: relative;
     border-radius: 4px;
 }
 
-.search_input button {
-    position: absolute;
-    right: 4%;
-    top: 20%;
-}
 
 .icon {
     background-color: Transparent;
@@ -41,24 +28,6 @@
     overflow: hidden;
     outline:none;
     
-}
-
-.homepage {
-    top: 10px;
-    left: 10px;
-    background-repeat: Transparent;
-    background-repeat:no-repeat;
-    border: none;
-    cursor:pointer;
-    overflow: hidden;
-    outline:none;
-    display: inline;
-    font-family: verdana;
-    margin: 4px 2px;
-    padding: 5px ;
-    text-align: center;
-    font-size: 16px;
-    border-radius: 12px;
 }
 
 .range {
@@ -86,6 +55,7 @@
 }
 .ButtonDropdown-DropdwonToggle{
     color: rgb(73, 67, 67);
+    background: white;
 }
 .addform {
     position:static;
@@ -94,17 +64,16 @@
 .Search {
     text-align: left;
     padding: 1em;
-    margin: 1em;
-    border: 2px solid #d3d3d3;
-    border-radius: .5em;
+    border: 1px solid #d3d3d3;
     vertical-align: middle;
-    margin-left: auto;
-    margin-right: auto;
-    width: 1000px;
     margin-top: 20px;
+    background: white;
 }
 
-.ButtonDropdown-DropdwonToggle{
-    font-family: verdana;
-   
+body {
+    font-family: Arial, Helvetica, sans-serif !important;
+}
+
+.Search button, .Search .input-group{
+    margin: 10px 0;
 }
