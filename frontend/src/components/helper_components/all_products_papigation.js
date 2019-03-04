@@ -244,99 +244,89 @@ export default class ProductsResults extends React.PureComponent {
     render() {
         const { currentPage } = this.state;
         return ( 
-            <div>
-                <br></br>
-                <br></br>
-                <br></br>
-                <Alert color="danger" isOpen={this.state.noproducts===true}>Δεν έχει επιλεχθεί κανένα προϊόν.</Alert> 
-                <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά. {this.state.error_message}</Alert>
-                <Alert color="danger" isOpen={this.state.not_found===true}>{this.state.message}</Alert>
-                
-                <Form>
-                    <Row >
-                        <Col>
-                            <FormGroup>
+            <Row>
+                <Col className="sidebar" md="3">
+                    <Form>
+                        <FormGroup>
                             <Label for="sort">Ταξινόμηση κατά:</Label>
                             <SortDropdown ref="sort" click={this.sortChoose}/>
                             </FormGroup>
-                    </Col>
-                    <Col >
-                    <FormGroup>
-                        <Label for="status">Προϊόντα προς εμφάνιση:</Label>
-                        <StatusDropdown ref="status" click={this.statusChoose}/>
-                        </FormGroup>
-                    </Col>
-                    <Col>
+                        <FormGroup>
+                            <Label for="status">Προϊόντα προς εμφάνιση:</Label>
+                            <StatusDropdown ref="status" click={this.statusChoose}/>
+                            </FormGroup>
                         <FormGroup>
                             <Label for="count">Προϊόντα ανά σελίδα:</Label>
                             <CountDropdown ref="count" click={this.countChoose}/>
                         </FormGroup>
-                    </Col>
-                    <Col>
-                        <FormGroup>
-                            <br></br>
-                            <Button onClick={this.search}> Αναζήτηση τιμών επιλεγμένων προϊόντων</Button>
-                        </FormGroup>
-                    </Col>
-                    </Row>
                     </Form>
-                    <br></br>
-                {!this.state.ready
-                ?<div> Loading... {this.state.ready} </div>
-                :<div>
-                {this.dataSet.length > 0
-                ? <React.Fragment>   
-                    <Table hover>
-                        <thead>
-                            <tr>
-                                <th>Όνομα Προϊόντος</th>
-                                <th>Κατηγορία</th>
-                                <th>Μάρκα</th>
-                                <th>Όγκος</th>
-                                <th>Χαρακτηριστικά</th>
-                                <th>Κατάσταση</th>
-                                <th>Περιγραφή</th>
-                            </tr>
-                        </thead>
-                        {this.dataSet.map((data, i) => 
-                        <tbody className="data-slice" key={i}>
-                            {data}
-                        </tbody>
+                </Col>
+                <Col md="9">
+                    <FormGroup>
+                        <Button className="btn-block" onClick={this.search}> Αναζήτηση τιμών επιλεγμένων προϊόντων</Button>
+                    </FormGroup>
+                    <Alert color="danger" isOpen={this.state.noproducts===true}>Δεν έχει επιλεχθεί κανένα προϊόν.</Alert> 
+                    <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά. {this.state.error_message}</Alert>
+                    <Alert color="danger" isOpen={this.state.not_found===true}>{this.state.message}</Alert>
+                    
+                        <br></br>
+                    {!this.state.ready
+                    ?<div> Loading... {this.state.ready} </div>
+                    :<div>
+                    {this.dataSet.length > 0
+                    ? <React.Fragment>   
+                        <Table hover>
+                            <thead>
+                                <tr>
+                                    <th>Όνομα Προϊόντος</th>
+                                    <th>Κατηγορία</th>
+                                    <th>Μάρκα</th>
+                                    <th>Όγκος</th>
+                                    <th>Χαρακτηριστικά</th>
+                                    <th>Κατάσταση</th>
+                                    <th>Περιγραφή</th>
+                                </tr>
+                            </thead>
+                            {this.dataSet.map((data, i) => 
+                            <tbody className="data-slice" key={i}>
+                                {data}
+                            </tbody>
 
-                        )}
-                    </Table>
-                    <div className="pagination-wrapper">          
-                        <Pagination aria-label="Page navigation example">            
-                            <PaginationItem disabled={currentPage <= 0}>              
-                                <PaginationLink
-                                    onClick={e => this.handleClick(e, currentPage - 1)}
-                                    previous
-                                    href="#"
-                                />              
-                            </PaginationItem>
-                            {[...Array(this.pagesCount)].map((page, i) => 
-                                <PaginationItem active={i === currentPage} key={i}>
-                                    <PaginationLink onClick={e => this.handleClick(e, i)} href="#">
-                                        {i + 1}
-                                    </PaginationLink>
-                                </PaginationItem>
                             )}
-                            <PaginationItem disabled={currentPage >= this.pagesCount - 1}>
-                                <PaginationLink
-                                    onClick={e => this.handleClick(e, currentPage + 1)}
-                                    next
-                                    href="#"
-                                />
-                            </PaginationItem>
-                        </Pagination>
-                    </div>
-                </React.Fragment>
-                : <div>Δε βρέθηκαν αποτελέσματα.</div>
+                        </Table>
+                        <div className="pagination-wrapper">          
+                            <Pagination aria-label="Page navigation example">            
+                                <PaginationItem disabled={currentPage <= 0}>              
+                                    <PaginationLink
+                                        onClick={e => this.handleClick(e, currentPage - 1)}
+                                        previous
+                                        href="#"
+                                    />              
+                                </PaginationItem>
+                                {[...Array(this.pagesCount)].map((page, i) => 
+                                    <PaginationItem active={i === currentPage} key={i}>
+                                        <PaginationLink onClick={e => this.handleClick(e, i)} href="#">
+                                            {i + 1}
+                                        </PaginationLink>
+                                    </PaginationItem>
+                                )}
+                                <PaginationItem disabled={currentPage >= this.pagesCount - 1}>
+                                    <PaginationLink
+                                        onClick={e => this.handleClick(e, currentPage + 1)}
+                                        next
+                                        href="#"
+                                    />
+                                </PaginationItem>
+                            </Pagination>
+                        </div>
+                    </React.Fragment>
+                    : <div>Δε βρέθηκαν αποτελέσματα.</div>
+                    }
+                </div>
                 }
-            </div>
-            }
-          
-        </div>
+            
+          </Col>
+        </Row>
     );
   }  
 }
