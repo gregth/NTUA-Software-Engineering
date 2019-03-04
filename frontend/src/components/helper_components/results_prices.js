@@ -6,7 +6,6 @@ import { getLocation } from '../functions/current_location';
 import MapClass from '../helper_components/map_price';
 import ProductInfo from '../helper_components/product_info';
 import ShopInfo from '../helper_components/shop_info';
-import { Card, Button, CardHeader, CardFooter, CardBody, CardTitle, CardText, CardDeck } from 'reactstrap';
 
 export default class PricesTable extends React.PureComponent {
     constructor(props) {
