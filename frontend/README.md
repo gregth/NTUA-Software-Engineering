@@ -11,9 +11,9 @@
    
 ## Start the app
 
-1. In order not to have any problem with HTTPS security, **brefore running the frontend** run the following command in the browser's search bar and continue ignoring the warnings brefore running the frontend.
+1. In order not to have any problem with HTTPS security, **brefore running the frontend** write the following url in the browser's search bar and continue ignoring the warnings brefore running the frontend.
    ```
-   brefore running the frontend
+   https://localhost:8765/observatory/api/products
    ```
    
 2. From within the **frontend** directory, run:
