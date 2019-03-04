@@ -208,7 +208,7 @@ export default class PapigationShops extends React.PureComponent {
     const { currentPage } = this.state;
     return (    
         <Row>
-            <Col md="3">
+            <Col className="sidebar" md="3">
                 <Form>
                     <FormGroup>
                         <Label for="sort">Ταξινόμηση κατά:</Label>
