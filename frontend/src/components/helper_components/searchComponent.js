@@ -114,7 +114,9 @@ export class Search extends Component {
                             <Input id="search_tags" placeholder="Αναζήτηση με χαρακτηριστικά..." name="tags" onChange={this.handleChange} value={this.state.tags ? this.state.tags : ''}></Input>
                             <Categories id="categ_ex" ref='search_category' default={this.props.params ? this.props.params.category : null}/>
                             <InputGroupAddon addonType="append">
-                                <Button className="btn btn-default" id="search_btn" onClick={this.handleSubmit}>search</Button>
+                                <Button className="btn btn-default" id="search_btn" onClick={this.handleSubmit}>
+                                    Αναζήτηση
+                                </Button>
                             </InputGroupAddon>
                         </InputGroup>
                         <FormText>Διαχωρισμός χαρακτηριστικών με κόμμα (,)</FormText>
@@ -147,12 +149,10 @@ export class Search extends Component {
                     </Col>
                     <Col>
                         <span class="text-justify">Άλλα Φίλτρa</span>
-                        <div class="input-group">
                             <InputGroup class="form-control" id="dist">
                                 <Input placeholder="Απόσταση" type="text" id="search_geodist" pattern="[0-9]+" name="geodist" onChange={this.handleChange} value={this.state.geodist ? this.state.geodist : ''}/>
                                 <InputGroupAddon addonType="append">km</InputGroupAddon>
                             </InputGroup>
-                        </div>
                         <div class="input-group">
                             <span>Τιμή:</span>
                             <Range range={this.state.price} id="maxp" updateRange={this.updateRange}/>
