@@ -118,7 +118,7 @@ class Login extends React.Component {
                     <Form id="login" onSubmit={this.handleSubmit}>
                         <FormGroup check row>
                             <Label for="username" sm={3}> <FontAwesomeIcon icon={faUser} /> {' '} Όνομα Χρήστη: </Label>
-                            <Col sm={3}>
+                            <Col sm={8}>
                                 <Input id="username" name="username" pattern="[A-Za-z0-9_]+" type="text" required/>
                             </Col>
                         </FormGroup>
