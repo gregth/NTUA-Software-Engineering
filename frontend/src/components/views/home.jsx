@@ -3,8 +3,6 @@ import { browserHistory } from 'react-router';
 import { Container, Alert, Row } from 'reactstrap';
 import Search from '../helper_components/searchComponent';
 import NavBarClass from '../helper_components/navbar';
-import ReactPlayer from 'react-player';
-
 
 class SearchPage extends Component {
     constructor(props) {
@@ -44,7 +42,7 @@ class SearchPage extends Component {
                 <NavBarClass/>
                 <div className="header">
                 </div>
-                <Container>
+                <Container className="home">
                     <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά.</Alert>
                     <Search ref="search" handle={this.handleSubmit} params={[]}/>
                 </Container>

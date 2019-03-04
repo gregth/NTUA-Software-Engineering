@@ -108,9 +108,9 @@ export class Search extends Component {
         curr.setUTCDate(curr.getDate());
         var date = curr.toISOString().substr(0,10);
         return ( 
-            <div class="group_search">
+            <div class="group_search" >
                 <Form>
-                        <InputGroup>
+                        <InputGroup id="home-search">
                             <Input id="search_tags" placeholder="Αναζήτηση με χαρακτηριστικά..." name="tags" onChange={this.handleChange} value={this.state.tags ? this.state.tags : ''}></Input>
                             <Categories id="categ_ex" ref='search_category' default={this.props.params ? this.props.params.category : null}/>
                             <InputGroupAddon addonType="append">
@@ -148,7 +148,7 @@ export class Search extends Component {
                         </div>
                     </Col>
                     <Col>
-                        <span class="text-justify">Άλλα Φίλτρa</span>
+                        <span class="text-justify">Άλλα Φίλτρα</span>
                             <InputGroup class="form-control" id="dist">
                                 <Input placeholder="Απόσταση" type="text" id="search_geodist" pattern="[0-9]+" name="geodist" onChange={this.handleChange} value={this.state.geodist ? this.state.geodist : ''}/>
                                 <InputGroupAddon addonType="append">km</InputGroupAddon>
