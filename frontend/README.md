@@ -25,3 +25,4 @@
    ```
    HTTPS=true npm start
    ```
+   After the ```npm start``` command, a browser tab will open and you must select "proceed" in the warning about security.
