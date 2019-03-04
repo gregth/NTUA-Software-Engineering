@@ -4,6 +4,7 @@ import { Button, Alert } from 'reactstrap';
 import PricesTable from '../helper_components/results_prices';
 import Search from '../helper_components/searchComponent';
 import NavBarClass from '../helper_components/navbar';
+import { Container, Row } from 'reactstrap';
 
 class Results extends Component {
     constructor(props) {
@@ -72,13 +73,14 @@ class Results extends Component {
         return (
             <div>
                 <NavBarClass/>
-                <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά.</Alert>
-                
-                <Button onClick={this.homepage}>Νέα αναζήτηση</Button>
-                
-                <Search ref="search" params={this.state.search} handle={this.handleSubmit}/>
+                <div className="header">
+                </div>
+                <Container>
+                    <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά.</Alert>
+                    <Search ref="search" handle={this.handleSubmit} params={[]}/>
+                    <PricesTable ref="result" params={this.state.search} shops={this.state.shops} products={this.state.products}/>
+                </Container>
 
-                <PricesTable ref="result" params={this.state.search} shops={this.state.shops} products={this.state.products}/>
 
             </div>
         );
