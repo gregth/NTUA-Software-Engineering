@@ -6,6 +6,7 @@ import { getLocation } from '../functions/current_location';
 import MapClass from '../helper_components/map_price';
 import ProductInfo from '../helper_components/product_info';
 import ShopInfo from '../helper_components/shop_info';
+import { Card, Button, CardHeader, CardFooter, CardBody, CardTitle, CardText, CardDeck } from 'reactstrap';
 
 export default class PricesTable extends React.PureComponent {
     constructor(props) {
@@ -216,6 +217,66 @@ export default class PricesTable extends React.PureComponent {
                 :<div>
                 {this.dataSet.length > 0
                 ?<React.Fragment>   
+                    <div>
+                    <CardDeck>
+                    <Card>
+                        <CardHeader>Header</CardHeader>
+                        <CardBody>
+                        <CardTitle>Special Title Treatment</CardTitle>
+                        <CardText>With supporting text below as a natural lead-in to additional content.</CardText>
+                        <Button>Go somewhere</Button>
+                        </CardBody>
+                        <CardFooter>Footer</CardFooter>
+                    </Card>
+                    <Card>
+                        <CardHeader>Header</CardHeader>
+                        <CardBody>
+                        <CardTitle>Special Title Treatment</CardTitle>
+                        <CardText>With supporting text below as a natural lead-in to additional content.</CardText>
+                        <Button>Go somewhere</Button>
+                        </CardBody>
+                        <CardFooter>Footer</CardFooter>
+                    </Card>
+                    <Card>
+                        <CardHeader>Header</CardHeader>
+                        <CardBody>
+                        <CardTitle>Special Title Treatment</CardTitle>
+                        <CardText>With supporting text below as a natural lead-in to additional content.</CardText>
+                        <Button>Go somewhere</Button>
+                        </CardBody>
+                        <CardFooter>Footer</CardFooter>
+                    </Card>
+                    <Card>
+                        <CardHeader>Header</CardHeader>
+                        <CardBody>
+                        <CardTitle>Special Title Treatment</CardTitle>
+                        <CardText>With supporting text below as a natural lead-in to additional content.</CardText>
+                        <Button>Go somewhere</Button>
+                        </CardBody>
+                        <CardFooter>Footer</CardFooter>
+                    </Card>
+                    <Card>
+                        <CardHeader>Header</CardHeader>
+                        <CardBody>
+                        <CardTitle>Special Title Treatment</CardTitle>
+                        <CardText>With supporting text below as a natural lead-in to additional content.</CardText>
+                        <Button>Go somewhere</Button>
+                        </CardBody>
+                        <CardFooter>Footer</CardFooter>
+                    </Card>
+
+                    <Card>
+                        <CardHeader tag="h3">Featured</CardHeader>
+                        <CardBody>
+                        <CardTitle>Special Title Treatment</CardTitle>
+                        <CardText>With supporting text below as a natural lead-in to additional content.</CardText>
+                        <Button>Go somewhere</Button>
+                        </CardBody>
+                        <CardFooter className="text-muted">Footer</CardFooter>
+                    </Card></CardDeck>
+                    </div>
+
+
                     <Table hover>
                         <thead>
                             <tr>

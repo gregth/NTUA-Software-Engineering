@@ -215,30 +215,22 @@ export default class PapigationShops extends React.PureComponent {
             <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά. {this.state.error_message}</Alert>
             <Alert color="danger" isOpen={this.state.not_found===true}>{this.state.message}</Alert>
             <Form>
-                    <Row >
-                        <Col>
-                            <FormGroup>
-                            <Label for="sort">Ταξινόμηση κατά:</Label>
-                            <SortDropdown ref="sort" click={this.sortChoose}/>
-                            </FormGroup>
+                <Row className="filters_section">
+                    <Col>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Ταξινόμηση κατά:</span>
+                            </div>
+                            <SortDropdown class="form-control" ref="sort" click={this.sortChoose}/>
+                        </div>
                     </Col>
                     <Col >
-                    <FormGroup>
-                        <Label for="status">Καταστήματα προς εμφάνιση:</Label>
-                        <StatusDropdown ref="status" click={this.statusChoose}/>
-                        </FormGroup>
-                    </Col>
-                    <Col>
-                        <FormGroup>
-                            <Label for="count">Καταστήματα ανά σελίδα:</Label>
-                            <CountDropdown ref="count" click={this.countChoose}/>
-                        </FormGroup>
-                    </Col>
-                    <Col>
-                        <FormGroup>
-                            <br></br>
-                            <Button onClick={this.search}> Αναζήτηση τιμών επιλεγμένων καταστημάτων </Button>
-                        </FormGroup>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Καταστήματα προς εμφάνιση:</span>
+                            </div>
+                            <StatusDropdown ref="status" click={this.statusChoose}/>
+                        </div>
                     </Col>
                     </Row>
                     </Form>
@@ -248,6 +240,16 @@ export default class PapigationShops extends React.PureComponent {
             : <div>
                 {this.dataSet.length >0
                 ?<React.Fragment> 
+                    <Row className="shops_page_buttons">
+                        <Col>
+                            <FormGroup>
+                                <Button className="btn-block" onClick={this.search}> Αναζήτηση τιμών επιλεγμένων καταστημάτων </Button>
+                            </FormGroup>
+                        </Col>
+                        <Col>
+                            <MapClass className="btn-block" shops={this.shops}/>
+                        </Col>
+                    </Row>
                     <Table hover>
                         <thead>
                             <tr>
@@ -290,8 +292,15 @@ export default class PapigationShops extends React.PureComponent {
                                 />
                             </PaginationItem>
                         </Pagination>
-                    </div>
-                    <MapClass shops={this.shops}/>
+                        <div class="pager">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Καταστήματα ανά σελίδα:</span>
+                                </div>
+                                <CountDropdown className="form-control" ref="count" click={this.countChoose}/>
+                            </div>
+                        </div>
+                        </div>
                 </React.Fragment>
                 : <div> Δε βρέθηκαν αποτελέσματα. </div>
                 }
