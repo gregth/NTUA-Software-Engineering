@@ -14,7 +14,7 @@
 import React, { Component } from "react";
 import { browserHistory } from 'react-router';
 import PapigationShops from '../helper_components/all_shops_papigation';
-import { Alert } from 'reactstrap';
+import { Alert, Container } from 'reactstrap';
 import Delete from '../helper_components/delete';
 import NavBarClass from '../helper_components/navbar';
 
@@ -58,9 +58,12 @@ export class AllShops extends Component {
         return (
             <div>
                 <NavBarClass/>
-                <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά.</Alert>
-                <PapigationShops ref='result' data={this.state.shops} delete={this.delete} edit={this.edit} />
-                <Delete ref='delete' back={this.delete_complete} category="shop" id={this.id} name={this.name}/>
+                <div className="header"></div>
+                <Container>
+                    <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά.</Alert>
+                    <PapigationShops ref='result' data={this.state.shops} delete={this.delete} edit={this.edit} />
+                    <Delete ref='delete' back={this.delete_complete} category="shop" id={this.id} name={this.name}/>
+                </Container>
             </div>
         );
     }
