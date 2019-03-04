@@ -227,9 +227,6 @@ export default class PapigationShops extends React.PureComponent {
                 </Form>
             </Col>
             <Col md="9">
-                <Alert color="danger" isOpen={this.state.noshops===true}>Δεν έχει επιλεχθεί κανένα κατάστημα.</Alert>
-                <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά. {this.state.error_message}</Alert>
-                <Alert color="danger" isOpen={this.state.not_found===true}>{this.state.message}</Alert>
                 {!this.state.ready
                 ?<div> Loading... </div>
                 : <div>
@@ -245,7 +242,11 @@ export default class PapigationShops extends React.PureComponent {
                                 <MapClass className="btn-block" shops={this.shops}/>
                             </Col>
                         </Row>
+                        <Alert color="danger" isOpen={this.state.noshops===true}>Δεν έχει επιλεχθεί κανένα κατάστημα.</Alert>
+                        <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά. {this.state.error_message}</Alert>
+                        <Alert color="danger" isOpen={this.state.not_found===true}>{this.state.message}</Alert>
                         <div class="main-content">
+
                         <Table hover>
                             <thead>
                                 <tr>
