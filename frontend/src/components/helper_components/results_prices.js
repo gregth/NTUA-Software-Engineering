@@ -211,18 +211,6 @@ export default class PricesTable extends React.PureComponent {
                 <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά. {this.state.error_message}</Alert>
                 <Alert color="danger" isOpen={this.state.not_found===true}>{this.state.message}</Alert>
                 
-                <Table borderless>
-                    <thead>
-                        <tr>
-                            <th>Προϊόντα ανά σελίδα:</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><CountDropdown ref="count" click={this.countChoose}/></td>
-                        </tr>
-                    </tbody>
-                </Table>
                 {!this.state.ready || !this.dataSet
                 ?<div> Loading... </div>
                 :<div>
@@ -273,6 +261,14 @@ export default class PricesTable extends React.PureComponent {
                                 />
                             </PaginationItem>
                         </Pagination>
+                        <div class="pager">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Προϊόντα ανά σελίδα:</span>
+                                </div>
+                                <CountDropdown className="form-control" ref="count" click={this.countChoose}/>
+                            </div>
+                        </div>
                     </div>
                 </React.Fragment>
                 : <div>Δε βρέθηκαν αποτελέσματα.</div>
