@@ -41,11 +41,11 @@ export default class SortDropdown extends React.Component {
     render() {
         return ( 
             <div>
-                <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-                    <DropdownToggle caret>
+                <Dropdown className="btn-block" isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+                    <DropdownToggle className="btn-block" caret>
                         {this.state.dropDownValue}
                     </DropdownToggle>
-                    <DropdownMenu right>
+                    <DropdownMenu>
                         {options.map(option => (
                             <DropdownItem onClick={this.changeValue} value={option.value} key={option.value}>
                                 {option.name}

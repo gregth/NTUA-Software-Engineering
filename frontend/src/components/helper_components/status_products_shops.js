@@ -47,10 +47,10 @@ export default class StatusDropdown extends React.Component {
         return ( 
             <div>
                 <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-                    <DropdownToggle caret>
+                    <DropdownToggle className="btn-block" caret>
                         {this.state.dropDownValue}
                     </DropdownToggle>
-                    <DropdownMenu right>
+                    <DropdownMenu className="btn-blk">
                         {options.map(option => (
                             <DropdownItem onClick={this.changeValue} value={option.value} key={option.value}>
                                 {option.name}
