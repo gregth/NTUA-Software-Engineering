@@ -191,23 +191,21 @@ class Shop extends React.Component {
                 <Form id="new_shop" onSubmit={this.handleSubmit}>                     
                     <FormGroup check row>
                         <Label sm={6} for="name">Όνομα Καταστήματος:</Label>
-                        <Col sm={3}>
+                        <Col sm={8}>
                             <Input id="new_shop_name" name="name" type="text" required/>
                         </Col>
                     </FormGroup>
                     <div className="row mt-3"></div>
-                    <FormGroup check>
-                        <Label check>
-                        <Col sm={9}>
+                    <FormGroup check row>
+                        <Container className="Map1">
+                            <Label check > Tωρινή Τοποθεσία
                             <Input type="checkbox" name="location" id="new_shop_location" onChange={() => this.currentLocation()} />{' '}
-                        </Col>  
-                            Tωρινή Τοποθεσία
-                        </Label>
-                       
+                            </Label>
+                        </Container>
                     </FormGroup>
                     <FormGroup check row>
                         <Label sm={3} for="address">Διεύθυνση:</Label>
-                        <Col sm={3}>
+                        <Col sm={8}>
                             <Input invalid={this.state.error_address} valid={false} id="new_shop_address" name="address" type="text" disabled={this.state.flag} required/>
                             <FormFeedback valid={!this.state.error_address}>Η διεύθυνση δεν είναι έγκυρη.</FormFeedback>
                         </Col>
@@ -215,14 +213,14 @@ class Shop extends React.Component {
 
                     <FormGroup check row>
                         <Label sm={3} for="number">Αριθμός:</Label>
-                        <Col sm={1}>
+                        <Col sm={2}>
                             <Input invalid={this.state.error_address} type="text" id="new_shop_number" pattern="[0-9]+" disabled={this.state.flag} required/>
                         </Col>
                     </FormGroup>
 
                     <FormGroup check row>
                         <Label sm={3} for="postal">ΤΚ/Περιοχή:</Label>
-                        <Col sm={2}>
+                        <Col sm={4}>
                             <Input invalid={this.state.error_address} id="new_shop_postal" name="postal" type="text" disabled={this.state.flag} required/>
                         </Col>
                     </FormGroup>
@@ -237,7 +235,7 @@ class Shop extends React.Component {
                     
                     <FormGroup check row>
                         <Label sm={6} for="phone">Τηλέφωνο Καταστήματος:</Label>
-                        <Col sm={2}>
+                        <Col sm={6}>
                             <Input type="tel" id="new_shop_phone" name="phone" invalid={this.state.checkPhone===false} valid={this.state.checkPhone} onChange={() => this.validatePhone()}/>
                         </Col>
                     </FormGroup>

@@ -310,36 +310,33 @@ class Product extends React.Component {
                             <Label sm={3} for="addprice_barcode" className="mr-sm-2">Barcode Προϊόντος:</Label>
                             {this.flag
                             ? 
-                            <Col sm={3}>
+                            <Col sm={8}>
                                 <Input id="addprice_barcode" name="barcode" pattern="[0-9]{1,128}" type="text" defaultValue={this.barcode} disabled required/>
                             </Col>
                             :
-                            <Col sm={3}>
+                            <Col sm={8}>
                                 <Input id="addprice_barcode" name="barcode" pattern="[0-9]{1,128}" type="text" required/>
                             </Col>
                             }
                         </FormGroup>
                         <div className="row mt-3"></div>
-                        <FormGroup check>
-                        <Label check>
-                        <Col sm={9}>
-                            <Input type="checkbox" name="location" id="addprice_location" onChange={() => this.currentLocation()}/>      
-                        </Col>
-                            Τωρινή Τοποθεσία
-                        </Label>
-
-                    
+                        <FormGroup check row>
+                            <Container className="Map1">
+                                <Label check> Τωρινή Τοποθεσία
+                                    <Input type="checkbox" name="location" id="addprice_location" onChange={() => this.currentLocation()}/>      
+                                </Label>
+                            </Container>
                         </FormGroup>    
                         <FormGroup check row>
                             <Label sm={8} for="addprice_name">Όνομα Καταστήματος:</Label>
-                            <Col sm={3}>
+                            <Col sm={8}>
                                 <Input id="addprice_name" name="name" type="text" disabled={this.state.flag}/>
                             </Col>
                         </FormGroup>
                         
                         <FormGroup check row>
                             <Label sm={3} for="addprice_address">Διεύθυνση:</Label>
-                            <Col sm={3}>
+                            <Col sm={8}>
                                 <Input id="addprice_address" invalid={this.state.error_address} name="address" type="text" disabled={this.state.flag} required/>
                                 <FormFeedback valid={!this.state.error_address}>Η διεύθυνση δεν είναι έγκυρη.</FormFeedback>
                             </Col>
@@ -347,21 +344,21 @@ class Product extends React.Component {
         
                         <FormGroup check row>
                                 <Label sm={3} for="addprice_number">Αριθμός:</Label>
-                                <Col sm={1}>
+                                <Col sm={2}>
                                     <Input id="addprice_number" invalid={this.state.error_address} name="number" type="text" disabled={this.state.flag} required/>
                             </Col>
                         </FormGroup>
                       
                         <FormGroup check row>
                             <Label sm={3} for="addprice_postal">ΤΚ/Περιοχή:</Label>
-                                <Col sm={2}>
+                                <Col sm={4}>
                                 <Input id="addprice_postal" invalid={this.state.error_address} name="postal" type="text" disabled={this.state.flag} required/>
                                 </Col>
                                 </FormGroup>
   
                         <FormGroup check row>
                             <Label sm={3} for="addprice_price">Τιμή:</Label>
-                            <Col sm={3}>
+                            <Col sm={2}>
                                 <InputGroup>
                                     <Input type="text" id="addprice_price" pattern="[0-9]+" name="price" required/>
                                     <InputGroupAddon addonType="append">€</InputGroupAddon>
@@ -370,14 +367,14 @@ class Product extends React.Component {
                         </FormGroup>
                         <FormGroup check row>
                             <Label sm={8} for="dateFrom">Ημερομηνία παρατήρησης:</Label>
-                            <Col sm={2}>
+                            <Col sm={4}>
                                 <Input id="dateFrom" type="date" name="dateFrom" defaultValue={date} min={min_date} max={date} required/>
                             </Col>
                         </FormGroup>
                         
                         <FormGroup check row>
                             <Label sm={8} for="dateTo">Ημερομηνία λήξης τιμής:</Label>
-                            <Col sm={2}>
+                            <Col sm={4}>
                                 <Input id="dateTo" type="date" name="dateTo" min={date} defaultValue={date} required/>
                             </Col>
                         </FormGroup>
