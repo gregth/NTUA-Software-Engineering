@@ -4,11 +4,12 @@ import ReactDom from 'react-dom';
 import { Router, browserHistory } from 'react-router';
 import routes from './routes';
 
-import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.css';
 
 require('./stylesheets/base.scss');
 require('./stylesheets/register.scss');
 require('./stylesheets/search.scss');
+require('./stylesheets/bootstrap.min.css');
 require('./stylesheets/bootstrap.scss');
 require('./stylesheets/login.scss');
 require('./stylesheets/addshop.scss');
