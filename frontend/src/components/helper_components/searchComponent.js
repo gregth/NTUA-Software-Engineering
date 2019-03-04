@@ -127,9 +127,9 @@ export class Search extends Component {
                 <Row >
                     <Col>
                         <span class="text-justify">Ταξινόμηση</span>
+                        <SortPrice ref="sort_price" id="sort_p" default={this.props.params ? this.props.params.sort_price : null}/>
                         <SortDistance ref="sort_distance" id="sort_dist" default={this.props.params ? this.props.params.sort_distance : null}/>
                         <SortDate ref="sort_date" id="sort_date" default={this.props.params ? this.props.params.sort_date : null}/>
-                        <SortPrice ref="sort_price" id="sort_p" default={this.props.params ? this.props.params.sort_price : null}/>
                     </Col>
                     
                     <Col>
