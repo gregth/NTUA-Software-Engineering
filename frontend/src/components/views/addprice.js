@@ -17,7 +17,7 @@ class Product extends React.Component {
         this.state = { error_message: null, not_found2: null, message2: null, 
                     flag: false, success: null, error: null, current: null, 
                     nearby_shops: false, error_address: null, not_found: null, 
-                    message: null, fail: null };
+                    message: null, fail: null, success_add: null };
         this._isMounted = null;
         this.handleSubmit = this.handleSubmit.bind(this);
         this.homepage = this.homepage.bind(this);
@@ -126,7 +126,7 @@ class Product extends React.Component {
     }
     
     async find_shop () {
-        this.setState({success: null, error: null, not_found: null, message: null, error_message: null, not_found2: null, message2: null });
+        this.setState({success: null, error: null, not_found: null, message: null, error_message: null, not_found2: null, message2: null, success_add: null });
         var lng = null;
         var lat = null;
         
@@ -219,7 +219,7 @@ class Product extends React.Component {
             }
 
             if (answer.status === 200) {
-                this.setState({success: true});
+                this.setState({success_add: true});
             }
             else if (answer.status === 404) {
                 this.setState({message: 'Error 404 - Not Found', not_found: true});
@@ -382,7 +382,7 @@ class Product extends React.Component {
                     </ModalFooter>
                 </Modal>
 
-                <Modal isOpen={this.state.success}>
+                <Modal isOpen={this.state.success_add}>
                     <ModalBody> Η τιμή καταχωρήθηκε επιτυχώς.</ModalBody>
                     <ModalFooter>
                         <Button color="secondary" onClick={this.homepage}>Αρχική Σελίδα</Button>

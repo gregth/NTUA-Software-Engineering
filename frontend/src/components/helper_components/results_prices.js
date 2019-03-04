@@ -72,14 +72,14 @@ export default class PricesTable extends React.PureComponent {
             if (this.props.params.dateto) {
                 params.push('dateTo='+ this.props.params.dateto);
             }
-            if (this.props.params.sort_distance) {
-                params.push('sort='+ this.props.params.sort_distance);
-            }
             if (this.props.params.sort_price) {
                 params.push('sort='+ this.props.params.sort_price);
             }
             if (this.props.params.sort_date) {
                 params.push('sort='+ this.props.params.sort_date);
+            }
+            if (this.props.params.sort_distance) {
+                params.push('sort='+ this.props.params.sort_distance);
             }
             if (this.props.params.tags) {
                 for (i=0; i<this.props.params.tags.length; i++) {

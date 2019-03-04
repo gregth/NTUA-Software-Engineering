@@ -122,8 +122,8 @@ export class Search extends Component {
                     </Col>
                     <Col >
                         <FormGroup>
-                            <Label for="sort_dist">Ταξινόμηση απόστασης:</Label>
-                            <SortDistance ref="sort_distance" id="sort_dist" default={this.props.params ? this.props.params.sort_distance : null}/>
+                            <Label for="sort_p">Ταξινόμηση τιμής:</Label>
+                            <SortPrice ref="sort_price" id="sort_p" default={this.props.params ? this.props.params.sort_price : null}/>
                         </FormGroup>
                     </Col>
                     <Col >
@@ -134,8 +134,8 @@ export class Search extends Component {
                     </Col>
                     <Col >
                         <FormGroup>
-                            <Label for="sort_p">Ταξινόμηση τιμής:</Label>
-                            <SortPrice ref="sort_price" id="sort_p" default={this.props.params ? this.props.params.sort_price : null}/>
+                            <Label for="sort_dist">Ταξινόμηση απόστασης:</Label>
+                            <SortDistance ref="sort_distance" id="sort_dist" default={this.props.params ? this.props.params.sort_distance : null}/>
                         </FormGroup>
                     </Col>
                 </Row> 
