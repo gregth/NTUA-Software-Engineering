@@ -5,6 +5,7 @@ import Search from '../helper_components/searchComponent';
 import NavBarClass from '../helper_components/navbar';
 import ReactPlayer from 'react-player';
 
+
 class SearchPage extends Component {
     constructor(props) {
         super(props);

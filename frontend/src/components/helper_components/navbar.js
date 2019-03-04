@@ -15,7 +15,6 @@ class NavBarClass extends React.Component {
         this.homepage = this.homepage.bind(this);
         this.login = this.login.bind(this);
         this.register = this.register.bind(this);
-        this.about = this.about.bind(this);
         this.toggle = this.toggle.bind(this);
         this.state = {
             dropdownOpen: false
@@ -54,9 +53,7 @@ class NavBarClass extends React.Component {
         browserHistory.push('/addshop');
     }
     
-    about () {
-        browserHistory.push('/aboutus');
-    }
+ 
     
     toggle() {
         this.setState({
@@ -113,6 +110,7 @@ class NavBarClass extends React.Component {
                     }
                     {Boolean(cookie.load('loggedin'))
                     ? <NavItem><Settings/></NavItem>
+                    
                     : null
                     }
                 </Nav>
