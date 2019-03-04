@@ -82,15 +82,15 @@ class NavBarClass extends React.Component {
                     <NavItem>
                         <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
                             <DropdownToggle caret style={{backgroundColor: '#f1f1f1'}} color="transparent" outline>Προσθήκη</DropdownToggle>
-                            <DropdownMenu>
+                            <DropdownMenu right>
                                 <DropdownItem onClick={() => this.new_product()}>
-                                    Προσθήκη Νέου Προϊόντος
+                                    Νέο Προϊόν
                                 </DropdownItem>
                                 <DropdownItem onClick={() => this.new_shop()}>
-                                    Προσθήκη Νέου Καταστήματος
+                                    Νέο Κατάστήμα
                                 </DropdownItem>
                                 <DropdownItem onClick={() => this.newprice()}>
-                                    Προσθήκη Νέας Τιμής
+                                    Νέα Τιμή
                                 </DropdownItem>
                             </DropdownMenu>
                         </ButtonDropdown>
