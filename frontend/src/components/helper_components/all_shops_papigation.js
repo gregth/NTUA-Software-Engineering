@@ -245,6 +245,7 @@ export default class PapigationShops extends React.PureComponent {
                                 <MapClass className="btn-block" shops={this.shops}/>
                             </Col>
                         </Row>
+                        <div class="main-content">
                         <Table hover>
                             <thead>
                                 <tr>
@@ -263,6 +264,7 @@ export default class PapigationShops extends React.PureComponent {
 
                             )}
                         </Table>
+                            </div>
                         <div className="pagination-wrapper">          
                             <Pagination aria-label="Page navigation example">            
                                 <PaginationItem disabled={currentPage <= 0}>              

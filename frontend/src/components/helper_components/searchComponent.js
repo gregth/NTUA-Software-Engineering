@@ -121,7 +121,7 @@ export class Search extends Component {
                         </InputGroup>
                         <FormText>Διαχωρισμός χαρακτηριστικών με κόμμα (,)</FormText>
                 </Form> 
-                <Container className="Search filters_section">
+                <div class="Search filters_section">
                 <Form>
 
                 <Row >
@@ -162,7 +162,7 @@ export class Search extends Component {
 
                 <Button color="secondary" size="sm" block onClick={this.handleSubmit}>Εφαρμογή φίλτρων</Button>
                 </Form>
-                </Container>
+                </div>
             </div>
         );
     }

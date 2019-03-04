@@ -245,6 +245,7 @@ export default class ProductsResults extends React.PureComponent {
         const { currentPage } = this.state;
         return ( 
             <Row>
+                <React.Fragment>
                 <Col className="sidebar" md="3">
                     <Form>
                         <FormGroup>
@@ -268,13 +269,13 @@ export default class ProductsResults extends React.PureComponent {
                     <Alert color="danger" isOpen={this.state.noproducts===true}>Δεν έχει επιλεχθεί κανένα προϊόν.</Alert> 
                     <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά. {this.state.error_message}</Alert>
                     <Alert color="danger" isOpen={this.state.not_found===true}>{this.state.message}</Alert>
-                    
-                        <br></br>
                     {!this.state.ready
                     ?<div> Loading... {this.state.ready} </div>
                     :<div>
                     {this.dataSet.length > 0
-                    ? <React.Fragment>   
+                    ? 
+                    <React.Fragment>
+                    <div class="main-content">   
                         <Table hover>
                             <thead>
                                 <tr>
@@ -294,30 +295,31 @@ export default class ProductsResults extends React.PureComponent {
 
                             )}
                         </Table>
-                        <div className="pagination-wrapper">          
-                            <Pagination aria-label="Page navigation example">            
-                                <PaginationItem disabled={currentPage <= 0}>              
-                                    <PaginationLink
-                                        onClick={e => this.handleClick(e, currentPage - 1)}
-                                        previous
-                                        href="#"
-                                    />              
+                    </div>
+                    <div className="pagination-wrapper">          
+                        <Pagination aria-label="Page navigation example">            
+                            <PaginationItem disabled={currentPage <= 0}>              
+                                <PaginationLink
+                                    onClick={e => this.handleClick(e, currentPage - 1)}
+                                    previous
+                                    href="#"
+                                />              
+                            </PaginationItem>
+                            {[...Array(this.pagesCount)].map((page, i) => 
+                                <PaginationItem active={i === currentPage} key={i}>
+                                    <PaginationLink onClick={e => this.handleClick(e, i)} href="#">
+                                        {i + 1}
+                                    </PaginationLink>
                                 </PaginationItem>
-                                {[...Array(this.pagesCount)].map((page, i) => 
-                                    <PaginationItem active={i === currentPage} key={i}>
-                                        <PaginationLink onClick={e => this.handleClick(e, i)} href="#">
-                                            {i + 1}
-                                        </PaginationLink>
-                                    </PaginationItem>
-                                )}
-                                <PaginationItem disabled={currentPage >= this.pagesCount - 1}>
-                                    <PaginationLink
-                                        onClick={e => this.handleClick(e, currentPage + 1)}
-                                        next
-                                        href="#"
-                                    />
-                                </PaginationItem>
-                            </Pagination>
+                            )}
+                            <PaginationItem disabled={currentPage >= this.pagesCount - 1}>
+                                <PaginationLink
+                                    onClick={e => this.handleClick(e, currentPage + 1)}
+                                    next
+                                    href="#"
+                                />
+                            </PaginationItem>
+                        </Pagination>
                         </div>
                     </React.Fragment>
                     : <div>Δε βρέθηκαν αποτελέσματα.</div>
@@ -326,6 +328,7 @@ export default class ProductsResults extends React.PureComponent {
                 }
             
           </Col>
+        </React.Fragment>
         </Row>
     );
   }  
