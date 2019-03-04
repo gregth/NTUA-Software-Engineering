@@ -108,7 +108,7 @@ export class Search extends Component {
         curr.setUTCDate(curr.getDate());
         var date = curr.toISOString().substr(0,10);
         return ( 
-            <Container>
+            <div class="group_search">
                 <Form>
                         <InputGroup>
                             <Input id="search_tags" placeholder="Αναζήτηση με χαρακτηριστικά..." name="tags" onChange={this.handleChange} value={this.state.tags ? this.state.tags : ''}></Input>
@@ -163,7 +163,7 @@ export class Search extends Component {
                 <Button color="secondary" size="sm" block onClick={this.handleSubmit}>Εφαρμογή φίλτρων</Button>
                 </Form>
                 </Container>
-            </Container>
+            </div>
         );
     }
 };
