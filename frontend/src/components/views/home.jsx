@@ -1,10 +1,8 @@
 import React, {Component} from 'react';
 import { browserHistory } from 'react-router';
-import { Alert, Row } from 'reactstrap';
+import { Alert } from 'reactstrap';
 import Search from '../helper_components/searchComponent';
 import NavBarClass from '../helper_components/navbar';
-import ReactPlayer from 'react-player';
-
 
 class SearchPage extends Component {
     constructor(props) {
@@ -12,7 +10,6 @@ class SearchPage extends Component {
         this.state = {search: null, success: null, error: null, not_found: null};
         this.handleSubmit = this.handleSubmit.bind(this);
         this._isMounted = null;
-        this.url = "https://www.youtube.com/watch?v=1hvzLV274Rg";
     }
     
     componentWilldUnmount() {
@@ -48,12 +45,6 @@ class SearchPage extends Component {
                 <div className="header"><img src={"/logo_transparent.png"} alt="logo" /></div>
                 <br></br>
                 <Search ref="search" handle={this.handleSubmit} params={[]}/>
-                <Row className="justify-content-center">
-                    <ReactPlayer url={this.url} playing/>
-                </Row>
-
-            
-
             </div>
         );
     }
