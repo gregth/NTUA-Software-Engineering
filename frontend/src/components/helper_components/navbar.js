@@ -16,6 +16,7 @@ class NavBarClass extends React.Component {
         this.login = this.login.bind(this);
         this.register = this.register.bind(this);
         this.toggle = this.toggle.bind(this);
+        this.aboutus = this.aboutus.bind(this);
         this.state = {
             dropdownOpen: false
         };
@@ -53,7 +54,9 @@ class NavBarClass extends React.Component {
         browserHistory.push('/addshop');
     }
     
- 
+    aboutus () {
+        browserHistory.push('/aboutus');
+    }
     
     toggle() {
         this.setState({
@@ -95,7 +98,13 @@ class NavBarClass extends React.Component {
                     : null
                     }
                     
-                   
+                    {!Boolean(cookie.load('loggedin'))
+                    ? <NavItem>
+                        <NavLink onClick={() => this.aboutus()}> Σχετικά με μας </NavLink>
+                    </NavItem>
+                    : null
+                    }
+
                     {!Boolean(cookie.load('loggedin'))
                     ? <NavItem>
                         <NavLink onClick={() => this.login()}> Σύνδεση </NavLink>

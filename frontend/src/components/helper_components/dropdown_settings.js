@@ -84,6 +84,7 @@ export class Settings extends Component {
     about () {
         browserHistory.push('/aboutus');
     }
+    
     render() {
         return ( 
             <div>
