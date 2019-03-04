@@ -217,6 +217,7 @@ export default class PricesTable extends React.PureComponent {
                 :<div>
                 {this.dataSet.length > 0
                 ?<React.Fragment>   
+                    <div class="main-content">
                     <Table hover>
                         <thead>
                             <tr>
@@ -238,6 +239,7 @@ export default class PricesTable extends React.PureComponent {
 
                         )}
                     </Table>
+                    </div>
                     <div className="pagination-wrapper">          
                         <Pagination aria-label="Page navigation example">            
                             <PaginationItem disabled={currentPage <= 0}>              
@@ -270,7 +272,7 @@ export default class PricesTable extends React.PureComponent {
                                 <CountDropdown className="form-control" ref="count" click={this.countChoose}/>
                             </div>
                         </div>
-                    </div>
+                   </div>
                 </React.Fragment>
                 : <div>Δε βρέθηκαν αποτελέσματα.</div>
                 }
