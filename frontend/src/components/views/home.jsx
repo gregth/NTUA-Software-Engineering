@@ -41,9 +41,10 @@ class SearchPage extends Component {
         return (
             <div>
                 <NavBarClass/>
+                <div className="header">
+                </div>
                 <Container>
                     <Alert color="danger" isOpen={this.state.error===true}>Πρόβλημα με τη σύνδεση. Δοκιμάστε ξανά.</Alert>
-                    <div className="header"><img src={"/logo_transparent.png"} alt="logo" /></div>
                     <Search ref="search" handle={this.handleSubmit} params={[]}/>
                 </Container>
             </div>
