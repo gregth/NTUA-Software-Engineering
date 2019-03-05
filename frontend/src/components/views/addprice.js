@@ -360,7 +360,7 @@ class Product extends React.Component {
                             <Label sm={3} for="addprice_price">Τιμή:</Label>
                             <Col sm={2}>
                                 <InputGroup>
-                                    <Input type="text" id="addprice_price" pattern="[0-9]+" name="price" required/>
+                                    <Input type="text" id="addprice_price" pattern="[0-9]+([\.][0-9]([0-9])?)?" name="price" required/>
                                     <InputGroupAddon addonType="append">€</InputGroupAddon>
                                 </InputGroup>
                             </Col>
