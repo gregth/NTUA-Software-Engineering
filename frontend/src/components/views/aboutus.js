@@ -1,9 +1,3 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 import React, {Component} from 'react';
 import { Alert, Card, CardImg, CardBody,
   CardTitle, CardSubtitle, Container, CardDeck} from 'reactstrap';
@@ -24,7 +18,33 @@ class About extends Component {
                     <Container className="About">
                     <CardDeck>
                         <Card>
-                            <CardImg  width="260" height="260" src={"/athina.jpg"} alt="Card image cap" />
+                            <CardImg width="280" height="200" src={"/grigoris.jpg"} alt="Card image cap" />
+                            <CardBody>
+                                <CardTitle>Γρηγόρης Θανάσουλας</CardTitle>
+                                <CardSubtitle>Backend Engineer</CardSubtitle>
+                              
+                            </CardBody>
+                        </Card>
+                        
+                        <Card>
+                            <CardImg width="280" height="200" src={"/themis.png"} alt="Card image cap" />
+                            <CardBody>
+                                <CardTitle>Θέμης Παπαμελετίου</CardTitle>
+                                <CardSubtitle>Backend Engineer</CardSubtitle>
+                              
+                            </CardBody>
+                        </Card>
+                        <Card>
+                            <CardImg width="280" height="200" src={"/marilena.jpg"} alt="Card image cap" />
+                            <CardBody>
+                                <CardTitle>Μαριλένα Οικονομοπούλου</CardTitle>                              
+                            </CardBody>
+                        </Card>
+                    </CardDeck>   
+                    
+                    <CardDeck className="down">
+                        <Card>
+                            <CardImg height="220" height="220" src={"/athina.jpg"} alt="Card image cap" />
                             <CardBody>
                                 <CardTitle>Αθηνά Σταματίου</CardTitle>
                                 <CardSubtitle>Frontend/UI Desinger</CardSubtitle>
@@ -34,7 +54,7 @@ class About extends Component {
                  
                         <Card>
                        
-                            <CardImg  width="260" height="260" src={"/nikol.jpg"} alt="Card image cap" />
+                            <CardImg  width="200" height="240" src={"/nikol.jpg"} alt="Card image cap" />
                             <CardBody>
                                 <CardTitle>Νικολέττα Κατσούλη</CardTitle>
                                 <CardSubtitle>Frontend Engineer</CardSubtitle>
@@ -42,28 +62,7 @@ class About extends Component {
                             </CardBody>
                         </Card>
                        
-                        </CardDeck>
-                        <CardDeck>
-                    
-                        <Card>
-                            <CardImg width="260" height="260" src={"/grigoris.jpg"} alt="Card image cap" />
-                            <CardBody>
-                                <CardTitle>Γρηγόρης Θανάσουλας</CardTitle>
-                                <CardSubtitle>Backend Engineer</CardSubtitle>
-                              
-                            </CardBody>
-                        </Card>
-                        
-                        <Card>
-                            <CardImg width="260" height="260" src={"/themis.png"} alt="Card image cap" />
-                            <CardBody>
-                                <CardTitle>Θέμης Παπαμελετίου</CardTitle>
-                                <CardSubtitle>Backend Engineer</CardSubtitle>
-                              
-                            </CardBody>
-                        </Card>
-                  
-                        </CardDeck>                        
+                        </CardDeck>                     
                     </Container>
                 </div>
             </div>
