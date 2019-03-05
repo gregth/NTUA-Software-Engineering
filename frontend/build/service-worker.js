@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/nikolkats/nerdcultech18/blob/master/README.md/precache-manifest.e266b09c4e1549154cb33d98735e65f7.js"
+  "/nikolkats/nerdcultech18/blob/master/README.md/precache-manifest.0c3d4c30ae7d710d92910a0980f94105.js"
 );
 
 workbox.clientsClaim();

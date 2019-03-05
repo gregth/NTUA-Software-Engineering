@@ -183,7 +183,7 @@ export default class EditProduct extends Component {
             brand,
             volume: parseInt(volume),
             category,
-            tags: tags.join(','),
+            tags,
             withdrawn: this.state.details.withdrawn
         };
         
@@ -258,21 +258,21 @@ export default class EditProduct extends Component {
                 <Form id="edit_product_form" onSubmit={this.handleSubmit}>
                     <FormGroup check row>
                         <Label sm={3} for="edit_product_barcode" className="mr-sm-2">Barcode Προϊόντος:</Label>
-                        <Col sm={3}>
+                        <Col sm={5}>
                             <Input disabled id="edit_product_barcode" name="barcode" pattern="[0-9]{1,128}" onChange={this.handleChange} value={this.state.details.extraData.barcode} type="text"/>
                         </Col>
                     </FormGroup>
 
                     <FormGroup check row>
                         <Label sm={3} for="edit_product_name" className="mr-sm-2">Όνομα Προϊόντος:</Label>
-                        <Col sm={3}>
+                        <Col sm={5}>
                             <Input id="edit_product_name" name="name" value={this.state.name} onChange={this.handleChange} type="text" required/>
                         </Col>
                     </FormGroup>
 
                     <FormGroup check row>
                         <Label sm={3} for="edit_product_brand" className="mr-sm-2">Μάρκα Προϊόντος:</Label>
-                        <Col sm={3}>
+                        <Col sm={5}>
                             <Input id="edit_product_brand" name="brand" value={this.state.brand} onChange={this.handleChange} type="text" required/>
                         </Col>
                     </FormGroup>
@@ -288,14 +288,14 @@ export default class EditProduct extends Component {
                         <Label sm={6} for="edit_product_tags">Χαρακτηριστικά Προϊόντος:
                         <FormText>Διαχωρισμός χαρακτηριστικών με κόμμα (,)</FormText>
                         </Label>
-                        <Col sm={8}>
+                        <Col sm={6}>
                             <Input type="textarea" name="tags" id="edit_product_tags" onChange={this.handleChange} value={this.state.tags}/>
                         </Col>
                     </FormGroup>
 
                     <FormGroup check row>
                         <Label sm={6} for="edit_product_description">Περιγραφή προϊόντος:</Label>
-                        <Col sm={8}>
+                        <Col sm={6}>
                             <Input type="textarea" name="description" id="edit_product_description" onChange={this.handleChange} value={this.state.description} required/>
                         </Col>
                     </FormGroup>

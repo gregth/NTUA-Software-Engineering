@@ -1,9 +1,3 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 import React, {Component} from 'react';
 import { Alert, Card, CardImg, CardBody,
   CardTitle, CardSubtitle, Container, CardDeck} from 'reactstrap';
@@ -24,9 +18,36 @@ class About extends Component {
                     <Container className="About">
                     <CardDeck>
                         <Card>
-                            <CardImg  width="200" height="260" src={"/athina.jpg"} alt="Card image cap" />
+                            <CardImg width="280" height="200" src={"/grigoris.jpg"} alt="Card image cap" />
                             <CardBody>
-                                <CardTitle>Αθηνά Σταματίου</CardTitle>
+                                <CardTitle><strong>Γρηγόρης Θανάσουλας</strong></CardTitle>
+                                <CardSubtitle>Backend Engineer</CardSubtitle>
+                              
+                            </CardBody>
+                        </Card>
+                        
+                        <Card>
+                            <CardImg width="280" height="200" src={"/themis.png"} alt="Card image cap" />
+                            <CardBody>
+                                <CardTitle><strong>Θέμης Παπαμελετίου</strong></CardTitle>
+                                <CardSubtitle>Backend Engineer</CardSubtitle>
+                              
+                            </CardBody>
+                        </Card>
+                        <Card>
+                            <CardImg width="280" height="200" src={"/marilena.jpg"} alt="Card image cap" />
+                            <CardBody>
+                                <CardTitle><strong>Μαριλένα Οικονομοπούλου</strong></CardTitle>    
+                                <CardSubtitle><strong>-</strong></CardSubtitle>                          
+                            </CardBody>
+                        </Card>
+                    </CardDeck>   
+                    
+                    <CardDeck className="down">
+                        <Card>
+                            <CardImg width="220" height="220" src={"/athina.jpg"} alt="Card image cap" />
+                            <CardBody>
+                                <CardTitle><strong>Αθηνά Σταματίου</strong></CardTitle>
                                 <CardSubtitle>Frontend/UI Desinger</CardSubtitle>
                   
                             </CardBody>
@@ -34,36 +55,15 @@ class About extends Component {
                  
                         <Card>
                        
-                            <CardImg  width="200" height="260" src={"/nikol.jpg"} alt="Card image cap" />
+                            <CardImg  width="200" height="240" src={"/nikol.jpg"} alt="Card image cap" />
                             <CardBody>
-                                <CardTitle>Νικολέττα Κατσούλη</CardTitle>
+                                <CardTitle><strong>Νικολέττα Κατσούλη</strong></CardTitle>
                                 <CardSubtitle>Frontend Engineer</CardSubtitle>
                             
                             </CardBody>
                         </Card>
                        
-                        </CardDeck>
-                        <CardDeck>
-                    
-                        <Card>
-                            <CardImg width="200" height="260" src={"/grigoris.jpg"} alt="Card image cap" />
-                            <CardBody>
-                                <CardTitle>Γρηγόρης Θανάσουλας</CardTitle>
-                                <CardSubtitle>Backend Engineer</CardSubtitle>
-                              
-                            </CardBody>
-                        </Card>
-                        
-                        <Card>
-                            <CardImg width="200" height="260" src={"/themis.png"} alt="Card image cap" />
-                            <CardBody>
-                                <CardTitle>Θέμης Παπαμελετίου</CardTitle>
-                                <CardSubtitle>Backend Engineer</CardSubtitle>
-                              
-                            </CardBody>
-                        </Card>
-                  
-                        </CardDeck>                        
+                        </CardDeck>                     
                     </Container>
                 </div>
             </div>

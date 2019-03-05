@@ -25,9 +25,16 @@ class Product extends React.Component {
         this.find_shop = this.find_shop.bind(this);
         this.currentLocation = this.currentLocation.bind(this);
         this.toggleModal = this.toggleModal.bind(this);
-        this.new_product = this.new_product.bind(this);
         this.nearby_shops = this.nearby_shops.bind(this);
         this.add_price = this.add_price.bind(this);
+        this.searches = this.props.location.query;
+        this.flag = false;
+        Object.entries(this.searches).forEach(([key, value]) => {
+            if (key === 'barcode') {
+                this.barcode = value;
+                this.flag = true;
+            }
+        });
         this.body = {productId: null, shopId: null, price: null, dateFrom: null, dateTo: null};
     }
     
@@ -133,8 +140,14 @@ class Product extends React.Component {
         var checkBox = document.getElementById("addprice_location");
         
         if (checkBox.checked) {
-            lng = this.state.current.longitude;
-            lat = this.state.current.latitude;
+            try {
+                lng = this.state.current.longitude;
+                lat = this.state.current.latitude;
+            }
+            catch {
+                this.setState({error_address: true});
+                return;
+            }
         }
         else {
             const postal = document.getElementById('addprice_postal').value;
@@ -142,12 +155,12 @@ class Product extends React.Component {
             const number = document.getElementById('addprice_number').value;
             const total = address_name + ' ' + number + ' ' + postal;
             var result = await address_to_coords(total);
-            if (result) {
+            try {
                 lat = result[0];
                 lng = result[1];
                 this.setState({error_address: false});
             }
-            else {
+            catch {
                 this.setState({error_address: true});
                 return;
             }
@@ -209,8 +222,6 @@ class Product extends React.Component {
         var url = '/prices';
         this._isMounted = await send_to_server(url, this.body);
         const answer = this._isMounted;
-        var result = await answer.json().then((result) => {return result;});
-        console.log(result)
         console.log(answer);
         try {
             if (answer === 'error') {
@@ -278,10 +289,6 @@ class Product extends React.Component {
         });
     }
     
-    new_product () {
-        browserHistory.push('/newproduct');
-    }
-    
     render() {
         var curr = new Date();
         curr.setUTCDate(curr.getDate());
@@ -301,31 +308,35 @@ class Product extends React.Component {
                 <Form id="addproduct" onSubmit={this.handleSubmit}>
                         <FormGroup check row>
                             <Label sm={3} for="addprice_barcode" className="mr-sm-2">Barcode Προϊόντος:</Label>
-                            <Col sm={3}>
+                            {this.flag
+                            ? 
+                            <Col sm={5}>
+                                <Input id="addprice_barcode" name="barcode" pattern="[0-9]{1,128}" type="text" defaultValue={this.barcode} disabled required/>
+                            </Col>
+                            :
+                            <Col sm={5}>
                                 <Input id="addprice_barcode" name="barcode" pattern="[0-9]{1,128}" type="text" required/>
                             </Col>
+                            }
                         </FormGroup>
                         <div className="row mt-3"></div>
-                        <FormGroup check>
-                        <Label check>
-                        <Col sm={9}>
-                            <Input type="checkbox" name="location" id="addprice_location" onChange={() => this.currentLocation()}/>      
-                        </Col>
-                            Τωρινή Τοποθεσία
-                        </Label>
-
-                    
+                        <FormGroup check row>
+                            <Container className="Map1">
+                                <Label check> Τωρινή Τοποθεσία
+                                    <Input type="checkbox" name="location" id="addprice_location" onChange={() => this.currentLocation()}/>      
+                                </Label>
+                            </Container>
                         </FormGroup>    
                         <FormGroup check row>
                             <Label sm={8} for="addprice_name">Όνομα Καταστήματος:</Label>
-                            <Col sm={3}>
+                            <Col sm={6}>
                                 <Input id="addprice_name" name="name" type="text" disabled={this.state.flag}/>
                             </Col>
                         </FormGroup>
                         
                         <FormGroup check row>
                             <Label sm={3} for="addprice_address">Διεύθυνση:</Label>
-                            <Col sm={3}>
+                            <Col sm={6}>
                                 <Input id="addprice_address" invalid={this.state.error_address} name="address" type="text" disabled={this.state.flag} required/>
                                 <FormFeedback valid={!this.state.error_address}>Η διεύθυνση δεν είναι έγκυρη.</FormFeedback>
                             </Col>
@@ -333,37 +344,37 @@ class Product extends React.Component {
         
                         <FormGroup check row>
                                 <Label sm={3} for="addprice_number">Αριθμός:</Label>
-                                <Col sm={1}>
+                                <Col sm={2}>
                                     <Input id="addprice_number" invalid={this.state.error_address} name="number" type="text" disabled={this.state.flag} required/>
                             </Col>
                         </FormGroup>
                       
                         <FormGroup check row>
                             <Label sm={3} for="addprice_postal">ΤΚ/Περιοχή:</Label>
-                                <Col sm={2}>
+                                <Col sm={4}>
                                 <Input id="addprice_postal" invalid={this.state.error_address} name="postal" type="text" disabled={this.state.flag} required/>
                                 </Col>
                                 </FormGroup>
   
                         <FormGroup check row>
                             <Label sm={3} for="addprice_price">Τιμή:</Label>
-                            <Col sm={3}>
+                            <Col sm={2}>
                                 <InputGroup>
-                                    <Input type="text" id="addprice_price" pattern="[0-9]+" name="price" required/>
+                                    <Input type="text" id="addprice_price" pattern="[0-9]+([\.][0-9]([0-9])?)?" name="price" required/>
                                     <InputGroupAddon addonType="append">€</InputGroupAddon>
                                 </InputGroup>
                             </Col>
                         </FormGroup>
                         <FormGroup check row>
                             <Label sm={8} for="dateFrom">Ημερομηνία παρατήρησης:</Label>
-                            <Col sm={2}>
+                            <Col sm={4}>
                                 <Input id="dateFrom" type="date" name="dateFrom" defaultValue={date} min={min_date} max={date} required/>
                             </Col>
                         </FormGroup>
                         
                         <FormGroup check row>
                             <Label sm={8} for="dateTo">Ημερομηνία λήξης τιμής:</Label>
-                            <Col sm={2}>
+                            <Col sm={4}>
                                 <Input id="dateTo" type="date" name="dateTo" min={date} defaultValue={date} required/>
                             </Col>
                         </FormGroup>

@@ -79,7 +79,7 @@ class newProduct extends React.Component {
             barcode,
             brand,
             category,
-            tags: tags.join(','),
+            tags,
             withdrawn: 0
         };
         if (volume !== null && volume !== '') product['volume'] = volume;
@@ -138,21 +138,21 @@ class newProduct extends React.Component {
                 
                 <FormGroup check row>
                     <Label sm={3} for="new_product_barcode" className="mr-sm-2">Barcode Προϊόντος:</Label>
-                    <Col sm={3}>
+                    <Col sm={5}>
                         <Input id="new_product_barcode" name="new_product_barcode" pattern="[0-9]{1,128}" type="text" required/>
                     </Col>
                 </FormGroup>
                 
                 <FormGroup check row>
                     <Label sm={3} for="new_product_name" className="mr-sm-2">Όνομα Προϊόντος:</Label>
-                    <Col sm={3}>
+                    <Col sm={5}>
                         <Input id="new_product_name" name="new_product_name" type="text" required/>
                     </Col>
                 </FormGroup>
                 
                 <FormGroup check row>
                     <Label sm={3} for="new_product_brand" className="mr-sm-2">Μάρκα Προϊόντος:</Label>
-                    <Col sm={3}>
+                    <Col sm={5}>
                         <Input id="new_product_brand" name="new_product_brand" type="text" required/>
                     </Col>
                 </FormGroup>

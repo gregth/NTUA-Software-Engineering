@@ -47,7 +47,7 @@ class NavBarClass extends React.Component {
     }
     
     new_product () {
-        browserHistory.push('/newproduct');
+        browserHistory.push('/addproduct');
     }
     
     new_shop () {

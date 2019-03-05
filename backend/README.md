@@ -18,6 +18,15 @@ Set up the database using mySQL Workbench, or any other database manager.
 2. Create a user for your database with password. 
 3. In config.json, set up the user and the password for that user 
 
+## Import empty database with automatic script
+
+From within backend directory:
+   ```
+   cd ./scripts
+   bash ./restore_database.sh
+   ```
+Type the password of *root* user when prompted (twice).
+This initializes an empty database, with admin user (username: admin, password: adminadmin).
 
 
 ## Set up the port
