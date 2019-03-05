@@ -20,7 +20,7 @@ class About extends Component {
                         <Card>
                             <CardImg width="280" height="200" src={"/grigoris.jpg"} alt="Card image cap" />
                             <CardBody>
-                                <CardTitle>Γρηγόρης Θανάσουλας</CardTitle>
+                                <CardTitle><strong>Γρηγόρης Θανάσουλας</strong></CardTitle>
                                 <CardSubtitle>Backend Engineer</CardSubtitle>
                               
                             </CardBody>
@@ -29,7 +29,7 @@ class About extends Component {
                         <Card>
                             <CardImg width="280" height="200" src={"/themis.png"} alt="Card image cap" />
                             <CardBody>
-                                <CardTitle>Θέμης Παπαμελετίου</CardTitle>
+                                <CardTitle><strong>Θέμης Παπαμελετίου</strong></CardTitle>
                                 <CardSubtitle>Backend Engineer</CardSubtitle>
                               
                             </CardBody>
@@ -37,16 +37,17 @@ class About extends Component {
                         <Card>
                             <CardImg width="280" height="200" src={"/marilena.jpg"} alt="Card image cap" />
                             <CardBody>
-                                <CardTitle>Μαριλένα Οικονομοπούλου</CardTitle>                              
+                                <CardTitle><strong>Μαριλένα Οικονομοπούλου</strong></CardTitle>    
+                                <CardSubtitle><strong>-</strong></CardSubtitle>                          
                             </CardBody>
                         </Card>
                     </CardDeck>   
                     
                     <CardDeck className="down">
                         <Card>
-                            <CardImg height="220" height="220" src={"/athina.jpg"} alt="Card image cap" />
+                            <CardImg width="220" height="220" src={"/athina.jpg"} alt="Card image cap" />
                             <CardBody>
-                                <CardTitle>Αθηνά Σταματίου</CardTitle>
+                                <CardTitle><strong>Αθηνά Σταματίου</strong></CardTitle>
                                 <CardSubtitle>Frontend/UI Desinger</CardSubtitle>
                   
                             </CardBody>
@@ -56,7 +57,7 @@ class About extends Component {
                        
                             <CardImg  width="200" height="240" src={"/nikol.jpg"} alt="Card image cap" />
                             <CardBody>
-                                <CardTitle>Νικολέττα Κατσούλη</CardTitle>
+                                <CardTitle><strong>Νικολέττα Κατσούλη</strong></CardTitle>
                                 <CardSubtitle>Frontend Engineer</CardSubtitle>
                             
                             </CardBody>
